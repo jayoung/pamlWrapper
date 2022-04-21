@@ -1,0 +1,13 @@
+name: R
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - r-ape
+  # - r-tidyverse
+  # - r-irkernel
+  # - r-viridis
+  # - r-devtools
+  # - r-janitor
+  # - r-plotrix
+  
