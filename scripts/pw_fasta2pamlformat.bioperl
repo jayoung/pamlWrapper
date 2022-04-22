@@ -1,0 +1,93 @@
+#!/usr/bin/perl
+
+use warnings;
+use strict;
+use Bio::SeqIO;
+
+#### converts fasta alignment to phyml/paml.  output will be called infile.fa.phy
+# removes in-frame stop codons (replace with ---)
+# replace ! with -  (MACSE's indication of frameshifts)
+# truncates seq names to 30 characters and makes an aliases.txt file showing old vs new names
+# SWAMP.py is a bit more picky than phyml and codeml - it wants the header and the sequence on separate lines
+
+# xxx I want to skip seqs with too many ambiguous nucleotides, e.g. woolly_spider_monkey_B2M_ORF
+
+##################
+
+if (@ARGV==0) {
+    die "\n\nterminating - please supply input file name(s)\n\n";
+}
+
+my $truncateNames = 30;
+
+##########################
+
+#print "\n\n";
+foreach my $infile (@ARGV) {
+    if (!-e $infile) {
+        die "\n\nterminating - file $infile does not exist\n\n";
+    }
+    #print "file $infile\n";
+    my $nameFile = $infile.".aliases.txt";
+    open (NAMES, "> $nameFile");
+    ##### read seqs in, remove stop codons, shorten seqnames if needed, ensure no duplicate names after shortening
+    my $seqin = Bio::SeqIO->new(-file=>"$infile",-format=>"fasta");
+    my (%seqhash,@orderedseqlist);
+    while (my $seq=$seqin->next_seq()) {
+        #print "    got a seq\n";
+        my $seqname = $seq->display_id();
+        my $originalName = $seqname;
+        #print "    got a seq $seqname\n";
+        if ($truncateNames ne "no") {
+            if (length($seqname) > $truncateNames) {
+                $seqname = substr($seqname, 0, $truncateNames);
+            }
+            print NAMES "$originalName\t$seqname\n"; 
+        }
+        if (defined ($seqhash{$seqname}) ) {
+            die "\n\nterminating on file $infile - sequence names are not unique after truncating to 30 characters. First bad one is $seqname\n\n";
+        }
+        
+        my $letters = $seq->seq();
+        my $ungappedSeq = $letters;
+        $ungappedSeq =~ s/-//g;
+            
+        #### remove stop codons from seqs (replace by ---)
+        ### also record start and end positions of seq in alignment
+        my $start = "ND"; my $end = "ND";
+        for (my $i=0;$i<length($letters);$i=$i+3){
+            my $thiscodon = substr($letters,$i,3);
+            if (($start eq "ND") & ($thiscodon ne "---")) {$start = $i;}
+            if ($thiscodon ne "---") {$end = $i;}
+            if ($thiscodon =~ m/taa|tga|tag/i) {
+                # print "changing codon $thiscodon\n";
+                 substr($letters,$i,3) = "---";
+            }
+            ### change codons that are partially gap, to all gap
+            if ( ($thiscodon =~ m/[acgt]/i) & ($thiscodon =~ m/-/)) {
+                 #print "changing codon $thiscodon\n";
+                 substr($letters,$i,3) = "---";
+            }
+        }
+        # replace ! with -
+        $letters =~ s/\!/-/g;
+        $seq->seq($letters);
+        $seqhash{$seqname} = $seq;
+        push @orderedseqlist, $seqname;
+    }
+    #how many seqs to declare in the paml output?
+    my $numseqs = @orderedseqlist;
+    my $outfile = "$infile.phy";
+    open (OUT, "> $outfile");
+    #at beginning of file, print number of phyla and number of sites
+    my $length = $seqhash{$orderedseqlist[0]}->length();
+    print OUT "  $numseqs $length\n";
+    foreach my $seqname (@orderedseqlist) {
+        my $seq = $seqhash{$seqname};
+        my $sequence = $seq->seq();
+        #print OUT "$seqname  $sequence\n";
+        print OUT "$seqname\n$sequence\n";
+    } #end of foreach my seqname loop
+    close OUT;
+    close NAMES; 
+} ### end of foreach file loop
