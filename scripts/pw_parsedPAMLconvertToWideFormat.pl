@@ -28,13 +28,13 @@ use POSIX qw/floor/;
 
 ############# get the command line options and chec them 
 ## set defaults for each option
-my $includeCpGMasked = "yes"; ## I mostly DO want to look for results on CpG-masked versions of the alignments, but not always (e.g. if I have run PAML on multipl GARD segments of the same gene, and did not do masked)
-my $splitGeneName = "yes"; ## I mostly DO want to get gene name by splitting up input file name, but not always (e.g.. if I have run PAML on multipl GARD segments of the same gene)
+my $includeCpGMasked = 0; ## I mostly DO want to look for results on CpG-masked versions of the alignments, but not always (e.g. if I have run PAML on multipl GARD segments of the same gene, and did not do masked)
+my $splitGeneName = 1; ## I mostly DO want to get gene name by splitting up input file name, but not always (e.g.. if I have run PAML on multipl GARD segments of the same gene)
 my $figureOutSegmentPositions = ''; ## in the unusual case I ran PAML on GARD segments I might want to know segment name,startNT,endNT,startAA,endAA
 
 ## GetOptions syntax:  https://perldoc.perl.org/Getopt/Long.html
-GetOptions ( "cpg=s" => \$includeCpGMasked, 
-             "genename=s" => \$splitGeneName, 
+GetOptions ( "cpg=i" => \$includeCpGMasked, 
+             "genename=i" => \$splitGeneName, 
              "segname" => \$figureOutSegmentPositions) or die "\n\nterminating - unknown option(s) specified on command line\n\n";
 print "\nOptions selected:\n";
 
@@ -68,7 +68,7 @@ foreach my $file (@ARGV) {
         $correspondingUnmaskedAlignmentName =~ s/\.removeCpGinframe//;
         
         my $geneName = $thisAlignmentName; 
-        if ($splitGeneName eq "yes") {
+        if ($splitGeneName == 1) {
             if ($geneName =~ m/_/) { 
                 $geneName = (split /_/, $geneName)[0];
             }
@@ -78,7 +78,7 @@ foreach my $file (@ARGV) {
         if ($thisAlignmentName =~ m/removeCpGinframe/) { $CpGmasked = "masked"; }
         my $model = $f[4];
         my $resultsLookupName = $geneName;
-        if ($splitGeneName ne "yes") {
+        if ($splitGeneName == 0) {
             $resultsLookupName = $correspondingUnmaskedAlignmentName;
         }
         if (defined $results{$resultsLookupName}{$CpGmasked}{$model}) {
@@ -126,7 +126,7 @@ foreach my $file (@ARGV) {
     # all species
     print OUT "\tnum seqs";
     printHeaderFieldsEachAnalysis("");
-    if ($includeCpGMasked eq "yes") {
+    if ($includeCpGMasked == 1) {
         printHeaderFieldsEachAnalysis("CpGmask ");
     }
     print OUT "\n";
@@ -136,7 +136,7 @@ foreach my $file (@ARGV) {
         print OUT "$gene";
         print OUT "\t$results{$gene}{'unmasked'}{'M0'}{'numSeqs'}"; 
         printResults("unmasked", $gene, \%results);
-        if ($includeCpGMasked eq "yes") {
+        if ($includeCpGMasked == 1) {
             printResults("masked", $gene, \%results);
         }
         print OUT "\n";

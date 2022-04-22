@@ -139,4 +139,18 @@ foreach my $alignmentFile (@ARGV) {
     } # end of foreach my $model loop
     ## go back to the dir we started in
     chdir $topDir; 
-}
+    my $parsedPAMLoutputFile = "$pamlDir/$alnFileWithoutDir";
+    $parsedPAMLoutputFile =~ s/\.fa$//;
+    $parsedPAMLoutputFile =~ s/\.fasta$//;
+    $parsedPAMLoutputFile .= ".PAMLsummary.txt";
+
+    if (-e $parsedPAMLoutputFile) {
+        print "\n\nSkipping parsing - outfile exists already: $parsedPAMLoutputFile\n\n";
+    } else {
+        system ("$masterPipelineDir/scripts/pw_parsePAMLoutput.pl $alnFileWithoutDir");
+        system ("$masterPipelineDir/scripts/pw_parsedPAMLconvertToWideFormat.pl $parsedPAMLoutputFile");
+        if(!-e $parsedPAMLoutputFile) {
+            die "\n\nTerminating - parsed PAML output file does not exist: $parsedPAMLoutputFile\n\n";
+        }
+    }
+} # end of foreach my $alignmentFile loop

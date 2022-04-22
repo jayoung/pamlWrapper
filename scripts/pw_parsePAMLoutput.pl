@@ -18,12 +18,14 @@ my $cleanData = 0;
 my $processTree = "yes"; ## if I ran PAML using a supplied tree (e.g. species tree) I don't want to bother with the steps of this script that process the tree 
 #my $processTree = "no";
 my $BEBprobThresholdToPrintSelectedSite = 0.9; ### report selected sites with at least this BEB probability into the output file
+my $combinedOutputFile = 0;    ## we always make one output file per input file, but do we also make a single output file for all the input files combined?
 
-GetOptions("omega=f" => \$initialOrFixedOmega,   ## sometimes I do 3, default is 0.4
-           "codon=i" => \$codonFreqModel,        ## sometimes I do 3, default is 2
-           "clean=i" => \$cleanData,             ## sometimes I do 1 to remove the sites with gaps in any species
-           "BEB=f"   => \$BEBprobThresholdToPrintSelectedSite, # 0.5 to be less conservative, default is 0.9
-           "processTree=s" => \$processTree) or die "\n\nterminating - unknown option(s) specified on command line\n\n"; 
+GetOptions("omega=f"       => \$initialOrFixedOmega,   ## sometimes I do 3, default is 0.4
+           "codon=i"       => \$codonFreqModel,        ## sometimes I do 3, default is 2
+           "clean=i"       => \$cleanData,             ## sometimes I do 1 to remove the sites with gaps in any species
+           "BEB=f"         => \$BEBprobThresholdToPrintSelectedSite, # 0.5 to be less conservative, default is 0.9
+           "processTree=s" => \$processTree,
+           "comb=i"        => \$combinedOutputFile) or die "\n\nterminating - unknown option(s) specified on command line\n\n"; 
 
 
 
@@ -44,22 +46,21 @@ my $RscriptExecutable = "Rscript";
 ## check Rscript is in our path
 my $checkWhich = `which $RscriptExecutable`;
 if ($checkWhich eq "") {
-    die "\n\nterminating - need to load an R module before running this script. Try this:\n    module load R/4.0.2-foss-2019b\n\n";
+    die "\n\nterminating - R is not available. If you're working on gizmo/rhino, maybe you need to load an R module before running this script. Try this:\n    module load R/4.0.2-foss-2019b\n\n";
 }
 
 ## prep overall outfiles, including header rows. 
 # this outfile is in "long" format, where each paml model gets its own row, so each alignment gets ~7 rows. see pw_parsedPAMLconvertToWideFormat.pl to convert this to a wide format, with only one row per gene.
-my $overallOutputFile = "allAlignmentsPAMLsummary";
-$overallOutputFile .= "_initOmega$initialOrFixedOmega";
-$overallOutputFile .= "_codonModel$codonFreqModel";
-if ($cleanData==1) { $overallOutputFile .= "_cleandata1"; }
-$overallOutputFile .= ".txt";
-open (ALL, "> $overallOutputFile");
-print ALL "seqFile\tnumSeqs\tseqLenNT\tseqLenCodons\tmodel\tresultsDir\t";
-print ALL "startingOmega\tcodonModel\tcleanData\t";
-print ALL "lnL\tnp\ttest\t2diffML\tdf\tpValue\tkappa\ttreeLen\ttreeLen_dN\ttreeLen_dS\toverallOmega\t";
-print ALL "proportionSelectedSites\testimatedOmegaOfSelectedClass\tseqToWhichSiteCoordsRefer\tnumSitesBEBover$BEBprobThresholdToPrintSelectedSite\twhichSitesBEBover$BEBprobThresholdToPrintSelectedSite\n";
-
+my $overallOutputFile_fh;
+if ($combinedOutputFile) {
+    my $overallOutputFile = "allAlignmentsPAMLsummary";
+    $overallOutputFile .= "_initOmega$initialOrFixedOmega";
+    $overallOutputFile .= "_codonModel$codonFreqModel";
+    if ($cleanData==1) { $overallOutputFile .= "_cleandata1"; }
+    $overallOutputFile .= ".txt";
+    open($overallOutputFile_fh, ">", "$overallOutputFile");
+    printHeaderRows($overallOutputFile_fh, $BEBprobThresholdToPrintSelectedSite);
+}
 my @files = sort (@ARGV);
 
 foreach my $fastaAlnFile (@files) {
@@ -83,7 +84,7 @@ foreach my $fastaAlnFile (@files) {
     if (!-e $PAMLresultsDir) {
         die "\n\nterminating - cannot find PAML results master dir $PAMLresultsDir\n\n";
     }
-    
+
     #### first, change names in tree file (with and without branch lengths) back to originals
     if ($processTree eq "yes") {
         my $aliasesFile = "$PAMLresultsDir/$filenameWithoutDir.aliases.txt";
@@ -120,16 +121,14 @@ foreach my $fastaAlnFile (@files) {
     print "    looking at PAML results\n";
     
     ## prep outfile, including header rows:
+
     my $outfile = "$PAMLresultsDir/$fileStem.PAMLsummary.txt";
-    open (OUT, "> $outfile");
-    print OUT "seqFile\tnumSeqs\tseqLenNT\tseqLenCodons\tmodel\tresultsDir\t";
-    print OUT "startingOmega\tcodonModel\tcleanData\t";
-    print OUT "lnL\tnp\ttest\t2diffML\tdf\tpValue\tkappa\ttreeLen\ttreeLen_dN\ttreeLen_dS\toverallOmega\t";
-    print OUT "proportionSelectedSites\testimatedOmegaOfSelectedClass\tseqToWhichSiteCoordsRefer\tnumSitesBEBover$BEBprobThresholdToPrintSelectedSite\twhichSitesBEBover$BEBprobThresholdToPrintSelectedSite\n";
-    
+    open(my $outfile_fh, ">", "$outfile");
+    printHeaderRows($outfile_fh, $BEBprobThresholdToPrintSelectedSite);
+
     my %allPAMLresults;
     ## first read in all the paml results (I need them all before I can get the p-values)
-   foreach my $thisModel (@allmodels) {
+    foreach my $thisModel (@allmodels) {
         my $modelSubDir = "$PAMLresultsDir/$thisModel"."_initOmega$initialOrFixedOmega"."_codonModel$codonFreqModel";
         if ($cleanData == 1) { $modelSubDir .= "_cleandata1"; }
         if (!-e $modelSubDir) {
@@ -237,16 +236,25 @@ foreach my $fastaAlnFile (@files) {
                 $outputLine .= "\t\t\t\t";
             }
         }
-        print OUT "$outputLine\n";
-        print ALL "$outputLine\n";
+        print $outfile_fh "$outputLine\n";
+        if ($combinedOutputFile) {print $overallOutputFile_fh "$outputLine\n";}
     }
-    print ALL "\n";
-    close OUT;
+    if ($combinedOutputFile) {print $overallOutputFile_fh "\n";}
+    close $outfile_fh;
 }
-close ALL;
+if ($combinedOutputFile) {close $overallOutputFile_fh;}
 print "\n################# done ###############\n\n";
 
 ############# subroutines - not sure whether I'm still using all of these
+
+sub printHeaderRows {
+    my $fh = $_[0];
+    my $BEB = $_[1];
+    print $fh "seqFile\tnumSeqs\tseqLenNT\tseqLenCodons\tmodel\tresultsDir\t";
+    print $fh "startingOmega\tcodonModel\tcleanData\t";
+    print $fh "lnL\tnp\ttest\t2diffML\tdf\tpValue\tkappa\ttreeLen\ttreeLen_dN\ttreeLen_dS\toverallOmega\t";
+    print $fh "proportionSelectedSites\testimatedOmegaOfSelectedClass\tseqToWhichSiteCoordsRefer\tnumSitesBEBover$BEB\twhichSitesBEBover$BEB\n";
+}
 
 ### put together the output I've collected using other subroutines
 sub paml_output {
@@ -583,3 +591,4 @@ sub plot_tree {
         system("$command1");
     }
 }
+

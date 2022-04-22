@@ -1,0 +1,3 @@
+Gene name	num seqs	numNT	numAA	overall dN/dS	pVal M0vsM0fixed	total tree length	total dN tree length	total dS tree length	pVal M8vsM8a	pVal M8vsM7	pVal M2vsM1	percent sites under positive selection	dN/dS of selected sites	num sites with BEB >=0.9	which sites have BEB >=0.9
+ACE2	24	2418	806	0.45350	0.000000000000089583	0.52404	0.1298	0.2862	0.0000061334	0.0000088096	0.000033101	3.272	4.69720	16	67_D_0.916,78_T_0.991,218_S_0.996,299_D_0.932,354_G_0.955,631_K_0.942,653_Q_0.999,657_K_0.917,658_V_0.999,662_M_0.913,706_M_0.997,716_R_0.993,728_Q_0.980,729_P_0.971,732_G_0.994,787_S_0.942
+CENPA	19	423	141	0.44137	0.00012121	0.69333	0.1672	0.3789	0.30365	0.55998	0.79991				
