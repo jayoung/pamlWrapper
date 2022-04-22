@@ -5,7 +5,7 @@ use strict;
 use Cwd;
 use Getopt::Long;
 
-#### usage:  pw_makeTreeAndRunPAML.pl  alignmentFile(s)*.fa
+#### usage:  pw_makeTreeAndRunPAML.pl alignmentFile(s)*.fa
 #takes a bunch of alignments in fasta format. for each one, make a tree (if it does not already exist) and runs paml. 
 # with the older version of this repo I was using pw_makeTreeAndRunPAML_sbatchWrapper.pl to run it on the cluster.
 

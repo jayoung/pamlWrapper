@@ -42,7 +42,7 @@ docker exec -it 844b2c15e545 /bin/bash
 And if we want to stop and remove a running container, we do this (again use `docker ps` to get the container ID):
 ```
 docker rm -f 844b2c15e545
-``
+```
 
 Now we have a new command-line prompt within the mini-computer. You'll be in the root dir (`/`) of this computer when you first log in, and there should be a directory called `workingDir` that contains the entire contents of the directory you were in on your actual computer. If not, something is wrong.  The `workingDir` folder should contain a folder called `pamlWrapper` - that's the cloned git repo containing all my scripts: if not, something is wrong.
 ```
@@ -52,14 +52,30 @@ ls
 ls pamlWrapper
 ```
 
-# testing: pw_runPHYML.pl works
+# testing
+
+pw_makeTreeAndRunPAML.pl works!
 ```
 cd /workingDir/pamlWrapper/testData
-../scripts/pw_fasta2pamlformat.bioperl CENPA_primates_aln2_NT.fa.treeorder.small
-../scripts/pw_runPHYML.pl CENPA_primates_aln2_NT.fa.treeorder.small.phy
+../scripts/pw_makeTreeAndRunPAML.pl CENPA_primates_aln2_NT.fa.treeorder
+../scripts/pw_makeTreeAndRunPAML.pl ACE2_primates_aln1_NT.fa
+
+../scripts/pw_parsePAMLoutput.pl ACE2_primates_aln1_NT.fa
+
+../scripts/pw_parsedPAMLconvertToWideFormat.pl --cpg=no --tree allAlignmentsPAMLsummary_initOmega0.4_codonModel2.txt
+
+
 ```
 
+# to do
 
+include the parsing as part of the pipeline. We want to end up with the long and wide tables - one per alignment.  Also include a script to combine those tables into a single table, either for that run of pw_makeTreeAndRunPAML.pl, or as an independent thing after running PAML
+
+Maybe I can simplify the files a bit - something about renaming the seqs (truncating for PAML) might mean I'm getting too many files?  Maybe provide a function to substitute the seqnames back to the originals in the tree output. Don't think it's necessary in any of the other outputs.
+
+figure out how to do this on the cluster using singularity
+
+within the Docker container, the timestamps for files seems to be based on Europe time. That's weird. The timestamps look fine from outside the Docker container though.
 
 # the usual git updates:
 ```
