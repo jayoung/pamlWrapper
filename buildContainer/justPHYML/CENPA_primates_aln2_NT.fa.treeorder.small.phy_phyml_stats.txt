@@ -1,0 +1,47 @@
+
+ oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+                                  ---  PhyML 3.3.20220408  ---                                             
+                              http://www.atgc-montpellier.fr/phyml                                          
+                             Copyright CNRS - Universite Montpellier                                 
+ oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+
+. Sequence filename: 			CENPA_primates_aln2_NT.fa.treeorder.small.phy
+. Data set: 				#1
+. Initial tree: 			BioNJ
+. Model of nucleotides substitution: 	HKY85
+. Number of taxa: 			6
+. Log-likelihood: 			-924.10288
+. Unconstrained log-likelihood: 	-1128.61553
+. Composite log-likelihood: 		-3464.17386
+. Parsimony: 				63
+. Tree size: 				0.16056
+. Discrete gamma model: 		Yes
+  - Number of classes: 			4
+  - Gamma shape parameter: 		618.416
+  - Relative rate in class 1: 		0.94936 [freq=0.250000] 		
+  - Relative rate in class 2: 		0.98649 [freq=0.250000] 		
+  - Relative rate in class 3: 		1.01259 [freq=0.250000] 		
+  - Relative rate in class 4: 		1.05157 [freq=0.250000] 		
+. Transition/transversion ratio: 	4.937446
+. Nucleotides frequencies:
+  - f(A)=  0.21420
+  - f(C)=  0.31714
+  - f(G)=  0.28103
+  - f(T)=  0.18763
+
+. Run ID:				none
+. Random seed:				1650652894
+. Subtree patterns aliasing:		no
+. Version:				3.3.20220408
+. Time used:				0h0m0s (0 seconds)
+
+ oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+ Suggested citations:
+ S. Guindon, JF. Dufayard, V. Lefort, M. Anisimova, W. Hordijk, O. Gascuel
+ "New algorithms and methods to estimate maximum-likelihood phylogenies: assessing the performance of PhyML 3.0."
+ Systematic Biology. 2010. 59(3):307-321.
+
+ S. Guindon & O. Gascuel
+ "A simple, fast, and accurate algorithm to estimate large phylogenies by maximum likelihood"
+ Systematic Biology. 2003. 52(5):696-704.
+ oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo

@@ -1,5 +1,24 @@
 FROM continuumio/miniconda3:4.10.3
 
+#### install build-essential (for gcc compiler) and autoconf (for autoreconf), both needed to compile phyml. I think build-essential includes wget
+RUN apt-get update && apt-get install build-essential autoconf -y
+
+## install phyml from the tarball - current release. We install phyml WITHOUT mpi support (we won't be bootstrapping, so don't need it)
+RUN mkdir src
+RUN mkdir src/phyml
+RUN cd src/phyml && \
+  wget https://github.com/stephaneguindon/phyml/archive/refs/tags/v3.3.20220408.tar.gz && \
+  tar -xf v3.3.20220408.tar.gz && \
+  cd phyml-3.3.20220408 && \
+  sh ./autogen.sh && \
+  autoreconf -i && \  
+  ./configure --enable-mpi && \ 
+  make && \ 
+  make install
+
+### install paml - this version of phyml has conflicts
+RUN conda install paml --channel bioconda
+
 ### install R (default version is OLD - 3.5.2), but I don't care. 
 # I only use R+ape for some very simple plots.
 # install the ape R package (v5.6-2)
@@ -7,16 +26,37 @@ RUN apt-get update && \
     apt-get install -y r-base
 RUN R -e "install.packages('ape',dependencies=TRUE, repos='http://cran.rstudio.com/')"
 
-### install the other stuff
-RUN conda install phyml --channel bioconda
-RUN conda install paml --channel bioconda
+### install bioperl
+# PERL5LIB does not seem to be set at all - need to do that
 RUN conda install perl-bioperl --channel bioconda
+ENV PERL5LIB /opt/conda/pkgs/perl-bioperl-1.6.924-4/lib/perl5/site_perl/5.22.0/
+
+### Install cpanm and some perl modules
+RUN apt-get install -y cpanminus
+RUN cpanm CPAN::Meta \
+  Cwd \ 
+  Getopt::Long \ 
+  Statistics::Distributions
+
+### set ENV to help me track the github repo home. Some of the scripts use this.
+ENV PAML_WRAPPER_HOME /workingDir/pamlWrapper
+
+### what to DO in our container
+CMD ["/bin/bash"]
 
 
 ##### Notes:
 
-# build: "docker build -t paml_wrapper ."
-# start a shell: "docker run -v `pwd`:/testData2 -it paml_wrapper"
+### to build first time: 
+# docker build -t paml_wrapper .
+
+### to rebuild and run a shell: 
+# docker ps -a ## to figure out container ID
+# docker rm -f 793368e0b770 ## replace with appropriate container ID
+# docker build -t paml_wrapper .
+# docker run -v `pwd`:/workingDir -it paml_wrapper
+
+# start a shell: "docker run -v `pwd`:/workingDir -it paml_wrapper"
 
 ### From that shell:
 # which phyml, which codeml, and playing with R all seem to work.

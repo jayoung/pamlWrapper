@@ -1,0 +1,22 @@
+#!/usr/bin/perl
+use warnings;
+use strict;
+use Bio::SeqIO;
+use Cwd;
+use Getopt::Long;
+use Statistics::Distributions;
+
+### this script simply tests whether Docker container setup is working as I expect.
+
+print "\nAll perl modules are installed\n";
+
+if (!defined $ENV{'PAML_WRAPPER_HOME'}) {
+    print "\nWARNING - the PAML_WRAPPER_HOME environmental variable is not defined\n";
+}
+my $gitHome = $ENV{'PAML_WRAPPER_HOME'}; 
+if (!-e $gitHome) {
+    print "\nWARNING - the PAML_WRAPPER_HOME environmental variable is defined as $gitHome but this directory does not exist\n";
+}
+print "\nGithub clone found in $gitHome\n"; 
+
+

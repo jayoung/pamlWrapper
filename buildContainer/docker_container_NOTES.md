@@ -10,7 +10,7 @@ This gets me a shell in the container
 ```
 cd /Users/jayoung/gitProjects/pamlWrapper/buildContainer
 docker build -t paml_wrapper .
-docker run -v `pwd`:/testData2 -it paml_wrapper
+docker run -v `pwd`:/workingDir -it paml_wrapper
 ```
 
 xxx then what?
