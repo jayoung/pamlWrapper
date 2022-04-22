@@ -62,7 +62,7 @@ cd /workingDir/pamlWrapper/testData
 
 ../scripts/pw_parsePAMLoutput.pl ACE2_primates_aln1_NT.fa
 
-../scripts/pw_parsedPAMLconvertToWideFormat.pl --cpg=no --tree allAlignmentsPAMLsummary_initOmega0.4_codonModel2.txt
+../scripts/pw_parsedPAMLconvertToWideFormat.pl --cpg=no allAlignmentsPAMLsummary_initOmega0.4_codonModel2.txt
 
 
 ```
@@ -70,6 +70,10 @@ cd /workingDir/pamlWrapper/testData
 # to do
 
 include the parsing as part of the pipeline. We want to end up with the long and wide tables - one per alignment.  Also include a script to combine those tables into a single table, either for that run of pw_makeTreeAndRunPAML.pl, or as an independent thing after running PAML
+- first update pw_makeTreeAndRunPAML.pl so that it produces one output file per alignment. Keep an option to produce a single output file, but that should not be the default. 
+- then incorporate pw_makeTreeAndRunPAML.pl into pw_makeTreeAndRunPAML.pl
+- then incorporate pw_parsedPAMLconvertToWideFormat.pl into pw_makeTreeAndRunPAML.pl
+- then make a script that can combine those tables for multiple genes
 
 Maybe I can simplify the files a bit - something about renaming the seqs (truncating for PAML) might mean I'm getting too many files?  Maybe provide a function to substitute the seqnames back to the originals in the tree output. Don't think it's necessary in any of the other outputs.
 

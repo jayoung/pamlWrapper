@@ -46,21 +46,14 @@ this script:
 
 dependencies: R and the ape package  
 
-xxx in Oct 2019 I added a couple more columns to the output of pw_parsePAMLoutput.pl, so files generated before/after this date will not align. I want to go back and re-parse output so the new columns are included in all.
 
 
 ## Simplify parsed paml results - make a table with one row per gene  
 
 ```
 scripts/pw_parsedPAMLconvertToWideFormat.pl allAlignmentsPAMLsummary.txt
-scripts/pw_parsedPAMLconvertToWideFormat.pl --nwm allAlignmentsPAMLsummary.txt
-scripts/pw_parsedPAMLconvertToWideFormat.pl --nwm --tree allAlignmentsPAMLsummary.txt
 ```
 If input file is called `allAlignmentsPAMLsummary.txt`, output file will be called `allAlignmentsPAMLsummary.wide.txt  `
-
-Options:  
-- --nwm : look for analysis done after I removed New World monkey seqs  
-- --tree : include total tree length in output
 
 
 ## Some other utility scripts: 
