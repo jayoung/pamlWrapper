@@ -12,14 +12,13 @@ use Getopt::Long;
 ## set up defaults:
 my $initialOrFixedOmega = 0.4;
 my $codonFreqModel = 2;
-my $walltime = "1-0";   # if we do use sbatch, default walltime is 1 days
 my $cleanData = 0;
+my $BEBprobThresholdToPrintSelectedSite = 0.9; ### report selected sites with at least this BEB probability into the output file
 
 GetOptions("omega=f" => \$initialOrFixedOmega,   ## sometimes I do 3
            "codon=i" => \$codonFreqModel,        ## sometimes I do 3
            "clean=i" => \$cleanData,             ## sometimes I do 1 to remove the sites with gaps in any species
-           "wall=s" => \$walltime) or die "\n\nterminating - unknown option(s) specified on command line\n\n"; 
-               ## '--wall 0-6' to specify 6 hrs
+           "BEB=f"   => \$BEBprobThresholdToPrintSelectedSite) or die "\n\nterminating - unknown option(s) specified on command line\n\n"; 
 
 ##### I don't usually change these things:
 my $masterPipelineDir = $ENV{'PAML_WRAPPER_HOME'}; 
@@ -31,6 +30,9 @@ my @modelsToRun = ("0","0fixNeutral","1","2","7","8","8a");
 #my @modelsToRun = ("0");
 
 # print "\nrunning PAML with these parameters:\n    starting omega $initialOrFixedOmega\n    codon model $codonFreqModel\n    cleandata $cleanData\n\n";
+
+
+
 
 ################
 
@@ -138,15 +140,20 @@ foreach my $alignmentFile (@ARGV) {
     } # end of foreach my $model loop
     ## go back to the dir we started in
     chdir $topDir; 
+    
+    ## parse PAML output
     my $parsedPAMLoutputFile = "$pamlDir/$alnFileWithoutDir";
     $parsedPAMLoutputFile =~ s/\.fa$//;
     $parsedPAMLoutputFile =~ s/\.fasta$//;
+    $parsedPAMLoutputFile .= ".initOmega$initialOrFixedOmega";
+    $parsedPAMLoutputFile .= "_codonModel$codonFreqModel";
+    $parsedPAMLoutputFile .= "_cleandata$cleanData"; 
     $parsedPAMLoutputFile .= ".PAMLsummary.txt";
-
     if (-e $parsedPAMLoutputFile) {
         print "\n\nSkipping parsing - outfile exists already: $parsedPAMLoutputFile\n\n";
     } else {
-        system ("$masterPipelineDir/scripts/pw_parsePAMLoutput.pl $alnFileWithoutDir");
+        system ("$masterPipelineDir/scripts/pw_parsePAMLoutput.pl -omega=$initialOrFixedOmega -codon=$codonFreqModel -clean=$cleanData -BEB=$BEBprobThresholdToPrintSelectedSite $alnFileWithoutDir");
+
         system ("$masterPipelineDir/scripts/pw_parsedPAMLconvertToWideFormat.pl $parsedPAMLoutputFile");
         if(!-e $parsedPAMLoutputFile) {
             die "\n\nTerminating - parsed PAML output file does not exist: $parsedPAMLoutputFile\n\n";

@@ -18,12 +18,17 @@ That script performs the following steps, using a bunch of other scripts:
 
 - makes a subdir called ACSL4_primates_aln1_NT.fa_phymlAndPAML  
 
-- runs phyml using GTR  nucleotide substitution model, estimating the proportion of invariable sites, estimating the shape of the gamma distribution, estimating nucleotide freqs (no bootstraps)  
+- runs phyml using GTR nucleotide substitution model, estimating the proportion of invariable sites, estimating the shape of the gamma distribution, estimating nucleotide freqs (no bootstraps)  
 
 - makes a copy of the tree without any branch lengths  
 
-- runs PAML using that tree and alignment.   Runs several models, with a single starting omega and single codon freq model
+- runs PAML using that tree and alignment. Runs several models, with a single starting omega and single codon freq model (defaults are codon model=2, starting omega=0.4, cleandata=0, but these can be changed)
 
+- parses the output, including the following steps:
+  - makes tables of paml results (allAlignmentsPAMLsummary.txt), calculates p-values.  
+  - makes pdf files showing the tree (with and without branch lengths)  
+  - makes plots showing how omega is distributed over sites  
+  - makes a reordered alignment file (seqs in same order as tree, useful for inspecting candidate sites of positive selection)  
 
 ## Parse paml results
 
@@ -37,12 +42,6 @@ module load R/4.0.2-foss-2019b
 scripts/pw_parsePAMLoutput.pl *NT.fa *removeCpGinframe.fa
 module purge
 ```
-
-this script:
-- makes tables of paml results (allAlignmentsPAMLsummary.txt), calculates p-values.  
-- makes pdf files showing the tree (with and without branch lengths)  
-- makes plots showing how omega is distributed over sites  
-- makes a reordered alignment file (seqs in same order as tree, useful for inspecting candidate sites of positive selection)  
 
 dependencies: R and the ape package  
 

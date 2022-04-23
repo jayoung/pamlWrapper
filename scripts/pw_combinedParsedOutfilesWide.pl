@@ -33,7 +33,7 @@ foreach my $file (@ARGV) {
     open (IN, "< $file");
     while (<IN>) {
         my $line = $_;
-        if ($line =~ m/^Gene\sname/) {
+        if (($line =~ m/^Gene\sname/) || ($line =~ m/^seqFile/)) {
             if ($firstFile) { print OUT $line; } else { next; }
         } else {
             print OUT $line; 

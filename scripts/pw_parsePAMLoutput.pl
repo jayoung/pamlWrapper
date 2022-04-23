@@ -53,11 +53,11 @@ if ($checkWhich eq "") {
 # this outfile is in "long" format, where each paml model gets its own row, so each alignment gets ~7 rows. see pw_parsedPAMLconvertToWideFormat.pl to convert this to a wide format, with only one row per gene.
 my $overallOutputFile_fh;
 if ($combinedOutputFile) {
-    my $overallOutputFile = "allAlignmentsPAMLsummary";
-    $overallOutputFile .= "_initOmega$initialOrFixedOmega";
+    my $overallOutputFile = "allAlignments";
+    $overallOutputFile .= ".initOmega$initialOrFixedOmega";
     $overallOutputFile .= "_codonModel$codonFreqModel";
-    if ($cleanData==1) { $overallOutputFile .= "_cleandata1"; }
-    $overallOutputFile .= ".txt";
+    $overallOutputFile .= "_cleandata$cleanData"; 
+    $overallOutputFile .= ".PAMLsummary.txt";
     open($overallOutputFile_fh, ">", "$overallOutputFile");
     printHeaderRows($overallOutputFile_fh, $BEBprobThresholdToPrintSelectedSite);
 }
@@ -121,8 +121,12 @@ foreach my $fastaAlnFile (@files) {
     print "    looking at PAML results\n";
     
     ## prep outfile, including header rows:
+    my $outfile = "$PAMLresultsDir/$fileStem";
+    $outfile .= ".initOmega$initialOrFixedOmega";
+    $outfile .= "_codonModel$codonFreqModel";
+    $outfile .= "_cleandata$cleanData"; 
+    $outfile .= ".PAMLsummary.txt";
 
-    my $outfile = "$PAMLresultsDir/$fileStem.PAMLsummary.txt";
     open(my $outfile_fh, ">", "$outfile");
     printHeaderRows($outfile_fh, $BEBprobThresholdToPrintSelectedSite);
 

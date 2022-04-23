@@ -18,9 +18,7 @@ use POSIX qw/floor/;
 # pw_parsedPAMLconvertToWideFormat.pl --tree list17_HultquistFinalList_PAMLsummary.txt 
 
 
-## this version of the script looks for two or four alignments for each gene: 
-# with and without CpG masking
-# perhaps also same alignments but without NWMs
+## this version of the script is capable of looking for two alignments for each gene, with and without CpG masking
 
 ## xxx to do - add another column that's the selected sites in a less ugly format
 ## xxx I might be able to add BH-corrected p-values in this script (see https://metacpan.org/pod/Statistics::Multtest) but for now I will open the output in R and do it
@@ -29,13 +27,13 @@ use POSIX qw/floor/;
 ############# get the command line options and chec them 
 ## set defaults for each option
 my $includeCpGMasked = 0; ## I mostly DO want to look for results on CpG-masked versions of the alignments, but not always (e.g. if I have run PAML on multipl GARD segments of the same gene, and did not do masked)
-my $splitGeneName = 1; ## I mostly DO want to get gene name by splitting up input file name, but not always (e.g.. if I have run PAML on multipl GARD segments of the same gene)
+my $splitGeneName = 0; ## I mostly DO want to get gene name by splitting up input file name, but not always (e.g.. if I have run PAML on multiple GARD segments of the same gene)
 my $figureOutSegmentPositions = ''; ## in the unusual case I ran PAML on GARD segments I might want to know segment name,startNT,endNT,startAA,endAA
 
 ## GetOptions syntax:  https://perldoc.perl.org/Getopt/Long.html
-GetOptions ( "cpg=i" => \$includeCpGMasked, 
+GetOptions ( "cpg=i"      => \$includeCpGMasked, 
              "genename=i" => \$splitGeneName, 
-             "segname" => \$figureOutSegmentPositions) or die "\n\nterminating - unknown option(s) specified on command line\n\n";
+             "segname"    => \$figureOutSegmentPositions) or die "\n\nterminating - unknown option(s) specified on command line\n\n";
 print "\nOptions selected:\n";
 
 ################
@@ -73,27 +71,34 @@ foreach my $file (@ARGV) {
                 $geneName = (split /_/, $geneName)[0];
             }
         }
-        my $CpGmasked = "unmasked"; 
+        my $mask = "unmasked"; 
         #print "line $line geneName $geneName\n";
-        if ($thisAlignmentName =~ m/removeCpGinframe/) { $CpGmasked = "masked"; }
-        my $model = $f[4];
-        my $resultsLookupName = $geneName;
+        if ($thisAlignmentName =~ m/removeCpGinframe/) { $mask = "masked"; }
+        my $mod = $f[4];
+        my $omega = $f[6];
+        my $codon = $f[7];
+        my $clean = $f[8];
+
+        my $alnName = $geneName;
         if ($splitGeneName == 0) {
-            $resultsLookupName = $correspondingUnmaskedAlignmentName;
+            $alnName = $correspondingUnmaskedAlignmentName;
         }
-        if (defined $results{$resultsLookupName}{$CpGmasked}{$model}) {
-            print "    WARNING - already saw results for gene $geneName $CpGmasked $model - did you intend to use the --genename=no option to suppress parsing gene name from file name?\n\n";
+        if (defined $results{$alnName}{$mask}{$omega}{$codon}{$clean}{$mod}) {
+            print "    WARNING - already saw results for gene $geneName $mask $mod - did you intend to use the --genename=no option to suppress parsing gene name from file name?\n\n";
         }
-        $results{$resultsLookupName}{$CpGmasked}{$model}{"numSeqs"} = $f[1];
-        $results{$resultsLookupName}{$CpGmasked}{$model}{"alnLenNT"} = $f[2];
-        $results{$resultsLookupName}{$CpGmasked}{$model}{"alnLenAA"} = $f[3];
-        
+        $results{$alnName}{$mask}{$omega}{$codon}{$clean}{$mod}{"numSeqs"} = $f[1];
+        $results{$alnName}{$mask}{$omega}{$codon}{$clean}{$mod}{"alnLenNT"} = $f[2];
+        $results{$alnName}{$mask}{$omega}{$codon}{$clean}{$mod}{"alnLenAA"} = $f[3];
+        $results{$alnName}{$mask}{$omega}{$codon}{$clean}{$mod}{"resultsDir"} = $f[5];
+        $results{$alnName}{$mask}{$omega}{$codon}{$clean}{$mod}{"lnL"} = $f[9];
+        $results{$alnName}{$mask}{$omega}{$codon}{$clean}{$mod}{"np"} = $f[10];
+
         ## record special output for M0 - overall dN/dS and total tree length
-        if ($model eq "M0") {
-            $results{$resultsLookupName}{$CpGmasked}{$model}{"tot_treeLen"} = $f[16];
-            $results{$resultsLookupName}{$CpGmasked}{$model}{"dN_treeLen"} = $f[17];
-            $results{$resultsLookupName}{$CpGmasked}{$model}{"dS_treeLen"} = $f[18];
-            $results{$resultsLookupName}{$CpGmasked}{$model}{"overall_dNdS"} = $f[19];
+        if ($mod eq "M0") {
+            $results{$alnName}{$mask}{$omega}{$codon}{$clean}{$mod}{"tot_treeLen"} = $f[16];
+            $results{$alnName}{$mask}{$omega}{$codon}{$clean}{$mod}{"dN_treeLen"} = $f[17];
+            $results{$alnName}{$mask}{$omega}{$codon}{$clean}{$mod}{"dS_treeLen"} = $f[18];
+            $results{$alnName}{$mask}{$omega}{$codon}{$clean}{$mod}{"overall_dNdS"} = $f[19];
         }
         
         ## record output if this line reflects a statistical test
@@ -101,18 +106,17 @@ foreach my $file (@ARGV) {
         if ($f[11] ne "") {
             my $test = $f[11];
             my $pVal = $f[14];
-            $results{$resultsLookupName}{$CpGmasked}{$test}{"pVal"} = $pVal;
+            $results{$alnName}{$mask}{$test}{"pVal"} = $pVal;
             ## if it's the M8 line and the test was signif, I record results about number of selected sites
-            if (($numFields >= 21) & ($model eq "M8")) {
+            if (($numFields >= 21) & ($mod eq "M8")) {
                 if ($f[20] ne "") {
-                    $results{$resultsLookupName}{$CpGmasked}{$model}{"percentSelected"} = 100*$f[20];
-                    $results{$resultsLookupName}{$CpGmasked}{$model}{"dNdSselected"} = $f[21];
-                    $results{$resultsLookupName}{$CpGmasked}{$model}{"numSitesBEB_90"} = $f[23];
-                    $results{$resultsLookupName}{$CpGmasked}{$model}{"sitesBEB_90"} = $f[24];
+                    $results{$alnName}{$mask}{$omega}{$codon}{$clean}{$mod}{"percentSelected"} = 100*$f[20];
+                    $results{$alnName}{$mask}{$omega}{$codon}{$clean}{$mod}{"dNdSselected"} = $f[21];
+                    $results{$alnName}{$mask}{$omega}{$codon}{$clean}{$mod}{"numSitesBEB_90"} = $f[23];
+                    $results{$alnName}{$mask}{$omega}{$codon}{$clean}{$mod}{"sitesBEB_90"} = $f[24];
                 }
             }
         }
-        
     }
     close IN;
     print "\n###### making output file\n";
@@ -122,7 +126,7 @@ foreach my $file (@ARGV) {
     
     open (OUT, "> $out");
     ### print header:
-    print OUT "Gene name";
+    print OUT "seqFile";
     # all species
     print OUT "\tnum seqs";
     printHeaderFieldsEachAnalysis("");
@@ -134,10 +138,28 @@ foreach my $file (@ARGV) {
     foreach my $gene (sort keys %results) {
         #print "\ngetting results for gene $gene\n";
         print OUT "$gene";
-        print OUT "\t$results{$gene}{'unmasked'}{'M0'}{'numSeqs'}"; 
-        printResults("unmasked", $gene, \%results);
-        if ($includeCpGMasked == 1) {
-            printResults("masked", $gene, \%results);
+        print "gene $gene\n";
+        my @allOmegas = sort keys %{$results{$gene}{'unmasked'}};
+        foreach my $thisOmega (@allOmegas) {
+            print "    thisOmega $thisOmega\n";
+            my @allCodons = sort keys %{$results{$gene}{'unmasked'}{$thisOmega}};
+            foreach my $thisCodon (@allCodons) {
+                print "    thisCodon $thisCodon\n";
+                my @allCleans = sort keys %{$results{$gene}{'unmasked'}{$thisOmega}{$thisCodon}};
+                foreach my $thisClean (@allCleans) {
+                    print "gene $gene thisOmega $thisOmega thisCodon $thisCodon thisClean $thisClean\n"; 
+                   # if (!defined $results{$gene}{'unmasked'}{$thisOmega}{$thisCodon}{$thisClean}) {
+                   #     print "    PROBLEM!\n"
+                   # }
+                    #die;
+
+                    print OUT "\t$results{$gene}{'unmasked'}{$thisOmega}{$thisCodon}{$thisClean}{'M0'}{'numSeqs'}"; 
+                    printResults("unmasked", $gene, $thisOmega, $thisCodon, $thisClean, \%results);
+                    if ($includeCpGMasked == 1) {
+                        printResults("masked", $gene, $thisOmega, $thisCodon, $thisClean, \%results);
+                    }
+                }
+            }
         }
         print OUT "\n";
     }
@@ -165,7 +187,10 @@ sub printHeaderFieldsEachAnalysis {
 sub printResults {
     my $masked = $_[0];
     my $gene = $_[1];
-    my $resultsRef = $_[2];
+    my $thisOmega = $_[2];
+    my $thisCodon = $_[3];
+    my $thisClean = $_[4];
+    my $resultsRef = $_[5];
     my %results = %$resultsRef;
     
     if ($figureOutSegmentPositions) {
@@ -193,23 +218,23 @@ sub printResults {
         die "\n\nterminating - no results for gene $gene with mask setting $masked - maybe you want to use the --cpg=no option while parsing??\n\n";
     }
     
-    print OUT "\t$results{$gene}{$masked}{'M0'}{'alnLenNT'}";
-    print OUT "\t$results{$gene}{$masked}{'M0'}{'alnLenAA'}";
-    print OUT "\t$results{$gene}{$masked}{'M0'}{'overall_dNdS'}";
-    print OUT "\t$results{$gene}{$masked}{'M0_M0fix'}{'pVal'}";
+    print OUT "\t$results{$gene}{$masked}{$thisOmega}{$thisCodon}{$thisClean}{'M0'}{'alnLenNT'}";
+    print OUT "\t$results{$gene}{$masked}{$thisOmega}{$thisCodon}{$thisClean}{'M0'}{'alnLenAA'}";
+    print OUT "\t$results{$gene}{$masked}{$thisOmega}{$thisCodon}{$thisClean}{'M0'}{'overall_dNdS'}";
+    print OUT "\t$results{$gene}{$masked}{$thisOmega}{$thisCodon}{$thisClean}{'M0_M0fix'}{'pVal'}";
 
-    print OUT "\t$results{$gene}{$masked}{'M0'}{'tot_treeLen'}";
-    print OUT "\t$results{$gene}{$masked}{'M0'}{'dN_treeLen'}";
-    print OUT "\t$results{$gene}{$masked}{'M0'}{'dS_treeLen'}";
+    print OUT "\t$results{$gene}{$masked}{$thisOmega}{$thisCodon}{$thisClean}{'M0'}{'tot_treeLen'}";
+    print OUT "\t$results{$gene}{$masked}{$thisOmega}{$thisCodon}{$thisClean}{'M0'}{'dN_treeLen'}";
+    print OUT "\t$results{$gene}{$masked}{$thisOmega}{$thisCodon}{$thisClean}{'M0'}{'dS_treeLen'}";
 
-    print OUT "\t$results{$gene}{$masked}{'M8_M8a'}{'pVal'}"; 
-    print OUT "\t$results{$gene}{$masked}{'M8_M7'}{'pVal'}";
-    print OUT "\t$results{$gene}{$masked}{'M2_M1'}{'pVal'}";
-    if (defined $results{$gene}{$masked}{'M8'}{'percentSelected'} ) {
-        print OUT "\t$results{$gene}{$masked}{'M8'}{'percentSelected'}";
-        print OUT "\t$results{$gene}{$masked}{'M8'}{'dNdSselected'}";
-        print OUT "\t$results{$gene}{$masked}{'M8'}{'numSitesBEB_90'}";
-        print OUT "\t$results{$gene}{$masked}{'M8'}{'sitesBEB_90'}";
+    print OUT "\t$results{$gene}{$masked}{$thisOmega}{$thisCodon}{$thisClean}{'M8_M8a'}{'pVal'}"; 
+    print OUT "\t$results{$gene}{$masked}{$thisOmega}{$thisCodon}{$thisClean}{'M8_M7'}{'pVal'}";
+    print OUT "\t$results{$gene}{$masked}{$thisOmega}{$thisCodon}{$thisClean}{'M2_M1'}{'pVal'}";
+    if (defined $results{$gene}{$masked}{$thisOmega}{$thisCodon}{$thisClean}{'M8'}{'percentSelected'} ) {
+        print OUT "\t$results{$gene}{$masked}{$thisOmega}{$thisCodon}{$thisClean}{'M8'}{'percentSelected'}";
+        print OUT "\t$results{$gene}{$masked}{$thisOmega}{$thisCodon}{$thisClean}{'M8'}{'dNdSselected'}";
+        print OUT "\t$results{$gene}{$masked}{$thisOmega}{$thisCodon}{$thisClean}{'M8'}{'numSitesBEB_90'}";
+        print OUT "\t$results{$gene}{$masked}{$thisOmega}{$thisCodon}{$thisClean}{'M8'}{'sitesBEB_90'}";
     } else { 
         print OUT "\t\t\t\t";
     }

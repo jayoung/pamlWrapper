@@ -57,8 +57,12 @@ ls pamlWrapper
 pw_makeTreeAndRunPAML.pl works!
 ```
 cd /workingDir/pamlWrapper/testData
+# run on individual alignments
 ../scripts/pw_makeTreeAndRunPAML.pl CENPA_primates_aln2_NT.fa.treeorder
 ../scripts/pw_makeTreeAndRunPAML.pl ACE2_primates_aln1_NT.fa
+
+# run on both alignments
+../scripts/pw_makeTreeAndRunPAML.pl CENPA_primates_aln2_NT.fa.treeorder ACE2_primates_aln1_NT.fa
 
 # if we ran it on several alignment files, and want a single long or wide output file for all:
 ../scripts/pw_combinedParsedOutfilesLong.pl */*PAMLsummary.txt
@@ -68,9 +72,25 @@ cd /workingDir/pamlWrapper/testData
 
 # to do
 
-scripts are currently looking for gene name as part of file name. I think I want to get rid of that for this standalone pipeline
+working on pw_parsedPAMLconvertToWideFormat.pl
+including codonModel/cleanData/starting omega
+I messed it up
 
-Maybe I can simplify the files a bit - something about renaming the seqs (truncating for PAML) might mean I'm getting too many files?  Maybe provide a function to substitute the seqnames back to the originals in the tree output. Don't think it's necessary in any of the other outputs.
+in the convert to wide script, I want to include more columns: starting omega, codon model, clean data, results dir, lnL and np for each model. Also for the sites columns, clarify in col headers that's M8.
+
+update and complete documentation. look again at the options I built in, including starting parameters
+
+Maybe I can simplify the files a bit - renaming the seqs (truncating for PAML) might mean I'm getting too many files?  Or play with the file naming so that it's more obvious what's what?
+
+what other utility scripts should I move to this repo?
+- annotating the selected sites
+- CpG mask, CpG annotate
+- check for robustness
+- GARD?
+
+maybe I want to pull from github as I build the docker container, and put my scripts into the PATH of the container? not sure what the best design is.
+
+scripts are currently looking for gene name as part of file name. I think I want to get rid of that for this standalone pipeline. I can have another simple script for the human genes pipeline that adds a gene name column.
 
 figure out how to do this on the cluster using singularity
 
