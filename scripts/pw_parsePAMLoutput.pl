@@ -54,8 +54,8 @@ if ($checkWhich eq "") {
 my $overallOutputFile_fh;
 if ($combinedOutputFile) {
     my $overallOutputFile = "allAlignments";
-    $overallOutputFile .= ".initOmega$initialOrFixedOmega";
-    $overallOutputFile .= "_codonModel$codonFreqModel";
+    $overallOutputFile .= ".codonModel$codonFreqModel";
+    $overallOutputFile .= "_initOmega$initialOrFixedOmega";
     $overallOutputFile .= "_cleandata$cleanData"; 
     $overallOutputFile .= ".PAMLsummary.txt";
     open($overallOutputFile_fh, ">", "$overallOutputFile");
@@ -69,7 +69,7 @@ foreach my $fastaAlnFile (@files) {
     }
 
     print "\n\n############################\n\n";
-    print "Working on file $fastaAlnFile\n";
+    print "Parsing PAML output for alignment $fastaAlnFile\n";
     
     my $filenameWithoutDir = $fastaAlnFile;
     if ($filenameWithoutDir =~ m/\//) {
@@ -122,8 +122,8 @@ foreach my $fastaAlnFile (@files) {
     
     ## prep outfile, including header rows:
     my $outfile = "$PAMLresultsDir/$fileStem";
-    $outfile .= ".initOmega$initialOrFixedOmega";
-    $outfile .= "_codonModel$codonFreqModel";
+    $outfile .= ".codonModel$codonFreqModel";
+    $outfile .= "_initOmega$initialOrFixedOmega";
     $outfile .= "_cleandata$cleanData"; 
     $outfile .= ".PAMLsummary.txt";
 
@@ -176,7 +176,7 @@ foreach my $fastaAlnFile (@files) {
             die "\n\nterminating - cannot open PAML results dir $modelSubDir\n\n";
         }
         $outputLine .= "$thisModel\t$modelSubDir\t";
-        $outputLine .= "$initialOrFixedOmega\t$codonFreqModel\t$cleanData\t";
+        $outputLine .= "$codonFreqModel\t$initialOrFixedOmega\t$cleanData\t";
         $outputLine .= "$pamlResult{'lnL'}\t$pamlResult{'np'}\t";
         my $reportTestResults = "no";
         #print "        model $thisModel\n";
@@ -255,7 +255,7 @@ sub printHeaderRows {
     my $fh = $_[0];
     my $BEB = $_[1];
     print $fh "seqFile\tnumSeqs\tseqLenNT\tseqLenCodons\tmodel\tresultsDir\t";
-    print $fh "startingOmega\tcodonModel\tcleanData\t";
+    print $fh "codonModel\tstartingOmega\tcleanData\t";
     print $fh "lnL\tnp\ttest\t2diffML\tdf\tpValue\tkappa\ttreeLen\ttreeLen_dN\ttreeLen_dS\toverallOmega\t";
     print $fh "proportionSelectedSites\testimatedOmegaOfSelectedClass\tseqToWhichSiteCoordsRefer\tnumSitesBEBover$BEB\twhichSitesBEBover$BEB\n";
 }

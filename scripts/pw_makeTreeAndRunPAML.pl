@@ -52,6 +52,7 @@ foreach my $alignmentFile (@ARGV) {
     if (!-e $alignmentFile) {
         die "\n\nterminating - alignment file $alignmentFile does not exist\n\n";
     } 
+    print "\n######## Running PAML for alignment $alignmentFile with codon model $codonFreqModel, starting omega $initialOrFixedOmega, cleandata $cleanData\n";
     my $alnFileWithoutDir = $alignmentFile;
     if ($alnFileWithoutDir =~ m/\//) {
         $alnFileWithoutDir = (split /\//, $alnFileWithoutDir)[-1];
@@ -93,7 +94,7 @@ foreach my $alignmentFile (@ARGV) {
     my $treeFileForCTLfile = "../$treeFile2";
     
     foreach my $model (@modelsToRun) {
-        print "Running model $model\n";
+        print "    Running model $model\n";
         my $modelDir = "M$model";
         $modelDir .= "_initOmega$initialOrFixedOmega";
         $modelDir .= "_codonModel$codonFreqModel";
@@ -135,7 +136,7 @@ foreach my $alignmentFile (@ARGV) {
             my $command = "cd $modelDir ; codeml > screenoutput ; cd ..";
             system ("$command");
         } else {
-            print "    output $mlcFile exists already - skipping this model\n";
+            print "        output $mlcFile exists already - skipping this model\n";
         }
     } # end of foreach my $model loop
     ## go back to the dir we started in
@@ -145,8 +146,8 @@ foreach my $alignmentFile (@ARGV) {
     my $parsedPAMLoutputFile = "$pamlDir/$alnFileWithoutDir";
     $parsedPAMLoutputFile =~ s/\.fa$//;
     $parsedPAMLoutputFile =~ s/\.fasta$//;
-    $parsedPAMLoutputFile .= ".initOmega$initialOrFixedOmega";
-    $parsedPAMLoutputFile .= "_codonModel$codonFreqModel";
+    $parsedPAMLoutputFile .= ".codonModel$codonFreqModel";
+    $parsedPAMLoutputFile .= "_initOmega$initialOrFixedOmega";
     $parsedPAMLoutputFile .= "_cleandata$cleanData"; 
     $parsedPAMLoutputFile .= ".PAMLsummary.txt";
     if (-e $parsedPAMLoutputFile) {

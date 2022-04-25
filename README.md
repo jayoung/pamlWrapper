@@ -1,12 +1,10 @@
 # pamlWrapper
 starting with an in-frame alignment, this repo has code that will run PAML's codeml (various models) and parse output
 
-[git repo](https://github.com/jayoung/pamlWrapper)
-
-on my mac: `/Users/jayoung/gitProjects/pamlWrapper`  
+git repo is [here](https://github.com/jayoung/pamlWrapper) and on my work mac I'm working in `/Users/jayoung/gitProjects/pamlWrapper`  
 
 # notes
-many of the script names start `pw_` (for Paml Wrapper). This is to help distinguish the versions of scripts in this repo from any others I have hanging around in my PATH.
+Script names start `pw_` (for Paml Wrapper) to help distinguish them from any other similar scripts I have hanging around in my PATH.
 
 # to run via docker
 
@@ -36,12 +34,12 @@ docker ps
 
 We start up a docker container using that `paml_wrapper` image, and we mount our whole alignments folder (containing the cloned repo) so that we can see the scripts and the alignments from within the mini-computer. On the mini-computer, the alignments folder will be mounted to `/workingDir`
 ```
-docker exec -it 844b2c15e545 /bin/bash
+docker exec -it 200a5fc9e39e /bin/bash
 ```
 
 And if we want to stop and remove a running container, we do this (again use `docker ps` to get the container ID):
 ```
-docker rm -f 844b2c15e545
+docker rm -f 200a5fc9e39e
 ```
 
 Now we have a new command-line prompt within the mini-computer. You'll be in the root dir (`/`) of this computer when you first log in, and there should be a directory called `workingDir` that contains the entire contents of the directory you were in on your actual computer. If not, something is wrong.  The `workingDir` folder should contain a folder called `pamlWrapper` - that's the cloned git repo containing all my scripts: if not, something is wrong.
@@ -58,11 +56,16 @@ pw_makeTreeAndRunPAML.pl works!
 ```
 cd /workingDir/pamlWrapper/testData
 # run on individual alignments
-../scripts/pw_makeTreeAndRunPAML.pl CENPA_primates_aln2_NT.fa.treeorder
+../scripts/pw_makeTreeAndRunPAML.pl CENPA_primates_aln2_NT.fa
 ../scripts/pw_makeTreeAndRunPAML.pl ACE2_primates_aln1_NT.fa
 
-# run on both alignments
-../scripts/pw_makeTreeAndRunPAML.pl CENPA_primates_aln2_NT.fa.treeorder ACE2_primates_aln1_NT.fa
+# run on both alignments (using defaults: codon model 2, starting omega 0.4, cleandata 0)
+../scripts/pw_makeTreeAndRunPAML.pl CENPA_primates_aln2_NT.fa ACE2_primates_aln1_NT.fa
+
+# run on both alignments, with alternative parameter choices (codon model 3, and/or starting omega 3):
+../scripts/pw_makeTreeAndRunPAML.pl --codon=3 CENPA_primates_aln2_NT.fa ACE2_primates_aln1_NT.fa
+../scripts/pw_makeTreeAndRunPAML.pl --codon=3 --omega=3 CENPA_primates_aln2_NT.fa ACE2_primates_aln1_NT.fa
+../scripts/pw_makeTreeAndRunPAML.pl --codon=2 --omega=3 CENPA_primates_aln2_NT.fa ACE2_primates_aln1_NT.fa
 
 # if we ran it on several alignment files, and want a single long or wide output file for all:
 ../scripts/pw_combinedParsedOutfilesLong.pl */*PAMLsummary.txt
@@ -72,15 +75,7 @@ cd /workingDir/pamlWrapper/testData
 
 # to do
 
-working on pw_parsedPAMLconvertToWideFormat.pl
-including codonModel/cleanData/starting omega
-I messed it up
-
-in the convert to wide script, I want to include more columns: starting omega, codon model, clean data, results dir, lnL and np for each model. Also for the sites columns, clarify in col headers that's M8.
-
-update and complete documentation. look again at the options I built in, including starting parameters
-
-Maybe I can simplify the files a bit - renaming the seqs (truncating for PAML) might mean I'm getting too many files?  Or play with the file naming so that it's more obvious what's what?
+update and complete documentation, including describing starting parameters
 
 what other utility scripts should I move to this repo?
 - annotating the selected sites
@@ -88,9 +83,7 @@ what other utility scripts should I move to this repo?
 - check for robustness
 - GARD?
 
-maybe I want to pull from github as I build the docker container, and put my scripts into the PATH of the container? not sure what the best design is.
-
-scripts are currently looking for gene name as part of file name. I think I want to get rid of that for this standalone pipeline. I can have another simple script for the human genes pipeline that adds a gene name column.
+maybe I want to pull from github as I build the docker container, and put my scripts into the PATH of the container? not sure what the best design is. That could simplify the setup.
 
 figure out how to do this on the cluster using singularity
 

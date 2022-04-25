@@ -1,0 +1,65 @@
+seqFile	numSeqs	seqLenNT	seqLenCodons	model	resultsDir	codonModel	startingOmega	cleanData	lnL	np	test	2diffML	df	pValue	kappa	treeLen	treeLen_dN	treeLen_dS	overallOmega	proportionSelectedSites	estimatedOmegaOfSelectedClass	seqToWhichSiteCoordsRefer	numSitesBEBover0.9	whichSitesBEBover0.9
+ACE2_primates_aln1_NT.fa	24	2418	806	M0	ACE2_primates_aln1_NT.fa_phymlAndPAML/M0_initOmega0.4_codonModel2	2	0.4	0	-5886.534475	 47					4.36635	0.52404	0.1298	0.2862	0.45350	
+ACE2_primates_aln1_NT.fa	24	2418	806	M0fixNeutral	ACE2_primates_aln1_NT.fa_phymlAndPAML/M0fixNeutral_initOmega0.4_codonModel2	2	0.4	0	-5914.326107	 46	M0_M0fix	55.583263999999	1	0.000000000000089583						
+ACE2_primates_aln1_NT.fa	24	2418	806	M1	ACE2_primates_aln1_NT.fa_phymlAndPAML/M1_initOmega0.4_codonModel2	2	0.4	0	-5839.133065	 48										
+ACE2_primates_aln1_NT.fa	24	2418	806	M2	ACE2_primates_aln1_NT.fa_phymlAndPAML/M2_initOmega0.4_codonModel2	2	0.4	0	-5828.817112	 50	M2_M1	20.6319060000005	2	0.000033101						0.02848	4.99455	notGettingThisInfoRightNow		
+ACE2_primates_aln1_NT.fa	24	2418	806	M7	ACE2_primates_aln1_NT.fa_phymlAndPAML/M7_initOmega0.4_codonModel2	2	0.4	0	-5839.779882	 48										
+ACE2_primates_aln1_NT.fa	24	2418	806	M8	ACE2_primates_aln1_NT.fa_phymlAndPAML/M8_initOmega0.4_codonModel2	2	0.4	0	-5828.910010	 50	M8_M7	21.7397440000004	2	0.000019023						0.03272	4.69727	human_ACE2_ORF	16	67_D_0.916,78_T_0.991,218_S_0.996,299_D_0.932,354_G_0.955,631_K_0.942,653_Q_0.999,657_K_0.917,658_V_0.999,662_M_0.913,706_M_0.997,716_R_0.993,728_Q_0.980,729_P_0.971,732_G_0.994,787_S_0.942
+ACE2_primates_aln1_NT.fa	24	2418	806	M8a	ACE2_primates_aln1_NT.fa_phymlAndPAML/M8a_initOmega0.4_codonModel2	2	0.4	0	-5839.133073	 49	M8_M8a	20.4461260000007	1	0.0000061334						
+
+ACE2_primates_aln1_NT.fa	24	2418	806	M0	ACE2_primates_aln1_NT.fa_phymlAndPAML/M0_initOmega3_codonModel2	2	3	0	-5886.534475	 47					4.36633	0.52404	0.1298	0.2862	0.45350	
+ACE2_primates_aln1_NT.fa	24	2418	806	M0fixNeutral	ACE2_primates_aln1_NT.fa_phymlAndPAML/M0fixNeutral_initOmega3_codonModel2	2	3	0	-5914.326107	 46	M0_M0fix	55.583263999999	1	0.000000000000089583						
+ACE2_primates_aln1_NT.fa	24	2418	806	M1	ACE2_primates_aln1_NT.fa_phymlAndPAML/M1_initOmega3_codonModel2	2	3	0	-5839.133065	 48										
+ACE2_primates_aln1_NT.fa	24	2418	806	M2	ACE2_primates_aln1_NT.fa_phymlAndPAML/M2_initOmega3_codonModel2	2	3	0	-5828.817112	 50	M2_M1	20.6319060000005	2	0.000033101						0.02848	4.99456	notGettingThisInfoRightNow		
+ACE2_primates_aln1_NT.fa	24	2418	806	M7	ACE2_primates_aln1_NT.fa_phymlAndPAML/M7_initOmega3_codonModel2	2	3	0	-5839.779882	 48										
+ACE2_primates_aln1_NT.fa	24	2418	806	M8	ACE2_primates_aln1_NT.fa_phymlAndPAML/M8_initOmega3_codonModel2	2	3	0	-5828.910010	 50	M8_M7	21.7397440000004	2	0.000019023						0.03272	4.69725	human_ACE2_ORF	16	67_D_0.916,78_T_0.991,218_S_0.996,299_D_0.932,354_G_0.955,631_K_0.942,653_Q_0.999,657_K_0.917,658_V_0.999,662_M_0.913,706_M_0.997,716_R_0.993,728_Q_0.980,729_P_0.971,732_G_0.994,787_S_0.942
+ACE2_primates_aln1_NT.fa	24	2418	806	M8a	ACE2_primates_aln1_NT.fa_phymlAndPAML/M8a_initOmega3_codonModel2	2	3	0	-5839.133043	 49	M8_M8a	20.4460660000004	1	0.0000061336						
+
+ACE2_primates_aln1_NT.fa	24	2418	806	M0	ACE2_primates_aln1_NT.fa_phymlAndPAML/M0_initOmega0.4_codonModel3	3	0.4	0	-5845.426999	 47					4.31067	0.51493	0.1263	0.2923	0.43193	
+ACE2_primates_aln1_NT.fa	24	2418	806	M0fixNeutral	ACE2_primates_aln1_NT.fa_phymlAndPAML/M0fixNeutral_initOmega0.4_codonModel3	3	0.4	0	-5876.270169	 46	M0_M0fix	61.6863400000002	1	0.0000000000000040276						
+ACE2_primates_aln1_NT.fa	24	2418	806	M1	ACE2_primates_aln1_NT.fa_phymlAndPAML/M1_initOmega0.4_codonModel3	3	0.4	0	-5796.975160	 48										
+ACE2_primates_aln1_NT.fa	24	2418	806	M2	ACE2_primates_aln1_NT.fa_phymlAndPAML/M2_initOmega0.4_codonModel3	3	0.4	0	-5787.134955	 50	M2_M1	19.680409999999	2	0.000053266						0.02277	5.44395	notGettingThisInfoRightNow		
+ACE2_primates_aln1_NT.fa	24	2418	806	M7	ACE2_primates_aln1_NT.fa_phymlAndPAML/M7_initOmega0.4_codonModel3	3	0.4	0	-5797.934069	 48										
+ACE2_primates_aln1_NT.fa	24	2418	806	M8	ACE2_primates_aln1_NT.fa_phymlAndPAML/M8_initOmega0.4_codonModel3	3	0.4	0	-5787.213048	 50	M8_M7	21.4420420000006	2	0.000022076						0.02668	5.02702	human_ACE2_ORF	11	78_T_0.974,218_S_0.994,653_Q_0.997,658_V_0.999,662_M_0.910,706_M_0.998,716_R_0.994,728_Q_0.980,729_P_0.953,732_G_0.977,787_S_0.924
+ACE2_primates_aln1_NT.fa	24	2418	806	M8a	ACE2_primates_aln1_NT.fa_phymlAndPAML/M8a_initOmega0.4_codonModel3	3	0.4	0	-5796.975166	 49	M8_M8a	19.5242360000011	1	0.0000099331						
+
+ACE2_primates_aln1_NT.fa	24	2418	806	M0	ACE2_primates_aln1_NT.fa_phymlAndPAML/M0_initOmega3_codonModel3	3	3	0	-5845.426999	 47					4.31062	0.51493	0.1263	0.2923	0.43193	
+ACE2_primates_aln1_NT.fa	24	2418	806	M0fixNeutral	ACE2_primates_aln1_NT.fa_phymlAndPAML/M0fixNeutral_initOmega3_codonModel3	3	3	0	-5876.270169	 46	M0_M0fix	61.6863400000002	1	0.0000000000000040276						
+ACE2_primates_aln1_NT.fa	24	2418	806	M1	ACE2_primates_aln1_NT.fa_phymlAndPAML/M1_initOmega3_codonModel3	3	3	0	-5796.975160	 48										
+ACE2_primates_aln1_NT.fa	24	2418	806	M2	ACE2_primates_aln1_NT.fa_phymlAndPAML/M2_initOmega3_codonModel3	3	3	0	-5787.134955	 50	M2_M1	19.680409999999	2	0.000053266						0.02277	5.44392	notGettingThisInfoRightNow		
+ACE2_primates_aln1_NT.fa	24	2418	806	M7	ACE2_primates_aln1_NT.fa_phymlAndPAML/M7_initOmega3_codonModel3	3	3	0	-5797.934069	 48										
+ACE2_primates_aln1_NT.fa	24	2418	806	M8	ACE2_primates_aln1_NT.fa_phymlAndPAML/M8_initOmega3_codonModel3	3	3	0	-5787.213045	 50	M8_M7	21.442047999999	2	0.000022076						0.02668	5.02706	human_ACE2_ORF	11	78_T_0.974,218_S_0.994,653_Q_0.997,658_V_0.999,662_M_0.910,706_M_0.998,716_R_0.994,728_Q_0.980,729_P_0.953,732_G_0.977,787_S_0.924
+ACE2_primates_aln1_NT.fa	24	2418	806	M8a	ACE2_primates_aln1_NT.fa_phymlAndPAML/M8a_initOmega3_codonModel3	3	3	0	-5796.975163	 49	M8_M8a	19.5242359999993	1	0.0000099331						
+
+CENPA_primates_aln2_NT.fa	19	423	141	M0	CENPA_primates_aln2_NT.fa_phymlAndPAML/M0_initOmega0.4_codonModel2	2	0.4	0	-1122.491194	 37					3.63261	0.69331	0.1672	0.3789	0.44138	
+CENPA_primates_aln2_NT.fa	19	423	141	M0fixNeutral	CENPA_primates_aln2_NT.fa_phymlAndPAML/M0fixNeutral_initOmega0.4_codonModel2	2	0.4	0	-1129.260252	 36	M0_M0fix	13.5381160000002	1	0.00023377						
+CENPA_primates_aln2_NT.fa	19	423	141	M1	CENPA_primates_aln2_NT.fa_phymlAndPAML/M1_initOmega0.4_codonModel2	2	0.4	0	-1115.585406	 38										
+CENPA_primates_aln2_NT.fa	19	423	141	M2	CENPA_primates_aln2_NT.fa_phymlAndPAML/M2_initOmega0.4_codonModel2	2	0.4	0	-1115.362155	 40	M2_M1	0.446501999999782	2	0.79991										
+CENPA_primates_aln2_NT.fa	19	423	141	M7	CENPA_primates_aln2_NT.fa_phymlAndPAML/M7_initOmega0.4_codonModel2	2	0.4	0	-1115.329846	 38										
+CENPA_primates_aln2_NT.fa	19	423	141	M8	CENPA_primates_aln2_NT.fa_phymlAndPAML/M8_initOmega0.4_codonModel2	2	0.4	0	-1115.362156	 40	M8_M7	-0.0646199999996497	2	1.00000										
+CENPA_primates_aln2_NT.fa	19	423	141	M8a	CENPA_primates_aln2_NT.fa_phymlAndPAML/M8a_initOmega0.4_codonModel2	2	0.4	0	-1115.278963	 39	M8_M8a	-0.166385999999875	1	1.00000						
+
+CENPA_primates_aln2_NT.fa	19	423	141	M0	CENPA_primates_aln2_NT.fa_phymlAndPAML/M0_initOmega3_codonModel2	2	3	0	-1122.491194	 37					3.63269	0.69331	0.1672	0.3789	0.44138	
+CENPA_primates_aln2_NT.fa	19	423	141	M0fixNeutral	CENPA_primates_aln2_NT.fa_phymlAndPAML/M0fixNeutral_initOmega3_codonModel2	2	3	0	-1129.568937	 36	M0_M0fix	14.1554860000001	1	0.00016831						
+CENPA_primates_aln2_NT.fa	19	423	141	M1	CENPA_primates_aln2_NT.fa_phymlAndPAML/M1_initOmega3_codonModel2	2	3	0	-1115.585406	 38										
+CENPA_primates_aln2_NT.fa	19	423	141	M2	CENPA_primates_aln2_NT.fa_phymlAndPAML/M2_initOmega3_codonModel2	2	3	0	-1115.056361	 40	M2_M1	1.05808999999999	2	0.58917										
+CENPA_primates_aln2_NT.fa	19	423	141	M7	CENPA_primates_aln2_NT.fa_phymlAndPAML/M7_initOmega3_codonModel2	2	3	0	-1115.636214	 38										
+CENPA_primates_aln2_NT.fa	19	423	141	M8	CENPA_primates_aln2_NT.fa_phymlAndPAML/M8_initOmega3_codonModel2	2	3	0	-1115.362155	 40	M8_M7	0.548118000000159	2	0.76029										
+CENPA_primates_aln2_NT.fa	19	423	141	M8a	CENPA_primates_aln2_NT.fa_phymlAndPAML/M8a_initOmega3_codonModel2	2	3	0	-1115.585409	 39	M8_M8a	0.446507999999994	1	0.50400						
+
+CENPA_primates_aln2_NT.fa	19	423	141	M0	CENPA_primates_aln2_NT.fa_phymlAndPAML/M0_initOmega0.4_codonModel3	3	0.4	0	-1099.055087	 37					3.49520	0.68750	0.1640	0.3835	0.42755	
+CENPA_primates_aln2_NT.fa	19	423	141	M0fixNeutral	CENPA_primates_aln2_NT.fa_phymlAndPAML/M0fixNeutral_initOmega0.4_codonModel3	3	0.4	0	-1106.657386	 36	M0_M0fix	15.2045980000003	1	0.000096468						
+CENPA_primates_aln2_NT.fa	19	423	141	M1	CENPA_primates_aln2_NT.fa_phymlAndPAML/M1_initOmega0.4_codonModel3	3	0.4	0	-1091.663894	 38										
+CENPA_primates_aln2_NT.fa	19	423	141	M2	CENPA_primates_aln2_NT.fa_phymlAndPAML/M2_initOmega0.4_codonModel3	3	0.4	0	-1091.278108	 40	M2_M1	0.771572000000106	2	0.67992										
+CENPA_primates_aln2_NT.fa	19	423	141	M7	CENPA_primates_aln2_NT.fa_phymlAndPAML/M7_initOmega0.4_codonModel3	3	0.4	0	-1091.694552	 38										
+CENPA_primates_aln2_NT.fa	19	423	141	M8	CENPA_primates_aln2_NT.fa_phymlAndPAML/M8_initOmega0.4_codonModel3	3	0.4	0	-1091.279377	 40	M8_M7	0.830349999999726	2	0.66022										
+CENPA_primates_aln2_NT.fa	19	423	141	M8a	CENPA_primates_aln2_NT.fa_phymlAndPAML/M8a_initOmega0.4_codonModel3	3	0.4	0	-1091.663893	 39	M8_M8a	0.769031999999697	1	0.38052						
+
+CENPA_primates_aln2_NT.fa	19	423	141	M0	CENPA_primates_aln2_NT.fa_phymlAndPAML/M0_initOmega3_codonModel3	3	3	0	-1099.055087	 37					3.49518	0.68750	0.1640	0.3835	0.42755	
+CENPA_primates_aln2_NT.fa	19	423	141	M0fixNeutral	CENPA_primates_aln2_NT.fa_phymlAndPAML/M0fixNeutral_initOmega3_codonModel3	3	3	0	-1106.657386	 36	M0_M0fix	15.2045980000003	1	0.000096468						
+CENPA_primates_aln2_NT.fa	19	423	141	M1	CENPA_primates_aln2_NT.fa_phymlAndPAML/M1_initOmega3_codonModel3	3	3	0	-1091.663894	 38										
+CENPA_primates_aln2_NT.fa	19	423	141	M2	CENPA_primates_aln2_NT.fa_phymlAndPAML/M2_initOmega3_codonModel3	3	3	0	-1091.278108	 40	M2_M1	0.771572000000106	2	0.67992										
+CENPA_primates_aln2_NT.fa	19	423	141	M7	CENPA_primates_aln2_NT.fa_phymlAndPAML/M7_initOmega3_codonModel3	3	3	0	-1091.694550	 38										
+CENPA_primates_aln2_NT.fa	19	423	141	M8	CENPA_primates_aln2_NT.fa_phymlAndPAML/M8_initOmega3_codonModel3	3	3	0	-1091.924860	 40	M8_M7	-0.46062000000029	2	1.00000										
+CENPA_primates_aln2_NT.fa	19	423	141	M8a	CENPA_primates_aln2_NT.fa_phymlAndPAML/M8a_initOmega3_codonModel3	3	3	0	-1091.663899	 39	M8_M8a	-0.521922000000359	1	1.00000						
+

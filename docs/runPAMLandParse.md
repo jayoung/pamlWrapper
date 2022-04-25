@@ -60,7 +60,7 @@ If input file is called `allAlignmentsPAMLsummary.txt`, output file will be call
 ### pw_annotateCpGsitesInAlignment.bioperl
 A utility script to make an annotated alignment, where we add a sequence line that shows where the CpG dinucleotides are. I will most likely want to run this on the alignments that are in tree order:  
 ```
-scripts/pw_annotateCpGsitesInAlignment.bioperl *NT.fa_phymlAndPAML/*treeorder
+scripts/pw_annotateCpGsitesInAlignment.bioperl *NT.fa_phymlAndPAML/*treeorder.fa
 ```
 
 ### pw_annotateAlignmentWithSelectedSites.pl 

@@ -1,5 +1,4 @@
 #!/usr/bin/perl
-
 use strict;
 use warnings;
 use Bio::SeqIO;
@@ -13,6 +12,9 @@ my $verbose = 0; ## 1 for verbose, 0 for not.
 if (@ARGV != 2) {die "\n\nterminating - expecting two arguments: (1) seq file (2) tree file\n\n";}
 if (!-e $ARGV[0]) {die "\n\nterminating - can't open seq file $ARGV[0]\n\n";}
 if (!-e $ARGV[1]) {die "\n\nterminating - can't open seq file $ARGV[1]\n\n";}
+
+my $out = $ARGV[0];  $out =~ s/\.fasta$//; $out =~ s/\.fa$//;
+$out .= ".treeorder.fa";
 
 #read in the tree and figure out the order
 if ($verbose == 1) { print "\n\nReading tree from $ARGV[1]\n"; }
@@ -54,8 +56,6 @@ if ($num < $numseqs) {print "\n\nWARNING - there are $num seqs in the tree and $
 if ($num > $numseqs) {die "\n\nterminating - there are $num seqs in the tree and $numseqs seqs in the file. That means some seqs in the tree are missing from seqs file\n\n";}
 
 #now output seqs, in order
-
-my $out = "$ARGV[0]".".treeorder";
 if ($verbose == 1) { print "\n\nWriting seqs to $out\n"; }
 my $seqio = new Bio::SeqIO(-file => ">$out", -format => 'Fasta');
 foreach my $name (@seqnames) {
