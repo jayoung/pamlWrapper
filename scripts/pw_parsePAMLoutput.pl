@@ -247,7 +247,6 @@ foreach my $fastaAlnFile (@files) {
     close $outfile_fh;
 }
 if ($combinedOutputFile) {close $overallOutputFile_fh;}
-print "\n################# done ###############\n\n";
 
 ############# subroutines - not sure whether I'm still using all of these
 

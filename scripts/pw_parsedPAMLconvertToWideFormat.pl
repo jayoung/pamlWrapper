@@ -45,7 +45,7 @@ foreach my $file (@ARGV) {
     if (!-e $file) {
         die "\n\nterminating - cannot open file $file\n\n";
     }
-    print "    Converting parsed PAML output to wide format. input file: $file\n";
+    print "    converting parsed PAML output to wide format\n";
     ### go through input file and collect info for all genes
     my %results; # first key = gene name. 
                  # second key = species set: all or noNWM

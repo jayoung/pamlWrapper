@@ -161,3 +161,5 @@ foreach my $alignmentFile (@ARGV) {
         }
     }
 } # end of foreach my $alignmentFile loop
+
+print "\n################# done ###############\n\n";

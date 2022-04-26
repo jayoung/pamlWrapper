@@ -77,6 +77,8 @@ cd /workingDir/pamlWrapper/testData
 
 push docker image to some repo
 
+add a script that checks alignment and warns if things aren't the same length, or if there's a lot of stop codons or frameshifts
+
 figure out how to run on the cluster using singularity
 
 update and complete documentation, including describing starting parameters
