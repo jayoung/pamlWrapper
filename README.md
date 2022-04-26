@@ -75,6 +75,10 @@ cd /workingDir/pamlWrapper/testData
 
 # to do
 
+push docker image to some repo
+
+figure out how to run on the cluster using singularity
+
 update and complete documentation, including describing starting parameters
 
 what other utility scripts should I move to this repo?
@@ -82,10 +86,6 @@ what other utility scripts should I move to this repo?
 - CpG mask, CpG annotate
 - check for robustness
 - GARD?
-
-maybe I want to pull from github as I build the docker container, and put my scripts into the PATH of the container? not sure what the best design is. That could simplify the setup.
-
-figure out how to do this on the cluster using singularity
 
 within the Docker container, the timestamps for files seems to be based on Europe time. That's weird. The timestamps look fine from outside the Docker container though.
 

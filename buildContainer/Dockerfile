@@ -1,9 +1,20 @@
 FROM continuumio/miniconda3:4.10.3
 
+### the slower things will go near the beginning, quicker things near the end (to make rebuilds quicker after any changes I make)
+
 #### install build-essential (for gcc compiler) and autoconf (for autoreconf), both needed to compile phyml. I think build-essential includes wget
 RUN apt-get update && apt-get install build-essential autoconf -y
 
-## install phyml from the tarball - current release. We install phyml WITHOUT mpi support (we won't be bootstrapping, so don't need it)
+### install R (default version is OLD - 3.5.2), but I don't care. 
+# I only use R+ape for some very simple plots.
+# install the ape R package (v5.6-2)
+RUN apt-get update && \
+    apt-get install -y r-base
+RUN R -e "install.packages('ape',dependencies=TRUE, repos='http://cran.rstudio.com/')"
+
+## install phyml from the tarball - current release. 
+# We install phyml WITHOUT mpi support (we won't be bootstrapping, so don't need it). 
+# I don't use the conda-bioconda version, because the current release of phyml seems to have conflicts with the base I am using for the docker image. An older release installed through bioconda seemed to install OK, but then it wouldn't run (just hung, with no error message)
 RUN mkdir src
 RUN mkdir src/phyml
 RUN cd src/phyml && \
@@ -16,18 +27,11 @@ RUN cd src/phyml && \
   make && \ 
   make install
 
-### install paml - this version of phyml has conflicts
+### install paml using conda
 RUN conda install paml --channel bioconda
 
-### install R (default version is OLD - 3.5.2), but I don't care. 
-# I only use R+ape for some very simple plots.
-# install the ape R package (v5.6-2)
-RUN apt-get update && \
-    apt-get install -y r-base
-RUN R -e "install.packages('ape',dependencies=TRUE, repos='http://cran.rstudio.com/')"
-
 ### install bioperl
-# PERL5LIB does not seem to be set at all - need to do that
+# PERL5LIB does not seem to be set by the conda install, so I do that myself
 RUN conda install perl-bioperl --channel bioconda
 ENV PERL5LIB /opt/conda/pkgs/perl-bioperl-1.6.924-4/lib/perl5/site_perl/5.22.0/
 
@@ -38,8 +42,21 @@ RUN cpanm CPAN::Meta \
   Getopt::Long \ 
   Statistics::Distributions
 
-### set ENV to help me track the github repo home. Some of the scripts use this.
-ENV PAML_WRAPPER_HOME /workingDir/pamlWrapper
+## Install my scripts and templates and docs from the local drive
+RUN mkdir pamlWrapper
+RUN --mount=type=bind,target=/src/pamlWrapper,source=. \
+  cp -R /src/pamlWrapper /
+RUN rmdir /src/pamlWrapper
+
+## if there are any previous output files hanging around (e.g. in the top level of pamlWrapper/testData), remove them.  This keeps the output files I have in pamlWrapper/testData/exampleOutput
+RUN find /pamlWrapper -maxdepth 2 -depth -name '*phymlAndPAML' -exec rm -rf {} +
+RUN find /pamlWrapper -maxdepth 2 -depth -name 'allAlignments.PAMLsummaries*' -exec rm -rf {} +
+
+### set an ENV to help me track the github repo home. Some of the scripts use this.
+ENV PAML_WRAPPER_HOME /pamlWrapper/
+
+### add to PATH
+ENV PATH /pamlWrapper/scripts:$PATH
 
 ### what to DO in our container
 CMD ["/bin/bash"]
@@ -47,21 +64,32 @@ CMD ["/bin/bash"]
 
 ##### Notes:
 
-### to build first time: 
-# docker build -t paml_wrapper .
+### this is in my ~/.profile file (needed for the "RUN --mount=type=bind" commands)
+# export DOCKER_BUILDKIT=1 
 
-### to rebuild and run a shell: 
+### to remove an existing container (perhaps before I rebuild the docker image)
 # docker ps -a ## to figure out container ID
 # docker rm -f 793368e0b770 ## replace with appropriate container ID
-# docker build -t paml_wrapper .
+
+### to build my docker image: 
+# cd /Users/jayoung/gitProjects/pamlWrapper
+# docker build -t paml_wrapper -f buildContainer/Dockerfile .
+
+### to run that image as a container, getting a shell, and mounting the current dir as workingDir: 
+# cd /Users/jayoung/gitProjects/alignments
 # docker run -v `pwd`:/workingDir -it paml_wrapper
 
-# start a shell: "docker run -v `pwd`:/workingDir -it paml_wrapper"
+### should be able to now run the code within the container, e.g. 
+# cd workingDir
+# pw_makeTreeAndRunPAML.pl CENPA_primates_aln2_NT.fa 
 
-### From that shell:
+
+### From that docker container shell:
 # which phyml, which codeml, and playing with R all seem to work.
 # "uname -a" output: 
 # Linux 67aff675bc0e 5.10.104-linuxkit #1 SMP Thu Mar 17 17:08:06 UTC 2022 x86_64 GNU/Linux
+
+
 
 
 #### things I tried that didn't seem to work:
