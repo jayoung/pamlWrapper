@@ -3,6 +3,9 @@ Starting with an in-frame alignment, this repo has code that will run sitewise P
 
 My git repo is [here](https://github.com/jayoung/pamlWrapper) and on my work mac I'm working in `/Users/jayoung/gitProjects/pamlWrapper`  
 
+# INSTALL
+
+see below - instructions for using scripts with or without docker image.
 
 # Instructions
 
