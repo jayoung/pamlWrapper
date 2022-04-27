@@ -107,6 +107,18 @@ git clone https://github.com/jayoung/pamlWrapper
 
 You'll want to set the environmental variable `PAML_WRAPPER_HOME` to be wherever `myInstallDir/pamlWrapper` is. 
 
+# To run these scripts on rhino/gizmo, without docker
+
+If your environment is NOT set up like mine, you should first do this:
+```
+export PAML_WRAPPER_HOME=/fh/fast/malik_h/user/jayoung/paml_screen/pamlWrapper
+export PATH=$PAML_WRAPPER_HOME/scripts:$PATH
+export PATH=/fh/fast/malik_h/grp/malik_lab_shared/linux_gizmo/bin:$PATH
+```
+
+
+xxxx finish this up
+
 
 # To run these scripts WITH docker
 
