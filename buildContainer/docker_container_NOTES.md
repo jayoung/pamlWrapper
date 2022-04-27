@@ -7,31 +7,32 @@ Goal: use Docker to provide a container where all my pamlWrapper scripts can run
 xxx
 
 # Notes on making my Dockerfile
+this is in my ~/.profile file on my mac (needed for the "RUN --mount=type=bind" commands)
 ```
-### this is in my ~/.profile file (needed for the "RUN --mount=type=bind" commands)
-# export DOCKER_BUILDKIT=1 
-
+export DOCKER_BUILDKIT=1 
+```
+```
 ### to remove an existing container (perhaps before I rebuild the docker image)
-# docker ps -a ## to figure out container ID
-# docker rm -f 793368e0b770 ## replace with appropriate container ID
+docker ps -a ## to figure out container ID
+docker rm -f 793368e0b770 ## replace with appropriate container ID
 
 ### to build my docker image: 
-# cd /Users/jayoung/gitProjects/pamlWrapper
-# docker build -t paml_wrapper -f buildContainer/Dockerfile .
+cd /Users/jayoung/gitProjects/pamlWrapper
+docker build -t paml_wrapper -f buildContainer/Dockerfile .
 
 ### to run that image as a container, getting a shell, and mounting the current dir as workingDir: 
-# cd /Users/jayoung/gitProjects/alignments
-# docker run -v `pwd`:/workingDir -it paml_wrapper
+cd /Users/jayoung/gitProjects/alignments
+docker run -v `pwd`:/workingDir -it paml_wrapper
 
 ### should be able to now run the code within the container, e.g. 
-# cd workingDir
-# pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa 
+cd workingDir
+pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa 
 
 
 ### From that docker container shell:
-# which phyml, which codeml, and playing with R all seem to work.
-# "uname -a" output: 
-# Linux 67aff675bc0e 5.10.104-linuxkit #1 SMP Thu Mar 17 17:08:06 UTC 2022 x86_64 GNU/Linux
+which phyml, which codeml, and playing with R all seem to work.
+"uname -a" output: 
+Linux 67aff675bc0e 5.10.104-linuxkit #1 SMP Thu Mar 17 17:08:06 UTC 2022 x86_64 GNU/Linux
 ```
 
 # things I tried when making my Dockerfile that I didn't pursue

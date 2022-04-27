@@ -7,8 +7,6 @@ Documentation on using my scripts is [here](docs/runPAMLandParse.md)
 
 # to do
 
-I want the omega plot files to named differently. Now: `omegaDistributions_initOmega0.4_codonModel2.pdf`. Should be `CENPA_primates_aln2_NT.codonModel2_initOmega0.4_cleandata0.omegaDistributions.pdf`
-
 add a script to run before doing anything else that checks the input alignment and warns if things aren't the same length, or if there's a lot of stop codons or frameshifts
 
 clone repo on rhino/gizmo, add the scripts dir to my PATH, and add the PAML_WRAPPER_HOME env

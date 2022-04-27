@@ -121,11 +121,12 @@ foreach my $fastaAlnFile (@files) {
     print "    looking at PAML results\n";
     
     ## prep outfile, including header rows:
-    my $outfile = "$PAMLresultsDir/$fileStem";
-    $outfile .= ".codonModel$codonFreqModel";
-    $outfile .= "_initOmega$initialOrFixedOmega";
-    $outfile .= "_cleandata$cleanData"; 
-    $outfile .= ".PAMLsummary.txt";
+    my $outfileStem = "$PAMLresultsDir/$fileStem";
+    $outfileStem .= ".codonModel$codonFreqModel";
+    $outfileStem .= "_initOmega$initialOrFixedOmega";
+    $outfileStem .= "_cleandata$cleanData"; 
+
+    my $outfile = "$outfileStem.PAMLsummary.txt";
 
     open(my $outfile_fh, ">", "$outfile");
     printHeaderRows($outfile_fh, $BEBprobThresholdToPrintSelectedSite);
@@ -146,7 +147,7 @@ foreach my $fastaAlnFile (@files) {
     }
         
     ### call an R script that plots the distributions of site omega classes:
-    plot_omegas("$PAMLresultsDir", \%allPAMLresults, \@allmodels);
+    plot_omegas("$PAMLresultsDir", "$outfileStem", \%allPAMLresults, \@allmodels);
     
     ## then calculate 2deltaML and p-values, comparing models
     my $pamlStatsRef = paml_stats(\%allPAMLresults);
@@ -548,15 +549,15 @@ sub paml_BEB_results {
 
 sub plot_omegas {
     my $pamlDir = $_[0];
-    my $pamlResultsRef = $_[1];
+    my $outfileStem = $_[1];
+    my $pamlResultsRef = $_[2];
     my %pamlResults2 = %$pamlResultsRef;
-    my $allModelsRef = $_[2];
+    my $allModelsRef = $_[3];
     my @allmodels = @$allModelsRef;
     ### call an R script that displays the distributions of omega:
-    my $omegaDistributionsPlotFile = "$pamlDir/omegaDistributions";
-    $omegaDistributionsPlotFile .= "_initOmega$initialOrFixedOmega";
-    $omegaDistributionsPlotFile .= "_codonModel$codonFreqModel";
-    $omegaDistributionsPlotFile .= ".pdf";
+    my $omegaDistributionsPlotFile = "$outfileStem.omegaDistributions.pdf";
+    print "   omegaDistributionsPlotFile $omegaDistributionsPlotFile\n";
+
     if (!-e $omegaDistributionsPlotFile) {
         print "    printing omega distributions for $pamlDir\n";
         my $Rcommand = "";

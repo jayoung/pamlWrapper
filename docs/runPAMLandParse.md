@@ -61,9 +61,9 @@ If we find evidence for positive selection, we might want to check that finding 
 
 The default parameters I use for codeml are codon model 2, starting omega 0.4, cleandata 0. If we want to use different parameters we use the `--codon` (codon model) or `--omega` (initial omega) options. E.g.:
 ```
-pw_makeTreeAndRunPAML.pl --codon=3 CENPA_primates_aln2a_NT.fa ACE2_primates_aln1_NT.fa
-pw_makeTreeAndRunPAML.pl --codon=3 --omega=3 CENPA_primates_aln2a_NT.fa ACE2_primates_aln1_NT.fa
-pw_makeTreeAndRunPAML.pl --codon=2 --omega=3 CENPA_primates_aln2a_NT.fa ACE2_primates_aln1_NT.fa
+pw_makeTreeAndRunPAML.pl --codon=3 ACE2_primates_aln1_NT.fa
+pw_makeTreeAndRunPAML.pl --codon=3 --omega=3 ACE2_primates_aln1_NT.fa
+pw_makeTreeAndRunPAML.pl --codon=2 --omega=3 ACE2_primates_aln1_NT.fa
 ```
 
 We would then combine the results as before, and see whether we had evidence for positive selection with all parameter choices.
@@ -137,11 +137,11 @@ docker ps
 You'll see something that looks a bit like this:
 ```
 CONTAINER ID   IMAGE          COMMAND       CREATED         STATUS         PORTS     NAMES
-da1241898697   paml_wrapper   "/bin/bash"   3 seconds ago   Up 2 seconds             boring_pasteur
+163df768287c   paml_wrapper   "/bin/bash"   3 seconds ago   Up 2 seconds             boring_pasteur
 ```
 The container ID is in the first column (`da1241898697`).  Then we can use the following command to start working inside the mini-computer:
 ```
-docker exec -it da1241898697 /bin/bash
+docker exec -it 163df768287c /bin/bash
 ```
 Notice that the command-line prompt has changed - this helps track whether you're on the mini-computer, or your main computer.
 
@@ -164,5 +164,5 @@ exit
 ```
 We could re-enter the mini-computer if we want, using the same `docker exec` command we used before, but if we're really done, maybe we should tidy up by stopping/removing the container:
 ```
-docker rm -f da1241898697
+docker rm -f 163df768287c
 ```
