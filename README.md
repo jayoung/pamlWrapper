@@ -13,7 +13,7 @@ Input file(s): in-frame multiple sequence alignment, in fasta format
 
 Script names in this repo start `pw_` (for Paml Wrapper) to help distinguish them from any other similar scripts I have hanging around.
 
-## Run sitewise paml on any fasta format in-frame alignment
+## To run sitewise paml on any fasta format in-frame alignment
 
 Run it on each sequence file, one at a time
 ```
@@ -25,7 +25,7 @@ or to run on several sequence files, one at a time. This can get slow - we'll pr
 pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa ACE2_primates_aln1_NT.fa
 ```
 
-The `pw_makeTreeAndRunPAML.pl` script performs the following steps: 
+The `pw_makeTreeAndRunPAML.pl` script performs the following steps on each input file: 
 
 - makes a subdir called `myAln.fa_phymlAndPAML` 
 
@@ -53,8 +53,7 @@ The `pw_makeTreeAndRunPAML.pl` script performs the following steps:
   - makes plots showing dN/dS class distributions for each model. Can be useful in understanding the results. `*.omegaDistributions.pdf`
   - makes a reordered alignment file (seqs in same order as tree, useful for inspecting candidate sites of positive selection): `myAln.treeorder.fa`
 
-## Combining results for several alignments:
-
+## To combine results for several alignments
 
 Maybe we ran PAML on several input alignments, and we want to see the results for all of them in single file, in either the long format or wide:
 ```
@@ -64,7 +63,7 @@ pw_combinedParsedOutfilesWide.pl */*PAMLsummary.wide.txt
 
 Output files are called `allAlignments.PAMLsummaries.txt` or `allAlignments.PAMLsummaries.wide.txt` - you probably want to rename them to something more informative, so they don't get overwritten next time you run the combining scripts.
 
-## Checking for robustness
+## To check for robustness, if we did find evidence for positive selection
 
 If we find evidence for positive selection, we might want to check that finding for robustness by running PAML with some different parameters. 
 
@@ -78,7 +77,7 @@ pw_makeTreeAndRunPAML.pl --codon=2 --omega=3 ACE2_primates_aln1_NT.fa
 We would then combine the results as before, and see whether we had evidence for positive selection with all parameter choices.
 
 
-# To run these scripts without docker
+# To run these scripts WITHOUT docker
 
 If you don't want to deal with installing software, look further down at the "using docker" instructions.
 
@@ -109,7 +108,7 @@ git clone https://github.com/jayoung/pamlWrapper
 You'll want to set the environmental variable `PAML_WRAPPER_HOME` to be wherever `myInstallDir/pamlWrapper` is. 
 
 
-# To run these scripts using docker
+# To run these scripts WITH docker
 
 A **docker container** is a bit like a mini-computer inside the computer we're actually working on. This mini-computer is where we will actually run PAML.  A **docker image** is a bunch of files stored in a hidden place on our computer that provide the setup for that mini-computer.
 
