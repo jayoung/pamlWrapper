@@ -69,11 +69,38 @@ pw_makeTreeAndRunPAML.pl --codon=2 --omega=3 ACE2_primates_aln1_NT.fa
 We would then combine the results as before, and see whether we had evidence for positive selection with all parameter choices.
 
 
+# To run these scripts without docker
+
+If you don't want to deal with installing software, look further down at the "using docker" instructions.
+
+If you don't want to deal with docker, here are some notes to help you figure out how to get it running.  If you're working on gizmo/rhino, your environment MIGHT already be set up so that this can work. Talk to me to figure it out.
+
+If you want to set it up yourself, you'll need to install some dependencies and make sure they're in your PATH:
+```
+phyml
+codeml
+R                 (on gizmo/rhino: module load R/4.1.2-foss-2020b) (shouldn't matter which version)
+ape package for R (within R:  install.packages("ape"))
+```
+Perl modules (make sure PERL5LIB is set right):
+```
+Bioperl    (on gizmo/rhino: module load BioPerl/1.7.8-GCCcore-10.2.0)
+  CPAN::Meta
+  Cwd
+  Getopt::Long
+  Statistics::Distributions
+```
+
+You'll want to get my scripts locally and add `myInstallDir/pamlWrapper/scripts` to your PATH:
+```
+cd myInstallDir
+git clone https://github.com/jayoung/pamlWrapper
+```
+
+You'll want to set the environmental variable `PAML_WRAPPER_HOME` to be wherever `myInstallDir/pamlWrapper` is. 
 
 
-
-
-# To run these scripts via docker
+# To run these scripts using docker
 
 A **docker container** is a bit like a mini-computer inside the computer we're actually working on. This mini-computer is where we will actually run PAML.  A **docker image** is a bunch of files stored in a hidden place on our computer that provide the setup for that mini-computer.
 
