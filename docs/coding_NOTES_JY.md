@@ -1,4 +1,3 @@
-
 # the usual git updates:
 ```
 git add --verbose --all .
@@ -10,15 +9,11 @@ git push
 
 first we add a new tag to the local docker image - this tag includes my hub.docker user name
 ```
-docker tag paml_wrapper jayoungfhcrc/paml_wrapper
+docker tag paml_wrapper jayoungfhcrc/paml_wrapper:version1.0.0
 ```
-then we push the local image up to docker hub, using default tag 'latest'. This is a bit slow.
+then we push the local image up to docker hub. If I hadn't supplied ':version1.0.0' it would gave used the default tag 'latest'. This is a bit slow.
 ```
-docker push jayoungfhcrc/paml_wrapper
-```
-I could also have given it a tag of my own, if I want to name certain versions:
-```
-# docker push jayoungfhcrc/paml_wrapper:version1
+docker push jayoungfhcrc/paml_wrapper:version1.0.0
 ```
 
 I can test my container using the [Play with Docker](https://labs.play-with-docker.com) site - it seems to work

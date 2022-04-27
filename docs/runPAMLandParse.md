@@ -2,9 +2,9 @@
 
 Input file(s): in-frame multiple sequence alignment, in fasta format
 
-(script names start `pw_` (for Paml Wrapper) to help distinguish them from any other similar scripts I have hanging around)
+Script names in this repo start `pw_` (for Paml Wrapper) to help distinguish them from any other similar scripts I have hanging around.
 
-## To run paml on any fasta format in-frame alignment
+## Run sitewise paml on any fasta format in-frame alignment
 
 Run it on each sequence file, one at a time
 ```
@@ -70,67 +70,35 @@ We would then combine the results as before, and see whether we had evidence for
 
 
 
-# Some other utility scripts I haven't yet put into this repo, but I will! 
-
-Some of them could also be added to the pipeline
-
-## pw_maskCpGsitesInAlignment.bioperl
-A utility script to mask CpGs in alignment:
-```
-scripts/pw_maskCpGsitesInAlignment.bioperl geneList1.txt_output/runPAML/*.fa  
-```
-I then run PHYML+PAML on the masked AND unmasked alignments - ideally I want to see signs of selection with BOTH.  For an input file called `SMARCB1_primates_aln2_NT.fa`  there will be two output files called  
-- `SMARCB1_primates_aln2_NT.removeCpGinframe.fa`  
-- `SMARCB1_primates_aln2_NT.maskCpGreport.txt`  
-
-## pw_annotateCpGsitesInAlignment.bioperl
-A utility script to make an annotated alignment, where we add a sequence line that shows where the CpG dinucleotides are. I will most likely want to run this on the alignments that are in tree order:  
-```
-scripts/pw_annotateCpGsitesInAlignment.bioperl *NT.fa_phymlAndPAML/*treeorder.fa
-```
-
-## pw_annotateAlignmentWithSelectedSites.pl 
-A utility script to add annotation for positively selected sites (has various command-line options)
-```
-scripts/pw_annotateAlignmentWithSelectedSites.pl *NT.fa_phymlAndPAML/*treeorder.annotateCpG.fa
-```
-
-## pw_parse_rst_getBEBandNEBresults.pl
-A utility script to parse the rst file to get full BEB (and maybe NEB) results, and make annotation fasta files I can add to the alignment if I choose.  I also have R code to do this, in a [separate repo](https://github.com/jayoung/pamlApps)
-```
-scripts/pw_parse_rst_getBEBandNEBresults.pl *NT.fa_phymlAndPAML/M8_*/rst
-```
 
 
 
+# To run these scripts via docker
 
+A **docker container** is a bit like a mini-computer inside the computer we're actually working on. This mini-computer is where we will actually run PAML.  A **docker image** is a bunch of files stored in a hidden place on our computer that provide the setup for that mini-computer.
 
-# to run via docker
+You first need to have docker and git installed on whichever computer you're working on. For example, see these [instructions to install on a mac](https://docs.docker.com/desktop/mac/install/). I think you might need to [create a docker account](https://docs.docker.com/docker-id/), too, in order to be able to use it. The free account is fine.
 
-You first need to have docker and git installed on whichever computer you're working on. For example, [see instructions for a mac](https://docs.docker.com/desktop/mac/install/).
+You can use various methods to manage and run your docker containers and images. The mac Docker app has some buttons to click, VScode has other ways, but here I'll describe the command line (Terminal) way to do it.
 
-I think you might need to [create a docker account](https://docs.docker.com/docker-id/), too. The free account is fine.
-
-Then you can pull my docker image (called `paml_wrapper`) onto your computer. From a terminal window:
+Once docker is installed and running, you'll download my docker image (called `paml_wrapper`) onto your computer. I do that from a terminal window:
 ```
 docker pull jayoungfhcrc/paml_wrapper
 ```
-A **docker container** is a bit like a mini-computer inside the computer we're actually working on. This mini-computer is where we will actually run PAML.  A **docker image** is a bunch of files stored in a hidden place on our computer that provide the setup for that mini-computer.
+After that, the mini-computer is ready to use, and the image should stick around on your computer long-term. That means you will only need to do `docker pull` once, until I make updates, in which case you'll want to pull the docker image again so that you're using the latest version.
 
-Once you've done that, the mini-computer is ready to use, and should stick around on your computer long-term (i.e. you will only need to do `docker pull` once, unless I update the image)
-
-Now we're ready to use the mini-computer and run PAML.
-
-First, navigate to a folder on your big computer where one or more alignments can be found. E.g. 
+Now we're ready to use the mini-computer and run PAML. First, navigate to a folder on your big computer where one or more alignments can be found. E.g. 
 ```
 cd /Users/jayoung/myData/myAlignments
 ```
 
-To start up the mini-computer, and share with it all the files in your current folder:
+To start up the mini-computer, and be able to see all the files in your current folder once you're inside the mini-computer:
 ```
 docker run -v `pwd`:/workingDir -itd paml_wrapper
 ```
-That just starts the container (mini-computer) running. To work inside it, we first have to find its ID:
+That starts the container (mini-computer) running, and creates a folder called `workingDir`, where you will see the files in your current folder. Any files created inside the mini-computer will also be visible from your main computer, in the folder you started from.  
+
+To work inside the mini-computer, we first have to find its ID:
 ```
 docker ps
 ```
@@ -139,7 +107,7 @@ You'll see something that looks a bit like this:
 CONTAINER ID   IMAGE          COMMAND       CREATED         STATUS         PORTS     NAMES
 163df768287c   paml_wrapper   "/bin/bash"   3 seconds ago   Up 2 seconds             boring_pasteur
 ```
-The container ID is in the first column (`da1241898697`).  Then we can use the following command to start working inside the mini-computer:
+The container ID is in the first column (`163df768287c`).  Then we can use the following command to start working inside the mini-computer:
 ```
 docker exec -it 163df768287c /bin/bash
 ```
@@ -156,13 +124,50 @@ Then we can use the scripts to run PAML, and the output will be shared between t
 pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa
 ```
 
-There's also some example files provided within your mini-computer: example input files (/pamlWrapper/testData) and and example output (/pamlWrapper/testData/exampleOutput) 
+There are also some example files provided within your mini-computer: 
+- example input files: /pamlWrapper/testData 
+- example output files: /pamlWrapper/testData/exampleOutput
 
 Once we've finished our work, we can exit the mini-computer:
 ```
 exit
 ```
-We could re-enter the mini-computer if we want, using the same `docker exec` command we used before, but if we're really done, maybe we should tidy up by stopping/removing the container:
+We could re-enter the mini-computer if we want, using the same `docker exec` command we used before, but if we're really done, we probably want to tidy up by stopping/removing the container:
 ```
 docker rm -f 163df768287c
+```
+The image will stick around, so next time you want to run PAML, you'd start from the `docker exec` step again to get a container running.
+
+
+# Some other utility scripts I haven't yet put into this repo, but I will! 
+
+Some of them could also be added to the pw_makeTreeAndRunPAML.pl pipeline - annotating selected sites, and parsing the rst file
+
+
+## pw_annotateAlignmentWithSelectedSites.pl 
+A utility script to add annotation for positively selected sites (has various command-line options)
+```
+scripts/pw_annotateAlignmentWithSelectedSites.pl *NT.fa_phymlAndPAML/*treeorder.annotateCpG.fa
+```
+
+## pw_parse_rst_getBEBandNEBresults.pl
+A utility script to parse the rst file to get full BEB (and maybe NEB) results, and make annotation fasta files I can add to the alignment if I choose.  I also have R code to do this, in a [separate repo](https://github.com/jayoung/pamlApps)
+```
+scripts/pw_parse_rst_getBEBandNEBresults.pl *NT.fa_phymlAndPAML/M8_*/rst
+```
+
+
+## pw_maskCpGsitesInAlignment.bioperl
+A utility script to mask CpGs in alignment:
+```
+scripts/pw_maskCpGsitesInAlignment.bioperl geneList1.txt_output/runPAML/*.fa  
+```
+I then run PHYML+PAML on the masked AND unmasked alignments - ideally I want to see signs of selection with BOTH.  For an input file called `SMARCB1_primates_aln2_NT.fa`  there will be two output files called  
+- `SMARCB1_primates_aln2_NT.removeCpGinframe.fa`  
+- `SMARCB1_primates_aln2_NT.maskCpGreport.txt`  
+
+## pw_annotateCpGsitesInAlignment.bioperl
+A utility script to make an annotated alignment, where we add a sequence line that shows where the CpG dinucleotides are. I will most likely want to run this on the alignments that are in tree order:  
+```
+scripts/pw_annotateCpGsitesInAlignment.bioperl *NT.fa_phymlAndPAML/*treeorder.fa
 ```
