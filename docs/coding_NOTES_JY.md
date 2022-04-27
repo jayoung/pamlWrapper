@@ -25,5 +25,5 @@ I can test my container using the [Play with Docker](https://labs.play-with-dock
 ```
 docker run -it jayoungfhcrc/paml_wrapper
 cd pamlWrapper/testData/
-pw_makeTreeAndRunPAML.pl CENPA_primates_aln2_NT.fa
+pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa
 ```

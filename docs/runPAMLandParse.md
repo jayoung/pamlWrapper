@@ -8,12 +8,12 @@ Input file(s): in-frame multiple sequence alignment, in fasta format
 
 Run it on each sequence file, one at a time
 ```
-pw_makeTreeAndRunPAML.pl CENPA_primates_aln2_NT.fa
+pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa
 ```
 
 or to run on several sequence files, one at a time. This can get slow - we'll probably want to use a wrapper script to run this in the cluster using `sbatch`.
 ```
-pw_makeTreeAndRunPAML.pl CENPA_primates_aln2_NT.fa ACE2_primates_aln1_NT.fa
+pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa ACE2_primates_aln1_NT.fa
 ```
 
 The `pw_makeTreeAndRunPAML.pl` script performs the following steps: 
@@ -53,15 +53,17 @@ pw_combinedParsedOutfilesLong.pl */*PAMLsummary.txt
 pw_combinedParsedOutfilesWide.pl */*PAMLsummary.wide.txt
 ```
 
+Output files are called `allAlignments.PAMLsummaries.txt` or `allAlignments.PAMLsummaries.wide.txt` - you probably want to rename them to something more informative, so they don't get overwritten next time you run the combining scripts.
+
 ## Checking for robustness
 
 If we find evidence for positive selection, we might want to check that finding for robustness by running PAML with some different parameters. 
 
 The default parameters I use for codeml are codon model 2, starting omega 0.4, cleandata 0. If we want to use different parameters we use the `--codon` (codon model) or `--omega` (initial omega) options. E.g.:
 ```
-pw_makeTreeAndRunPAML.pl --codon=3 CENPA_primates_aln2_NT.fa ACE2_primates_aln1_NT.fa
-pw_makeTreeAndRunPAML.pl --codon=3 --omega=3 CENPA_primates_aln2_NT.fa ACE2_primates_aln1_NT.fa
-pw_makeTreeAndRunPAML.pl --codon=2 --omega=3 CENPA_primates_aln2_NT.fa ACE2_primates_aln1_NT.fa
+pw_makeTreeAndRunPAML.pl --codon=3 CENPA_primates_aln2a_NT.fa ACE2_primates_aln1_NT.fa
+pw_makeTreeAndRunPAML.pl --codon=3 --omega=3 CENPA_primates_aln2a_NT.fa ACE2_primates_aln1_NT.fa
+pw_makeTreeAndRunPAML.pl --codon=2 --omega=3 CENPA_primates_aln2a_NT.fa ACE2_primates_aln1_NT.fa
 ```
 
 We would then combine the results as before, and see whether we had evidence for positive selection with all parameter choices.
@@ -151,7 +153,7 @@ ls
 
 Then we can use the scripts to run PAML, and the output will be shared between the mini-computer and your main computer. E.g. 
 ```
-pw_makeTreeAndRunPAML.pl CENPA_primates_aln2_NT.fa
+pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa
 ```
 
 There's also some example files provided within your mini-computer: example input files (/pamlWrapper/testData) and and example output (/pamlWrapper/testData/exampleOutput) 
