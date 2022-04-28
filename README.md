@@ -241,15 +241,13 @@ scripts/pw_annotateCpGsitesInAlignment.bioperl *NT.fa_phymlAndPAML/*treeorder.fa
 
 add a script that runs before doing anything else to check the input alignment and warns if things aren't the same length, or if there's a lot of stop codons or frameshifts
 
-figure out how to run on the cluster using singularity
-
-
-
 move more utility scripts to this repo from the older repo (janet_pamlPipeline)
 - annotating the selected sites
 - CpG mask, CpG annotate
 - check for robustness
 - GARD?
 - any others??
+
+figure out how to run on the cluster using singularity and my docker image, make a wrapper script that will allow people to do that, people who don't have their environment set up like mine
 
 within the Docker container, the timestamps for files seems to be based on Europe time. That's weird. The timestamps look fine from outside the Docker container though. I probably don't care about that. 
