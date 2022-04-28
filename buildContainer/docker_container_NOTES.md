@@ -26,7 +26,7 @@ docker run -v `pwd`:/workingDir -it paml_wrapper
 
 ### should be able to now run the code within the container, e.g. 
 cd workingDir
-pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa 
+pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa ACE2_primates_aln1_NT.fa
 
 
 ### From that docker container shell:
