@@ -40,11 +40,11 @@ If we're working on a compute cluster (like rhino/gizmo), we can use `sbatch` to
 pw_makeTreeAndRunPAML_sbatchWrapper.pl CENPA_primates_aln2a_NT.fa ACE2_primates_aln1_NT.fa
 ```
 
-The `pw_makeTreeAndRunPAML.pl` script performs the following steps on each input file: 
+The `pw_makeTreeAndRunPAML.pl` script performs the following steps on each input file (e.g. if the input file is called `myAln.fa`): 
 
 - makes a subdir called `myAln.fa_phymlAndPAML` 
 
-- reformats the alignment for PHYML/PAML (`myAln.fa.phy`): 
+- reformats the alignment for PHYML/PAML (in the `myAln.fa.phy` file): 
   - replace in-frame stop codons (PAML hates those) with gap codon (---)
   - truncates long sequence names to 30 characters (long names caused trouble somewhere - I think in PHYML). Name translations are saved in `myAln.fa.aliases.txt`
   - converts from fasta format to a [format suitable for phyml and PAML](http://abacus.gene.ucl.ac.uk/software/pamlDOC.pdf)
@@ -65,8 +65,12 @@ The `pw_makeTreeAndRunPAML.pl` script performs the following steps on each input
   - makes two tab-delimited text files summarizing paml results (same results, different table format):
     - `*PAMLsummary.txt` 'long format': each model gets a separate row in the file, so each input alignment file gets multiple rows. Easier for a human to read, not so good for downstream parsing, e.g. in R.
     - `*PAMLsummary.wide.txt` 'wide format': each input alignment file gets a single row (actually, one row per set of parameter choices, see below in the 'robustness' section)
-  - makes plots showing dN/dS class distributions for each model. Can be useful in understanding the results. `*.omegaDistributions.pdf`
-  - makes a reordered alignment file (seqs in same order as tree, useful for inspecting candidate sites of positive selection): `myAln.treeorder.fa`
+
+- makes plots showing dN/dS class distributions for each model. Can be useful in understanding the results. `*.omegaDistributions.pdf`
+
+- makes a reordered alignment file (seqs in same order as tree, useful for inspecting candidate sites of positive selection): `myAln.treeorder.fa`
+
+- if there was evidence for positive selection in the M8vsM7 or M8vsM8a comparison, we make an annotated version of the alignment:`myAln.treeorder.annotBEBover0.9.fa`. This is the alignment with an additional line at the bottom, mostly gaps, but any codon with evidence for positive selection (with BEB>0.9) gets "BEB".   Some multiple alignment viewers will have a hard time reading this file - neither DNA or amino acid sequences should contain Bs, but my favorite alignment view can handle it - that's [seaview for Mac](http://doua.prabi.fr/software/seaview)
 
 ## To combine results for several alignments
 
@@ -102,8 +106,8 @@ If you want to set it up yourself, you'll need to install some dependencies and 
 ```
 phyml
 codeml
-R                 (on gizmo/rhino: module load R/4.1.2-foss-2020b) (shouldn't matter which version)
-ape package for R (within R:  install.packages("ape"))
+R                 (on gizmo/rhino: module load fhR/4.1.2-foss-2020b)
+ape package for R, if it's not already installed (it is installed in the fhR/4.1.2-foss-2020b module)
 ```
 Perl modules (make sure PERL5LIB is set right):
 ```
@@ -124,9 +128,11 @@ You'll want to set the environmental variable `PAML_WRAPPER_HOME` to be wherever
 
 # To run these scripts on rhino/gizmo, without docker
 
-Unlikely: if your gizmo/rhino environment IS set up like mine (only true for a few people in the lab - I've been moving away from doing this) - I think you may be able to run the scripts already. Try it and let me know what happens:
+Unlikely: if your gizmo/rhino environment IS set up like mine (only true for a few people in the lab - I've been moving away from doing this) - I think you may be able to run the scripts after loading an R module. Try it and let me know what happens:
 ```
+module load fhR/4.1.2-foss-2020b
 pw_makeTreeAndRunPAML.pl myAln.fa
+module purge
 ```
 
 More likely: if your gizmo/rhino environment is NOT set up like mine, you should first do this, so that the necessary programs are available to you.  This hasn't been tested yet (and I can't test it myself, so please give it a try and let me know what happens. There may be errors at first but I would love to get this working).
@@ -251,3 +257,5 @@ move more utility scripts to this repo from the older repo (janet_pamlPipeline)
 figure out how to run on the cluster using singularity and my docker image, make a wrapper script that will allow people to do that, people who don't have their environment set up like mine
 
 within the Docker container, the timestamps for files seems to be based on Europe time. That's weird. The timestamps look fine from outside the Docker container though. I probably don't care about that. 
+
+maybe change the PATHS in pw_gizmoRhinoEnvironmentSetup.sh to use a central copy of the repo, stored in a common area, that I know is working. I pull less regularly to that repo. my own copy can be the development copy. or learn about git branches and releases

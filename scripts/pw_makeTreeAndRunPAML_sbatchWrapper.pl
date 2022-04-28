@@ -37,7 +37,7 @@ foreach my $file (@ARGV) {
     my $outdir = $file . "_phymlAndPAML";
     if (!$addToExistingOutputDir) {
         if (-e $outdir) {
-            print "    SKIPPING this file - outdir $outdir exists already.\n";
+            print "    SKIPPING this file - output directory $outdir exists already.\n";
             print "    Include --add on the command line to override this check, for example if you want to run using a different set of parameters and add results to the existing directory\n";
             print "    If you want to get rid of previous results and re-run PAML, do this: rm -r $outdir\n";
             next;
@@ -45,6 +45,7 @@ foreach my $file (@ARGV) {
     }
     ## run pw_makeTreeAndRunPAML.pl using sbatch (pass through the parameters)
     my $command = "$masterPipelineDir/scripts/pw_makeTreeAndRunPAML.pl --omega $initialOrFixedOmega --codon $codonFreqModel --clean $cleanData $file >> $file.phymlAndPAML.log.txt";
+    $command = "/bin/bash -c \\\"source /app/lmod/lmod/init/profile; module load fhR/4.1.2-foss-2020b ; $command\\\"";
     $command = "sbatch -t $walltime --job-name=PAML_$file --wrap=\"$command\"";
     system($command);
 }

@@ -46,7 +46,7 @@ my $RscriptExecutable = "Rscript";
 ## check Rscript is in our path
 my $checkWhich = `which $RscriptExecutable`;
 if ($checkWhich eq "") {
-    die "\n\nterminating - R is not available. If you're working on gizmo/rhino, maybe you need to load an R module before running this script. Try this:\n    module load R/4.0.2-foss-2019b\n\n";
+    die "\n\nterminating - R is not available. If you're working on gizmo/rhino, maybe you need to load an R module before running this script. Try this:\n    module load fhR/4.1.2-foss-2020b\n\n";
 }
 
 ## prep overall outfiles, including header rows. 
@@ -237,6 +237,12 @@ foreach my $fastaAlnFile (@files) {
                 }
                 $outputLine .= "\t$numSites";
                 $outputLine .= "\t$sites";
+                ## annotate selected sites
+                my $treeorderFile = "$PAMLresultsDir/$filenameWithoutDir";
+                $treeorderFile =~ s/\.fasta$//; $treeorderFile =~ s/\.fa$//; 
+                $treeorderFile .= ".treeorder.fa";
+                system("$masterPipelineDir/scripts/pw_annotateAlignmentWithSelectedSites.pl $treeorderFile");
+
             } else {
                 $outputLine .= "\t\t\t\t";
             }
@@ -556,10 +562,10 @@ sub plot_omegas {
     my @allmodels = @$allModelsRef;
     ### call an R script that displays the distributions of omega:
     my $omegaDistributionsPlotFile = "$outfileStem.omegaDistributions.pdf";
-    print "   omegaDistributionsPlotFile $omegaDistributionsPlotFile\n";
+    #print "   omegaDistributionsPlotFile $omegaDistributionsPlotFile\n";
 
     if (!-e $omegaDistributionsPlotFile) {
-        print "    printing omega distributions for $pamlDir\n";
+        print "    plotting omega distributions for $pamlDir\n";
         my $Rcommand = "";
         for my $model (@allmodels) {
             if ($model eq "M0fixNeutral") { next; }
