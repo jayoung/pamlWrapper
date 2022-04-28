@@ -1,11 +1,17 @@
 # pamlWrapper
 Janet Young, April 2022
 
-Starting with an in-frame alignment, this repo has code that will run sitewise PAML using various evolutionary models and parse the output into tabular format.
-
-My git repo is [here](https://github.com/jayoung/pamlWrapper) and on my work mac I'm working in `/Users/jayoung/gitProjects/pamlWrapper`  
+Starting with an in-frame alignment, this repo has code that will run sitewise 
+PAML using various evolutionary models and parse the output into tabular format.
 
 This is work in progress. If you find any problems, or don't understand what's going on, talk to me, submit an issue using the github site, or email me.
+
+My git repo is [here](https://github.com/jayoung/pamlWrapper).   
+
+On my work mac I'm working in `/Users/jayoung/gitProjects/pamlWrapper`.  
+On gizmo/rhino I'm working in `/fh/fast/malik_h/user/jayoung/paml_screen/pamlWrapper`
+
+There's an associated [docker image](https://hub.docker.com/repository/docker/jayoungfhcrc/paml_wrapper) to help you run this on any computer.
 
 # INSTALL
 
@@ -27,6 +33,11 @@ pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa
 or to run on several sequence files, one at a time. This can get slow - we'll probably want to use a wrapper script to run this in the cluster using `sbatch`.
 ```
 pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa ACE2_primates_aln1_NT.fa
+```
+
+If we're working on a compute cluster (like rhino/gizmo), we can use `sbatch` to start a whole bunch of PAML jobs running in parellel. This script will run the `pw_makeTreeAndRunPAML.pl` pipeline script on a bunch of alignments, sending off one sbatch job per input file.
+```
+pw_makeTreeAndRunPAML_sbatchWrapper.pl CENPA_primates_aln2a_NT.fa ACE2_primates_aln1_NT.fa
 ```
 
 The `pw_makeTreeAndRunPAML.pl` script performs the following steps on each input file: 
@@ -232,7 +243,7 @@ add a script that runs before doing anything else to check the input alignment a
 
 figure out how to run on the cluster using singularity
 
-add a script to run using sbatch, if I'm in my usual environment where everything will be in my PATH. see older script `pw_makeTreeAndRunPAML_sbatchWrapper.pl` - should be easy to modify.
+
 
 move more utility scripts to this repo from the older repo (janet_pamlPipeline)
 - annotating the selected sites
