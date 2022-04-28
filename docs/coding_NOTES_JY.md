@@ -29,3 +29,30 @@ docker run -it jayoungfhcrc/paml_wrapper:version1.0.1
 cd pamlWrapper/testData/
 pw_makeTreeAndRunPAML.pl ACE2_primates_aln1_NT.fa
 ```
+
+# convert docker image to singularity
+
+On gizmo/rhino:
+```
+cd ~/FH_fast_storage/paml_screen/pamlWrapper/buildContainer
+module purge
+module load Singularity/3.5.3
+singularity build paml_wrapper-v1.0.1.sif docker://jayoungfhcrc/paml_wrapper:version1.0.1
+    # the paml_wrapper-v1.0.1.sif file appears
+
+# for a shell:
+cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments
+singularity shell ../pamlWrapper/buildContainer/paml_wrapper-v1.0.1.sif 
+    # I get a shell, but I get this error a lot: 
+    #  bash: k5start: command not found
+
+```
+
+Now run some code using the singularity image:
+```
+
+
+singularity exec paml_wrapper-v1.0.1.sif xxxx
+
+module purge
+```
