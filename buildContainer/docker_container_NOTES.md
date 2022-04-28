@@ -4,7 +4,6 @@ Goal: use Docker to provide a container where all my pamlWrapper scripts can run
 
 `Dockerfile` contains instructions to install a bunch of stuff using conda. 
 
-xxx
 
 # Notes on making my Dockerfile
 this is in my ~/.profile file on my mac (needed for the "RUN --mount=type=bind" commands)
