@@ -18,7 +18,7 @@ docker push jayoungfhcrc/paml_wrapper:version1.0.1
 
 I can test my container using the [Play with Docker](https://labs.play-with-docker.com) site - it seems to work
 ```
-docker run -it jayoungfhcrc/paml_wrapper
+docker run -it jayoungfhcrc/paml_wrapper:version1.0.1
 cd pamlWrapper/testData/
-pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa
+pw_makeTreeAndRunPAML.pl ACE2_primates_aln1_NT.fa
 ```

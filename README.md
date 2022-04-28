@@ -152,9 +152,9 @@ You first need to have docker and git installed on whichever computer you're wor
 
 You can use various methods to manage and run your docker containers and images. The mac Docker app has some buttons to click, VScode has other ways, but here I'll describe the command line (Terminal) way to do it.
 
-Once docker is installed and running, you'll download my docker image (called `paml_wrapper`) onto your computer. I do that from a terminal window:
+Once docker is installed and running, you'll download my docker image (called `paml_wrapper`) onto your computer. I do that from a terminal window (update the version tag with the most recent version listed [here](https://hub.docker.com/repository/docker/jayoungfhcrc/paml_wrapper)):
 ```
-docker pull jayoungfhcrc/paml_wrapper
+docker pull jayoungfhcrc/paml_wrapper:version1.0.1
 ```
 After that, the mini-computer is ready to use, and the image should stick around on your computer long-term. That means you will only need to do `docker pull` once, until I make updates, in which case you'll want to pull the docker image again so that you're using the latest version.
 
@@ -248,9 +248,7 @@ scripts/pw_annotateCpGsitesInAlignment.bioperl *NT.fa_phymlAndPAML/*treeorder.fa
 add a script that runs before doing anything else to check the input alignment and warns if things aren't the same length, or if there's a lot of stop codons or frameshifts
 
 move more utility scripts to this repo from the older repo (janet_pamlPipeline)
-- annotating the selected sites
 - CpG mask, CpG annotate
-- check for robustness
 - GARD?
 - any others??
 
