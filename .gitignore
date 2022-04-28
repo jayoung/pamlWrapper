@@ -3,3 +3,4 @@ hide
 notUsingTheseFiles
 *_phymlAndPAML
 *PAMLsummary*
+*.sif
