@@ -1,7 +1,11 @@
 # pamlWrapper
+Janet Young, April 2022
+
 Starting with an in-frame alignment, this repo has code that will run sitewise PAML using various evolutionary models and parse the output into tabular format.
 
 My git repo is [here](https://github.com/jayoung/pamlWrapper) and on my work mac I'm working in `/Users/jayoung/gitProjects/pamlWrapper`  
+
+This is work in progress. If you find any problems, or don't understand what's going on, talk to me, submit an issue using the github site, or email me.
 
 # INSTALL
 
@@ -109,16 +113,19 @@ You'll want to set the environmental variable `PAML_WRAPPER_HOME` to be wherever
 
 # To run these scripts on rhino/gizmo, without docker
 
-If your environment is NOT set up like mine, you should first do this:
+Unlikely: if your gizmo/rhino environment IS set up like mine (only true for a few people in the lab - I've been moving away from doing this) - I think you may be able to run the scripts already. Try it and let me know what happens:
 ```
-export PAML_WRAPPER_HOME=/fh/fast/malik_h/user/jayoung/paml_screen/pamlWrapper
-export PATH=$PAML_WRAPPER_HOME/scripts:$PATH
-export PATH=/fh/fast/malik_h/grp/malik_lab_shared/linux_gizmo/bin:$PATH
+pw_makeTreeAndRunPAML.pl myAln.fa
 ```
 
-
-xxxx finish this up
-
+More likely: if your gizmo/rhino environment is NOT set up like mine, you should first do this, so that the necessary programs are available to you.  This hasn't been tested yet (and I can't test it myself, so please give it a try and let me know what happens. There may be errors at first but I would love to get this working).
+```
+source /fh/fast/malik_h/user/jayoung/paml_screen/pamlWrapper/scripts/pw_gizmoRhinoEnvironmentSetup.sh
+```
+I think you should be able to run the scripts now. After you've finished your PAML work, you probably want to restore your environment to it's original state:
+```
+source /fh/fast/malik_h/user/jayoung/paml_screen/pamlWrapper/scripts/pw_gizmoRhinoEnvironmentRestore.sh
+```
 
 # To run these scripts WITH docker
 
