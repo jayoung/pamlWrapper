@@ -7,7 +7,7 @@ use strict;
 
 ## the version of this script in /fh/fast/malik_h/grp/malik_lab_shared/bin/runPAML.pl is a copy of the one here: https://github.com/jayoung/pamlWrapper/tree/main/scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl
 
-my $singularityImageFile = "/fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.0.2.sif";
+my $singularityImageFile = "/fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.0.3.sif";
 
 my $walltime = "1-0"; ## walltime for sbatch jobs
 my $jobnamePrefix = "pw_";   
