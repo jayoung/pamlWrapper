@@ -16,9 +16,17 @@ cd /Users/jayoung/gitProjects/pamlWrapper
 git pull
 ```
 
-Then we re-build the docker image and push it to [docker hub](https://hub.docker.com/repository/docker/jayoungfhcrc/paml_wrapper).  I update the version number each time:
+Then we re-build the docker image
 ```
 docker build -t paml_wrapper -f buildContainer/Dockerfile .
+```
+To get a shell for a quick look:
+```
+docker run -v `pwd`:/workingDir -it paml_wrapper
+```
+
+When I know it's working I add a new tag and push it to [docker hub](https://hub.docker.com/repository/docker/jayoungfhcrc/paml_wrapper).  I update the version number each time:
+```
 docker tag paml_wrapper jayoungfhcrc/paml_wrapper:version1.0.1
 docker push jayoungfhcrc/paml_wrapper:version1.0.1
 ```

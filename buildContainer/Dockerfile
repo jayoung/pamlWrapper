@@ -48,7 +48,7 @@ RUN --mount=type=bind,target=/src/pamlWrapper,source=. \
   cp -R /src/pamlWrapper /
 RUN rmdir /src/pamlWrapper
 RUN chmod a+r -R pamlWrapper && \
-  chmod a+x pamlWrapper/scripts
+  chmod a+x pamlWrapper/scripts/*
 
 ## if there are any previous output files hanging around (e.g. in the top level of pamlWrapper/testData), remove them.  This keeps the output files I have in pamlWrapper/testData/exampleOutput
 RUN find /pamlWrapper -maxdepth 2 -depth -name '*phymlAndPAML' -exec rm -rf {} +
