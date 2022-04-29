@@ -149,7 +149,7 @@ foreach my $alignmentFile (@ARGV) {
     $parsedPAMLoutputFile .= ".codonModel$codonFreqModel";
     $parsedPAMLoutputFile .= "_initOmega$initialOrFixedOmega";
     $parsedPAMLoutputFile .= "_cleandata$cleanData"; 
-    $parsedPAMLoutputFile .= ".PAMLsummary.txt";
+    $parsedPAMLoutputFile .= ".PAMLsummary.tsv";
     if (-e $parsedPAMLoutputFile) {
         print "\n\nSkipping parsing - outfile exists already: $parsedPAMLoutputFile\n\n";
     } else {

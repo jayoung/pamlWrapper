@@ -3,7 +3,7 @@ use warnings;
 use strict;
 use Getopt::Long;
 
-my $outfile = "allAlignments.PAMLsummaries.txt";
+my $outfile = "allAlignments.PAMLsummaries.tsv";
 my $overwrite = 0;
 
 GetOptions("out=s" => \$outfile,
@@ -27,8 +27,8 @@ foreach my $file (@ARGV) {
     if (!-e $file) {
         die "\n\nTerminating - file $file does not exist\n\n";
     }
-    if ($file !~ m/PAMLsummary\.txt/) {
-        die "\n\nTerminating - did you really want to run this script on file $file ? It is not a PAMLsummary.txt file. If you did mean that, change the script\n\n";
+    if ($file !~ m/PAMLsummary\.tsv/) {
+        die "\n\nTerminating - did you really want to run this script on file $file ? It is not a PAMLsummary.tsv file. If you did mean that, change the script\n\n";
     }
     open (IN, "< $file");
     while (<IN>) {

@@ -1,0 +1,30 @@
+
+######## Running PAML for alignment ACE2_primates_aln1_NT.fa with codon model 2, starting omega 0.4, cleandata 0
+    making tree for file ACE2_primates_aln1_NT.fa.phy - command is:
+phyml -i ACE2_primates_aln1_NT.fa.phy --datatype nt --model GTR -b 0 --sequential --pinv e --alpha e -f e > ACE2_primates_aln1_NT.fa.phy_phyml_log ; mv ACE2_primates_aln1_NT.fa.phy_phyml_tree.txt ACE2_primates_aln1_NT.fa.phy_phyml_tree ; /fh/fast/malik_h/user/jayoung/paml_screen/pamlWrapper/scripts/pw_removeBranchLengthsFromTree.pl ACE2_primates_aln1_NT.fa.phy_phyml_tree
+
+    Running model 0
+    Running model 0fixNeutral
+    Running model 1
+    Running model 2
+    Running model 7
+    Running model 8
+    Running model 8a
+
+
+############################
+
+Parsing PAML output for alignment ACE2_primates_aln1_NT.fa
+    restoring original seq names in tree files
+    drawing trees
+    drawing gene tree
+    drawing gene tree
+    getting a seq file in tree order
+    looking at PAML results
+    plotting omega distributions for ACE2_primates_aln1_NT.fa_phymlAndPAML
+                test M2 vs M1 had a good p-value!
+                test M8vsM7 and/or M8avsM7 had a good p-value!
+    converting parsed PAML output to wide format
+
+################# done ###############
+

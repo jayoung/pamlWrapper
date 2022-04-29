@@ -57,7 +57,7 @@ if ($combinedOutputFile) {
     $overallOutputFile .= ".codonModel$codonFreqModel";
     $overallOutputFile .= "_initOmega$initialOrFixedOmega";
     $overallOutputFile .= "_cleandata$cleanData"; 
-    $overallOutputFile .= ".PAMLsummary.txt";
+    $overallOutputFile .= ".PAMLsummary.tsv";
     open($overallOutputFile_fh, ">", "$overallOutputFile");
     printHeaderRows($overallOutputFile_fh, $BEBprobThresholdToPrintSelectedSite);
 }
@@ -126,7 +126,7 @@ foreach my $fastaAlnFile (@files) {
     $outfileStem .= "_initOmega$initialOrFixedOmega";
     $outfileStem .= "_cleandata$cleanData"; 
 
-    my $outfile = "$outfileStem.PAMLsummary.txt";
+    my $outfile = "$outfileStem.PAMLsummary.tsv";
 
     open(my $outfile_fh, ">", "$outfile");
     printHeaderRows($outfile_fh, $BEBprobThresholdToPrintSelectedSite);

@@ -39,6 +39,7 @@ If we're working on a compute cluster (like rhino/gizmo), we can use `sbatch` to
 ```
 pw_makeTreeAndRunPAML_sbatchWrapper.pl CENPA_primates_aln2a_NT.fa ACE2_primates_aln1_NT.fa
 ```
+Use this command to see if your jobs are still running: `squeue -u $USER`
 
 The `pw_makeTreeAndRunPAML.pl` script performs the following steps on each input file (e.g. if the input file is called `myAln.fa`): 
 
@@ -63,8 +64,8 @@ The `pw_makeTreeAndRunPAML.pl` script performs the following steps on each input
 
 - parses the output for all models into some tab-delimited tables:
   - makes two tab-delimited text files summarizing paml results (same results, different table format):
-    - `*PAMLsummary.txt` 'long format': each model gets a separate row in the file, so each input alignment file gets multiple rows. Easier for a human to read, not so good for downstream parsing, e.g. in R.
-    - `*PAMLsummary.wide.txt` 'wide format': each input alignment file gets a single row (actually, one row per set of parameter choices, see below in the 'robustness' section)
+    - `*PAMLsummary.tsv` 'long format': each model gets a separate row in the file, so each input alignment file gets multiple rows. Easier for a human to read, not so good for downstream parsing, e.g. in R.
+    - `*PAMLsummary.wide.tsv` 'wide format': each input alignment file gets a single row (actually, one row per set of parameter choices, see below in the 'robustness' section)
 
 - makes plots showing dN/dS class distributions for each model. Can be useful in understanding the results. `*.omegaDistributions.pdf`
 
@@ -76,11 +77,11 @@ The `pw_makeTreeAndRunPAML.pl` script performs the following steps on each input
 
 Maybe we ran PAML on several input alignments, and we want to see the results for all of them in single file, in either the long format or wide:
 ```
-pw_combinedParsedOutfilesLong.pl */*PAMLsummary.txt
-pw_combinedParsedOutfilesWide.pl */*PAMLsummary.wide.txt
+pw_combinedParsedOutfilesLong.pl */*PAMLsummary.tsv
+pw_combinedParsedOutfilesWide.pl */*PAMLsummary.wide.tsv
 ```
 
-Output files are called `allAlignments.PAMLsummaries.txt` or `allAlignments.PAMLsummaries.wide.txt` - you probably want to rename them to something more informative, so they don't get overwritten next time you run the combining scripts.
+Output files are called `allAlignments.PAMLsummaries.tsv` or `allAlignments.PAMLsummaries.wide.tsv` - you probably want to rename them to something more informative, so they don't get overwritten next time you run the combining scripts.
 
 ## To check for robustness, if we did find evidence for positive selection
 

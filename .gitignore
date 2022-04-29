@@ -1,6 +1,7 @@
 .DS_Store
 hide
 notUsingTheseFiles
-*_phymlAndPAML
-*PAMLsummary*
+testData/*_phymlAndPAML
+testData/*PAMLsummary*tsv
 *.sif
+slurm-*

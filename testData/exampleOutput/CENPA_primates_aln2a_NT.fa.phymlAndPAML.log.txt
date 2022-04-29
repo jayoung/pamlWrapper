@@ -1,0 +1,28 @@
+
+######## Running PAML for alignment CENPA_primates_aln2a_NT.fa with codon model 2, starting omega 0.4, cleandata 0
+    making tree for file CENPA_primates_aln2a_NT.fa.phy - command is:
+phyml -i CENPA_primates_aln2a_NT.fa.phy --datatype nt --model GTR -b 0 --sequential --pinv e --alpha e -f e > CENPA_primates_aln2a_NT.fa.phy_phyml_log ; mv CENPA_primates_aln2a_NT.fa.phy_phyml_tree.txt CENPA_primates_aln2a_NT.fa.phy_phyml_tree ; /fh/fast/malik_h/user/jayoung/paml_screen/pamlWrapper/scripts/pw_removeBranchLengthsFromTree.pl CENPA_primates_aln2a_NT.fa.phy_phyml_tree
+
+    Running model 0
+    Running model 0fixNeutral
+    Running model 1
+    Running model 2
+    Running model 7
+    Running model 8
+    Running model 8a
+
+
+############################
+
+Parsing PAML output for alignment CENPA_primates_aln2a_NT.fa
+    restoring original seq names in tree files
+    drawing trees
+    drawing gene tree
+    drawing gene tree
+    getting a seq file in tree order
+    looking at PAML results
+    plotting omega distributions for CENPA_primates_aln2a_NT.fa_phymlAndPAML
+    converting parsed PAML output to wide format
+
+################# done ###############
+

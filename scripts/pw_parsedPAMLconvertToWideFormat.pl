@@ -7,15 +7,15 @@ use POSIX qw/floor/;
 
 ###### works on the output of pp_parsePAMLoutput.pl to convert it into "wide" table format, where each gene has only a single row
 ## simple usage: 
-# pw_parsedPAMLconvertToWideFormat.pl list17_HultquistFinalList_PAMLsummary.txt 
+# pw_parsedPAMLconvertToWideFormat.pl list17_HultquistFinalList_PAMLsummary.tsv 
 
 ## but add command line options if desired:
 # --tree to include total tree length (total, dN, dS) in the output. before June 17 2019 I did not, and I might want to mimic that in future, so default is no
 # --genename=no to prevent attempt to parse input file name to get gene name. Useful e.g. if I have run PAML on GARD segments of the same gene.  In this case I output the entire file name in the gene name column
 
 ## examples:
-# pw_parsedPAMLconvertToWideFormat.pl list17_HultquistFinalList_PAMLsummary.txt 
-# pw_parsedPAMLconvertToWideFormat.pl --tree list17_HultquistFinalList_PAMLsummary.txt 
+# pw_parsedPAMLconvertToWideFormat.pl list17_HultquistFinalList_PAMLsummary.tsv 
+# pw_parsedPAMLconvertToWideFormat.pl --tree list17_HultquistFinalList_PAMLsummary.tsv 
 
 
 ## this version of the script is capable of looking for two alignments for each gene, with and without CpG masking
@@ -122,8 +122,8 @@ foreach my $file (@ARGV) {
     close IN;
     #print "\n###### making output file\n";
     ### now make output file
-    my $out = $file; $out =~ s/\.txt$//; $out .= ".wide";
-    $out .= ".txt";
+    my $out = $file; $out =~ s/\.tsv$//; $out .= ".wide";
+    $out .= ".tsv";
     
     open (OUT, "> $out");
     ### print header:
