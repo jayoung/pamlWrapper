@@ -5,3 +5,4 @@ testData/*_phymlAndPAML
 testData/*PAMLsummary*tsv
 *.sif
 slurm-*
+screenoutput
