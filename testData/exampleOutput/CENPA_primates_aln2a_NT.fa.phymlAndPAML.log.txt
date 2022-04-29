@@ -4,12 +4,54 @@
 phyml -i CENPA_primates_aln2a_NT.fa.phy --datatype nt --model GTR -b 0 --sequential --pinv e --alpha e -f e > CENPA_primates_aln2a_NT.fa.phy_phyml_log ; mv CENPA_primates_aln2a_NT.fa.phy_phyml_tree.txt CENPA_primates_aln2a_NT.fa.phy_phyml_tree ; /fh/fast/malik_h/user/jayoung/paml_screen/pamlWrapper/scripts/pw_removeBranchLengthsFromTree.pl CENPA_primates_aln2a_NT.fa.phy_phyml_tree
 
     Running model 0
+
+
+
+working on file M0_initOmega0.4_codonModel2/rst
+
+
     Running model 0fixNeutral
+
+
+
+working on file M0fixNeutral_initOmega0.4_codonModel2/rst
+
+
     Running model 1
+
+
+
+working on file M1_initOmega0.4_codonModel2/rst
+
+
     Running model 2
+
+
+
+working on file M2_initOmega0.4_codonModel2/rst
+
+
     Running model 7
+
+
+
+working on file M7_initOmega0.4_codonModel2/rst
+
+
     Running model 8
+
+
+
+working on file M8_initOmega0.4_codonModel2/rst
+
+
     Running model 8a
+
+
+
+working on file M8a_initOmega0.4_codonModel2/rst
+
+
 
 
 ############################

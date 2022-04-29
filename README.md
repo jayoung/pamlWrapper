@@ -11,7 +11,7 @@ My git repo is [here](https://github.com/jayoung/pamlWrapper).
 On my work mac I'm working in `/Users/jayoung/gitProjects/pamlWrapper`.  
 On gizmo/rhino I'm working in `/fh/fast/malik_h/user/jayoung/paml_screen/pamlWrapper`
 
-There's an associated [docker image](https://hub.docker.com/repository/docker/jayoungfhcrc/paml_wrapper) to help you run this on any computer.
+There's an associated [docker image](https://hub.docker.com/repository/docker/jayoungfhcrc/paml_wrapper) to help you run this on any computer, and a singularity version of that image stored on rhino/gizmo (see below).
 
 # INSTALL
 
@@ -66,6 +66,7 @@ The `pw_makeTreeAndRunPAML.pl` script performs the following steps on each input
   - makes two tab-delimited text files summarizing paml results (same results, different table format):
     - `*PAMLsummary.tsv` 'long format': each model gets a separate row in the file, so each input alignment file gets multiple rows. Easier for a human to read, not so good for downstream parsing, e.g. in R.
     - `*PAMLsummary.wide.tsv` 'wide format': each input alignment file gets a single row (actually, one row per set of parameter choices, see below in the 'robustness' section)
+  - for M8, we also parse the `rst` output file to extract a tab-delimited table of the BEB results for each site (`rst.BEB.tsv` in the M8 subdirs)
 
 - makes plots showing dN/dS class distributions for each model. Can be useful in understanding the results. `*.omegaDistributions.pdf`
 

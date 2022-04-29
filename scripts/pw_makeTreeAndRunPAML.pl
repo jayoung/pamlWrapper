@@ -138,6 +138,11 @@ foreach my $alignmentFile (@ARGV) {
         } else {
             print "        output $mlcFile exists already - skipping this model\n";
         }
+        # we also convert the rst file to tab-delimited, just for M8
+        if ($model eq "8") {
+            system ("$masterPipelineDir/scripts/pw_parse_rst_getBEBtable.pl $modelDir/rst");
+        }
+
     } # end of foreach my $model loop
     ## go back to the dir we started in
     chdir $topDir; 

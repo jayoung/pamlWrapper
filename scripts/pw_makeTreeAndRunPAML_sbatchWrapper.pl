@@ -47,6 +47,6 @@ foreach my $file (@ARGV) {
     ## run pw_makeTreeAndRunPAML.pl using sbatch (pass through the parameters)
     my $command = "$masterPipelineDir/scripts/pw_makeTreeAndRunPAML.pl --omega $initialOrFixedOmega --codon $codonFreqModel --clean $cleanData $file >> $file.phymlAndPAML.log.txt";
     $command = "/bin/bash -c \\\"source /app/lmod/lmod/init/profile; module load fhR/4.1.2-foss-2020b ; $command\\\"";
-    $command = "sbatch -t $walltime --job-name=$jobnamePrefix"."_$file --wrap=\"$command\"";
+    $command = "sbatch -t $walltime --job-name=$jobnamePrefix"."$file --wrap=\"$command\"";
     system($command);
 }

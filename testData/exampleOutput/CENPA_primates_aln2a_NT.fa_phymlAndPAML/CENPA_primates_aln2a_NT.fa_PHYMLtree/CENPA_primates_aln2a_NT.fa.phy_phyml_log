@@ -29,7 +29,7 @@
         . Minimum length of an edge:			 1e-08
         . Optimise substitution model parameters:	 yes
         . Run ID:					 none
-        . Random seed:					 1651199121
+        . Random seed:					 1651200668
         . Subtree patterns aliasing:			 no
         . Version:					 3.3.20200621
         . Byte alignment:				 32
@@ -56,24 +56,24 @@
 
 . Starting first round of SPRs...
 
-	       0s |   1 | lnL=     -1023.0 | depth=    1/   40 | improvements=   2 | delta_lnL=    0.0/ 1000.0   +
+	       0s |   1 | lnL=     -1024.5 | depth=    1/   40 | improvements=   2 | delta_lnL=    0.0/ 1000.0  
 
 . Second round of optimization...
 
-	       0s |   2 | lnL=     -1023.2 | depth=    1/   36 | improvements=   2 | delta_lnL=    0.0/ 1000.0  
+	       0s |   2 | lnL=     -1032.6 | depth=    1/   36 | improvements=   4 | delta_lnL=    0.0/ 1000.0  
 
 . Third round of optimization...
 
-	       0s |   3 | lnL=     -1022.3 | depth=    1/   20 | improvements=   2 | delta_lnL=    0.0/ 1000.0 | triple moves=   5   +
-	       0s |   4 | lnL=     -1022.3 | depth=    0/   16 | improvements=   0 | delta_lnL=    0.0/  100.0 | triple moves=   5   +
+	       0s |   3 | lnL=     -1022.3 | depth=    1/   20 | improvements=   5 | delta_lnL=    0.0/ 1000.0 | triple moves=   5   +
+	       0s |   4 | lnL=     -1022.3 | depth=    0/   16 | improvements=   0 | delta_lnL=    0.0/  100.0 | triple moves=   6   +
 
 . Final optimisation steps...
 
 
-. Log likelihood of the current tree: -1021.255067521957698772894.
+. Log likelihood of the current tree: -1021.255231285037439192820.
 
 . Printing the most likely tree in file 'CENPA_primates_aln2a_NT.fa.phy_phyml_tree.txt'.
 
-. Time used 0h0m0s
+. Time used 0h0m1s
 
 oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
