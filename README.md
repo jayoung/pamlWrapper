@@ -114,7 +114,14 @@ This will list all the jobs you have running on the cluster. Any PAML jobs still
 
 My docker image is [here](https://hub.docker.com/repository/docker/jayoungfhcrc/paml_wrapper)
 
-There's a singularity file version of that on rhino/gizmo `/fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.0.2.sif` (check the version number!  README might not list the most recent version)
+There's a singularity file version of that on rhino/gizmo `/fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.0.2.sif` (check the version number!  README might not list the most recent version).  I use it like this (this is exactly what the `runPAML.pl` script listed above does, except wrapping it for sbatch):
+```
+module load Singularity/3.5.3
+singularity exec --cleanenv /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.0.2.s
+if pw_makeTreeAndRunPAML.pl myAln.fa > myAln.fa_runPAMLwrapper.log.txt
+module purge
+```
+
 
 ## Docker: detailed explanation
 
