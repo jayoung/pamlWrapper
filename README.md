@@ -264,5 +264,3 @@ move more utility scripts to this repo from the older repo (janet_pamlPipeline)
 - any others??
 
 within the Docker container, the timestamps for files seems to be based on Europe time. That's weird. The timestamps look fine from outside the Docker container though. I probably don't care about that. 
-
-maybe change the PATHS in pw_gizmoRhinoEnvironmentSetup.sh to use a central copy of the repo, stored in a common area, that I know is working. I pull less regularly to that repo. my own copy can be the development copy. or learn about git branches and releases
