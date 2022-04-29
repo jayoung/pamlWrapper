@@ -1,8 +1,0 @@
-seqFile	numSeqs	seqLenNT	seqLenCodons	model	resultsDir	codonModel	startingOmega	cleanData	lnL	np	test	2diffML	df	pValue	kappa	treeLen	treeLen_dN	treeLen_dS	overallOmega	proportionSelectedSites	estimatedOmegaOfSelectedClass	seqToWhichSiteCoordsRefer	numSitesBEBover0.9	whichSitesBEBover0.9
-ACE2_primates_aln1_NT.fa	24	2418	806	M0	ACE2_primates_aln1_NT.fa_phymlAndPAML/M0_initOmega3_codonModel3	3	3	0	-5845.426999	 47					4.31062	0.51493	0.1263	0.2923	0.43193	
-ACE2_primates_aln1_NT.fa	24	2418	806	M0fixNeutral	ACE2_primates_aln1_NT.fa_phymlAndPAML/M0fixNeutral_initOmega3_codonModel3	3	3	0	-5876.270169	 46	M0_M0fix	61.6863400000002	1	0.0000000000000040276						
-ACE2_primates_aln1_NT.fa	24	2418	806	M1	ACE2_primates_aln1_NT.fa_phymlAndPAML/M1_initOmega3_codonModel3	3	3	0	-5796.975160	 48										
-ACE2_primates_aln1_NT.fa	24	2418	806	M2	ACE2_primates_aln1_NT.fa_phymlAndPAML/M2_initOmega3_codonModel3	3	3	0	-5787.134955	 50	M2_M1	19.680409999999	2	0.000053266						0.02277	5.44392	notGettingThisInfoRightNow		
-ACE2_primates_aln1_NT.fa	24	2418	806	M7	ACE2_primates_aln1_NT.fa_phymlAndPAML/M7_initOmega3_codonModel3	3	3	0	-5797.934069	 48										
-ACE2_primates_aln1_NT.fa	24	2418	806	M8	ACE2_primates_aln1_NT.fa_phymlAndPAML/M8_initOmega3_codonModel3	3	3	0	-5787.213045	 50	M8_M7	21.442047999999	2	0.000022076						0.02668	5.02706	human_ACE2_ORF	11	78_T_0.974,218_S_0.994,653_Q_0.997,658_V_0.999,662_M_0.910,706_M_0.998,716_R_0.994,728_Q_0.980,729_P_0.953,732_G_0.977,787_S_0.924
-ACE2_primates_aln1_NT.fa	24	2418	806	M8a	ACE2_primates_aln1_NT.fa_phymlAndPAML/M8a_initOmega3_codonModel3	3	3	0	-5796.975163	 49	M8_M8a	19.5242359999993	1	0.0000099331						
