@@ -96,55 +96,27 @@ pw_makeTreeAndRunPAML.pl --codon=2 --omega=3 ACE2_primates_aln1_NT.fa
 We would then combine the results as before, and see whether we had evidence for positive selection with all parameter choices.
 
 
-# To run these scripts WITHOUT docker
+# To run these scripts on rhino/gizmo
 
-If you don't want to deal with installing software, look further down at the "using docker" instructions.
+Log in to rhino or gizmo (doesn't matter which), navigate to the folder where your alignments are and run this script:
+```
+cd ~/my/folder/with/alignments
+/fh/fast/malik_h/grp/malik_lab_shared/bin/runPAML.pl myAln1.fa myAln2.fa
+```
+This will start a 'batch' job on the cluster. Monitor whether this job is running using the following command:
+```
+squeue -u $USER
+```
+This will list all the jobs you have running on the cluster. Any PAML jobs still running will show up with IDs starting `pw_` in the NAME column.
 
-If you don't want to deal with docker, here are some notes to help you figure out how to get it running.  If you're working on gizmo/rhino, your environment MIGHT already be set up so that this can work. Talk to me to figure it out.
 
-If you want to set it up yourself, you'll need to install some dependencies and make sure they're in your PATH:
-```
-phyml
-codeml
-R                 (on gizmo/rhino: module load fhR/4.1.2-foss-2020b)
-ape package for R, if it's not already installed (it is installed in the fhR/4.1.2-foss-2020b module)
-```
-Perl modules (make sure PERL5LIB is set right):
-```
-Bioperl    (on gizmo/rhino: module load BioPerl/1.7.8-GCCcore-10.2.0)
-  CPAN::Meta
-  Cwd
-  Getopt::Long
-  Statistics::Distributions
-```
+# To run these scripts with docker
 
-You'll want to get my scripts locally and add `myInstallDir/pamlWrapper/scripts` to your PATH:
-```
-cd myInstallDir
-git clone https://github.com/jayoung/pamlWrapper
-```
+My docker image is [here](https://hub.docker.com/repository/docker/jayoungfhcrc/paml_wrapper)
 
-You'll want to set the environmental variable `PAML_WRAPPER_HOME` to be wherever `myInstallDir/pamlWrapper` is. 
+There's a singularity file version of that on rhino/gizmo `/fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.0.2.sif` (check the version number!  README might not list the most recent version)
 
-# To run these scripts on rhino/gizmo, without docker
-
-Unlikely: if your gizmo/rhino environment IS set up like mine (only true for a few people in the lab - I've been moving away from doing this) - I think you may be able to run the scripts after loading an R module. Try it and let me know what happens:
-```
-module load fhR/4.1.2-foss-2020b
-pw_makeTreeAndRunPAML.pl myAln.fa
-module purge
-```
-
-More likely: if your gizmo/rhino environment is NOT set up like mine, you should first do this, so that the necessary programs are available to you.  This hasn't been tested yet (and I can't test it myself, so please give it a try and let me know what happens. There may be errors at first but I would love to get this working).
-```
-source /fh/fast/malik_h/user/jayoung/paml_screen/pamlWrapper/scripts/pw_gizmoRhinoEnvironmentSetup.sh
-```
-I think you should be able to run the scripts now. After you've finished your PAML work, you probably want to restore your environment to it's original state:
-```
-source /fh/fast/malik_h/user/jayoung/paml_screen/pamlWrapper/scripts/pw_gizmoRhinoEnvironmentRestore.sh
-```
-
-# To run these scripts WITH docker
+## Docker: detailed explanation
 
 A **docker container** is a bit like a mini-computer inside the computer we're actually working on. This mini-computer is where we will actually run PAML.  A **docker image** is a bunch of files stored in a hidden place on our computer that provide the setup for that mini-computer.
 
@@ -210,6 +182,36 @@ docker rm -f 163df768287c
 The image will stick around, so next time you want to run PAML, you'd start from the `docker exec` step again to get a container running.
 
 
+# To run these scripts WITHOUT docker/singularity
+
+If you don't want to deal with installing software, look further down at the "using docker" instructions.
+
+If you don't want to deal with docker, here are some notes to help you figure out how to get it running.  If you're working on gizmo/rhino, your environment MIGHT already be set up so that this can work. Talk to me to figure it out.
+
+If you want to set it up yourself, you'll need to install some dependencies and make sure they're in your PATH:
+```
+phyml
+codeml
+R                 (on gizmo/rhino: module load fhR/4.1.2-foss-2020b)
+ape package for R, if it's not already installed (it is installed in the fhR/4.1.2-foss-2020b module)
+```
+Perl modules (make sure PERL5LIB is set right):
+```
+Bioperl    (on gizmo/rhino: module load BioPerl/1.7.8-GCCcore-10.2.0)
+  CPAN::Meta
+  Cwd
+  Getopt::Long
+  Statistics::Distributions
+```
+
+You'll want to get my scripts locally and add `myInstallDir/pamlWrapper/scripts` to your PATH:
+```
+cd myInstallDir
+git clone https://github.com/jayoung/pamlWrapper
+```
+
+You'll want to set the environmental variable `PAML_WRAPPER_HOME` to be wherever `myInstallDir/pamlWrapper` is. 
+
 # Some other utility scripts I haven't yet put into this repo, but I will! 
 
 Some of them could also be added to the pw_makeTreeAndRunPAML.pl pipeline - annotating selected sites, and parsing the rst file
@@ -245,12 +247,10 @@ scripts/pw_annotateCpGsitesInAlignment.bioperl *NT.fa_phymlAndPAML/*treeorder.fa
 
 # To do list
 
-
-figure out how to run on the cluster using singularity and my docker image, make a wrapper script that will allow people to do that, people who don't have their environment set up like mine
-
 add a script that runs before doing anything else to check the input alignment and warns if things aren't the same length, or if there's a lot of stop codons or frameshifts
 
 move more utility scripts to this repo from the older repo (janet_pamlPipeline)
+- the rst parse script - include that in the main pipeline too
 - CpG mask, CpG annotate
 - GARD?
 - any others??

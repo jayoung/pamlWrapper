@@ -7,7 +7,7 @@ git push
 
 # updating the docker image:
 
-My mac has docker installed, gizmo/rhino do not. But I am keeping the master copy of the repo on gizmo/rhino.
+My mac has docker installed, gizmo/rhino do not. But I am keeping the master copy of the repo on gizmo/rhino.  Make sure that's synced to github, then:
 
 On the mac, first we make sure we have the latest version of the pamlWrapper git repo:
 
@@ -27,13 +27,13 @@ docker run -v `pwd`:/workingDir -it paml_wrapper
 
 When I know it's working I add a new tag and push it to [docker hub](https://hub.docker.com/repository/docker/jayoungfhcrc/paml_wrapper).  I update the version number each time:
 ```
-docker tag paml_wrapper jayoungfhcrc/paml_wrapper:version1.0.1
-docker push jayoungfhcrc/paml_wrapper:version1.0.1
+docker tag paml_wrapper jayoungfhcrc/paml_wrapper:version1.0.2
+docker push jayoungfhcrc/paml_wrapper:version1.0.2
 ```
 
 I then test my container in a totally different environment using the [Play with Docker](https://labs.play-with-docker.com) site - it seems to work. Once I have an instance running there:
 ```
-docker run -it jayoungfhcrc/paml_wrapper:version1.0.1
+docker run -it jayoungfhcrc/paml_wrapper:version1.0.2
 cd pamlWrapper/testData/
 pw_makeTreeAndRunPAML.pl ACE2_primates_aln1_NT.fa
 ```
@@ -45,22 +45,37 @@ On gizmo/rhino:
 cd ~/FH_fast_storage/paml_screen/pamlWrapper/buildContainer
 module purge
 module load Singularity/3.5.3
-singularity build paml_wrapper-v1.0.1.sif docker://jayoungfhcrc/paml_wrapper:version1.0.1
-    # the paml_wrapper-v1.0.1.sif file appears
+singularity build paml_wrapper-v1.0.2.sif docker://jayoungfhcrc/paml_wrapper:version1.0.2
+```
 
-# for a shell:
+
+a file called paml_wrapper-v1.0.2.sif appears. 
+
+I could get a shell in the singularity container like this:
+```
 cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments
-singularity shell ../pamlWrapper/buildContainer/paml_wrapper-v1.0.1.sif 
-    # I get a shell, but I get this error a lot: 
-    #  bash: k5start: command not found
-
+singularity shell --cleanenv /fh/fast/malik_h/grp/malik_lab_shared/singularityImages
 ```
 
-Now run some code using the singularity image:
+And within the shell, this works.
+```
+pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa 
 ```
 
+Or, I can run some code using the singularity image without entering a shell:
+```
+singularity exec --cleanenv /fh/fast/malik_h/grp/malik_lab_shared/singularityImages pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa 
+```
 
-singularity exec paml_wrapper-v1.0.1.sif xxxx
-
+and when we're done:
+```
 module purge
+```
+
+The `pw_makeTreeAndRunPAML_singularityWrapper.pl` script will run pw_makeTreeAndRunPAML.pl on each alignment
+
+I want a copy of the singularity image file, and a script that uses it, in a more central place, for use by others:
+```
+cp paml_wrapper-v1.0.2.sif /fh/fast/malik_h/grp/malik_lab_shared/singularityImages
+cp ../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl /fh/fast/malik_h/grp/malik_lab_shared/bin/runPAML.pl
 ```
