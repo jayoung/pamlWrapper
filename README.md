@@ -1,8 +1,7 @@
 # pamlWrapper
 Janet Young, April 2022
 
-Starting with an in-frame alignment, this repo has code that will run sitewise 
-PAML using various evolutionary models and parse the output into tabular format.
+Starting with an in-frame alignment in fasta format, this repo has code that will run sitewise PAML using various evolutionary models and parse the output into tabular format.
 
 This is work in progress. If you find any problems, or don't understand what's going on, talk to me, submit an issue using the github site, or email me.
 
@@ -13,40 +12,50 @@ On gizmo/rhino I'm working in `/fh/fast/malik_h/user/jayoung/paml_screen/pamlWra
 
 There's an associated [docker image](https://hub.docker.com/repository/docker/jayoungfhcrc/paml_wrapper) to help you run this on any computer, and a singularity version of that image stored on rhino/gizmo (see below).
 
-# INSTALL
-
-see below - instructions for using scripts with or without docker image.
+Individual script names in this repo start `pw_` (for Paml Wrapper) to help distinguish them from any other similar scripts I have hanging around.
 
 # Instructions
 
 Input file(s): in-frame multiple sequence alignment, in fasta format
 
-Script names in this repo start `pw_` (for Paml Wrapper) to help distinguish them from any other similar scripts I have hanging around.
+## To run these scripts on rhino/gizmo
 
-## To run sitewise paml on any fasta format in-frame alignment
-
-Run it on each sequence file, one at a time
+Log in to rhino or gizmo (doesn't matter which), navigate to the folder where your alignment(s) are and run this script, specifying your alignment(s) as input files:
 ```
-pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa
-```
-
-or to run on several sequence files, one at a time. This can get slow - we'll probably want to use a wrapper script to run this in the cluster using `sbatch`.
-```
-pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa ACE2_primates_aln1_NT.fa
+cd ~/my/folder/with/alignments
+/fh/fast/malik_h/grp/malik_lab_shared/bin/runPAML.pl myAln1.fa myAln2.fa
 ```
 
-If we're working on a compute cluster (like rhino/gizmo), we can use `sbatch` to start a whole bunch of PAML jobs running in parellel. This script will run the `pw_makeTreeAndRunPAML.pl` pipeline script on a bunch of alignments, sending off one sbatch job per input file.
+Depending on how your rhino/gizmo account is set up, you might even be able to run it using a simpler form of the command:
 ```
-pw_makeTreeAndRunPAML_sbatchWrapper.pl CENPA_primates_aln2a_NT.fa ACE2_primates_aln1_NT.fa
+cd ~/my/folder/with/alignments
+runPAML.pl myAln1.fa myAln2.fa
 ```
-Use this command to see if your jobs are still running: `squeue -u $USER`
+If you want to set up your account so you can use this simpler form, and don't know how to do it, talk to me.
 
-The `pw_makeTreeAndRunPAML.pl` script performs the following steps on each input file (e.g. if the input file is called `myAln.fa`): 
+Whichever way you do it, that command will start one 'batch' job on the cluster for each input file. Monitor whether your PAML job(s) are still running using the following command:
+```
+squeue -u $USER
+```
+This will list all the jobs you have running on the cluster. Any PAML jobs still running will show up with IDs starting `pw_` in the NAME column.
+
+Once they've finished, you can look in the output folders (called `myAln1.fa_phymlAndPAML`, etc) for the results.  Details of all the output files are given below, as well as what happens when this script runs.
+
+If anything went wrong, there should be useful error messages in the `myAln1.fa_runPAML.log.txt` file.  If it seems like it's not working, send me your alignment and this `log.txt` file and I'll try to troubleshoot.
+
+## To run these scripts in other ways
+
+Maybe you don't want to run on gizmo/rhino. Maybe you want to use individual scripts and modify them. Maybe you want to use Docker. See [here](docs/running_in_other_ways.md) for notes on how you might run it in other ways.
+
+
+# What happens when it runs? 
+
+The pipeline performs the following steps on each input file (e.g. if the input file is called `myAln.fa`): 
 
 - makes a subdir called `myAln.fa_phymlAndPAML` 
 
-- reformats the alignment for PHYML/PAML (in the `myAln.fa.phy` file): 
-  - replace in-frame stop codons (PAML hates those) with gap codon (---)
+- reformats the alignment for PHYML/PAML (the `myAln.fa.phy` file): 
+  - replace in-frame stop codons with gap codon (---) because PAML hates those
   - truncates long sequence names to 30 characters (long names caused trouble somewhere - I think in PHYML). Name translations are saved in `myAln.fa.aliases.txt`
   - converts from fasta format to a [format suitable for phyml and PAML](http://abacus.gene.ucl.ac.uk/software/pamlDOC.pdf)
 
@@ -81,6 +90,7 @@ Maybe we ran PAML on several input alignments, and we want to see the results fo
 pw_combinedParsedOutfilesLong.pl */*PAMLsummary.tsv
 pw_combinedParsedOutfilesWide.pl */*PAMLsummary.wide.tsv
 ```
+(if you get a 'command not found' error, put this in front of the script names above: `/fh/fast/malik_h/grp/malik_lab_shared/bin/`)
 
 Output files are called `allAlignments.PAMLsummaries.tsv` or `allAlignments.PAMLsummaries.wide.tsv` - you probably want to rename them to something more informative, so they don't get overwritten next time you run the combining scripts.
 
@@ -90,135 +100,15 @@ If we find evidence for positive selection, we might want to check that finding 
 
 The default parameters I use for codeml are codon model 2, starting omega 0.4, cleandata 0. If we want to use different parameters we use the `--codon` (codon model) or `--omega` (initial omega) options. E.g.:
 ```
-pw_makeTreeAndRunPAML.pl --codon=3 ACE2_primates_aln1_NT.fa
-pw_makeTreeAndRunPAML.pl --codon=3 --omega=3 ACE2_primates_aln1_NT.fa
-pw_makeTreeAndRunPAML.pl --codon=2 --omega=3 ACE2_primates_aln1_NT.fa
+/fh/fast/malik_h/grp/malik_lab_shared/bin/runPAML.pl --codon=3 ACE2_primates_aln1_NT.fa
+/fh/fast/malik_h/grp/malik_lab_shared/bin/runPAML.pl --codon=3 --omega=3 ACE2_primates_aln1_NT.fa
+/fh/fast/malik_h/grp/malik_lab_shared/bin/runPAML.pl --codon=2 --omega=3 ACE2_primates_aln1_NT.fa
 ```
+
+If you are running the `pw_makeTreeAndRunPAML.pl` or `pw_makeTreeAndRunPAML_sbatchWrapper.pl` scripts instead, you can specify the same arguments to that script.
 
 We would then combine the results as before, and see whether we had evidence for positive selection with all parameter choices.
 
-
-# To run these scripts on rhino/gizmo
-
-Log in to rhino or gizmo (doesn't matter which), navigate to the folder where your alignments are and run this script:
-```
-cd ~/my/folder/with/alignments
-/fh/fast/malik_h/grp/malik_lab_shared/bin/runPAML.pl myAln1.fa myAln2.fa
-```
-This will start a 'batch' job on the cluster. Monitor whether this job is running using the following command:
-```
-squeue -u $USER
-```
-This will list all the jobs you have running on the cluster. Any PAML jobs still running will show up with IDs starting `pw_` in the NAME column.
-
-
-# To run these scripts with docker
-
-My docker image is [here](https://hub.docker.com/repository/docker/jayoungfhcrc/paml_wrapper)
-
-There's a singularity file version of that on rhino/gizmo `/fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.0.3.sif` (check the version number!  README might not list the most recent version).  I use it like this (this is exactly what the `runPAML.pl` script listed above does, except wrapping it for sbatch):
-```
-module load Singularity/3.5.3
-singularity exec --cleanenv /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.0.3.sif pw_makeTreeAndRunPAML.pl myAln.fa > myAln.fa_runPAMLwrapper.log.txt
-module purge
-```
-
-
-## Docker: detailed explanation
-
-A **docker container** is a bit like a mini-computer inside the computer we're actually working on. This mini-computer is where we will actually run PAML.  A **docker image** is a bunch of files stored in a hidden place on our computer that provide the setup for that mini-computer.
-
-You first need to have docker and git installed on whichever computer you're working on. For example, see these [instructions to install on a mac](https://docs.docker.com/desktop/mac/install/). I think you might need to [create a docker account](https://docs.docker.com/docker-id/), too, in order to be able to use it. The free account is fine.
-
-You can use various methods to manage and run your docker containers and images. The mac Docker app has some buttons to click, VScode has other ways, but here I'll describe the command line (Terminal) way to do it.
-
-Once docker is installed and running, you'll download my docker image (called `paml_wrapper`) onto your computer. I do that from a terminal window (update the version tag with the most recent version listed [here](https://hub.docker.com/repository/docker/jayoungfhcrc/paml_wrapper)):
-```
-docker pull jayoungfhcrc/paml_wrapper:version1.0.3
-```
-After that, the mini-computer is ready to use, and the image should stick around on your computer long-term. That means you will only need to do `docker pull` once, until I make updates, in which case you'll want to pull the docker image again so that you're using the latest version.
-
-Now we're ready to use the mini-computer and run PAML. First, navigate to a folder on your big computer where one or more alignments can be found. E.g. 
-```
-cd /Users/jayoung/myData/myAlignments
-```
-
-To start up the mini-computer, and be able to see all the files in your current folder once you're inside the mini-computer:
-```
-docker run -v `pwd`:/workingDir -itd paml_wrapper
-```
-That starts the container (mini-computer) running, and creates a folder called `workingDir`, where you will see the files in your current folder. Any files created inside the mini-computer will also be visible from your main computer, in the folder you started from.  
-
-To work inside the mini-computer, we first have to find its ID:
-```
-docker ps
-```
-You'll see something that looks a bit like this:
-```
-CONTAINER ID   IMAGE          COMMAND       CREATED         STATUS         PORTS     NAMES
-163df768287c   paml_wrapper   "/bin/bash"   3 seconds ago   Up 2 seconds             boring_pasteur
-```
-The container ID is in the first column (`163df768287c`).  Then we can use the following command to start working inside the mini-computer:
-```
-docker exec -it 163df768287c /bin/bash
-```
-Notice that the command-line prompt has changed - this helps track whether you're on the mini-computer, or your main computer.
-
-On the mini-computer, the contents of the folder you were in on the big computer will be mounted to `/workingDir`, so the first thing we do is go into that folder and use `ls` to make sure we can see the files we expect:
-```
-cd workingDir
-ls
-```
-
-Then we can use the scripts to run PAML, and the output will be shared between the mini-computer and your main computer. E.g. 
-```
-pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa
-```
-
-There are also some example files provided within your mini-computer: 
-- example input files: /pamlWrapper/testData 
-- example output files: /pamlWrapper/testData/exampleOutput
-
-Once we've finished our work, we can exit the mini-computer:
-```
-exit
-```
-We could re-enter the mini-computer if we want, using the same `docker exec` command we used before, but if we're really done, we probably want to tidy up by stopping/removing the container:
-```
-docker rm -f 163df768287c
-```
-The image will stick around, so next time you want to run PAML, you'd start from the `docker exec` step again to get a container running.
-
-
-# To run these scripts WITHOUT docker/singularity
-
-If you don't want to deal with installing software, look further down at the "using docker" instructions.
-
-If you don't want to deal with docker, here are some notes to help you figure out how to get it running.  If you're working on gizmo/rhino, your environment MIGHT already be set up so that this can work. Talk to me to figure it out.
-
-If you want to set it up yourself, you'll need to install some dependencies and make sure they're in your PATH:
-```
-phyml
-codeml
-R                 (on gizmo/rhino: module load fhR/4.1.2-foss-2020b)
-ape package for R, if it's not already installed (it is installed in the fhR/4.1.2-foss-2020b module)
-```
-Perl modules (make sure PERL5LIB is set right):
-```
-Bioperl    (on gizmo/rhino: module load BioPerl/1.7.8-GCCcore-10.2.0)
-  CPAN::Meta
-  Cwd
-  Getopt::Long
-  Statistics::Distributions
-```
-
-You'll want to get my scripts locally and add `myInstallDir/pamlWrapper/scripts` to your PATH:
-```
-cd myInstallDir
-git clone https://github.com/jayoung/pamlWrapper
-```
-
-You'll want to set the environmental variable `PAML_WRAPPER_HOME` to be wherever `myInstallDir/pamlWrapper` is. 
 
 # Some other utility scripts I haven't yet put into this repo, but I will! 
 
@@ -262,5 +152,7 @@ move more utility scripts to this repo from the older repo (janet_pamlPipeline)
 - CpG mask, CpG annotate
 - GARD?
 - any others??
+
+do I want to include the --add option and check in the runPAML.pl/pw_makeTreeAndRunPAML_singularityWrapper.pl script?  It should probably be consistent with the pw_makeTreeAndRunPAML_sbatchWrapper.pl script
 
 within the Docker container, the timestamps for files seems to be based on Europe time. That's weird. The timestamps look fine from outside the Docker container though. I probably don't care about that. 

@@ -17,7 +17,7 @@ my $addToExistingOutputDir = ""; ## default is that I will NOT add to existing o
 GetOptions("omega=f" => \$initialOrFixedOmega,   ## sometimes I do 3, default is 0.4
            "codon=i" => \$codonFreqModel,        ## sometimes I do 3, default is 2
            "clean=i" => \$cleanData,             ## sometimes I do 1 to remove the sites with gaps in any species
-           "wall=s"  => \$walltime,
+           "walltime=s"  => \$walltime,
            "add"     => \$addToExistingOutputDir) or die "\n\nterminating - unknown option(s) specified on command line\n\n";             
                       ## '--wall 0-6' to specify 6 hrs
 
