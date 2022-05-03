@@ -6,8 +6,9 @@ use Bio::SeqIO;
 use Bio::Seq;
 use IO::String;
 
-#### take an rst file (output of codeml) and extracts just the BEB (and possibly NEB) outputs, as tab-delimited text. Motivation: may want to use this to plot results.
-#### also can output annotation lines where BEB (and possibly NEB) sites over specified probability thresholds will be highlighted
+#### take an rst file (output of codeml) and extracts just the BEB outputs, as tab-delimited text. Motivation: may want to use this to plot results.
+
+#### can also output annotation lines where BEB sites over specified probability thresholds will be highlighted
 
 ######## set default parameter choices:
 

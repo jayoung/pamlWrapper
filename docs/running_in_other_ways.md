@@ -1,3 +1,7 @@
+# General notes
+
+Individual script names in this repo start `pw_` (for Paml Wrapper) to help distinguish them from any other similar scripts I have hanging around.
+
 # To run these scripts WITHOUT docker/singularity
 
 If you've installed the pipeline and dependencies yourself, or if you're running within the docker container, you do NOT need to use the `runPAML.pl` script (that's designed to use the singularity container and sbatch). 
@@ -118,3 +122,22 @@ We could re-enter the mini-computer if we want, using the same `docker exec` com
 docker rm -f 163df768287c
 ```
 The image will stick around, so next time you want to run PAML, you'd start from the `docker exec` step again to get a container running.
+
+
+
+# Some individual scripts
+
+These ARE run as part of the pipeline, but maybe sometimes you want to run them on their own.
+
+## pw_annotateAlignmentWithSelectedSites.pl 
+A utility script to add annotation for positively selected sites (has various command-line options)
+```
+pw_annotateAlignmentWithSelectedSites.pl *NT.fa_phymlAndPAML/*treeorder.annotateCpG.fa
+```
+
+## pw_parse_rst_getBEBtable.pl
+A utility script to parse the rst file to get full BEB (and maybe NEB) results, and make annotation fasta files I can add to the alignment if I choose.  I also have R code to do this, in a [separate repo](https://github.com/jayoung/pamlApps)
+```
+pw_parse_rst_getBEBtable.pl *NT.fa_phymlAndPAML/M8_*/rst
+```
+

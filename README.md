@@ -5,14 +5,7 @@ Starting with an in-frame alignment in fasta format, this repo has code that wil
 
 This is work in progress. If you find any problems, or don't understand what's going on, talk to me, submit an issue using the github site, or email me.
 
-My git repo is [here](https://github.com/jayoung/pamlWrapper).   
-
-On my work mac I'm working in `/Users/jayoung/gitProjects/pamlWrapper`.  
-On gizmo/rhino I'm working in `/fh/fast/malik_h/user/jayoung/paml_screen/pamlWrapper`
-
 There's an associated [docker image](https://hub.docker.com/repository/docker/jayoungfhcrc/paml_wrapper) to help you run this on any computer, and a singularity version of that image stored on rhino/gizmo (see below).
-
-Individual script names in this repo start `pw_` (for Paml Wrapper) to help distinguish them from any other similar scripts I have hanging around.
 
 # Instructions
 
@@ -45,10 +38,12 @@ If anything went wrong, there should be useful error messages in the `myAln1.fa_
 
 ## To run these scripts in other ways
 
-Maybe you don't want to run on gizmo/rhino. Maybe you want to use individual scripts and modify them. Maybe you want to use Docker. See [here](docs/running_in_other_ways.md) for notes on how you might run it in other ways.
+The runPAML.pl script will only work on gizmo/rhino. Behind the scenes, it uses a singularity image file to run a pipeline of scripts inside a container using the Fred Hutch compute cluster via sbatch. 
+
+Maybe you don't want to use the Fred Hutch computers (gizmo/rhino). Maybe you want to use individual scripts and modify them. Maybe you want to use Docker. See [here](docs/running_in_other_ways.md) for notes on how you might run it in other ways.
 
 
-# What happens when it runs? 
+# What does runPAML.pl actually do? 
 
 The pipeline performs the following steps on each input file (e.g. if the input file is called `myAln.fa`): 
 
@@ -83,6 +78,8 @@ The pipeline performs the following steps on each input file (e.g. if the input 
 
 - if there was evidence for positive selection in the M8vsM7 or M8vsM8a comparison, we make an annotated version of the alignment:`myAln.treeorder.annotBEBover0.9.fa`. This is the alignment with an additional line at the bottom, mostly gaps, but any codon with evidence for positive selection (with BEB>0.9) gets "BEB".   Some multiple alignment viewers will have a hard time reading this file - neither DNA or amino acid sequences should contain Bs, but my favorite alignment view can handle it - that's [seaview for Mac](http://doua.prabi.fr/software/seaview)
 
+# Using the results
+
 ## To combine results for several alignments
 
 Maybe we ran PAML on several input alignments, and we want to see the results for all of them in single file, in either the long format or wide:
@@ -114,20 +111,6 @@ We would then combine the results as before, and see whether we had evidence for
 
 Some of them could also be added to the pw_makeTreeAndRunPAML.pl pipeline - annotating selected sites, and parsing the rst file
 
-
-## pw_annotateAlignmentWithSelectedSites.pl 
-A utility script to add annotation for positively selected sites (has various command-line options)
-```
-scripts/pw_annotateAlignmentWithSelectedSites.pl *NT.fa_phymlAndPAML/*treeorder.annotateCpG.fa
-```
-
-## pw_parse_rst_getBEBandNEBresults.pl
-A utility script to parse the rst file to get full BEB (and maybe NEB) results, and make annotation fasta files I can add to the alignment if I choose.  I also have R code to do this, in a [separate repo](https://github.com/jayoung/pamlApps)
-```
-scripts/pw_parse_rst_getBEBandNEBresults.pl *NT.fa_phymlAndPAML/M8_*/rst
-```
-
-
 ## pw_maskCpGsitesInAlignment.bioperl
 A utility script to mask CpGs in alignment:
 ```
@@ -148,11 +131,8 @@ scripts/pw_annotateCpGsitesInAlignment.bioperl *NT.fa_phymlAndPAML/*treeorder.fa
 add a script that runs before doing anything else to check the input alignment and warns if things aren't the same length, or if there's a lot of stop codons or frameshifts
 
 move more utility scripts to this repo from the older repo (janet_pamlPipeline)
-- the rst parse script - include that in the main pipeline too
 - CpG mask, CpG annotate
 - GARD?
 - any others??
 
 do I want to include the --add option and check in the runPAML.pl/pw_makeTreeAndRunPAML_singularityWrapper.pl script?  It should probably be consistent with the pw_makeTreeAndRunPAML_sbatchWrapper.pl script
-
-within the Docker container, the timestamps for files seems to be based on Europe time. That's weird. The timestamps look fine from outside the Docker container though. I probably don't care about that. 

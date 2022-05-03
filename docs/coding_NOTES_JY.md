@@ -1,3 +1,10 @@
+# locations and paths
+
+My git repo is [here](https://github.com/jayoung/pamlWrapper).   
+
+On my work mac I'm working in `/Users/jayoung/gitProjects/pamlWrapper`.  
+On gizmo/rhino I'm working in `/fh/fast/malik_h/user/jayoung/paml_screen/pamlWrapper`
+
 # the usual git updates:
 ```
 git add --verbose --all .
@@ -39,6 +46,8 @@ docker run -it jayoungfhcrc/paml_wrapper:version1.0.4
 cd pamlWrapper/testData/
 pw_makeTreeAndRunPAML.pl ACE2_primates_aln1_NT.fa
 ```
+
+I noticed (when I run on my Mac) that within the Docker container, the timestamps for files seems to be based on Europe time. That's weird. The timestamps look fine from outside the Docker container though. I probably don't care about that. I'm not going to worry about it.
 
 # convert docker image to singularity
 
