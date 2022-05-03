@@ -16,6 +16,8 @@ cd /Users/jayoung/gitProjects/pamlWrapper
 git pull
 ```
 
+I also make sure the Mac docker app is running, and using the app, I sign in to my account.
+
 Then we re-build the docker image
 ```
 docker build -t paml_wrapper -f buildContainer/Dockerfile .
@@ -27,13 +29,13 @@ docker run -v `pwd`:/workingDir -it paml_wrapper
 
 When I know it's working I add a new tag and push it to [docker hub](https://hub.docker.com/repository/docker/jayoungfhcrc/paml_wrapper).  I update the version number each time:
 ```
-docker tag paml_wrapper jayoungfhcrc/paml_wrapper:version1.0.3
-docker push jayoungfhcrc/paml_wrapper:version1.0.3
+docker tag paml_wrapper jayoungfhcrc/paml_wrapper:version1.0.4
+docker push jayoungfhcrc/paml_wrapper:version1.0.4
 ```
 
 I then test my container in a totally different environment using the [Play with Docker](https://labs.play-with-docker.com) site - it seems to work. Once I have an instance running there:
 ```
-docker run -it jayoungfhcrc/paml_wrapper:version1.0.3
+docker run -it jayoungfhcrc/paml_wrapper:version1.0.4
 cd pamlWrapper/testData/
 pw_makeTreeAndRunPAML.pl ACE2_primates_aln1_NT.fa
 ```
@@ -45,12 +47,10 @@ On gizmo/rhino:
 cd ~/FH_fast_storage/paml_screen/pamlWrapper/buildContainer
 module purge
 module load Singularity/3.5.3
-singularity build paml_wrapper-v1.0.3.sif docker://jayoungfhcrc/paml_wrapper:version1.0.3
+singularity build paml_wrapper-v1.0.4.sif docker://jayoungfhcrc/paml_wrapper:version1.0.4
 module purge
 ```
-
-
-a file called paml_wrapper-v1.0.3.sif appears. 
+A file called paml_wrapper-v1.0.4.sif appears. 
 
 I could get a shell in the singularity container like this:
 ```
@@ -81,6 +81,12 @@ The `pw_makeTreeAndRunPAML_singularityWrapper.pl` script will run pw_makeTreeAnd
 
 I want a copy of the singularity image file, and a script that uses it, in a more central place, for use by others:
 ```
-cp paml_wrapper-v1.0.3.sif /fh/fast/malik_h/grp/malik_lab_shared/singularityImages
+cp paml_wrapper-v1.0.4.sif /fh/fast/malik_h/grp/malik_lab_shared/singularityImages
 cp ../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl /fh/fast/malik_h/grp/malik_lab_shared/bin/runPAML.pl
+```
+
+Test the new singularity container, on rhino/gizmo:
+```
+cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments
+runPAML.pl --codon=2 --omega=3 CENPA_primates_aln2a_NT.fa
 ```
