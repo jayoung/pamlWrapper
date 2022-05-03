@@ -1,19 +1,19 @@
 # pamlWrapper
 Janet Young, April 2022
 
-Starting with an in-frame alignment in fasta format, this repo has code that will run sitewise PAML using various evolutionary models and parse the output into tabular format.
+Starting with an in-frame alignment in fasta format, this repository has code that will run sitewise PAML using various evolutionary models and parse the output into tabular format.
 
-This is work in progress. If you find any problems, or don't understand what's going on, talk to me, submit an issue using the github site, or email me.
+This should work well, but if you find any problems, don't understand what's going on, or have suggestions for improvements, please talk to me, submit an issue using the github site, or email me.
 
 There's an associated [docker image](https://hub.docker.com/repository/docker/jayoungfhcrc/paml_wrapper) to help you run this on any computer, and a singularity version of that image stored on rhino/gizmo (see below).
 
 # Instructions
 
-Input file(s): in-frame multiple sequence alignment, in fasta format
+Input file(s): in-frame multiple sequence alignment(s), in fasta format
 
 ## To run these scripts on rhino/gizmo
 
-Log in to rhino or gizmo (doesn't matter which), navigate to the folder where your alignment(s) are and run this script, specifying your alignment(s) as input files:
+Log in to rhino or gizmo (doesn't matter which), navigate to the folder where your alignment(s) are, and run this script, specifying your alignment(s) as input files:
 ```
 cd ~/my/folder/with/alignments
 /fh/fast/malik_h/grp/malik_lab_shared/bin/runPAML.pl myAln1.fa myAln2.fa
@@ -26,19 +26,19 @@ runPAML.pl myAln1.fa myAln2.fa
 ```
 If you want to set up your account so you can use this simpler form, and don't know how to do it, talk to me.
 
-Whichever way you do it, that command will start one 'batch' job on the cluster for each input file. Monitor whether your PAML job(s) are still running using the following command:
+Whichever way you do it, that command will start 'batch' jobs on the cluster, one for each input file. You can monitor whether your PAML job(s) are still running using the following command:
 ```
 squeue -u $USER
 ```
 This will list all the jobs you have running on the cluster. Any PAML jobs still running will show up with IDs starting `pw_` in the NAME column.
 
-Once they've finished, you can look in the output folders (called `myAln1.fa_phymlAndPAML`, etc) for the results.  Details of all the output files are given below, as well as what happens when this script runs.
+Once they've finished, they disappear from the output of the `squeue` command, and you can look in the output folders (called `myAln1.fa_phymlAndPAML`, etc) for the results.  Details of all the output files are given below, as well as what happens when this script runs.
 
 If anything went wrong, there should be useful error messages in the `myAln1.fa_runPAML.log.txt` file.  If it seems like it's not working, send me your alignment and this `log.txt` file and I'll try to troubleshoot.
 
 ## To run these scripts in other ways
 
-The runPAML.pl script will only work on gizmo/rhino. Behind the scenes, it uses a singularity image file to run a pipeline of scripts inside a container using the Fred Hutch compute cluster via sbatch. 
+The `runPAML.pl` script will only work on gizmo/rhino. Behind the scenes, it uses a singularity image file to run a pipeline of scripts inside a container using the Fred Hutch compute cluster via sbatch. 
 
 Maybe you don't want to use the Fred Hutch computers (gizmo/rhino). Maybe you want to use individual scripts and modify them. Maybe you want to use Docker. See [here](docs/running_in_other_ways.md) for notes on how you might run it in other ways.
 
@@ -108,8 +108,6 @@ We would then combine the results as before, and see whether we had evidence for
 
 
 # Some other utility scripts I haven't yet put into this repo, but I will! 
-
-Some of them could also be added to the pw_makeTreeAndRunPAML.pl pipeline - annotating selected sites, and parsing the rst file
 
 ## pw_maskCpGsitesInAlignment.bioperl
 A utility script to mask CpGs in alignment:
