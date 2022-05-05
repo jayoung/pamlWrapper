@@ -59,39 +59,30 @@ module load Singularity/3.5.3
 singularity build paml_wrapper-v1.0.5.sif docker://jayoungfhcrc/paml_wrapper:version1.0.5
 module purge
 ```
-A file called paml_wrapper-v1.0.5.sif appears. 
+A file called paml_wrapper-v1.0.5.sif appears. I want a copy of the singularity image file, and a script that uses it, in a more central place, for use by others:
+```
+cp paml_wrapper-v1.0.5.sif /fh/fast/malik_h/grp/malik_lab_shared/singularityImages
+cp ../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl /fh/fast/malik_h/grp/malik_lab_shared/bin/runPAML.pl
+```
 
-I could get a shell in the singularity container like this:
+I can get a shell in the singularity container like this:
 ```
 cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments
 module load Singularity/3.5.3
-singularity shell --cleanenv /fh/fast/malik_h/grp/malik_lab_shared/singularityImages
+singularity shell --cleanenv /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.0.5.sif
 module purge
 ```
 
-And within the shell, this works.
+And within the shell, this works:
 ```
 pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa 
 ```
 
-Or, I can run some code using the singularity image without entering a shell:
+Or, I can run some code using the singularity image without entering a shell (the `pw_makeTreeAndRunPAML_singularityWrapper.pl` script (same as `runPAML.pl`) does this for each alignment):
 ```
 module load Singularity/3.5.3
-singularity exec --cleanenv /fh/fast/malik_h/grp/malik_lab_shared/singularityImages pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa 
+singularity exec --cleanenv /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.0.5.sif pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa 
 module purge
-```
-
-and when we're done:
-```
-module purge
-```
-
-The `pw_makeTreeAndRunPAML_singularityWrapper.pl` script will run pw_makeTreeAndRunPAML.pl on each alignment
-
-I want a copy of the singularity image file, and a script that uses it, in a more central place, for use by others:
-```
-cp paml_wrapper-v1.0.5.sif /fh/fast/malik_h/grp/malik_lab_shared/singularityImages
-cp ../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl /fh/fast/malik_h/grp/malik_lab_shared/bin/runPAML.pl
 ```
 
 Test the new singularity container, on rhino/gizmo:
