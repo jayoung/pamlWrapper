@@ -1,0 +1,124 @@
+#!/usr/bin/perl
+use warnings;
+use strict;
+use Bio::SeqIO;
+
+# looks for pairs of columns from alignment where any sequence has a CpG at that position
+# output a new alignment file with any codon overlapping a CpG site removed (infile.removeCpGinframe.fa)
+# note that I am not dealing with CGs that are interrupted by gaps. This is a flaw
+
+# this script could probably be simplified. I modified it from an old, more complex script and didn't spend time tidying it up
+
+my $dinucReplacement = "NN";
+
+################## script begins below
+
+foreach my $infile (@ARGV) {
+    if (!-e $infile) { die "\n\nterminating - file $infile does not exist\n\n"; }
+    if (-z $infile) {
+        print "    WARNING - skipping file $infile, as it is empty\n";
+        next;
+    }
+    print "\n#### working on file $infile\n";
+    my $outfile = $infile;
+    $outfile =~ s/\.fasta$//; $outfile =~ s/\.fa$//; 
+    $outfile .= ".removeCpGcodons.fa";
+    if (-e $outfile) {
+        print "skipping file $infile - outfile $outfile already exists\n"; 
+        next;
+    }
+    
+    my $seqIN = Bio::SeqIO->new(-file => "$infile", '-format' => 'Fasta');
+    my @orderedseqs;
+    #go through sequences the first time and read them in (the hash called sequences will be a hash of arrays, values is the seq object)
+    my %sequences;
+    while (my $thisseq = $seqIN->next_seq()) {
+        my $seqname = $thisseq->display_id();
+        my $sequence = $thisseq->seq();
+        push @orderedseqs, $seqname;
+        $sequences{$seqname} = $thisseq;
+    }
+    my $alnLen = $sequences{$orderedseqs[0]} -> length();
+    ### newsequences and oldsequences - text-only versions of the sequences
+    my %newsequences;
+    my %oldsequences;
+    foreach my $seq (keys %sequences) {
+        $newsequences{$seq} = $sequences{$seq}->seq();
+        $oldsequences{$seq} = $sequences{$seq}->seq();
+        ### taking the text-only versions: if I change that at any point later, it's possible I'll have to clone these objects to avoid modifying the originals
+    }
+    
+    #now go through each dinucleotide in alignment and if at least one CpG, replace with the replacement character
+    my $numNucsMasked = 0;
+    for (my $dinucStart=0;$dinucStart<($alnLen-2);$dinucStart++) {
+        my $anyCpG = "no";
+        foreach my $seq (keys %sequences) {
+            my $thisDinuc = $sequences{$seq}->seq;
+            $thisDinuc = substr($thisDinuc, $dinucStart, 2);
+            if (($thisDinuc eq "CG") || ($thisDinuc eq "cg")) {
+               $anyCpG = "yes";
+            }
+        }
+        if ($anyCpG eq "no") {next;}
+        $numNucsMasked++;
+        #go through all seqs at that position and make the replacement (unless the seq has a gap)
+        foreach my $key2 (keys %newsequences) {
+            my $currentDinuc = substr($newsequences{$key2}, $dinucStart, 2);
+            if ($currentDinuc eq "--") {next;} # I don't replace gap chars with NN
+            substr($newsequences{$key2}, $dinucStart, 2, $dinucReplacement);
+        }
+    }
+
+    ## produce outfile where CpG columns are removed as well as the whole codon(s) in which they appear
+    my $seqOUT_CpGinframe = Bio::SeqIO->new(-file => "> $outfile", '-format' => 'fasta');
+
+    my %CpGmaskedSeqsAsCodonArrays;
+    foreach my $key5 (@orderedseqs) {
+        my $seqString = $newsequences{$key5};
+        my $length = length($seqString);
+        for (my $i=0;$i<$length;$i+=3) { 
+            my $codon = substr($seqString,$i,3);
+            push @{$CpGmaskedSeqsAsCodonArrays{$key5}}, $codon;
+        }
+    }
+
+    #now go through each codon in alignment and if at least one gap character, skip it, otherwise add to the %newseqsAllGapCodonsRemoved hash of arrays
+    my %newseqsAllGapCodonsRemoved;
+    my $numgoodcodons = 0;
+    my $numcodons;
+    foreach my $key1 (@orderedseqs) {
+        $newseqsAllGapCodonsRemoved{$key1} = "";
+        $numcodons = @{$CpGmaskedSeqsAsCodonArrays{$key1}};
+    }
+    for (my $j=0;$j<$numcodons;$j++) {
+        my $thisCodonGood = 1;
+        #go through all seqs at that codon
+        foreach my $key2 (@orderedseqs) {
+            ### before July 31 2018 I had this, which meant I was skipping alignment columns that had at least one seq with a gap
+            #if ( (@{$CpGmaskedSeqsAsCodonArrays{$key2}}[$j] =~ m/N/i)
+            #  || (@{$CpGmaskedSeqsAsCodonArrays{$key2}}[$j] eq "---")) {
+            if (@{$CpGmaskedSeqsAsCodonArrays{$key2}}[$j] =~ m/N/i) {
+                $thisCodonGood=0; 
+            }
+        }
+        if ($thisCodonGood == 1) {
+            $numgoodcodons++;
+            foreach my $key3 (@orderedseqs) {
+                $newseqsAllGapCodonsRemoved{$key3} .= @{$CpGmaskedSeqsAsCodonArrays{$key3}}[$j];
+            } 
+        }
+    }
+
+    foreach my $key4 (@orderedseqs) {
+        my $seqLetters = $newseqsAllGapCodonsRemoved{$key4};
+        $seqLetters =~ s/!/-/g;
+        my $seq = Bio::Seq->new(-display_id=>$key4, -seq=>$seqLetters);
+        $seqOUT_CpGinframe->write_seq($seq);
+    }
+    if ($numgoodcodons==0) {
+        print "\n\t\tWARNING for $infile - not sure whether any good codons remain\n\n";
+        next;
+    }
+    
+}
+

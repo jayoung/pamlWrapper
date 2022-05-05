@@ -57,7 +57,19 @@ foreach my $alignmentFile (@ARGV) {
     if ($alnFileWithoutDir =~ m/\//) {
         $alnFileWithoutDir = (split /\//, $alnFileWithoutDir)[-1];
     }
-    
+    ## run some checks on the alignment
+    # are seqs the same length?
+    my $exitCode = system("$masterPipelineDir/scripts/pw_checkAlignmentBasics.pl $alnFileWithoutDir") >> 8;
+    if ($exitCode > 0) {
+        die "\n\nTerminating - ERROR - problem with seq lengths in alignment file (see details above). Is this really an in-frame alignment?  We need an in-frame alignment to run PAML\n\n";
+    }
+    # check for internal stops/frameshifts
+    my $exitCode2 = system("$masterPipelineDir/scripts/pw_checkAlignmentFrameshiftsStops.pl $alnFileWithoutDir") >> 8;
+    if ($exitCode2 > 0) {
+        print "    WARNING - some seqs in this alignment file have internal stops/frameshifts (see details above). Is this really an in-frame alignment?  We need an in-frame alignment to run PAML. Proceeding, but you might want to check your alignment\n\n";
+    }
+
+
     ## make a new folder, and run everything in there
     my $pamlDir = $alnFileWithoutDir . "_phymlAndPAML";
     if (!-e $pamlDir) { mkdir $pamlDir; }

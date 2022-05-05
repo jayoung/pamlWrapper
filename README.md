@@ -1,11 +1,13 @@
 # pamlWrapper
-Janet Young, April 2022
+Janet Young, Fred Hutchinson Cancer Center, April 2022
 
 Starting with an in-frame alignment in fasta format, this repository has code that will run sitewise PAML using various evolutionary models and parse the output into tabular format.
 
 This should work well, but if you find any problems, don't understand what's going on, or have suggestions for improvements, please talk to me, submit an issue using the github site, or email me.
 
 There's an associated [docker image](https://hub.docker.com/repository/docker/jayoungfhcrc/paml_wrapper) to help you run this on any computer, and a singularity version of that image stored on rhino/gizmo (see below).
+
+I'm making these scripts public. Use them as you like, but please acknowledge me in any publication arising from their use, and it would make me happy if you let me know they were useful.
 
 # Instructions
 
@@ -47,7 +49,14 @@ Maybe you don't want to use the Fred Hutch computers (gizmo/rhino). Maybe you wa
 
 The pipeline performs the following steps on each input file (e.g. if the input file is called `myAln.fa`): 
 
-- makes a subdir called `myAln.fa_phymlAndPAML` 
+- performs some basic checks on the alignment to make sure it's suitable for PAML (using script `pw_checkAlignmentBasics.pl`)
+  - checks sequences are all the same length as each other - if not, we stop here and do not run PAML
+  - checks alignment length is divisible by 3 - if not, we stop here and do not run PAML
+  - checks the alignment does not include duplicate sequence names - if not, we stop here and do not run PAML
+
+- performs another check, looking in each sequence for internal stop codons or frameshifting gaps. We issue warnings if we find any, but still proceed to PAML (using script `pw_checkAlignmentFrameshiftsStops.pl`)
+
+- makes a subdir called `myAln.fa_phymlAndPAML` where we'll do all the work
 
 - reformats the alignment for PHYML/PAML (the `myAln.fa.phy` file): 
   - replace in-frame stop codons with gap codon (---) because PAML hates those
@@ -110,27 +119,29 @@ We would then combine the results as before, and see whether we had evidence for
 # Some other utility scripts I haven't yet put into this repo, but I will! 
 
 ## pw_maskCpGsitesInAlignment.bioperl
-A utility script to mask CpGs in alignment:
+
+CpG dinucleotides are hyper-mutagenic, via deamination of methylated cytosines. CpGs are often methylated in mammals (for example) but not Drosophila (for example).  PAML's evolutionary models do not account for this, and I fear that sometimes, weaker signals of positive selection are due to high rate of change at CpG-containing codons, rather than true positive selection.
+
+An ad hoc and much too conservative way to address this is to remove from the alignment any codon that overlaps a CpG dinucleotide in any of the extant species. Often this results in a much shorter alignment. I run PAML on that alignment too: if I still see positive selection, I have additional confidence in the result.
+
+Known problems with this script/approach:  
+- I am not checking for CpG dinucleotides that are split by in-frame alignment gaps, and I really should be removing these, too.
+- I am not checking for ancestral CpG dinucleotides that have mutated away in ALL extant sequences in the alignment
+
+`pw_maskCpGsitesInAlignment.bioperl` is a utility script to mask CpGs in alignment:
 ```
-scripts/pw_maskCpGsitesInAlignment.bioperl geneList1.txt_output/runPAML/*.fa  
+pw_maskCpGsitesInAlignment.bioperl ACE2_primates_aln1_NT.fa  
 ```
-I then run PHYML+PAML on the masked AND unmasked alignments - ideally I want to see signs of selection with BOTH.  For an input file called `SMARCB1_primates_aln2_NT.fa`  there will be two output files called  
-- `SMARCB1_primates_aln2_NT.removeCpGinframe.fa`  
-- `SMARCB1_primates_aln2_NT.maskCpGreport.txt`  
 
 ## pw_annotateCpGsitesInAlignment.bioperl
-A utility script to make an annotated alignment, where we add a sequence line that shows where the CpG dinucleotides are. I will most likely want to run this on the alignments that are in tree order:  
+
+Sometimes, rather than removing codons that overlap CpG dinucleotides, I simply want to see where they are in my alignment. This script annotates them. For a fasta format alignment, we add a fake sequence at the end that mostly comprises gaps, but uses NN to show where any of the extant sequences contain CpG.  
+
+I will most often want to run this on the alignments where I've already annotated positively selected sites:  
 ```
-scripts/pw_annotateCpGsitesInAlignment.bioperl *NT.fa_phymlAndPAML/*treeorder.fa
+pw_annotateCpGsitesInAlignment.pl ACE2_primates_aln1_NT.fa_phymlAndPAML/ACE2_primates_aln1_NT.treeorder.annotBEBover0.9.fa
 ```
 
 # To do list
-
-add a script that runs before doing anything else to check the input alignment and warns if things aren't the same length, or if there's a lot of stop codons or frameshifts
-
-move more utility scripts to this repo from the older repo (janet_pamlPipeline)
-- CpG mask, CpG annotate
-- GARD?
-- any others??
 
 do I want to include the --add option and check in the runPAML.pl/pw_makeTreeAndRunPAML_singularityWrapper.pl script?  It should probably be consistent with the pw_makeTreeAndRunPAML_sbatchWrapper.pl script
