@@ -68,7 +68,7 @@ You can use various methods to manage and run your docker containers and images.
 
 Once docker is installed and running, you'll download my docker image (called `paml_wrapper`) onto your computer. I do that from a terminal window (update the version tag with the most recent version listed [here](https://hub.docker.com/repository/docker/jayoungfhcrc/paml_wrapper)):
 ```
-docker pull jayoungfhcrc/paml_wrapper:version1.0.4
+docker pull jayoungfhcrc/paml_wrapper:version1.0.5
 ```
 After that, the mini-computer is ready to use, and the image should stick around on your computer long-term. That means you will only need to do `docker pull` once, until I make updates, in which case you'll want to pull the docker image again so that you're using the latest version.
 

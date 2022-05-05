@@ -36,13 +36,13 @@ docker run -v `pwd`:/workingDir -it paml_wrapper
 
 When I know it's working I add a new tag and push it to [docker hub](https://hub.docker.com/repository/docker/jayoungfhcrc/paml_wrapper).  I update the version number each time:
 ```
-docker tag paml_wrapper jayoungfhcrc/paml_wrapper:version1.0.4
-docker push jayoungfhcrc/paml_wrapper:version1.0.4
+docker tag paml_wrapper jayoungfhcrc/paml_wrapper:version1.0.5
+docker push jayoungfhcrc/paml_wrapper:version1.0.5
 ```
 
 I then test my container in a totally different environment using the [Play with Docker](https://labs.play-with-docker.com) site - it seems to work. Once I have an instance running there:
 ```
-docker run -it jayoungfhcrc/paml_wrapper:version1.0.4
+docker run -it jayoungfhcrc/paml_wrapper:version1.0.5
 cd pamlWrapper/testData/
 pw_makeTreeAndRunPAML.pl ACE2_primates_aln1_NT.fa
 ```
@@ -56,7 +56,7 @@ On gizmo/rhino:
 cd ~/FH_fast_storage/paml_screen/pamlWrapper/buildContainer
 module purge
 module load Singularity/3.5.3
-singularity build paml_wrapper-v1.0.5.sif docker://jayoungfhcrc/paml_wrapper:version1.0.4
+singularity build paml_wrapper-v1.0.5.sif docker://jayoungfhcrc/paml_wrapper:version1.0.5
 module purge
 ```
 A file called paml_wrapper-v1.0.5.sif appears. 
