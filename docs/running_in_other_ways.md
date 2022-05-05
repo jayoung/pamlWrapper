@@ -48,10 +48,10 @@ You'll also want to:
 
 My docker image is [here](https://hub.docker.com/repository/docker/jayoungfhcrc/paml_wrapper)
 
-There's a singularity file version of that on rhino/gizmo `/fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.0.4.sif` (check the version number!  README might not list the most recent version).  I use it like this:
+There's a singularity file version of that on rhino/gizmo `/fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.0.5.sif` (check the version number!  README might not list the most recent version).  I use it like this:
 ```
 module load Singularity/3.5.3
-singularity exec --cleanenv /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.0.4.sif pw_makeTreeAndRunPAML.pl myAln.fa > myAln.fa_runPAMLwrapper.log.txt
+singularity exec --cleanenv /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.0.5.sif pw_makeTreeAndRunPAML.pl myAln.fa > myAln.fa_runPAMLwrapper.log.txt
 module purge
 ```
 This is exactly what the `runPAML.pl` script listed above does, except we make a shell script for each input file and run that using sbatch.

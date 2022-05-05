@@ -56,10 +56,10 @@ On gizmo/rhino:
 cd ~/FH_fast_storage/paml_screen/pamlWrapper/buildContainer
 module purge
 module load Singularity/3.5.3
-singularity build paml_wrapper-v1.0.4.sif docker://jayoungfhcrc/paml_wrapper:version1.0.4
+singularity build paml_wrapper-v1.0.5.sif docker://jayoungfhcrc/paml_wrapper:version1.0.4
 module purge
 ```
-A file called paml_wrapper-v1.0.4.sif appears. 
+A file called paml_wrapper-v1.0.5.sif appears. 
 
 I could get a shell in the singularity container like this:
 ```
@@ -90,7 +90,7 @@ The `pw_makeTreeAndRunPAML_singularityWrapper.pl` script will run pw_makeTreeAnd
 
 I want a copy of the singularity image file, and a script that uses it, in a more central place, for use by others:
 ```
-cp paml_wrapper-v1.0.4.sif /fh/fast/malik_h/grp/malik_lab_shared/singularityImages
+cp paml_wrapper-v1.0.5.sif /fh/fast/malik_h/grp/malik_lab_shared/singularityImages
 cp ../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl /fh/fast/malik_h/grp/malik_lab_shared/bin/runPAML.pl
 ```
 
