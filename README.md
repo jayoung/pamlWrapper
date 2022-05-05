@@ -116,7 +116,7 @@ If you are running the `pw_makeTreeAndRunPAML.pl` or `pw_makeTreeAndRunPAML_sbat
 We would then combine the results as before, and see whether we had evidence for positive selection with all parameter choices.
 
 
-# Some other utility scripts I haven't yet put into this repo, but I will! 
+# Some utility scripts
 
 ## pw_maskCpGsitesInAlignment.bioperl
 
@@ -141,7 +141,3 @@ I will most often want to run this on the alignments where I've already annotate
 ```
 pw_annotateCpGsitesInAlignment.pl ACE2_primates_aln1_NT.fa_phymlAndPAML/ACE2_primates_aln1_NT.treeorder.annotBEBover0.9.fa
 ```
-
-# To do list
-
-do I want to include the --add option and check in the runPAML.pl/pw_makeTreeAndRunPAML_singularityWrapper.pl script?  It should probably be consistent with the pw_makeTreeAndRunPAML_sbatchWrapper.pl script
