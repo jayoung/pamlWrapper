@@ -8,14 +8,14 @@ use strict;
 ##################
 
 foreach my $treeOutfile (@ARGV) {
-    if (!-e $treeOutfile) { die "\n\nterminating - file $treeOutfile does not exist\n\n";}
+    if (!-e $treeOutfile) { die "\n\nERROR - terminating in script pw_removeBranchLengthsFromTree.pl - file $treeOutfile does not exist\n\n";}
     if (-z $treeOutfile) {
-        die "\n\nterminating pp_runPHYML.pl - tree file is empty, perhaps phyml failed\n\n";
+        die "\n\nERROR - terminating in script pw_removeBranchLengthsFromTree.pl - tree file is empty, perhaps phyml failed\n\n";
     }
     
     ## remove branch lengths
     my $treeWithoutBranches = "$treeOutfile.nolen";
-    open (IN, "< $treeOutfile") || die "\n\nterminating - couldn't open file $treeOutfile\n\n";
+    open (IN, "< $treeOutfile") || die "\n\nERROR - terminating in script pw_removeBranchLengthsFromTree.pl - couldn't open file $treeOutfile\n\n";
     open (OUT, "> $treeWithoutBranches");
     while (<IN>) {
         my $line = $_;

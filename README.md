@@ -32,11 +32,17 @@ Whichever way you do it, that command will start 'batch' jobs on the cluster, on
 ```
 squeue -u $USER
 ```
-This will list all the jobs you have running on the cluster. Any PAML jobs still running will show up with IDs starting `pw_` in the NAME column.
+This will list all the jobs you have running on the cluster. Any PAML jobs still running will show up with IDs starting `pw_` in the NAME column. The JOBID column shows a numerical job ID that can be useful: for example, if the JOBID is `55134218` you could cancel your job using this command: `scancel 55134218`. 
 
-Once they've finished, they disappear from the output of the `squeue` command, and you can look in the output folders (called `myAln1.fa_phymlAndPAML`, etc) for the results.  Details of all the output files are given below, as well as what happens when this script runs.
+Once they've finished, they disappear from the output of the `squeue` command, and you can look in the output folders (called `myAln1.fa_phymlAndPAML`, etc) for the results.  Details of all the output files are given below, as well as what happens when this script runs. 
 
 If anything went wrong, there should be useful error messages in the `myAln1.fa_runPAML.log.txt` file.  If it seems like it's not working, send me your alignment and this `log.txt` file and I'll try to troubleshoot.
+
+There'll also be a second log file for each job, called something like `slurm-55131024.out` (the numerical JOBID is in the filename). Once in a while errors will show up in here. You can ignore warnings that look something like this:
+```
+WARNING: Bind mount '/home/jayoung => /home/jayoung' overlaps container CWD /home/jayoung/FH_fast_storage/paml_screen/pamlWrapperTestAlignments, may not be available
+```
+but please don't ignore any other warnings/errors you see in the `slurm-JOBID.out` file.  Email me with the input file and copy-paste the error you got.
 
 ## To run these scripts in other ways
 
@@ -141,3 +147,4 @@ I will most often want to run this on the alignments where I've already annotate
 ```
 pw_annotateCpGsitesInAlignment.pl ACE2_primates_aln1_NT.fa_phymlAndPAML/ACE2_primates_aln1_NT.treeorder.annotBEBover0.9.fa
 ```
+

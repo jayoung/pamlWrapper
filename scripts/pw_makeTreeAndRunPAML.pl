@@ -18,7 +18,7 @@ my $BEBprobThresholdToPrintSelectedSite = 0.9; ### report selected sites with at
 GetOptions("omega=f" => \$initialOrFixedOmega,   ## sometimes I do 3
            "codon=i" => \$codonFreqModel,        ## sometimes I do 3
            "clean=i" => \$cleanData,             ## sometimes I do 1 to remove the sites with gaps in any species
-           "BEB=f"   => \$BEBprobThresholdToPrintSelectedSite) or die "\n\nterminating - unknown option(s) specified on command line\n\n"; 
+           "BEB=f"   => \$BEBprobThresholdToPrintSelectedSite) or die "\n\nERROR - terminating in script pw_makeTreeAndRunPAML.pl - unknown option(s) specified on command line\n\n"; 
 
 ##### I don't usually change these things:
 my $masterPipelineDir = $ENV{'PAML_WRAPPER_HOME'}; 
@@ -38,7 +38,7 @@ my @modelsToRun = ("0","0fixNeutral","1","2","7","8","8a");
 
 #first read in codeml.ctl template
 if (!-e $codemlCTLtemplateFile) {
-    die "\n\nterminating pw_makeTreeAndRunPAML.pl - cannot open template file $codemlCTLtemplateFile\n\n";
+    die "\n\nERROR - terminating in script pw_makeTreeAndRunPAML.pl - cannot open template file $codemlCTLtemplateFile\n\n";
 }
 undef $/;
 open (TEMPLATE, "< $codemlCTLtemplateFile");
@@ -50,7 +50,7 @@ my $topDir = cwd();
 
 foreach my $alignmentFile (@ARGV) {
     if (!-e $alignmentFile) {
-        die "\n\nterminating - alignment file $alignmentFile does not exist\n\n";
+        die "\n\nERROR - terminating in script pw_makeTreeAndRunPAML.pl - alignment file $alignmentFile does not exist\n\n";
     } 
     print "\n######## Running PAML for alignment $alignmentFile with codon model $codonFreqModel, starting omega $initialOrFixedOmega, cleandata $cleanData\n";
     my $alnFileWithoutDir = $alignmentFile;
@@ -61,7 +61,7 @@ foreach my $alignmentFile (@ARGV) {
     # are seqs the same length?
     my $exitCode = system("$masterPipelineDir/scripts/pw_checkAlignmentBasics.pl $alnFileWithoutDir") >> 8;
     if ($exitCode > 0) {
-        die "\n\nTerminating - ERROR - problem with seq lengths in alignment file (see details above). Is this really an in-frame alignment?  We need an in-frame alignment to run PAML\n\n";
+        die "\n\nERROR - terminating in script pw_makeTreeAndRunPAML.pl - ERROR - problem with seq lengths in alignment file (see details above). Is this really an in-frame alignment?  We need an in-frame alignment to run PAML\n\n";
     }
     # check for internal stops/frameshifts
     my $exitCode2 = system("$masterPipelineDir/scripts/pw_checkAlignmentFrameshiftsStops.pl $alnFileWithoutDir") >> 8;
@@ -97,7 +97,7 @@ foreach my $alignmentFile (@ARGV) {
         system("$masterPipelineDir/scripts/pw_runPHYML.pl $alnFilePhylipFormat")
     }
     if (!-e $treeFile2) {
-        die "\n\nterminating pw_makeTreeAndRunPAML.pl - tree file $treeFile2 does not exist\n\n";
+        die "\n\nERROR - terminating in script pw_makeTreeAndRunPAML.pl - tree file $treeFile2 does not exist\n\n";
     }
     if (!-e "../$treeFile2") { system("cp $treeFile2 .."); }
     chdir ".."; ## I'm in $pamlDir
@@ -174,7 +174,7 @@ foreach my $alignmentFile (@ARGV) {
 
         system ("$masterPipelineDir/scripts/pw_parsedPAMLconvertToWideFormat.pl $parsedPAMLoutputFile");
         if(!-e $parsedPAMLoutputFile) {
-            die "\n\nTerminating - parsed PAML output file does not exist: $parsedPAMLoutputFile\n\n";
+            die "\n\nERROR - terminating in script pw_makeTreeAndRunPAML.pl - parsed PAML output file does not exist: $parsedPAMLoutputFile\n\n";
         }
     }
 } # end of foreach my $alignmentFile loop

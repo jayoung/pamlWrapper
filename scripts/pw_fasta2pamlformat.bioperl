@@ -15,7 +15,7 @@ use Bio::SeqIO;
 ##################
 
 if (@ARGV==0) {
-    die "\n\nterminating - please supply input file name(s)\n\n";
+    die "\n\nERROR - terminating in script pw_fasta2pamlformat.bioperl - please supply input file name(s)\n\n";
 }
 
 my $truncateNames = 30;
@@ -25,7 +25,7 @@ my $truncateNames = 30;
 #print "\n\n";
 foreach my $infile (@ARGV) {
     if (!-e $infile) {
-        die "\n\nterminating - file $infile does not exist\n\n";
+        die "\n\nERROR - terminating in script pw_fasta2pamlformat.bioperl - file $infile does not exist\n\n";
     }
     #print "file $infile\n";
     my $nameFile = $infile.".aliases.txt";
@@ -34,18 +34,16 @@ foreach my $infile (@ARGV) {
     my $seqin = Bio::SeqIO->new(-file=>"$infile",-format=>"fasta");
     my (%seqhash,@orderedseqlist);
     while (my $seq=$seqin->next_seq()) {
-        #print "    got a seq\n";
         my $seqname = $seq->display_id();
         my $originalName = $seqname;
         #print "    got a seq $seqname\n";
-        if ($truncateNames ne "no") {
-            if (length($seqname) > $truncateNames) {
-                $seqname = substr($seqname, 0, $truncateNames);
-            }
-            print NAMES "$originalName\t$seqname\n"; 
+        if (length($seqname) > $truncateNames) {
+            $seqname = substr($seqname, 0, $truncateNames);
         }
+        $seqname =~ s/\'//;  ### e.g. deal with seqs with names like Francois's_langur_CENPA
+        print NAMES "$originalName\t$seqname\n"; 
         if (defined ($seqhash{$seqname}) ) {
-            die "\n\nterminating on file $infile - sequence names are not unique after truncating to 30 characters. First bad one is $seqname\n\n";
+            die "\n\nERROR - terminating in script pw_fasta2pamlformat.bioperl on file $infile - sequence names are not unique after truncating to 30 characters and cleaning up weird characters. First bad one is $seqname\n\n";
         }
         
         my $letters = $seq->seq();

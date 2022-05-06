@@ -14,7 +14,7 @@ my $dinucReplacement = "NN";
 ################## script begins below
 
 foreach my $infile (@ARGV) {
-    if (!-e $infile) { die "\n\nterminating - file $infile does not exist\n\n"; }
+    if (!-e $infile) { die "\n\nERROR - terminating in script pw_maskCpGsitesInAlignment.bioperl - file $infile does not exist\n\n"; }
     if (-z $infile) {
         print "    WARNING - skipping file $infile, as it is empty\n";
         next;

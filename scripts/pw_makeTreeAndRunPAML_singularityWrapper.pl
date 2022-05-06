@@ -46,11 +46,11 @@ my @files = grep !/^--/, @ARGV;
 foreach my $commandLineOption (@commandLineOptions) {
     $commandLineOption =~ s/^--//;
     if ($commandLineOption !~ m/=/) {
-        die "\n\nTerminating - found a command line option that does not contain '=': that doesn't look right: $commandLineOption.\n\n$usage\n\n";
+        die "\n\nERROR - terminating in script pw_makeTreeAndRunPAML_singularityWrapper.pl - found a command line option that does not contain '=': that doesn't look right: $commandLineOption.\n\n$usage\n\n";
     }
     my @o = split /=/, $commandLineOption;
     if (!defined $options{$o[0]}) {
-        die "\n\nTerminating - found a command line option I don't recognize: $o[0].\n\n$usage\n\n";
+        die "\n\nERROR - terminating in script pw_makeTreeAndRunPAML_singularityWrapper.pl - found a command line option I don't recognize: $o[0].\n\n$usage\n\n";
     }
     $options{$o[0]} = $o[1];
 }
@@ -58,14 +58,14 @@ foreach my $commandLineOption (@commandLineOptions) {
 # check remaining args - they should all be names of files that exist:
 foreach my $alnFile (@files) {
     if (!-e $alnFile) {
-        die "\n\nTerminating - file $alnFile does not exist. It's possible you specified a file that doesn't exist, or it's possible you tried to specify a command line argument and got it slightly wrong.\n\n$usage\n\n";
+        die "\n\nERROR - terminating in script pw_makeTreeAndRunPAML_singularityWrapper.pl - file $alnFile does not exist. It's possible you specified a file that doesn't exist, or it's possible you tried to specify a command line argument and got it slightly wrong.\n\n$usage\n\n";
     }
 }
 
 ############# now do things
 
 if (!-e $options{'sif'}) {
-    die "\n\nTerminating - singularity image file expected by the script does not exist: $options{'sif'}\n\n";
+    die "\n\nERROR - terminating in script pw_makeTreeAndRunPAML_singularityWrapper.pl - singularity image file expected by the script does not exist: $options{'sif'}\n\n";
 }
 
 foreach my $alnFile (@files) {
@@ -96,7 +96,7 @@ foreach my $alnFile (@files) {
     print SH "#!/bin/bash\n";
     print SH "source /app/lmod/lmod/init/profile\n";
     print SH "module load Singularity/3.5.3\n";
-    print SH "singularity exec --cleanenv $options{'sif'} pw_makeTreeAndRunPAML.pl --omega=$options{'omega'} --codon=$options{'codon'} --clean=$options{'clean'} --BEB=$options{'BEB'} $alnFile > $logFile\n";
+    print SH "singularity exec --cleanenv $options{'sif'} pw_makeTreeAndRunPAML.pl --omega=$options{'omega'} --codon=$options{'codon'} --clean=$options{'clean'} --BEB=$options{'BEB'} $alnFile &> $logFile \n";
     print SH "module purge\n";
     close SH;
     ### then we set it running using sbatch

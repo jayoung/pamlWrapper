@@ -12,7 +12,7 @@ my $dinucAnnotation = "NN";
 ################## script begins below
 
 foreach my $infile (@ARGV) {
-    if (!-e $infile) { die "\n\nterminating - file $infile does not exist\n\n"; }
+    if (!-e $infile) { die "\n\nERROR - terminating in script pw_annotateCpGsitesInAlignment.pl - file $infile does not exist\n\n"; }
     if (-z $infile) {
         print "    WARNING - skipping file $infile, as it is empty\n";
         next;
@@ -35,12 +35,12 @@ foreach my $infile (@ARGV) {
         my $sequence = $thisseq->seq();
         my $length = $thisseq->length();
         if ($prevseqlength ne "dummy") {
-            if ($length != $prevseqlength) {die "\n\nterminating - seqlengths are different - perhaps run makeseqssamelength.pl on the alignment first. got to $seqname. length is $length and prev length was $prevseqlength\n\n";}
+            if ($length != $prevseqlength) {die "\n\nERROR - terminating in script pw_annotateCpGsitesInAlignment.pl - seqlengths are different - perhaps run makeseqssamelength.pl on the alignment first. got to $seqname. length is $length and prev length was $prevseqlength\n\n";}
         }
         $prevseqlength = $length;
         ### check for seeing a sequence twice
         if (defined $sequences{$seqname}) {
-            die "\n\nterminating - seeing sequence name $sequence twice in the file - script is not set up to deal with this\n\n";
+            die "\n\nERROR - terminating in script pw_annotateCpGsitesInAlignment.pl - seeing sequence name $sequence twice in the file - script is not set up to deal with this\n\n";
         }
         $sequences{$seqname} = $thisseq;
     }

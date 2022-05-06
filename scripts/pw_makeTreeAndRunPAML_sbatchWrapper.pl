@@ -18,7 +18,7 @@ GetOptions("omega=f" => \$initialOrFixedOmega,   ## sometimes I do 3, default is
            "codon=i" => \$codonFreqModel,        ## sometimes I do 3, default is 2
            "clean=i" => \$cleanData,             ## sometimes I do 1 to remove the sites with gaps in any species
            "walltime=s"  => \$walltime,
-           "add"     => \$addToExistingOutputDir) or die "\n\nterminating - unknown option(s) specified on command line\n\n";             
+           "add"     => \$addToExistingOutputDir) or die "\n\nERROR - terminating in script pw_makeTreeAndRunPAML_sbatchWrapper.pl - unknown option(s) specified on command line\n\n";             
                       ## '--wall 0-6' to specify 6 hrs
 
 
@@ -31,7 +31,7 @@ print "\nrunning PAML with these parameters:\n    starting omega $initialOrFixed
 ##################
 
 foreach my $file (@ARGV) {
-    if (!-e $file) { die "\n\nterminating - file $file does not exist\n\n";}
+    if (!-e $file) { die "\n\nERROR - terminating in script pw_makeTreeAndRunPAML_sbatchWrapper.pl - file $file does not exist\n\n";}
     print "\n####### Working on file $file\n";
     ## I used to always check for the top level outdir.
     # now I still do it by default, but I can override by including --add on the command line (because I might want to run PAML again with different parameters)

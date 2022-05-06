@@ -4,14 +4,14 @@ use warnings;
 use Bio::SeqIO;
 use Bio::Seq;
 
-#takes seqs in file1 and reorders them in same order as tree file file2
+# takes seqs in file1 and reorders them in same order as tree file file2
 
 my $verbose = 0; ## 1 for verbose, 0 for not.
 
 #------------------------------------
-if (@ARGV != 2) {die "\n\nterminating - expecting two arguments: (1) seq file (2) tree file\n\n";}
-if (!-e $ARGV[0]) {die "\n\nterminating - can't open seq file $ARGV[0]\n\n";}
-if (!-e $ARGV[1]) {die "\n\nterminating - can't open seq file $ARGV[1]\n\n";}
+if (@ARGV != 2) {die "\n\nERROR - terminating in script pw_reorderseqs_treeorder.pl - expecting two arguments: (1) seq file (2) tree file\n\n";}
+if (!-e $ARGV[0]) {die "\n\nERROR - terminating in script pw_reorderseqs_treeorder.pl - can't open seq file $ARGV[0]\n\n";}
+if (!-e $ARGV[1]) {die "\n\nERROR - terminating in script pw_reorderseqs_treeorder.pl - can't open seq file $ARGV[1]\n\n";}
 
 my $out = $ARGV[0];  $out =~ s/\.fasta$//; $out =~ s/\.fa$//;
 $out .= ".treeorder.fa";
@@ -24,15 +24,17 @@ close TREE;
 
 #check there's just one tree
 my @check = grep /\;/, @lines;
-if (@check > 1) {die "\n\nterminating - looks like there is more than one tree in file $ARGV[1]\n\n";}
-if (@check < 1) {die "\n\nterminating - looks like there is no tree in file $ARGV[1]\n\n";}
+if (@check > 1) {die "\n\nERROR - terminating in script pw_reorderseqs_treeorder.pl - looks like there is more than one tree in file $ARGV[1]\n\n";}
+if (@check < 1) {die "\n\nERROR - terminating in script pw_reorderseqs_treeorder.pl - looks like there is no tree in file $ARGV[1]\n\n";}
 
+# parse the tree to get seqnames in order
 my $tree = join "", @lines;
 $tree =~ s/[\(\)\n]//g;$tree =~ s/\n//g;
 my @seqnames = split /\,/, $tree;
 foreach my $seq (@seqnames) {
     if ($seq =~ m/\:/) {$seq = (split /\:/, $seq)[0];}
-    $seq =~ s/\'//g;$seq =~ s/;//g;
+    #$seq =~ s/\'//g; ### I had this line previously - if the original seqfile had seqnames with ' character, this script fails
+    $seq =~ s/;//g;
     if ($verbose == 1) { print "     $seq\n"; }
 }
 my $num = @seqnames;
@@ -53,7 +55,7 @@ while ($thisseq ne "") {
 
 my $numseqs = keys(%seqs);
 if ($num < $numseqs) {print "\n\nWARNING - there are $num seqs in the tree and $numseqs seqs in the file. Should match. Proceeding anyway - will just get the seqs in the tree file\n\n";}
-if ($num > $numseqs) {die "\n\nterminating - there are $num seqs in the tree and $numseqs seqs in the file. That means some seqs in the tree are missing from seqs file\n\n";}
+if ($num > $numseqs) {die "\n\nERROR - terminating in script pw_reorderseqs_treeorder.pl - there are $num seqs in the tree and $numseqs seqs in the file. That means some seqs in the tree are missing from seqs file\n\n";}
 
 #now output seqs, in order
 if ($verbose == 1) { print "\n\nWriting seqs to $out\n"; }
@@ -64,7 +66,7 @@ foreach my $name (@seqnames) {
     else { 
        my $tryanothername = $name; $tryanothername =~ s/\.frame1pep\.fasta//;
        if (defined ($seqs{$tryanothername})) {$thisseq = $seqs{$tryanothername};} 
-       if (!defined ($seqs{$tryanothername})) {die "\n\nterminating - can't find seq $name or $tryanothername in the seq file\n\n";}
+       if (!defined ($seqs{$tryanothername})) {die "\n\nERROR - terminating in script pw_reorderseqs_treeorder.pl - can't find seq $name or $tryanothername in the seq file\n\n";}
     }
     $seqio->write_seq($thisseq);  
 }

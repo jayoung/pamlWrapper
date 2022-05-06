@@ -6,7 +6,7 @@ use Bio::SeqIO;
 ### check each seq of an in-frame alignment for internal stop codons and frameshifts
 my $exitCode = 0;
 foreach my $file (@ARGV){
-    if (!-e $file) { die "\n\nterminating - cannot open file $file\n\n"; }
+    if (!-e $file) { die "\n\nERROR - terminating in script pw_checkAlignmentFrameshiftsStops.pl - cannot open file $file\n\n"; }
     print "    checking for stops/frameshifts in file $file\n";
     my $seqIN = Bio::SeqIO->new(-file => "< $file", '-format' => 'fasta');
     while (my $seq = $seqIN ->next_seq) {

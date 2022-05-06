@@ -25,7 +25,7 @@ GetOptions("omega=f"       => \$initialOrFixedOmega,   ## sometimes I do 3, defa
            "clean=i"       => \$cleanData,             ## sometimes I do 1 to remove the sites with gaps in any species
            "BEB=f"         => \$BEBprobThresholdToPrintSelectedSite, # 0.5 to be less conservative, default is 0.9
            "processTree=s" => \$processTree,
-           "comb=i"        => \$combinedOutputFile) or die "\n\nterminating - unknown option(s) specified on command line\n\n"; 
+           "comb=i"        => \$combinedOutputFile) or die "\n\nERROR - terminating in script pw_parsePAMLoutput.pl - unknown option(s) specified on command line\n\n"; 
 
 
 
@@ -46,7 +46,7 @@ my $RscriptExecutable = "Rscript";
 ## check Rscript is in our path
 my $checkWhich = `which $RscriptExecutable`;
 if ($checkWhich eq "") {
-    die "\n\nterminating - R is not available. If you're working on gizmo/rhino, maybe you need to load an R module before running this script. Try this:\n    module load fhR/4.1.2-foss-2020b\n\n";
+    die "\n\nERROR - terminating in script pw_parsePAMLoutput.pl - R is not available. If you're working on gizmo/rhino, maybe you need to load an R module before running this script. Try this:\n    module load fhR/4.1.2-foss-2020b\n\n";
 }
 
 ## prep overall outfiles, including header rows. 
@@ -65,7 +65,7 @@ my @files = sort (@ARGV);
 
 foreach my $fastaAlnFile (@files) {
     if (!-e $fastaAlnFile) {
-        die "\n\nterminating - cannot open file $fastaAlnFile\n\n";
+        die "\n\nERROR - terminating in script pw_parsePAMLoutput.pl - cannot open file $fastaAlnFile\n\n";
     }
 
     print "\n\n############################\n\n";
@@ -82,7 +82,7 @@ foreach my $fastaAlnFile (@files) {
     
     my $PAMLresultsDir = "$fastaAlnFile"."_$PAMLresultsDirSuffix";
     if (!-e $PAMLresultsDir) {
-        die "\n\nterminating - cannot find PAML results master dir $PAMLresultsDir\n\n";
+        die "\n\nERROR - terminating in script pw_parsePAMLoutput.pl - cannot find PAML results master dir $PAMLresultsDir\n\n";
     }
 
     #### first, change names in tree file (with and without branch lengths) back to originals
@@ -93,16 +93,16 @@ foreach my $fastaAlnFile (@files) {
         my $geneTreeFileNoLen = "$filenameWithoutDir.phy_phyml_tree.nolen";
         
         if (!-e $aliasesFile) {
-            die "\n\nterminating - cannot find alias file $aliasesFile\n\n";
+            die "\n\nERROR - terminating in script pw_parsePAMLoutput.pl - cannot find alias file $aliasesFile\n\n";
         }
         if (!-e $geneTreeDir) {
-            die "\n\nterminating - cannot find gene tree dir $geneTreeDir\n\n";
+            die "\n\nERROR - terminating in script pw_parsePAMLoutput.pl - cannot find gene tree dir $geneTreeDir\n\n";
         }
         if (!-e "$geneTreeDir/$geneTreeFile") {
-            die "\n\nterminating - cannot find gene tree file $geneTreeFile\n\n";
+            die "\n\nERROR - terminating in script pw_parsePAMLoutput.pl - cannot find gene tree file $geneTreeFile\n\n";
         }
         if (!-e "$geneTreeDir/$geneTreeFileNoLen") {
-            die "\n\nterminating - cannot find gene tree file without branch lengths $geneTreeFileNoLen\n\n";
+            die "\n\nERROR - terminating in script pw_parsePAMLoutput.pl - cannot find gene tree file without branch lengths $geneTreeFileNoLen\n\n";
         }
         
         print "    restoring original seq names in tree files\n";
@@ -137,11 +137,11 @@ foreach my $fastaAlnFile (@files) {
         my $modelSubDir = "$PAMLresultsDir/$thisModel"."_initOmega$initialOrFixedOmega"."_codonModel$codonFreqModel";
         if ($cleanData == 1) { $modelSubDir .= "_cleandata1"; }
         if (!-e $modelSubDir) {
-            die "\n\nterminating - cannot open PAML results dir $modelSubDir\n\n";
+            die "\n\nERROR - terminating in script pw_parsePAMLoutput.pl - cannot open PAML results dir $modelSubDir\n\n";
         }
         my $mlcFile = "$modelSubDir/mlc";
         if (!-e $mlcFile) {
-            die "\n\nterminating - cannot open mlc file $mlcFile\n\n";
+            die "\n\nERROR - terminating in script pw_parsePAMLoutput.pl - cannot open mlc file $mlcFile\n\n";
         }
         $allPAMLresults{$thisModel} = parse_paml($mlcFile, $thisModel);
     }
@@ -159,7 +159,7 @@ foreach my $fastaAlnFile (@files) {
         my $pamlWorked = "yes";
         if (defined $pamlResult{'warnings'}) {
             if ($pamlResult{'warnings'} eq "FAILED!!!") { 
-                die "\n\nterminating - looks like PAML failed - mlc file is $pamlResult{'file'}\n\n";
+                die "\n\nERROR - terminating in script pw_parsePAMLoutput.pl - looks like PAML failed - mlc file is $pamlResult{'file'}\n\n";
             } else {
                 print "        WARNING - paml result had a warning $pamlResult{'warnings'} - see file $pamlResult{'file'}\n";
             }
@@ -174,7 +174,7 @@ foreach my $fastaAlnFile (@files) {
         my $modelSubDir = "$PAMLresultsDir/$thisModel"."_initOmega$initialOrFixedOmega"."_codonModel$codonFreqModel";
         if ($cleanData == 1) { $modelSubDir .= "_cleandata1"; }
         if (!-e $modelSubDir) {
-            die "\n\nterminating - cannot open PAML results dir $modelSubDir\n\n";
+            die "\n\nERROR - terminating in script pw_parsePAMLoutput.pl - cannot open PAML results dir $modelSubDir\n\n";
         }
         $outputLine .= "$thisModel\t$modelSubDir\t";
         $outputLine .= "$codonFreqModel\t$initialOrFixedOmega\t$cleanData\t";
@@ -370,7 +370,7 @@ sub parse_paml {
     #my $seenBranchLineYet = "no";
     my $seenTimeUsedLineYet = "no";
     if (!-e $file) {
-        die "\n\nterminating in parse_paml - cannot open mlc file $file\n\n";
+        die "\n\nERROR - terminating in script pw_parsePAMLoutput.pl in parse_paml subroutine - cannot open mlc file $file\n\n";
     }
     open (MLC, "< $file");
     my $problem = "no";
@@ -487,7 +487,7 @@ sub parse_paml {
 sub paml_BEB_results {
     my $file = $_[0];
     if (!-e $file) {
-        die "\n\nterminating in paml_BEB_results - file $file does not exist\n\n";
+        die "\n\nERROR - terminating in script pw_parsePAMLoutput.pl in paml_BEB_results subroutine - file $file does not exist\n\n";
     }
     my %M8results;
     open (MLC, "< $file");
@@ -586,7 +586,7 @@ sub plot_omegas {
 sub plot_tree {
     my $treefile = $_[0];
     if (!-e $treefile) {
-        die "\n\nterminating in plot_tree - cannot find gene tree file $treefile\n\n";
+        die "\n\nERROR - terminating in script pw_parsePAMLoutput.pl in plot_tree subroutine - cannot find gene tree file $treefile\n\n";
     }
     my $treefileShortName = $treefile;
     if ($treefileShortName =~ m/\//) {

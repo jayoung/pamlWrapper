@@ -32,7 +32,7 @@ GetOptions("dat=s" => \$datatype,       ## '--dat aa' for amino acid alns
            "sbatch" => \$use_sbatch,    ## '--sbatch' to use sbatch
             ### I have disabled the ability to ask for >1 thread for now - phyml-mpi seems way slower than it should be. I might need to reinstall it and use a newer version of mpirun
             #"t=i" => \$numThreads,       ## '--t 4' to use 4 threads
-           "wall=s" => \$walltime) or die "\n\nterminating - unknown option(s) specified on command line\n\n";     ## '--wall 0-6' to specify 6 hrs
+           "wall=s" => \$walltime) or die "\n\nERROR - terminating in script pw_runPHYML.pl - unknown option(s) specified on command line\n\n";     ## '--wall 0-6' to specify 6 hrs
 
 my $constantParameters = "--sequential --pinv e --alpha e -f e"; ## i.e. I have not encoded the ability to change them
 # --pinv e (= estimate the proportion of invariable sites)
@@ -53,7 +53,7 @@ if ($numThreads > 1) { $phyml_exe = "mpirun -np $numThreads phyml-mpi"; }
 if ($use_sbatch) {print "\n\nUsing sbatch to parallelize\n\n";}
 
 foreach my $file (@ARGV) {
-    if (!-e $file) { die "\n\nterminating - file $file does not exist\n\n";}
+    if (!-e $file) { die "\n\nERROR - terminating in script pw_runPHYML.pl - file $file does not exist\n\n";}
     my $treeOutfile = $file . "_phyml_tree";
     my $treeOutfileWithExt = $file . "_phyml_tree.txt"; # newer versions of phyml use this output name.  I'll rename the output file to be compatible with older version
     if (-e $treeOutfile) {
@@ -67,10 +67,10 @@ foreach my $file (@ARGV) {
         system("$command");
         ### check it worked
         if (!-e $treeOutfile) {
-            die "\n\nterminating pw_runPHYML.pl - tree file is not present, perhaps phyml failed\n\n";
+            die "\n\nERROR - terminating in script pw_runPHYML.pl - tree file is not present, perhaps phyml failed\n\n";
         }
         if (-z $treeOutfile) {
-            die "\n\nterminating pw_runPHYML.pl - tree file is empty, perhaps phyml failed\n\n";
+            die "\n\nERROR - terminating in script pw_runPHYML.pl - tree file is empty, perhaps phyml failed\n\n";
         }
     } else {
         $command = "sbatch --cpus-per-task=$numThreads -t $walltime --job-name=PHYML --wrap=\"$command\"";
