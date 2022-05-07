@@ -148,3 +148,11 @@ I will most often want to run this on the alignments where I've already annotate
 pw_annotateCpGsitesInAlignment.pl ACE2_primates_aln1_NT.fa_phymlAndPAML/ACE2_primates_aln1_NT.treeorder.annotBEBover0.9.fa
 ```
 
+# To do 
+
+## Maybe
+
+Add the ability to run and parse:
+- GARD
+- FEL
+- MEME
