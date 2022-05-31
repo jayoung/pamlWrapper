@@ -58,7 +58,7 @@ if (exists("aliasFile")) {
         stop("\n\nERROR in pw_plottree.R - aliasFile",aliasFile,"was specified but it does not exist\n\n")
     }
     cat("using aliasFile",aliasFile)
-    aliasTable <- read.delim(aliasFile, header=FALSE)
+    aliasTable <- read.delim(aliasFile, header=FALSE, colClasses = "character")
 }
 cat ("\n\n")
 
