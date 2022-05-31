@@ -110,12 +110,16 @@ foreach my $fastaAlnFile (@files) {
         system("$masterPipelineDir/scripts/pw_changenamesinphyliptreefileBackAgain.pl $geneTreeDir/$geneTreeFileNoLen $aliasesFile");
         
         print "    drawing trees\n";
-        plot_tree("$geneTreeDir/$geneTreeFile.names");
-        plot_tree("$geneTreeDir/$geneTreeFileNoLen.names");
+        # plot_tree("$geneTreeDir/$geneTreeFile.names");
+        # plot_tree("$geneTreeDir/$geneTreeFileNoLen.names");
+        plot_tree("$geneTreeDir/$geneTreeFile", $aliasesFile);
+        plot_tree("$geneTreeDir/$geneTreeFileNoLen", $aliasesFile);
         
         ## reorder seqs in tree order, so that the alignment is easier to look at
         print "    getting a seq file in tree order\n";
-        system("$masterPipelineDir/scripts/pw_reorderseqs_treeorder.pl $PAMLresultsDir/$filenameWithoutDir $geneTreeDir/$geneTreeFile.names");
+        ### I was previously parsing the tree where I had already restored names to their originals, but if those names include : that doesn't work. So now I parse the tree with the altered names, and read the alias file in pw_reorderseqs_treeorder.pl
+        # system("$masterPipelineDir/scripts/pw_reorderseqs_treeorder.pl $PAMLresultsDir/$filenameWithoutDir $geneTreeDir/$geneTreeFile.names");
+        system("$masterPipelineDir/scripts/pw_reorderseqs_treeorder.pl $PAMLresultsDir/$filenameWithoutDir $geneTreeDir/$geneTreeFile");
     }
     ## now look at PAML results
     print "    looking at PAML results\n";
@@ -351,6 +355,7 @@ sub paml_stats {
         $pamlStats{'M2_M1_pval'} =  Statistics::Distributions::chisqrprob ($pamlStats{'M2_M1_npDiff'},$pamlStats{'M2_M1_2ML'});
         $pamlStats{'M8_M7_pval'} =  Statistics::Distributions::chisqrprob ($pamlStats{'M8_M7_npDiff'},$pamlStats{'M8_M7_2ML'});
         $pamlStats{'M8_M8a_pval'} =  Statistics::Distributions::chisqrprob ($pamlStats{'M8_M8a_npDiff'},$pamlStats{'M8_M8a_2ML'});
+
         #if (defined %{$pamlResults{"M0fixNeutral"}}) {
         if (%{$pamlResults{"M0fixNeutral"}}) {
             my %M0fixhash = %{$pamlResults{"M0fixNeutral"}};
@@ -585,6 +590,7 @@ sub plot_omegas {
 
 sub plot_tree {
     my $treefile = $_[0];
+    my $aliasfile = $_[1];
     if (!-e $treefile) {
         die "\n\nERROR - terminating in script pw_parsePAMLoutput.pl in plot_tree subroutine - cannot find gene tree file $treefile\n\n";
     }
@@ -597,7 +603,10 @@ sub plot_tree {
         print "    drawing gene tree\n";
         my $Routfile1 = "$treefile.treeplot.Rout";
         my $command1 = "$RscriptExecutable $masterPipelineDir/scripts/pw_plottree.R ";
-        $command1 .= "myCex=1 plotbootstrap=FALSE myTitle=$treefileShortName $treefile > $Routfile1 2>&1";
+        $command1 .= "myCex=1 plotbootstrap=FALSE myTitle=$treefileShortName ";
+        $command1 .= "aliasFile=$aliasfile "; 
+        $command1 .= "$treefile ";
+        $command1 .= " > $Routfile1 2>&1";
         system("$command1");
     }
 }

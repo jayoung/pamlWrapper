@@ -6,3 +6,4 @@ testData/*PAMLsummary*tsv
 *.sif
 slurm-*
 screenoutput
+.vscode

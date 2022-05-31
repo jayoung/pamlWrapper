@@ -6,8 +6,6 @@ plotType <- "phylogram"
 myCex <- 1
 myScalePosX <- 2
 myScalePosY <- 2
-#myTitlePosX <- 2
-#myTitlePosY <- 1
 myTitlePosX <- "default"
 myTitlePosY <- "default"
 myPageWidth <- 11
@@ -21,7 +19,7 @@ outgroup <- NULL
 myMargins <- c(0,0,0.5,0)
 
 ### whether to plot the bootstrap values.
-plotbootstrap<-TRUE
+plotbootstrap <- TRUE
 
 ### sometimes bootstraps are given as proportion, and I'd rather see them as percentage
 multiplyBootstraps <- FALSE
@@ -30,8 +28,6 @@ roundBootstraps <- TRUE
 minBootstrapToShow <- 0
 
 ###### parse the command line
-
-
 allargs <- commandArgs(TRUE)
 
 filenames <- grep("=", allargs, invert=TRUE, value=TRUE)
@@ -56,7 +52,14 @@ if (!exists("myTitleCex")) {
     cat("setting myTitleCex to match myCex\n")
     myTitleCex <- myCex 
 }
-
+aliasTable <- data.frame()
+if (exists("aliasFile")) {
+    if(!file.exists(aliasFile)) {
+        stop("\n\nERROR in pw_plottree.R - aliasFile",aliasFile,"was specified but it does not exist\n\n")
+    }
+    cat("using aliasFile",aliasFile)
+    aliasTable <- read.delim(aliasFile, header=FALSE)
+}
 cat ("\n\n")
 
 ##################
@@ -64,7 +67,14 @@ library(ape)
 
 for (treefile in filenames) {
     cat ("working on file ", treefile, "\n")
-    tree<-read.tree(treefile)
+    tree <- read.tree(treefile)
+
+    if (exists("aliasFile")) {
+        newTipLabels <- tree$tip.label
+        gotNewLabels <- match(tree$tip.label, aliasTable[,2])
+        newTipLabels[which(!is.na(gotNewLabels))] <- aliasTable[which(!is.na(gotNewLabels)),1]
+        tree$tip.label <- newTipLabels
+    }
 
     if (root) {
         if (is.null(outgroup)) {
@@ -84,7 +94,7 @@ for (treefile in filenames) {
         tree$node.label <- myTempLabels
     }
     
-    outname <-paste(treefile,".pdf",sep="")
+    outname <-paste(treefile,".names.pdf",sep="")
     pdf(file=outname, height=as.numeric(myPageHeight),width=as.numeric(myPageWidth))
     #X11(height=as.numeric(myPageHeight),width=as.numeric(myPageWidth))
     par(mar=myMargins)

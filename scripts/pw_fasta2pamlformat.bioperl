@@ -40,7 +40,9 @@ foreach my $infile (@ARGV) {
         if (length($seqname) > $truncateNames) {
             $seqname = substr($seqname, 0, $truncateNames);
         }
-        $seqname =~ s/\'//;  ### e.g. deal with seqs with names like Francois's_langur_CENPA
+        $seqname =~ s/\'//g;  ### e.g. deal with seqs with names like Francois's_langur_CENPA
+        $seqname =~ s/\:/_/g;  ### e.g. deal with seqs with names like Francois's_langur_CENPA
+        $seqname =~ s/[\(\)\;\"]/_/g;  
         print NAMES "$originalName\t$seqname\n"; 
         if (defined ($seqhash{$seqname}) ) {
             die "\n\nERROR - terminating in script pw_fasta2pamlformat.bioperl on file $infile - sequence names are not unique after truncating to 30 characters and cleaning up weird characters. First bad one is $seqname\n\n";
