@@ -65,11 +65,12 @@ The pipeline performs the following steps on each input file (e.g. if the input 
 - makes a subdir called `myAln.fa_phymlAndPAML` where we'll do all the work
 
 - reformats the alignment for PHYML/PAML (the `myAln.fa.phy` file): 
-  - replace in-frame stop codons with gap codon (---) because PAML hates those
-  - truncates long sequence names to 30 characters (long names caused trouble somewhere - I think in PHYML). Name translations are saved in `myAln.fa.aliases.txt`
   - converts from fasta format to a [format suitable for phyml and PAML](http://abacus.gene.ucl.ac.uk/software/pamlDOC.pdf)
+  - replaces in-frame stop codons with gap codon (---) because PAML hates those
+  - truncates long sequence names to 30 characters (long names caused trouble somewhere - I think in PHYML). Name translations are saved in `myAln.fa.aliases.txt`
+  - removes odd characters from seqnames (e.g. `' : ( )`) - these can cause trouble
 
-- runs phyml to make a phylogenetic tree (details: we use the GTR nucleotide substitution model, we estimate the proportion of invariable sites, we estimate the shape of the gamma distribution, we estimate nucleotide freqs, we do not do any bootstrapping). See contents of the `myAln.fa_PHYMLtree` directory:
+- runs PHYML to make a phylogenetic tree (details: we use the GTR nucleotide substitution model, we estimate the proportion of invariable sites, we estimate the shape of the gamma distribution, we estimate nucleotide freqs, we do not do any bootstrapping). See contents of the `myAln.fa_PHYMLtree` directory:
   - PHYML's output tree is `myAln.fa.phy_phyml_tree`
   - sometimes I want to see how those trees look, so I restore any seqnames I changed to their original names: `myAln.fa.phy_phyml_tree.names` 
   - and I use an R script to draw that tree: `myAln.fa.phy_phyml_tree.names.pdf` 
