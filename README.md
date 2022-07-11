@@ -111,11 +111,12 @@ Output files are called `allAlignments.PAMLsummaries.tsv` or `allAlignments.PAML
 
 If we find evidence for positive selection, we might want to check that finding for robustness by running PAML with some different parameters. 
 
-The default parameters I use for codeml are codon model 2, starting omega 0.4, cleandata 0. If we want to use different parameters we use the `--codon` (codon model) or `--omega` (initial omega) options. E.g.:
+The default parameters I use for codeml are codon model 2, starting omega 0.4, cleandata 0. If we want to use different parameters we use the `--codon` (codon model) or `--omega` (initial omega) or `--clean` (cleandata) options. E.g.:
 ```
 /fh/fast/malik_h/grp/malik_lab_shared/bin/runPAML.pl --codon=3 ACE2_primates_aln1_NT.fa
 /fh/fast/malik_h/grp/malik_lab_shared/bin/runPAML.pl --codon=3 --omega=3 ACE2_primates_aln1_NT.fa
 /fh/fast/malik_h/grp/malik_lab_shared/bin/runPAML.pl --codon=2 --omega=3 ACE2_primates_aln1_NT.fa
+/fh/fast/malik_h/grp/malik_lab_shared/bin/runPAML.pl --clean=1 --codon=3 ACE2_primates_aln1_NT.fa
 ```
 
 If you are running the `pw_makeTreeAndRunPAML.pl` or `pw_makeTreeAndRunPAML_sbatchWrapper.pl` scripts instead, you can specify the same arguments to that script.
