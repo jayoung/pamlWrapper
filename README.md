@@ -152,6 +152,10 @@ pw_annotateCpGsitesInAlignment.pl ACE2_primates_aln1_NT.fa_phymlAndPAML/ACE2_pri
 
 # To do 
 
+Add the ability for the user to supply their own tree
+
+Add the ability to run only model 0 and model 0fixed on an alignment containing only 2 seqs.  Tree is meaningless, and PHYML fails when there's only two seqs. But I can make a fake tree `(seq1,seq2);` and PAML will work.
+
 ## Maybe
 
 Add the ability to run and parse:
