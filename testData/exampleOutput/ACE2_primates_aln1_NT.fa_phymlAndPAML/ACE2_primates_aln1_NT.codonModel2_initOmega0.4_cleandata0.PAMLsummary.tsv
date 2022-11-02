@@ -1,4 +1,4 @@
-seqFile	numSeqs	seqLenNT	seqLenCodons	model	resultsDir	codonModel	startingOmega	cleanData	lnL	np	test	2diffML	df	pValue	kappa	treeLen	treeLen_dN	treeLen_dS	overallOmega	proportionSelectedSites	estimatedOmegaOfSelectedClass	seqToWhichSiteCoordsRefer	numSitesBEBover0.9	whichSitesBEBover0.9
+seqFile	numSeqs	seqLenNT	seqLenCodons	model	resultsDir	codonModel	startingOmega	cleanData	lnL	np	test	2diffML	df	pValue	kappa	treeLen	treeLen_dN	treeLen_dS	overallOmega	proportionSelectedSites	estimatedOmegaOfSelectedClass	seqToWhichAminoAcidsRefer	numSitesBEBover0.9	whichSitesBEBover0.9
 ACE2_primates_aln1_NT.fa	24	2418	806	M0	ACE2_primates_aln1_NT.fa_phymlAndPAML/M0_initOmega0.4_codonModel2	2	0.4	0	-5886.534475	 47					4.36635	0.52404	0.1298	0.2862	0.45350	
 ACE2_primates_aln1_NT.fa	24	2418	806	M0fixNeutral	ACE2_primates_aln1_NT.fa_phymlAndPAML/M0fixNeutral_initOmega0.4_codonModel2	2	0.4	0	-5914.326107	 46	M0_M0fix	55.583263999999	1	0.000000000000089583						
 ACE2_primates_aln1_NT.fa	24	2418	806	M1	ACE2_primates_aln1_NT.fa_phymlAndPAML/M1_initOmega0.4_codonModel2	2	0.4	0	-5839.133065	 48										

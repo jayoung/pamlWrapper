@@ -69,13 +69,15 @@ for (treefile in filenames) {
     cat ("working on file ", treefile, "\n")
     tree <- read.tree(treefile)
 
+    ## fixed  alias lookup Nov 1, 2022:
     if (exists("aliasFile")) {
-        newTipLabels <- tree$tip.label
-        gotNewLabels <- match(tree$tip.label, aliasTable[,2])
-        newTipLabels[which(!is.na(gotNewLabels))] <- aliasTable[which(!is.na(gotNewLabels)),1]
-        tree$tip.label <- newTipLabels
+        existingTipLabels <- tree$tip.label
+        newLabels <- aliasTable[match(existingTipLabels, aliasTable[,2]),1]
+        # fix any NAs in gotNewLabels
+        newLabels[which(is.na(newLabels))] <- existingTipLabels[which(is.na(newLabels))]
+        tree$tip.label <- newLabels
     }
-
+    
     if (root) {
         if (is.null(outgroup)) {
             cat("Problem - requested rooting of the tree, but no outgroup was specified. Skipping this one!\n")

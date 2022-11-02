@@ -207,7 +207,7 @@ foreach my $fastaAlnFile (@files) {
         } else {
             $outputLine .= "\t\t\t\t\t";
         }
-        # M2: proportionSelectedSites estimatedOmegaOfSelectedClass seqToWhichSiteCoordsRefer whichSites
+        # M2: proportionSelectedSites estimatedOmegaOfSelectedClass seqToWhichAminoAcidsRefer whichSites
         if ($thisModel eq "M2") { 
             if ($pamlStats{'M2_M1_pval'} < 0.1) {
                 print "                test M2 vs M1 had a good p-value!\n";
@@ -223,7 +223,7 @@ foreach my $fastaAlnFile (@files) {
             }
         }
         
-        # M8: proportionSelectedSites estimatedOmegaOfSelectedClass seqToWhichSiteCoordsRefer numSites whichSites
+        # M8: proportionSelectedSites estimatedOmegaOfSelectedClass seqToWhichAminoAcidsRefer numSites whichSites
         if ($thisModel eq "M8") {
             if (($pamlStats{'M8_M7_pval'} < 0.1) || ($pamlStats{'M8_M8a_pval'} < 0.1))  {
                 print "                test M8vsM7 and/or M8avsM7 had a good p-value!\n";
@@ -267,7 +267,7 @@ sub printHeaderRows {
     print $fh "seqFile\tnumSeqs\tseqLenNT\tseqLenCodons\tmodel\tresultsDir\t";
     print $fh "codonModel\tstartingOmega\tcleanData\t";
     print $fh "lnL\tnp\ttest\t2diffML\tdf\tpValue\tkappa\ttreeLen\ttreeLen_dN\ttreeLen_dS\toverallOmega\t";
-    print $fh "proportionSelectedSites\testimatedOmegaOfSelectedClass\tseqToWhichSiteCoordsRefer\tnumSitesBEBover$BEB\twhichSitesBEBover$BEB\n";
+    print $fh "proportionSelectedSites\testimatedOmegaOfSelectedClass\tseqToWhichAminoAcidsRefer\tnumSitesBEBover$BEB\twhichSitesBEBover$BEB\n";
 }
 
 ### put together the output I've collected using other subroutines

@@ -14,9 +14,11 @@ git push
 
 # updating the docker image:
 
-My mac has docker installed, gizmo/rhino do not. But I am keeping the master copy of the repo on gizmo/rhino.  Make sure that's synced to github, then:
+My mac has docker installed, gizmo/rhino do not. But I am keeping the master copy of the repo on gizmo/rhino.  
 
-On the mac, first we make sure we have the latest version of the pamlWrapper git repo:
+Before starting, make sure the pamlWrapper is synced to github, then:
+
+On the mac, make sure we have the latest version of the pamlWrapper git repo:
 
 ```
 cd /Users/jayoung/gitProjects/pamlWrapper
