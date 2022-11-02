@@ -9,6 +9,8 @@ There's an associated [docker image](https://hub.docker.com/repository/docker/ja
 
 I'm making these scripts public. Use them as you like, but please acknowledge me in any publication arising from their use, and it would make me happy if you let me know they were useful.
 
+If you find bugs/problems or see room for improvement, you can submit an issue via [github](https://github.com/jayoung/pamlWrapper) or you can just email me.
+
 # Instructions
 
 Input file(s): in-frame multiple sequence alignment(s), in fasta format
@@ -159,42 +161,6 @@ I also created a shiny app to help visualize sitewise (and branchwise) PAML resu
 Add the ability for the user to supply their own tree
 
 Add the ability to run only model 0 and model 0fixed on an alignment containing only 2 seqs.  Tree is meaningless, and PHYML fails when there's only two seqs. But I can make a fake tree `(seq1,seq2);` and PAML will work.
-
-Rename column W in the tsv long output (site number is w.r.t alignment, it's the amino acid that comes from a particular seq)
-
-
-
-xx rerun the whole pipeline outside the container - make sure it still works
-
-xx rebuild docker/singularity container
-
-xx test again using new singularity image, update runPAML script
-
-```
-
-cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/CENPA_again
-
-module purge
-module load R/3.6.2-foss-2019b-fh1
-
-/fh/fast/malik_h/user/jayoung/paml_screen/pamlWrapper/scripts/pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa
-
-```
-
-
-## making the omega plots look a tiny bit nicer
-
-```
-
-module purge
-module load R/3.6.2-foss-2019b-fh1
-
-
-# module load OpenBLAS/0.3.18-GCC-11.2.0
-
-xx get example code from the top of /fh/fast/malik_h/user/jayoung/paml_screen/pamlWrapper/scripts/pw_plotOmegaDistributions.R
-
-```
 
 ## Maybe
 
