@@ -52,7 +52,7 @@ plotModel <- function( modelName ) {
         highWvals <- paste(highWvals,collapse="_")
         myTitle <- paste(myTitle, "\n(note: omega(s)>", maxOmega,
                          " are shown at x=", maxOmega,
-                         "for a tidy plot, but should be at ",highWvals,
+                         " for a tidy plot, but should be at ",highWvals,
                          ")",sep="")
         
         myCols [ which (wVals>maxOmega) ] <- "dark gray"
