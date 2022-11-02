@@ -92,11 +92,23 @@ foreach my $alnFile (@files) {
 
     my $shellFile = $outfileStem . "_runPAML.sh";
     my $logFile = $outfileStem . "_runPAML.log.txt";
+
+    my $singularityCommand = "singularity exec --cleanenv $options{'sif'} pw_makeTreeAndRunPAML.pl --omega=$options{'omega'} --codon=$options{'codon'} --clean=$options{'clean'} --BEB=$options{'BEB'} $alnFile &>> $logFile";
+
+    open (LOG, "> $logFile");
+    print LOG "\n######## Running PAML wrapper within this singularity container:\n$options{'sif'}\n\n";
+    print LOG "Passing the following command to the container:\n\n";
+    print LOG "$singularityCommand\n\n";
+    print LOG "Running on rhino/gizmo, sometimes we get a singularity-related error containing these words 'WARNING: Bind mount overlaps container CWD may not be available' but I think it's OK to ignore it.\n\n";
+    print LOG "All following output comes from the singularity container, running pw_makeTreeAndRunPAML.pl.\n\n";
+    close LOG;
+
     open (SH, "> $shellFile");
     print SH "#!/bin/bash\n";
     print SH "source /app/lmod/lmod/init/profile\n";
     print SH "module load Singularity/3.5.3\n";
-    print SH "singularity exec --cleanenv $options{'sif'} pw_makeTreeAndRunPAML.pl --omega=$options{'omega'} --codon=$options{'codon'} --clean=$options{'clean'} --BEB=$options{'BEB'} $alnFile &> $logFile \n";
+    print SH "$singularityCommand\n";
+    print SH "echo\n";
     print SH "module purge\n";
     close SH;
     ### then we set it running using sbatch

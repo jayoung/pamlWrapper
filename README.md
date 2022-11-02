@@ -156,6 +156,32 @@ Add the ability for the user to supply their own tree
 
 Add the ability to run only model 0 and model 0fixed on an alignment containing only 2 seqs.  Tree is meaningless, and PHYML fails when there's only two seqs. But I can make a fake tree `(seq1,seq2);` and PAML will work.
 
+Rename column W in the tsv long output (site number is w.r.t alignment, it's the amino acid that comes from a particular seq)
+
+Make a link to the shiny app?
+
+Make sure my PAML teaching materials have a link to the shiny app.  Are they on github yet?
+
+## bug (?)
+xxx I think there's a problem with the tree plotting portion when I used run_PAML.  It looked weird for ABO_drosophila_melanogaster_aln2_NT.fasta.
+I suspect because container uses OLD version of R - 3.5.2?  I thought I had fixed that problem but probably not.
+
+```
+cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments
+/fh/fast/malik_h/grp/malik_lab_shared/bin/runPAML.pl ABO_drosophila_melanogaster_aln2_NT.fasta
+    xxx 3184193
+# also run branch PAML:
+cp ABO_drosophila_melanogaster_aln2_NT.fasta.phy ABO_drosophila_melanogaster_aln2_NT.fasta.phy_phyml_tree.nolen BRANCH_paml/
+cp M0_initOmega0.4_codonModel2/codeml.ctl BRANCH_paml/
+cd BRANCH_paml
+    # edit codeml.ctl
+sbatch --job-name=BRANCH_paml --wrap="codeml > screenoutput.txt"
+    xxx 3184599
+
+
+```
+
+
 ## Maybe
 
 Add the ability to run and parse:
