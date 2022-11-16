@@ -114,7 +114,6 @@ runPAML.pl --usertree=CENPA_primates_aln2a_only5seqs.fa.phy.usertree CENPA_prima
 
 ```
 runPAML.pl --usertree=Dmel22genome_tree.nwk Dmel_22_aln.fasta
-    xxx running 3904149
 ```
 
 
@@ -123,20 +122,42 @@ runPAML.pl --usertree=Dmel22genome_tree.nwk Dmel_22_aln.fasta
 ```
 cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/testUserTree
 
-pw_makeTreeAndRunPAML.pl --usertree=CENPA_primates_aln2a_only5seqs.fa.phy.usertree CENPA_primates_aln2a_only5seqs.fa 
-
+## an example where the seqnames and the tree names DO match up:
 pw_makeTreeAndRunPAML.pl --usertree=Dmel22genome_tree.nwk Dmel_22_aln.fasta
     # works
-
-
-# xx add usertree option to these, with a pass through 
-# pw_makeTreeAndRunPAML_sbatchWrapper.pl  pw_makeTreeAndRunPAML_singularityWrapper.pl
-
-pw_makeTreeAndRunPAML_sbatchWrapper.pl --usertree=CENPA_primates_aln2a_only5seqs.fa.phy.usertree CENPA_primates_aln2a_only5seqs.fa 
+# via sbatch wrapper:
+pw_makeTreeAndRunPAML_sbatchWrapper.pl --usertree=Dmel22genome_tree.nwk Dmel_22_aln.fasta
+   # works
+# via singularity wrapper - certainly worked before I added the name checking
+runPAML.pl --usertree=Dmel22genome_tree.nwk Dmel_22_aln.fasta
    # works
 
-# xx make new singularity wrapper
+## an example where the seqnames and the tree names DO NOT match up:
+
+pw_makeTreeAndRunPAML.pl --usertree=CENPA_primates_aln2a_only5seqs.fa.phy.usertree CENPA_primates_aln2a_only5seqs.fa 
+    # stops before it gets to running PAML - good.
+
+# via sbatch wrapper:
+pw_makeTreeAndRunPAML_sbatchWrapper.pl --usertree=CENPA_primates_aln2a_only5seqs.fa.phy.usertree CENPA_primates_aln2a_only5seqs.fa 
+   # stops before it gets to running PAML - good. (it does go through sbatch to do it - that's OK)
+
+# created CENPA_primates_aln2a_only5seqs.userTreeNameTable.txt via minimal edits from teh file produced by checkSeqs
+
+# fix the names:
+../../pamlWrapper/scripts/pw_changenamesinphyliptreefile.pl CENPA_primates_aln2a_only5seqs.fa.phy.usertree CENPA_primates_aln2a_only5seqs.userTreeNameTable.txt 
+# rerun after fixing names in tree
+pw_makeTreeAndRunPAML.pl --usertree=CENPA_primates_aln2a_only5seqs.fa.phy.usertree.names CENPA_primates_aln2a_only5seqs.fa 
+
+# rerun after fixing names in tree via sbatch wrapper:
+pw_makeTreeAndRunPAML_sbatchWrapper.pl --usertree=CENPA_primates_aln2a_only5seqs.fa.phy.usertree.names CENPA_primates_aln2a_only5seqs.fa 
+
+# xxx rebuild docker/singularity and test
+
 
 ```
+
+
+xxxx  
+
 
 # How to parse PAML after running

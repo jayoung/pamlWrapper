@@ -118,9 +118,17 @@ foreach my $alignmentFile (@ARGV) {
     } else {
         ### we're using the user-specified tree
         # xx for now we use it directly, but we probably want to do some checks on it, maybe remove branch lengths etc. 
-        # xx we might also need to swap in names using the aliases file, because in the alignment I might have truncated some long names before running PAML. The user will assume the tree file and fasta file they supplied as inputs should have the same names
-        $treeFile2 = $userTreeFile;
+        # xx we might also need to swap in names using the aliases file (.aliases.txt), because in the alignment I might have truncated some long names before running PAML. The user will assume the tree file and fasta file they supplied as inputs should have the same names
+
+        ## first we check that the treefile and alignment file the user specified have names that match each other
+        my $exitCode = system("$masterPipelineDir/scripts/pw_checkUserTree.pl $alnFileWithoutDir ../$userTreeFile") >> 8;
+        if ($exitCode > 0) {
+            die "\n\nERROR - terminating in script $scriptName - problem with the user tree (see details above - the tsv file will be inside the folder called $pamlDir).\n\n";
+        }
+        ## then we truncate long names in the treefile just like we might have done in the alignment file
         system("cp ../$userTreeFile .");
+        system("$masterPipelineDir/scripts/pw_changenamesinphyliptreefile.pl --format old_new $userTreeFile $alnFileWithoutDir.aliases.txt");
+        $treeFile2 = "$userTreeFile.names";
     }
     my $alnFileForCTLfile = "../$alnFilePhylipFormat";
     my $treeFileForCTLfile = "../$treeFile2";

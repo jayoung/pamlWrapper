@@ -57,8 +57,9 @@ foreach my $file (@ARGV) {
     ## run pw_makeTreeAndRunPAML.pl using sbatch (pass through the parameters)
     my $moreOptions = "";
     if ($userTreeFile ne "") { $moreOptions .= "--usertree=$userTreeFile"; }
-    my $command = "$masterPipelineDir/scripts/pw_makeTreeAndRunPAML.pl $moreOptions --omega $initialOrFixedOmega --codon $codonFreqModel --clean $cleanData $file >> $file.phymlAndPAML.log.txt";
+    my $command = "$masterPipelineDir/scripts/pw_makeTreeAndRunPAML.pl $moreOptions --omega $initialOrFixedOmega --codon $codonFreqModel --clean $cleanData $file >> $file.phymlAndPAML.log.txt 2>&1"; ## xx added 2>&1 - I want the error message from pw_makeTreeAndRunPAML.pl to go in the log file too
     $command = "/bin/bash -c \\\"source /app/lmod/lmod/init/profile; module load fhR/4.1.2-foss-2020b ; $command\\\"";
     $command = "sbatch -t $walltime --job-name=$jobnamePrefix"."$file --wrap=\"$command\"";
     system($command);
 }
+

@@ -116,8 +116,8 @@ foreach my $fastaAlnFile (@files) {
         }
         
         print "    restoring original seq names in tree files\n";
-        system("$masterPipelineDir/scripts/pw_changenamesinphyliptreefileBackAgain.pl $geneTreeDir/$geneTreeFile $aliasesFile");
-        system("$masterPipelineDir/scripts/pw_changenamesinphyliptreefileBackAgain.pl $geneTreeDir/$geneTreeFileNoLen $aliasesFile");
+        system("$masterPipelineDir/scripts/pw_changenamesinphyliptreefile.pl $geneTreeDir/$geneTreeFile $aliasesFile");
+        system("$masterPipelineDir/scripts/pw_changenamesinphyliptreefile.pl $geneTreeDir/$geneTreeFileNoLen $aliasesFile");
         
         print "    drawing trees\n";
         # plot_tree("$geneTreeDir/$geneTreeFile.names");
