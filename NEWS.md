@@ -3,6 +3,11 @@
 ## Fixes since v1.0.8
 
 
+## paml_wrapper-v1.0.9   
+
+Nov 15 2022, 
+- added `--usertree` option to allow use of a user-specified tree (e.g. known species tree) rather than the default behavior of creating a tree from the alignment.  For now I am not doing any checks on the tree, so there are ways this might break.
+
 ## paml_wrapper-v1.0.8   
 
 Nov 1 2022, commit 974bf91

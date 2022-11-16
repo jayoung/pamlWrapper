@@ -9,6 +9,8 @@ There's an associated [docker image](https://hub.docker.com/repository/docker/ja
 
 I'm making these scripts public. Use them as you like, but please acknowledge me in any publication arising from their use, and it would make me happy if you let me know they were useful.
 
+Default behaviour is to generate a tree from the alignment (using PHYML), but starting Nov 15, 2022, there is a `--usertree` option, allowing a user-specified tree as input for PAML.
+
 If you find bugs/problems or see room for improvement, you can submit an issue via [github](https://github.com/jayoung/pamlWrapper) or you can just email me.
 
 # Instructions
@@ -45,6 +47,27 @@ There'll also be a second log file for each job, called something like `slurm-55
 WARNING: Bind mount '/home/jayoung => /home/jayoung' overlaps container CWD /home/jayoung/FH_fast_storage/paml_screen/pamlWrapperTestAlignments, may not be available
 ```
 but please don't ignore any other warnings/errors you see in the `slurm-JOBID.out` file.  Email me with the input file and copy-paste the error you got.
+
+## Script options
+
+If you don't specify any additional options, the pipeline generates a tree to use as PAML input (using PHYML), and uses these options in PAML: codon model 2, starting omega 0.4, cleandata 0. 
+
+To change the PAML options, use these options when calling runPAML.pl:
+  - `--codon` (codon model) 
+  - `--omega` (initial omega) 
+  - `--clean` (cleandata) options.  
+
+Example:
+```
+/fh/fast/malik_h/grp/malik_lab_shared/bin/runPAML.pl --codon=3 --omega=3 --clean=1 ACE2_primates_aln1_NT.fa
+```
+
+To use a tree file you provide (in newick format), instead of generating a tree from the alignment, use the `--usertree` option. I have not (yet) built-in many checks on the user-supplied tree, so if it doesn't work, send me your alignment and tree files and I will troubleshoot.  One likely problem is that PAML won't run unless the sequence names in your alignment and your tree file match EXACTLY. I'm not checking for that at the moment.
+
+Example:
+```
+/fh/fast/malik_h/grp/malik_lab_shared/bin/runPAML.pl --usertree=primateTree.nwk ACE2_primates_aln1_NT.fa
+```
 
 ## To run these scripts in other ways
 

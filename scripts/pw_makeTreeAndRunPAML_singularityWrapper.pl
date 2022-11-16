@@ -16,7 +16,7 @@ use strict;
 
 ###### set up defaults for all the options
 my %options;
-$options{'sif'} = "/fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.0.8.sif"; # singularity image file
+$options{'sif'} = "/fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.0.9.sif"; # singularity image file
 $options{'walltime'} = "1-0"; ## walltime for sbatch jobs
 $options{'job'} = "pw_";   
 $options{'omega'} = 0.4;
@@ -96,7 +96,7 @@ foreach my $alnFile (@files) {
     my $logFile = $outfileStem . "_runPAML.log.txt";
 
     my $moreOptions = "";
-    if ($userTreeFile ne "") { $moreOptions .= "--usertree=$userTreeFile"; }
+    if ($options{'usertree'} ne "") { $moreOptions .= "--usertree=$options{'usertree'}"; }
 
     my $singularityCommand = "singularity exec --cleanenv $options{'sif'} pw_makeTreeAndRunPAML.pl $moreOptions --omega=$options{'omega'} --codon=$options{'codon'} --clean=$options{'clean'} --BEB=$options{'BEB'} $alnFile &>> $logFile";
 
