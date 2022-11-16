@@ -104,3 +104,26 @@ Test the new singularity container, on rhino/gizmo:
 cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments
 runPAML.pl --codon=2 --omega=3 CENPA_primates_aln2a_NT.fa
 ```
+
+# Testing a new feature - allow user-supplied tree
+
+```
+cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/testUserTree
+
+pw_makeTreeAndRunPAML.pl --usertree=CENPA_primates_aln2a_only5seqs.fa.phy.usertree CENPA_primates_aln2a_only5seqs.fa 
+
+pw_makeTreeAndRunPAML.pl --usertree=Dmel22genome_tree.nwk Dmel_22_aln.fasta
+    # works
+
+
+# xx add usertree option to these, with a pass through 
+# pw_makeTreeAndRunPAML_sbatchWrapper.pl  pw_makeTreeAndRunPAML_singularityWrapper.pl
+
+pw_makeTreeAndRunPAML_sbatchWrapper.pl --usertree=CENPA_primates_aln2a_only5seqs.fa.phy.usertree CENPA_primates_aln2a_only5seqs.fa 
+   # works
+
+# xx make new singularity wrapper
+
+```
+
+# How to parse PAML after running

@@ -8,9 +8,11 @@ use Bio::SeqIO;
 #    alignment length is a multiple of 3. 
 #    there are no duplicate sequence names
 
+my $scriptName = "pw_checkAlignmentBasics.pl";
+
 my $exitCode = 0;
 foreach my $file (@ARGV){
-    if (!-e $file) { die "\n\nERROR - terminating in script pw_checkAlignmentBasics.pl - cannot open file $file\n\n"; }
+    if (!-e $file) { die "\n\nERROR - terminating in script $scriptName - cannot open file $file\n\n"; }
     my $seqIN = Bio::SeqIO->new(-file => "< $file", '-format' => 'fasta');
     my %lengths; # key = seq length, values=seqnames with that length
     my %seqnames;

@@ -19,28 +19,30 @@ my $codemlModel = 8;
 ## report selected sites with at least this BEB probability into the output file:
 my $BEBprobThresholdToPrintSelectedSite = 0.9;
 
+my $scriptName = "pw_annotateAlignmentWithSelectedSites.pl";
+
 ######### get any non-default parameters from the command-line:
 GetOptions("omega=f" => \$initOmega,         ## sometimes I do 3, default is 0.4
            "codon=i" => \$codonModel,        ## sometimes I do 3, default is 2
            "codonModel=i" => \$codemlModel,  ## default is 8
            "clean=i" => \$cleanData,         ## default is 0. sometimes I do paml with cleandata=1 to remove the sites with gaps in any species.  But I haven't implemented looking at cleandata=1 output. 
            "BEB=f"   => \$BEBprobThresholdToPrintSelectedSite,  # BEB threshold 0.5 would be less conservative, default is 0.9
-           "annot=s" => \$codonAnnotString) or die "\n\nERROR - terminating in script pw_annotateAlignmentWithSelectedSites.pl - unknown option(s) specified on command line\n\n" ; 
+           "annot=s" => \$codonAnnotString) or die "\n\nERROR - terminating in script $scriptName - unknown option(s) specified on command line\n\n" ; 
 
 ################
 
 if ($cleanData==1) {
-    die "\n\nERROR - terminating in script pw_annotateAlignmentWithSelectedSites.pl - script not set up yet to look at cleandata=1 output\n\n";
+    die "\n\nERROR - terminating in script $scriptName - script not set up yet to look at cleandata=1 output\n\n";
 }
 
 ## check that length of annot is 3 characters
 if (length($codonAnnotString) != 3) {
-    die "\n\nERROR - terminating in script pw_annotateAlignmentWithSelectedSites.pl - cannot annotate codons with string $codonAnnotString because it is not three characters long\n\n";
+    die "\n\nERROR - terminating in script $scriptName - cannot annotate codons with string $codonAnnotString because it is not three characters long\n\n";
 }
 
 foreach my $fastaAlnFile (@ARGV) {
     if (!-e $fastaAlnFile) {
-        die "\n\nERROR - terminating in script pw_annotateAlignmentWithSelectedSites.pl - cannot open file $fastaAlnFile\n\n";
+        die "\n\nERROR - terminating in script $scriptName - cannot open file $fastaAlnFile\n\n";
     }
     #print "\n\n############################\n\n";
     #print "Working on file $fastaAlnFile\n";
@@ -109,7 +111,7 @@ foreach my $fastaAlnFile (@ARGV) {
 sub paml_BEB_results {
     my $file = $_[0];
     if (!-e $file) {
-        die "\n\nERROR - terminating in script pw_annotateAlignmentWithSelectedSites.pl - file $file does not exist\n\n";
+        die "\n\nERROR - terminating in script $scriptName - file $file does not exist\n\n";
     }
     my %M8results;
     open (MLC, "< $file");

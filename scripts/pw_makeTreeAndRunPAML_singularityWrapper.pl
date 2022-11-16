@@ -22,6 +22,7 @@ $options{'job'} = "pw_";
 $options{'omega'} = 0.4;
 $options{'codon'} = 2;
 $options{'clean'} = 0;
+$options{'usertree'} = "";
 $options{'BEB'} = 0.9; ### report selected sites with at least this BEB probability into the output file
 $options{'add'} = 0; ## a.k.a addToExistingOutputDir
 
@@ -31,6 +32,7 @@ $usage .= "    Options:\n";
 $usage .= "        --omega=$options{'omega'} : starting omega for codeml\n"; 
 $usage .= "        --codon=$options{'codon'} : codon model for codeml\n";
 $usage .= "        --clean=$options{'clean'} : cleandata option for codeml\n";
+$usage .= "        --usertree=$options{'usertree'} : the default behavior is to run PHYML to generate a tree from the alignment, but if we want to specify the input tree for PAML, we use this option\n";
 $usage .= "        --BEB=$options{'BEB'} : BEB threshold for reporting positively selected sites\n";
 $usage .= "        --add=$options{'add'} : if output directory for a previous PAML run exists, are we allowed to add output to it?\n";
 $usage .= "        --walltime=$options{'walltime'} : how much time to request for each job\n";
@@ -93,7 +95,10 @@ foreach my $alnFile (@files) {
     my $shellFile = $outfileStem . "_runPAML.sh";
     my $logFile = $outfileStem . "_runPAML.log.txt";
 
-    my $singularityCommand = "singularity exec --cleanenv $options{'sif'} pw_makeTreeAndRunPAML.pl --omega=$options{'omega'} --codon=$options{'codon'} --clean=$options{'clean'} --BEB=$options{'BEB'} $alnFile &>> $logFile";
+    my $moreOptions = "";
+    if ($userTreeFile ne "") { $moreOptions .= "--usertree=$userTreeFile"; }
+
+    my $singularityCommand = "singularity exec --cleanenv $options{'sif'} pw_makeTreeAndRunPAML.pl $moreOptions --omega=$options{'omega'} --codon=$options{'codon'} --clean=$options{'clean'} --BEB=$options{'BEB'} $alnFile &>> $logFile";
 
     open (LOG, "> $logFile");
     print LOG "\n######## Running PAML wrapper within this singularity container:\n$options{'sif'}\n\n";

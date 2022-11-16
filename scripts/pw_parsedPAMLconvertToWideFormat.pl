@@ -30,10 +30,12 @@ my $includeCpGMasked = 0; ## I mostly DO want to look for results on CpG-masked 
 my $splitGeneName = 0; ## I mostly DO want to get gene name by splitting up input file name, but not always (e.g.. if I have run PAML on multiple GARD segments of the same gene)
 my $figureOutSegmentPositions = ''; ## in the unusual case I ran PAML on GARD segments I might want to know segment name,startNT,endNT,startAA,endAA
 
+my $scriptName = "pw_parsedPAMLconvertToWideFormat.pl";
+
 ## GetOptions syntax:  https://perldoc.perl.org/Getopt/Long.html
 GetOptions ( "cpg=i"      => \$includeCpGMasked, 
              "genename=i" => \$splitGeneName, 
-             "segname"    => \$figureOutSegmentPositions) or die "\n\nERROR - terminating in script pw_parsedPAMLconvertToWideFormat.pl - unknown option(s) specified on command line\n\n";
+             "segname"    => \$figureOutSegmentPositions) or die "\n\nERROR - terminating in script $scriptName - unknown option(s) specified on command line\n\n";
 
 ################
 
@@ -43,7 +45,7 @@ GetOptions ( "cpg=i"      => \$includeCpGMasked,
 
 foreach my $file (@ARGV) {
     if (!-e $file) {
-        die "\n\nERROR - terminating in script pw_parsedPAMLconvertToWideFormat.pl - cannot open file $file\n\n";
+        die "\n\nERROR - terminating in script $scriptName - cannot open file $file\n\n";
     }
     print "    converting parsed PAML output to wide format\n";
     ### go through input file and collect info for all genes
@@ -224,7 +226,7 @@ sub printResults {
     }
     
     if (!defined $results{$gene}{$masked}) {
-        die "\n\nERROR - terminating in script pw_parsedPAMLconvertToWideFormat.pl - no results for gene $gene with mask setting $masked - maybe you want to use the --cpg=no option while parsing??\n\n";
+        die "\n\nERROR - terminating in script $scriptName - no results for gene $gene with mask setting $masked - maybe you want to use the --cpg=no option while parsing??\n\n";
     }
     
     print OUT "\t$results{$gene}{$masked}{$thisCodon}{$thisOmega}{$thisClean}{'M0'}{'alnLenNT'}";

@@ -21,12 +21,14 @@ my $convertCoords = 0;
 my $refName = "";
 my $refPattern = "";
 
+my $scriptName = "pw_parse_rst_getBEBtable.pl";
+
 ######## now, get any user-specified non-default options
 GetOptions("annot=i" => \$getAnnotLine, ## default is 1, that I do get annotation line(s)
            "post=s" => \$posteriorThresholdsString,
            "refCoords=i" => \$convertCoords,
            "refName=s" => \$refName,
-           "refPattern=s" => \$refPattern) or die "\n\nERROR - terminating in script pw_parse_rst_getBEBtable.pl - unknown option(s) specified on command line\n\n";
+           "refPattern=s" => \$refPattern) or die "\n\nERROR - terminating in script $scriptName - unknown option(s) specified on command line\n\n";
 
 ############
 
@@ -41,14 +43,14 @@ if ($getAnnotLine == 1) {
 
 if ($convertCoords == 1) {
     if (($refName eq "") & ($refPattern eq "")) {
-        die "\n\nERROR - terminating in script pw_parse_rst_getBEBtable.pl - if you want to convert coordinates from alignment coordinates to coords in an individual sequence, you must specify either refName or refPattern\n\n";
+        die "\n\nERROR - terminating in script $scriptName - if you want to convert coordinates from alignment coordinates to coords in an individual sequence, you must specify either refName or refPattern\n\n";
     }
     if (($refName ne "") & ($refPattern ne "")) {
-        die "\n\nERROR - terminating in script pw_parse_rst_getBEBtable.pl - you cannot specify BOTH refName or refPattern - pick one\n\n";
+        die "\n\nERROR - terminating in script $scriptName - you cannot specify BOTH refName or refPattern - pick one\n\n";
     }
 }
 foreach my $file (@ARGV) {
-    if (!-e $file) { die "\n\nERROR - terminating in script pw_parse_rst_getBEBtable.pl - cannot open file $file\n\n";} 
+    if (!-e $file) { die "\n\nERROR - terminating in script $scriptName - cannot open file $file\n\n";} 
     my ($shortFileName, $filePath) = getShortFileNameAndPathFromFileName($file);
     open (IN, "< $file");
     my @lines = <IN>;
@@ -71,10 +73,10 @@ foreach my $file (@ARGV) {
         # make sure I can find the reference sequence
         if ($refName ne "") {
             #if(!defined $aln->get_seq_by_id($refName)) {
-            #    die "\n\nERROR - terminating in script pw_parse_rst_getBEBtable.pl - you asked to convert coords to coords in a reference seq called $refName but it is not present in the alignment\n\n";
+            #    die "\n\nERROR - terminating in script $scriptName - you asked to convert coords to coords in a reference seq called $refName but it is not present in the alignment\n\n";
             #}
             if (!defined $seqHash{$refName}) { 
-                die "\n\nERROR - terminating in script pw_parse_rst_getBEBtable.pl - you asked to convert coords to coords in a reference seq called $refName but it is not present in the alignment\n\n";
+                die "\n\nERROR - terminating in script $scriptName - you asked to convert coords to coords in a reference seq called $refName but it is not present in the alignment\n\n";
             }
             $refSeqName = $refName;
             #$refSeqAln = $aln->get_seq_by_id($refName);
@@ -102,10 +104,10 @@ foreach my $file (@ARGV) {
             }
         }
         if ($matchCount < 1) {
-            die "\n\nERROR - terminating in script pw_parse_rst_getBEBtable.pl - did not find any sequences with names matching $refPattern\n\n";
+            die "\n\nERROR - terminating in script $scriptName - did not find any sequences with names matching $refPattern\n\n";
         }
         if ($matchCount > 1) {
-            die "\n\nERROR - terminating in script pw_parse_rst_getBEBtable.pl - found more than one sequence with names matching $refPattern\n\n";
+            die "\n\nERROR - terminating in script $scriptName - found more than one sequence with names matching $refPattern\n\n";
         }
         print "    Found ref seq $refSeqName\n";
         my ($codonCoordConversionRef, $refAAsRef) = convertCodonCoords($seqHash{$refSeqName});
@@ -140,7 +142,7 @@ sub getTable {
     my $sectionStartString = "";
     if ($analysisDesired eq "BEB") {$sectionStartString="Bayes Empirical Bayes";}
     #if ($analysisDesired eq "NEB") {$sectionStartString="Naive Empirical Bayes";}
-    if ($sectionStartString eq "") { die "\n\nERROR - terminating in script pw_parse_rst_getBEBtable.pl - problem in the getTable subroutine!\n\n"; }
+    if ($sectionStartString eq "") { die "\n\nERROR - terminating in script $scriptName - problem in the getTable subroutine!\n\n"; }
     my $sectionEndString = "Positively selected sites";
     
     ### open out file and print a header
@@ -241,7 +243,7 @@ sub getAlnFileName {
     my ($alnFileShortName, $alnFilePath) = getShortFileNameAndPathFromFileName($alnFile);
     my $alnFileWithPath = "$rstFilePath/$alnFile";
     if (!-e $alnFileWithPath) {
-        die "\n\nERROR - terminating in script pw_parse_rst_getBEBtable.pl - cannot find the alignment file specified in the rst file. Should be called $alnFileWithPath\n\n";
+        die "\n\nERROR - terminating in script $scriptName - cannot find the alignment file specified in the rst file. Should be called $alnFileWithPath\n\n";
     }
     return($alnFileWithPath);
 }

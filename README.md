@@ -84,7 +84,7 @@ The pipeline performs the following steps on each input file (e.g. if the input 
   - we use a single set of parameters (defaults are codon model=2, starting omega=0.4, cleandata=0, but these can be changed if desired)
   - each model gets run in a separate folder (e.g. `M8_initOmega0.4_codonModel2`). You'll see all PAML's output files there.
 
-- parses the output for all models into some tab-delimited tables:
+- uses script `pw_parsePAMLoutput.pl` to parse the output for all models into some tab-delimited tables:
   - makes two tab-delimited text files summarizing paml results (same results, different table format):
     - `*PAMLsummary.tsv` 'long format': each model gets a separate row in the file, so each input alignment file gets multiple rows. Easier for a human to read, not so good for downstream parsing, e.g. in R.
     - `*PAMLsummary.wide.tsv` 'wide format': each input alignment file gets a single row (actually, one row per set of parameter choices, see below in the 'robustness' section)

@@ -14,18 +14,21 @@ use Bio::SeqIO;
 
 ##################
 
+my $scriptName = "pw_fasta2pamlformat.bioperl";
+
 if (@ARGV==0) {
-    die "\n\nERROR - terminating in script pw_fasta2pamlformat.bioperl - please supply input file name(s)\n\n";
+    die "\n\nERROR - terminating in script $scriptName - please supply input file name(s)\n\n";
 }
 
 my $truncateNames = 30;
+
 
 ##########################
 
 #print "\n\n";
 foreach my $infile (@ARGV) {
     if (!-e $infile) {
-        die "\n\nERROR - terminating in script pw_fasta2pamlformat.bioperl - file $infile does not exist\n\n";
+        die "\n\nERROR - terminating in script $scriptName - file $infile does not exist\n\n";
     }
     #print "file $infile\n";
     my $nameFile = $infile.".aliases.txt";
@@ -45,7 +48,7 @@ foreach my $infile (@ARGV) {
         $seqname =~ s/[\(\)\;\"]/_/g;  
         print NAMES "$originalName\t$seqname\n"; 
         if (defined ($seqhash{$seqname}) ) {
-            die "\n\nERROR - terminating in script pw_fasta2pamlformat.bioperl on file $infile - sequence names are not unique after truncating to 30 characters and cleaning up weird characters. First bad one is $seqname\n\n";
+            die "\n\nERROR - terminating in script $scriptName on file $infile - sequence names are not unique after truncating to 30 characters and cleaning up weird characters. First bad one is $seqname\n\n";
         }
         
         my $letters = $seq->seq();

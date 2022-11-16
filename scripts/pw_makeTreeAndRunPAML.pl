@@ -13,12 +13,16 @@ use Getopt::Long;
 my $initialOrFixedOmega = 0.4;
 my $codonFreqModel = 2;
 my $cleanData = 0;
+my $userTreeFile = "";
 my $BEBprobThresholdToPrintSelectedSite = 0.9; ### report selected sites with at least this BEB probability into the output file
 
-GetOptions("omega=f" => \$initialOrFixedOmega,   ## sometimes I do 3
-           "codon=i" => \$codonFreqModel,        ## sometimes I do 3
-           "clean=i" => \$cleanData,             ## sometimes I do 1 to remove the sites with gaps in any species
-           "BEB=f"   => \$BEBprobThresholdToPrintSelectedSite) or die "\n\nERROR - terminating in script pw_makeTreeAndRunPAML.pl - unknown option(s) specified on command line\n\n"; 
+my $scriptName = "pw_makeTreeAndRunPAML.pl";
+
+GetOptions("omega=f"    => \$initialOrFixedOmega,   ## sometimes I do 3
+           "codon=i"    => \$codonFreqModel,        ## sometimes I do 3
+           "clean=i"    => \$cleanData,             ## sometimes I do 1 to remove the sites with gaps in any species
+           "usertree=s" => \$userTreeFile,
+           "BEB=f"      => \$BEBprobThresholdToPrintSelectedSite) or die "\n\nERROR - terminating in script $scriptName - unknown option(s) specified on command line\n\n"; 
 
 ##### I don't usually change these things:
 my $masterPipelineDir = $ENV{'PAML_WRAPPER_HOME'}; 
@@ -36,9 +40,15 @@ my @modelsToRun = ("0","0fixNeutral","1","2","7","8","8a");
 
 ################
 
+if ($userTreeFile ne "") {
+    if (!-e $userTreeFile) {
+        die "\n\nERROR - terminating in script $scriptName - you specified tree file $userTreeFile with the --usertree option, but that file does not exist\n\n";
+    }
+}
+
 #first read in codeml.ctl template
 if (!-e $codemlCTLtemplateFile) {
-    die "\n\nERROR - terminating in script pw_makeTreeAndRunPAML.pl - cannot open template file $codemlCTLtemplateFile\n\n";
+    die "\n\nERROR - terminating in script $scriptName - cannot open template file $codemlCTLtemplateFile\n\n";
 }
 undef $/;
 open (TEMPLATE, "< $codemlCTLtemplateFile");
@@ -50,18 +60,19 @@ my $topDir = cwd();
 
 foreach my $alignmentFile (@ARGV) {
     if (!-e $alignmentFile) {
-        die "\n\nERROR - terminating in script pw_makeTreeAndRunPAML.pl - alignment file $alignmentFile does not exist\n\n";
+        die "\n\nERROR - terminating in script $scriptName - alignment file $alignmentFile does not exist\n\n";
     } 
     print "\n######## Running PAML for alignment $alignmentFile with codon model $codonFreqModel, starting omega $initialOrFixedOmega, cleandata $cleanData\n";
     my $alnFileWithoutDir = $alignmentFile;
     if ($alnFileWithoutDir =~ m/\//) {
         $alnFileWithoutDir = (split /\//, $alnFileWithoutDir)[-1];
     }
-    ## run some checks on the alignment
+    ## run some checks on the alignment:
     # are seqs the same length?
+    # is alignment length is a multiple of three?
     my $exitCode = system("$masterPipelineDir/scripts/pw_checkAlignmentBasics.pl $alnFileWithoutDir") >> 8;
     if ($exitCode > 0) {
-        die "\n\nERROR - terminating in script pw_makeTreeAndRunPAML.pl - ERROR - problem with seq lengths in alignment file (see details above). Is this really an in-frame alignment?  We need an in-frame alignment to run PAML\n\n";
+        die "\n\nERROR - terminating in script $scriptName - ERROR - problem with seq lengths in alignment file (see details above). Is this really an in-frame alignment?  We need an in-frame alignment to run PAML\n\n";
     }
     # check for internal stops/frameshifts
     my $exitCode2 = system("$masterPipelineDir/scripts/pw_checkAlignmentFrameshiftsStops.pl $alnFileWithoutDir") >> 8;
@@ -82,26 +93,35 @@ foreach my $alignmentFile (@ARGV) {
     if (!-e $alnFilePhylipFormat) {
         system("$masterPipelineDir/scripts/pw_fasta2pamlformat.bioperl $alnFileWithoutDir")
     }
-    ## xxx here - I could open up the .phy file and make sure the alignment length is a multiple of three
     
     ## find or make the tree file using pw_runPHYML.pl
     ## xx if I start one PAML run with one set of parameters really soon after the last one, it may THINK there is already a tree but the tree is not ready to use. need to somehow check for that
     
-    my $treeDir = $alnFileWithoutDir . "_PHYMLtree";
-    if (!-e $treeDir) { mkdir $treeDir; }
-    system("cp $alnFilePhylipFormat $treeDir");
-    chdir $treeDir; ## I'm in $pamlDir/$treeDir
-    my $treeFile1 = "$alnFilePhylipFormat"."_phyml_tree";
-    my $treeFile2 = "$alnFilePhylipFormat"."_phyml_tree.nolen";
-    if (!-e $treeFile1) { 
-        system("$masterPipelineDir/scripts/pw_runPHYML.pl $alnFilePhylipFormat")
+    my $treeFile1;
+    my $treeFile2;
+    if ($userTreeFile eq "") {   
+        ### we're making a tree
+        my $treeDir = $alnFileWithoutDir . "_PHYMLtree";
+        if (!-e $treeDir) { mkdir $treeDir; }
+        system("cp $alnFilePhylipFormat $treeDir");
+        chdir $treeDir; ## I'm in $pamlDir/$treeDir
+        $treeFile1 = "$alnFilePhylipFormat"."_phyml_tree";
+        $treeFile2 = "$alnFilePhylipFormat"."_phyml_tree.nolen";
+        if (!-e $treeFile1) { 
+            system("$masterPipelineDir/scripts/pw_runPHYML.pl $alnFilePhylipFormat")
+        }
+        if (!-e $treeFile2) {
+            die "\n\nERROR - terminating in script $scriptName - tree file $treeFile2 does not exist\n\n";
+        }
+        if (!-e "../$treeFile2") { system("cp $treeFile2 .."); }
+        chdir ".."; ## I'm in $pamlDir
+    } else {
+        ### we're using the user-specified tree
+        # xx for now we use it directly, but we probably want to do some checks on it, maybe remove branch lengths etc. 
+        # xx we might also need to swap in names using the aliases file, because in the alignment I might have truncated some long names before running PAML. The user will assume the tree file and fasta file they supplied as inputs should have the same names
+        $treeFile2 = $userTreeFile;
+        system("cp ../$userTreeFile .");
     }
-    if (!-e $treeFile2) {
-        die "\n\nERROR - terminating in script pw_makeTreeAndRunPAML.pl - tree file $treeFile2 does not exist\n\n";
-    }
-    if (!-e "../$treeFile2") { system("cp $treeFile2 .."); }
-    chdir ".."; ## I'm in $pamlDir
-    
     my $alnFileForCTLfile = "../$alnFilePhylipFormat";
     my $treeFileForCTLfile = "../$treeFile2";
     
@@ -145,7 +165,7 @@ foreach my $alignmentFile (@ARGV) {
         #run codeml, if it's not already done
         my $mlcFile = "$modelDir/mlc";
         if (!-e $mlcFile) {
-            my $command = "cd $modelDir ; codeml > screenoutput ; cd ..";
+            my $command = "cd $modelDir ; codeml > screenoutput.txt ; cd ..";
             system ("$command");
         } else {
             print "        output $mlcFile exists already - skipping this model\n";
@@ -170,11 +190,16 @@ foreach my $alignmentFile (@ARGV) {
     if (-e $parsedPAMLoutputFile) {
         print "\n\nSkipping parsing - outfile exists already: $parsedPAMLoutputFile\n\n";
     } else {
-        system ("$masterPipelineDir/scripts/pw_parsePAMLoutput.pl -omega=$initialOrFixedOmega -codon=$codonFreqModel -clean=$cleanData -BEB=$BEBprobThresholdToPrintSelectedSite $alnFileWithoutDir");
+        my $otherOptions = "";
+        if ($userTreeFile ne "") { 
+            $otherOptions .= "--processTree=no --usertree=$userTreeFile"; 
+        }
+
+        system ("$masterPipelineDir/scripts/pw_parsePAMLoutput.pl $otherOptions -omega=$initialOrFixedOmega -codon=$codonFreqModel -clean=$cleanData -BEB=$BEBprobThresholdToPrintSelectedSite $alnFileWithoutDir");
 
         system ("$masterPipelineDir/scripts/pw_parsedPAMLconvertToWideFormat.pl $parsedPAMLoutputFile");
         if(!-e $parsedPAMLoutputFile) {
-            die "\n\nERROR - terminating in script pw_makeTreeAndRunPAML.pl - parsed PAML output file does not exist: $parsedPAMLoutputFile\n\n";
+            die "\n\nERROR - terminating in script $scriptName - parsed PAML output file does not exist: $parsedPAMLoutputFile\n\n";
         }
     }
 } # end of foreach my $alignmentFile loop
