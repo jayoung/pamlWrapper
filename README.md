@@ -181,7 +181,7 @@ I also created a shiny app to help visualize sitewise (and branchwise) PAML resu
 
 # To do 
 
-Add the ability for the user to supply their own tree
+For the `--usertree` option: I want to add some checks if the user specifies `--usertree`.  Check alignment and tree have same seqnames, maybe remove branch lengths etc.  Might also need to swap in names using the aliases file, because in the alignment I might have truncated some long names before running PAML. The user will assume the tree file and fasta file they supplied as inputs should have the same names.
 
 Add the ability to run only model 0 and model 0fixed on an alignment containing only 2 seqs.  Tree is meaningless, and PHYML fails when there's only two seqs. But I can make a fake tree `(seq1,seq2);` and PAML will work.
 
