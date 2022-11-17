@@ -39,13 +39,13 @@ docker run -v `pwd`:/workingDir -it paml_wrapper
 
 When I know it's working I add a new tag and push it to [docker hub](https://hub.docker.com/repository/docker/jayoungfhcrc/paml_wrapper).  I update the version number each time:
 ```
-docker tag paml_wrapper jayoungfhcrc/paml_wrapper:version1.0.9
-docker push jayoungfhcrc/paml_wrapper:version1.0.9
+docker tag paml_wrapper jayoungfhcrc/paml_wrapper:version1.1.0
+docker push jayoungfhcrc/paml_wrapper:version1.1.0
 ```
 
 I then test my container in a totally different environment using the [Play with Docker](https://labs.play-with-docker.com) site - it seems to work. Once I have an instance running there:
 ```
-docker run -it jayoungfhcrc/paml_wrapper:version1.0.9
+docker run -it jayoungfhcrc/paml_wrapper:version1.1.0
 cd pamlWrapper/testData/
 pw_makeTreeAndRunPAML.pl ACE2_primates_aln1_NT.fa
 ```
@@ -59,22 +59,26 @@ On gizmo/rhino:
 cd ~/FH_fast_storage/paml_screen/pamlWrapper/buildContainer
 module purge
 module load Singularity/3.5.3
-singularity build paml_wrapper-v1.0.9.sif docker://jayoungfhcrc/paml_wrapper:version1.0.9
+singularity build paml_wrapper-v1.1.0.sif docker://jayoungfhcrc/paml_wrapper:version1.1.0
 module purge
 ```
-A file called paml_wrapper-v1.0.9.sif appears. I want a copy of the singularity image file, and a script that uses it, in a more central place, for use by others:
+A file called paml_wrapper-v1.1.0.sif appears. I want a copy of the singularity image file, and a script that uses it, in a more central place, for use by others:
 ```
-cp paml_wrapper-v1.0.9.sif /fh/fast/malik_h/grp/malik_lab_shared/singularityImages
+cp paml_wrapper-v1.1.0.sif /fh/fast/malik_h/grp/malik_lab_shared/singularityImages
 ```
 If I want to retest before I change the version used by others
 ```
 cd ~/FH_fast_storage/paml_screen/pamlWrapper/testData
 
-# test, make a tree
+# test, making a gene tree
 ../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl CENPA_primates_aln2a_only5seqs.fa
 
-# test, with --usertree option
+# test, supplying a tree via --usertree option
 ../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --usertree=CENPA_primates_aln2a_only5seqs.fa.phy.usertree CENPA_primates_aln2a_only5seqs.fa
+
+# test, supplying a tree with non-matching seqnames via --usertree option
+../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --usertree=CENPA_primates_aln2a_only5seqs.fa.phy.usertree.badNames CENPA_primates_aln2a_only5seqs.fa
+    xxx 4055469
 ```
 
 
@@ -88,7 +92,7 @@ I can get a shell in the singularity container like this:
 ```
 cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments
 module load Singularity/3.5.3
-singularity shell --cleanenv /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.0.9.sif
+singularity shell --cleanenv /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.1.0.sif
 module purge
 ```
 
@@ -100,7 +104,7 @@ pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa
 Or, I can run some code using the singularity image without entering a shell (the `pw_makeTreeAndRunPAML_singularityWrapper.pl` script (same as `runPAML.pl`) does this for each alignment):
 ```
 module load Singularity/3.5.3
-singularity exec --cleanenv /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.0.9.sif pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa 
+singularity exec --cleanenv /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.1.0.sif pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa 
 module purge
 ```
 
@@ -110,6 +114,10 @@ cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments
 runPAML.pl CENPA_primates_aln2a_NT.fa
 runPAML.pl --codon=2 --omega=3 CENPA_primates_aln2a_NT.fa
 runPAML.pl --usertree=CENPA_primates_aln2a_only5seqs.fa.phy.usertree CENPA_primates_aln2a_only5seqs.fa
+
+runPAML.pl --usertree=CENPA_primates_aln2a_only5seqs.fa.phy.usertree.names CENPA_primates_aln2a_only5seqs.fa
+
+
 ```
 
 ```
@@ -154,6 +162,9 @@ pw_makeTreeAndRunPAML_sbatchWrapper.pl --usertree=CENPA_primates_aln2a_only5seqs
 # xxx rebuild docker/singularity and test
 
 
+# via sbatch wrapper:
+pw_makeTreeAndRunPAML_sbatchWrapper.pl --usertree=CENPA_primates_aln2a_only5seqs.fa.phy.usertree.badNames CENPA_primates_aln2a_only5seqs.fa 
+ 4055887
 ```
 
 

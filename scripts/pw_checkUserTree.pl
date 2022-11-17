@@ -127,8 +127,11 @@ print "\n\nERROR - sequence names did NOT match between alignment file and tree 
 print "    There were $countAlnSeqsNotInTree seqs in the alignment but not in the tree\n";
 print "    There were $countTreeTipsNotInAln seqs in the tree but not in the alignment\n\n";
 print "    The following file will show you which seqs did not match up:\n";
-print "         $alnToTreeNameFile\n";
-print "    If you edit that file to pair up names, you can use it as input to the script pw_changenamesinphyliptreefile.pl to swap names in the tree so that it matches the alignment\n\n";
+print "        $alnToTreeNameFile\n";
+print "    If you edit that file to pair up names, you can use it as input to the script pw_changenamesinphyliptreefile.pl to swap names in the tree so that it matches the alignment.  Example command:\n";
+my $temp2 = $alnToTreeNameFile; $temp2 =~ s/\.tsv$//;
+print "        pw_changenamesinphyliptreefile.pl $treeFile $temp2.edited.txt\n";
+print "\n";
 
 exit $exitCode;
 

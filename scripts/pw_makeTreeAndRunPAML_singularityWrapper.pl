@@ -16,7 +16,7 @@ use strict;
 
 ###### set up defaults for all the options
 my %options;
-$options{'sif'} = "/fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.0.9.sif"; # singularity image file
+$options{'sif'} = "/fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.1.0.sif"; # singularity image file
 $options{'walltime'} = "1-0"; ## walltime for sbatch jobs
 $options{'job'} = "pw_";   
 $options{'omega'} = 0.4;
@@ -85,8 +85,7 @@ foreach my $alnFile (@files) {
         }
     }
 
-
-    ### first we make the shell file
+    ### first we make the shell file (figure out log file name at the same time)
     my $outfileStem = $alnFileStem;
     $outfileStem .= ".codon$options{'codon'}";
     $outfileStem .= "_omega$options{'omega'}";

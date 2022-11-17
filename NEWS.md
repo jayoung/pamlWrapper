@@ -1,9 +1,14 @@
 ## Issues still to fix
 
-I want to add some checks if the user specifies --usertree.  Check alignment and tree have same seqnames, maybe remove branch lengths etc.  Might also need to swap in names using the aliases file, because in the alignment I might have truncated some long names before running PAML. The user will assume the tree file and fasta file they supplied as inputs should have the same names.
 
-## Fixes since v1.0.9
+## Fixes since v1.10.0
 
+
+
+## paml_wrapper-v1.10.0
+
+Nov 16 2022, commit c0f6507
+- when using the `--usertree` option we now check that the seqnames match up between the alignment and the tree, and offer some hints on what to do if they don't.
 
 ## paml_wrapper-v1.0.9   
 
