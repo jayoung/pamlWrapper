@@ -55,7 +55,7 @@ If you don't specify any additional options, the pipeline generates a tree to us
 To change the PAML options, use these options when calling runPAML.pl:
   - `--codon` (codon model) 
   - `--omega` (initial omega) 
-  - `--clean` (cleandata) options.  
+  - `--clean` (cleandata)  
 
 Example:
 ```
