@@ -62,7 +62,7 @@ Example:
 /fh/fast/malik_h/grp/malik_lab_shared/bin/runPAML.pl --codon=3 --omega=3 --clean=1 ACE2_primates_aln1_NT.fa
 ```
 
-To use a tree file you provide (in newick format), instead of generating a tree from the alignment, use the `--usertree` option. I have not (yet) built-in many checks on the user-supplied tree, so if it doesn't work, send me your alignment and tree files and I will troubleshoot.  One likely problem is that PAML won't run unless the sequence names in your alignment and your tree file match EXACTLY. I'm not checking for that at the moment.
+To supply your own tree file (in newick format), rather than generating a tree from the alignment, use the `--usertree` option. The script expects that the sequence names match exactly between the alignment and the tree, and won't run PAML unless they do. If they don't match, it will provide a few hints on how to make a tree where names match.
 
 Example:
 ```
@@ -95,7 +95,7 @@ The pipeline performs the following steps on each input file (e.g. if the input 
   - truncates long sequence names to 30 characters (long names caused trouble somewhere - I think in PHYML). Name translations are saved in `myAln.fa.aliases.txt`
   - removes odd characters from seqnames (e.g. `' : ( )`) - these can cause trouble
 
-- runs PHYML to make a phylogenetic tree (details: we use the GTR nucleotide substitution model, we estimate the proportion of invariable sites, we estimate the shape of the gamma distribution, we estimate nucleotide freqs, we do not do any bootstrapping). See contents of the `myAln.fa_PHYMLtree` directory:
+- if the user supplies a tree via the `--usertree` option, we use that (after checking that seqnames match up between the alignment and the tree). Otherwise we run PHYML to make a phylogenetic tree (details: we use the GTR nucleotide substitution model, we estimate the proportion of invariable sites, we estimate the shape of the gamma distribution, we estimate nucleotide freqs, we do not do any bootstrapping). See contents of the `myAln.fa_PHYMLtree` directory:
   - PHYML's output tree is `myAln.fa.phy_phyml_tree`
   - sometimes I want to see how those trees look, so I restore any seqnames I changed to their original names: `myAln.fa.phy_phyml_tree.names` 
   - and I use an R script to draw that tree: `myAln.fa.phy_phyml_tree.names.pdf` 
@@ -180,8 +180,6 @@ pw_annotateCpGsitesInAlignment.pl ACE2_primates_aln1_NT.fa_phymlAndPAML/ACE2_pri
 I also created a shiny app to help visualize sitewise (and branchwise) PAML results. The apps can be run [here](https://jyoungfhcrc.shinyapps.io/pamlApps/) and the underlying code is [here](https://github.com/jayoung/pamlApps) (R functions can also be used in a standalone way)
 
 # To do 
-
-For the `--usertree` option: I want to add some checks if the user specifies `--usertree`.  Check alignment and tree have same seqnames, maybe remove branch lengths etc.  Might also need to swap in names using the aliases file, because in the alignment I might have truncated some long names before running PAML. The user will assume the tree file and fasta file they supplied as inputs should have the same names.
 
 Add the ability to run only model 0 and model 0fixed on an alignment containing only 2 seqs.  Tree is meaningless, and PHYML fails when there's only two seqs. But I can make a fake tree `(seq1,seq2);` and PAML will work.
 
