@@ -62,7 +62,7 @@ Example:
 /fh/fast/malik_h/grp/malik_lab_shared/bin/runPAML.pl --codon=3 --omega=3 --clean=1 ACE2_primates_aln1_NT.fa
 ```
 
-To supply your own tree file (in newick format), rather than generating a tree from the alignment, use the `--usertree` option. The script expects that the sequence names match exactly between the alignment and the tree, and won't run PAML unless they do. If they don't match, it will provide a few hints on how to make a tree where names match.
+To **supply your own tree file** (in newick format), rather than generating a tree from the alignment, use the `--usertree` option. The script expects that the sequence names match exactly between the alignment and the tree, and won't run PAML unless they do. If they don't match, it will provide a few hints on how to make a tree where names match.
 
 Example:
 ```
