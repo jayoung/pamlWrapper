@@ -27,8 +27,21 @@ RUN cd src/phyml && \
   make && \ 
   make install
 
-### install paml using conda
-RUN conda install paml --channel bioconda
+### I WAS installing paml using conda 
+# this installs paml version 4.9, March 2015
+# there is a weird bug in that version, where the BEB algorithm sometimes returns nan values. Ching-Ho and Risa both had alignments where this bug was evident.  
+# RUN conda install paml --channel bioconda
+
+### but now I want to install paml from the source, a newer version
+# paml version 4.9j, February 2020
+RUN mkdir src/paml
+RUN cd src/paml && \
+  wget http://abacus.gene.ucl.ac.uk/software/paml4.9j.tgz && \
+  tar -xf paml4.9j.tgz && \
+  cd paml4.9j/src && \
+  sed 's/CC = cc/CC = gcc/g' -i Makefile && \
+  make
+  ## I add paml4.9j/src to PATH at the bottom so I don't need to move the executables
 
 ### install bioperl
 # PERL5LIB does not seem to be set by the conda install, so I do that myself
@@ -58,7 +71,7 @@ RUN find /pamlWrapper -maxdepth 2 -depth -name 'allAlignments.PAMLsummaries*' -e
 ENV PAML_WRAPPER_HOME /pamlWrapper/
 
 ### add to PATH
-ENV PATH /pamlWrapper/scripts:$PATH
+ENV PATH /pamlWrapper/scripts:/src/paml/paml4.9j/src:$PATH
 
 ### what to DO in our container
 # CMD ["/bin/bash"]
