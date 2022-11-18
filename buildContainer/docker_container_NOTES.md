@@ -80,3 +80,38 @@ install wget:
 RUN apt-get update && apt-get install wget -y
 ```
 
+# trying to update paml in Dockerfile to v4.9j
+
+need to isntall from source if I want 4.9j
+
+even if I don't have paml in Dockerfile AT ALL bioperl now fails to build.  I need to troubleshoot building bioperl.  I think it's trying to get some OTHER version of bioperl that I wasn't getting before?
+
+```
+ > [ 8/16] RUN conda install perl-bioperl --channel bioconda:                                                                           
+#11 0.500 Collecting package metadata (current_repodata.json): ...working... done                                                       
+#11 5.298 Solving environment: ...working... failed with initial frozen solve. Retrying with flexible solve.                            
+#11 6.633 Solving environment: ...working... failed with repodata from current_repodata.json, will retry with next repodata source.     
+#11 8.303 Collecting package metadata (repodata.json): ...working... done                                                               
+#11 21.17 Solving environment: ...working... failed with initial frozen solve. Retrying with flexible solve.
+                                                                                         
+#11 34.21 Found conflicts! Looking for incompatible packages.
+#11 34.21 This can take several minutes.  Press CTRL-C to abort.
+#11 34.21 failed
+#11 34.21 
+#11 34.21 UnsatisfiableError: The following specifications were found to be incompatible with each other:
+#11 34.21 
+#11 34.21 Output in format: Requested package -> Available versions
+#11 34.21 
+#11 34.21 Package libgcc-ng conflicts for:
+#11 34.21 python=3.9 -> zlib[version='>=1.2.11,<1.3.0a0'] -> libgcc-ng[version='>=7.2.0']
+#11 34.21 python=3.9 -> libgcc-ng[version='>=11.2.0|>=7.5.0|>=7.3.0']
+#11 34.21 perl-bioperl -> perl -> libgcc-ng[version='>=10.3.0|>=11.2.0|>=7.2.0|>=9.4.0']The following specifications were found to be incompatible with your system:
+#11 34.21 
+#11 34.21   - feature:/linux-64::__glibc==2.28=0
+#11 34.21   - feature:|@/linux-64::__glibc==2.28=0
+#11 34.21   - python=3.9 -> libgcc-ng[version='>=11.2.0'] -> __glibc[version='>=2.17']
+#11 34.21 
+#11 34.21 Your installed version is: 2.28
+#11 34.21 
+#11 34.21 
+```
