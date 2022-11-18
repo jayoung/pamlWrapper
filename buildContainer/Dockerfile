@@ -30,7 +30,7 @@ RUN cd src/phyml && \
 ### I WAS installing paml using conda 
 # this installs paml version 4.9, March 2015
 # there is a weird bug in that version, where the BEB algorithm sometimes returns nan values. Ching-Ho and Risa both had alignments where this bug was evident.  
-RUN conda install paml --channel bioconda
+# RUN conda install paml --channel bioconda
 
 ### install bioperl
 # PERL5LIB does not seem to be set by the conda install, so I do that myself
