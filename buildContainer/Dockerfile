@@ -34,7 +34,8 @@ RUN conda install paml --channel bioconda
 
 ### install bioperl
 # PERL5LIB does not seem to be set by the conda install, so I do that myself
-RUN conda install perl-bioperl --channel bioconda
+# RUN conda install perl-bioperl --channel bioconda
+RUN conda install -c conda-forge -c bioconda -c defaults perl-bioperl=1.7.8
 ENV PERL5LIB /opt/conda/pkgs/perl-bioperl-1.6.924-4/lib/perl5/site_perl/5.22.0/
 
 ### Install cpanm and some perl modules
