@@ -36,14 +36,23 @@ docker run -v `pwd`:/workingDir -it paml_wrapper
 I should then be able to run the code within the container, e.g. 
 ```
 cd workingDir/testData
+# one very small alignment
+../scripts/pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_only5seqs.fa
+# two bigger alignments
 ../scripts/pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa ACE2_primates_aln1_NT.fa
 ```
 
 From that docker container shell:
 `which phyml`, `which codeml`, and playing with R all seem to work.
-`uname -a` output is:
+
+`uname -a` output is this when I used the miniconda base:
 ```
 Linux 67aff675bc0e 5.10.104-linuxkit #1 SMP Thu Mar 17 17:08:06 UTC 2022 x86_64 GNU/Linux
+```
+
+`uname -a` output is this when I used the bioperl/trusty base:
+```
+Linux bcd270568437 5.15.49-linuxkit #1 SMP Tue Sep 13 07:51:46 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux
 ```
 
 # things I tried when making my Dockerfile that I didn't pursue
