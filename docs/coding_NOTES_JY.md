@@ -72,6 +72,15 @@ module load Singularity/3.5.3
 singularity build paml_wrapper-v1.2.0.sif docker://jayoungfhcrc/paml_wrapper:version1.2.0
 module purge
 ```
+
+Now that I use the bioperl base, I do get a bunch of warnings while building the singularity image, e.g. 
+```
+2022/11/22 17:00:44  warn rootless{dev/agpgart} creating empty file in place of device 10:175
+2022/11/22 17:00:44  warn rootless{dev/audio} creating empty file in place of device 14:4
+2022/11/22 17:00:52  warn rootless{root/.cpanm/work/1468017244.5/Statistics-Descriptive-3.0612/t/pod.t} ignoring (usually) harmless EPERM on setxattr "user.rootlesscontainers"
+```
+
+
 A file called paml_wrapper-v1.2.0.sif appears. I want a copy of the singularity image file, and a script that uses it, in a more central place, for use by others:
 ```
 cp paml_wrapper-v1.2.0.sif /fh/fast/malik_h/grp/malik_lab_shared/singularityImages
@@ -82,15 +91,19 @@ cd ~/FH_fast_storage/paml_screen/pamlWrapper/testData
 
 # test paml v4.9j (singularity 1.2.0)
 cd ~/FH_fast_storage/paml_screen/pamlWrapper/testData
-../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa
-   xxx 4364086 and 4364087
 
-/.singularity.d/actions/exec: 21: exec: pw_makeTreeAndRunPAML.pl: Permission denied
+# test tiny alignment
+../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl CENPA_primates_aln2a_only5seqs.fa
+     xxx 4459620
+# test two real alignments
+../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl  ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa
+   xxx 4461192 and 4461193
+
 
 
 cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/test_paml4.9j
 ../../pamlWrapper/scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --usertree=Dmel22genome_tree.nwk Dmel_22_aln.fasta
-   xx 4364159  FAILED
+   xx 4461525  
 
 xx old tests below
 
@@ -105,6 +118,9 @@ xx old tests below
 
 ```
 
+```
+../../../pamlWrapper/scripts/pw_makeTreeAndRunPAML.pl --usertree=Dmel22genome_tree.nwk Dmel_22_aln.fasta
+```
 
 Then, when I'm sure it's working, update the version used by others:
 

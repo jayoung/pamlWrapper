@@ -159,11 +159,19 @@ foreach my $fastaAlnFile (@files) {
         if (!-e $modelSubDir) {
             die "\n\nERROR - terminating in script $scriptName - cannot open PAML results dir $modelSubDir\n\n";
         }
+        ## we get almost all the results from the mlc file
         my $mlcFile = "$modelSubDir/mlc";
         if (!-e $mlcFile) {
             die "\n\nERROR - terminating in script $scriptName - cannot open mlc file $mlcFile\n\n";
         }
         $allPAMLresults{$thisModel} = parse_paml($mlcFile, $thisModel);
+        
+        ## but we also read the rst file, because that contains the name of the treefile we used
+        my $rstFile = "$modelSubDir/rst";
+        if (!-e $rstFile) {
+            die "\n\nERROR - terminating in script $scriptName - cannot open mlc file $rstFile\n\n";
+        }
+        $allPAMLresults{$thisModel}{'treefile'} = parse_rst($rstFile);
     }
         
     ### call an R script that plots the distributions of site omega classes:
@@ -188,6 +196,7 @@ foreach my $fastaAlnFile (@files) {
         #### start making output line
         # numSeqs seqLenNT seqLenCodons model resultsDir startingOmega 
         my $outputLine = "$fastaAlnFile";
+        $outputLine .= "\t$allPAMLresults{$thisModel}{'treefile'}";
         my $numNT = $pamlResult{'numcodons'} * 3;
         $outputLine .= "\t$pamlResult{'numseqs'}\t$numNT\t$pamlResult{'numcodons'}\t";
         # lnL np test 2diffML df pValue
@@ -281,7 +290,7 @@ if ($combinedOutputFile) {close $overallOutputFile_fh;}
 sub printHeaderRows {
     my $fh = $_[0];
     my $BEB = $_[1];
-    print $fh "seqFile\tnumSeqs\tseqLenNT\tseqLenCodons\tmodel\tresultsDir\t";
+    print $fh "seqFile\ttreeFile\tnumSeqs\tseqLenNT\tseqLenCodons\tmodel\tresultsDir\t";
     print $fh "codonModel\tstartingOmega\tcleanData\t";
     print $fh "lnL\tnp\ttest\t2diffML\tdf\tpValue\tkappa\ttreeLen\ttreeLen_dN\ttreeLen_dS\toverallOmega\t";
     print $fh "proportionSelectedSites\testimatedOmegaOfSelectedClass\tseqToWhichAminoAcidsRefer\tnumSitesBEBover$BEB\twhichSitesBEBover$BEB\n";
@@ -384,7 +393,20 @@ sub paml_stats {
     return(\%pamlStats);
 }
 
-### read the mlc file, and get the bits of the output I'm interested in
+### parse_rst: parse rst, get only the name of the tree file
+sub parse_rst {
+    my $file = $_[0];
+    my $firstLine = `head -1 $file`;
+    chomp $firstLine;
+    my @words = split /\s/, $firstLine;
+    my $treefile = $words[-1];
+    $treefile =~ s/\)$//;
+    if ($treefile =~ m/\//) { $treefile = (split /\//, $treefile)[-1]; }
+    #print "found treefile $treefile in rst file $file\n";
+    return($treefile);
+}
+
+### parse_paml: read the mlc file, and get the bits of the output I'm interested in
 sub parse_paml {
     my $file = $_[0];
     my $model = $_[1];

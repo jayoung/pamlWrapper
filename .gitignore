@@ -3,6 +3,8 @@ hide
 notUsingTheseFiles
 testData/*_phymlAndPAML
 testData/*PAMLsummary*tsv
+*_runPAML.log.txt
+*_runPAML.sh
 *.sif
 slurm-*
 screenoutput

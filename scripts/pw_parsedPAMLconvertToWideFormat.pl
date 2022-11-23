@@ -59,7 +59,7 @@ foreach my $file (@ARGV) {
     while (<IN>) {
         my $line = $_; chomp $line;
         if ($line eq "") {next;} ## empty lines
-        if ($line =~ m/^seqFile\tnumSeqs\tseqLenNT\t/) {next;} ## header
+        if ($line =~ m/^seqFile\ttreeFile\tnumSeqs\tseqLenNT\t/) {next;} ## header
         #print "line $line\n";
         my @f = split /\t/, $line; my $numFields = @f;
         my $thisAlignmentName = $f[0];
@@ -75,10 +75,11 @@ foreach my $file (@ARGV) {
         my $mask = "unmasked"; 
         #print "line $line geneName $geneName\n";
         if ($thisAlignmentName =~ m/removeCpGinframe/) { $mask = "masked"; }
-        my $mod = $f[4];
-        my $codon = $f[6];
-        my $omega = $f[7];
-        my $clean = $f[8];
+
+        my $mod = $f[5];
+        my $codon = $f[7];
+        my $omega = $f[8];
+        my $clean = $f[9];
 
         my $alnName = $geneName;
         if ($splitGeneName == 0) {
@@ -87,36 +88,37 @@ foreach my $file (@ARGV) {
         if (defined $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$mod}) {
             print "    WARNING - already saw results for gene $geneName $mask $mod - did you intend to use the --genename=no option to suppress parsing gene name from file name?\n\n";
         }
-        $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$mod}{"numSeqs"} = $f[1];
-        $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$mod}{"alnLenNT"} = $f[2];
-        $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$mod}{"alnLenAA"} = $f[3];
-        $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$mod}{"resultsDir"} = $f[5];
-        $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$mod}{"lnL"} = $f[9];
-        $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$mod}{"np"} = $f[10];
+        $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$mod}{"treeFile"} = $f[1];
+        $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$mod}{"numSeqs"} = $f[2];
+        $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$mod}{"alnLenNT"} = $f[3];
+        $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$mod}{"alnLenAA"} = $f[4];
+        $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$mod}{"resultsDir"} = $f[6];
+        $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$mod}{"lnL"} = $f[10];
+        $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$mod}{"np"} = $f[11];
 
         ## record special output for M0 - overall dN/dS and total tree length
         if ($mod eq "M0") {
-            $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$mod}{"tot_treeLen"} = $f[16];
-            $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$mod}{"dN_treeLen"} = $f[17];
-            $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$mod}{"dS_treeLen"} = $f[18];
-            $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$mod}{"overall_dNdS"} = $f[19];
+            $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$mod}{"tot_treeLen"} = $f[17];
+            $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$mod}{"dN_treeLen"} = $f[18];
+            $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$mod}{"dS_treeLen"} = $f[19];
+            $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$mod}{"overall_dNdS"} = $f[20];
         }
         
         ## record output if this line reflects a statistical test
-        if ($numFields < 12) {next;}
-        if ($f[11] ne "") {
-            my $test = $f[11];
-            my $diffML2 = $f[12];
-            my $pVal = $f[14];
+        if ($numFields < 13) {next;}
+        if ($f[12] ne "") {
+            my $test = $f[12];
+            my $diffML2 = $f[13];
+            my $pVal = $f[15];
             $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$test}{"diffML2"} = $diffML2;
             $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$test}{"pVal"} = $pVal;
             ## if it's the M8 line and the test was signif, I record results about number of selected sites
-            if (($numFields >= 21) & ($mod eq "M8")) {
-                if ($f[20] ne "") {
-                    $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$mod}{"percentSelected"} = 100*$f[20];
-                    $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$mod}{"dNdSselected"} = $f[21];
-                    $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$mod}{"numSitesBEB_90"} = $f[23];
-                    $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$mod}{"sitesBEB_90"} = $f[24];
+            if (($numFields >= 22) & ($mod eq "M8")) {
+                if ($f[21] ne "") {
+                    $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$mod}{"percentSelected"} = 100*$f[21];
+                    $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$mod}{"dNdSselected"} = $f[22];
+                    $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$mod}{"numSitesBEB_90"} = $f[24];
+                    $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$mod}{"sitesBEB_90"} = $f[25];
                 }
             }
         }
@@ -129,7 +131,7 @@ foreach my $file (@ARGV) {
     
     open (OUT, "> $out");
     ### print header:
-    print OUT "seqFile";
+    print OUT "seqFile\ttreeFile";
     # all species
     print OUT "\tnum seqs\tcodon model\tinitial omega\tcleandata";
     printHeaderFieldsEachAnalysis("");
@@ -137,6 +139,7 @@ foreach my $file (@ARGV) {
         printHeaderFieldsEachAnalysis("CpGmask ");
     }
     print OUT "\n";
+
     ### print results for each gene
     foreach my $gene (sort keys %results) {
         #print "\ngetting results for gene $gene\n";
@@ -156,6 +159,7 @@ foreach my $file (@ARGV) {
                     # die;
 
                     print OUT "$gene";
+                    print OUT "\t$results{$gene}{'unmasked'}{$thisCodon}{$thisOmega}{$thisClean}{'M0'}{'treeFile'}";
                     print OUT "\t$results{$gene}{'unmasked'}{$thisCodon}{$thisOmega}{$thisClean}{'M0'}{'numSeqs'}"; 
                     print OUT "\t$thisCodon";
                     print OUT "\t$thisOmega";
