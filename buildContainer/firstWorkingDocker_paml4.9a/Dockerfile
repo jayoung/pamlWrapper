@@ -1,30 +1,16 @@
-FROM bioperl/bioperl:release-1-6-924
+FROM continuumio/miniconda3:4.10.3
 
-# https://hub.docker.com/r/bioperl/bioperl
-# At present, the base OS image is Ubuntu 14.04 (a.k.a. 'trusty'). This may change in the future, in particular if there is user demand, so please post on the issue tracker if you'd like to see other base OS images as well.
-# R is NOT installed in the base image
-
-
-### for testing:
-# docker build -t paml_wrapper -f ./Dockerfile .
-# docker run -it paml_wrapper /bin/bash  
-
+### the slower things will go near the beginning, quicker things near the end (to make rebuilds quicker after any changes I make)
 
 #### install build-essential (for gcc compiler) and autoconf (for autoreconf), both needed to compile phyml. I think build-essential includes wget
-RUN apt-get update && apt-get install build-essential autoconf wget -y
+RUN apt-get update && apt-get install build-essential autoconf -y
 
-
-#### install R : this gets me v3.4.4 (OLD, but I don't care.)
-# I suspect it's hard to install R 4.x on this base image
+### install R (default version is OLD - 3.5.2), but I don't care. 
 # I only use R+ape for some very simple plots.
-# https://www.digitalocean.com/community/tutorials/how-to-set-up-r-on-ubuntu-14-04
-RUN sh -c 'echo "deb http://cran.rstudio.com/bin/linux/ubuntu trusty/" >> /etc/apt/sources.list'
-RUN gpg --keyserver keyserver.ubuntu.com --recv-key E298A3A825C0D65DFD57CBB651716619E084DAB9
-RUN gpg -a --export E298A3A825C0D65DFD57CBB651716619E084DAB9 | apt-key add -
-RUN apt-get update && apt-get install r-base -y
-# install the ape R package (5.6-2)
+# install the ape R package (v5.6-2)
+RUN apt-get update && \
+    apt-get install -y r-base
 RUN R -e "install.packages('ape',dependencies=TRUE, repos='http://cran.rstudio.com/')"
-
 
 ## install phyml from the tarball - current release. 
 # We install phyml WITHOUT mpi support (we won't be bootstrapping, so don't need it). 
@@ -41,23 +27,35 @@ RUN cd src/phyml && \
   make && \ 
   make install
 
+### I WAS installing paml using conda 
+# this installs paml version 4.9, March 2015
+# there is a weird bug in that version, where the BEB algorithm sometimes returns nan values. Ching-Ho and Risa both had alignments where this bug was evident.  
+RUN conda install paml --channel bioconda
 
-### Install some perl modules (cpanm is already in this base)
+### install bioperl
+# PERL5LIB does not seem to be set by the conda install, so I do that myself
+RUN conda install perl-bioperl --channel bioconda
+# RUN conda install -c conda-forge -c bioconda -c defaults perl-bioperl=1.7.8
+ENV PERL5LIB /opt/conda/pkgs/perl-bioperl-1.6.924-4/lib/perl5/site_perl/5.22.0/
+
+### Install cpanm and some perl modules
+RUN apt-get install -y cpanminus
 RUN cpanm CPAN::Meta \
-  Cwd \
-  Getopt::Long \
+  Cwd \ 
+  Getopt::Long \ 
   Statistics::Distributions
 
-
-### install paml from the source, version 4.9j, February 2020
-RUN mkdir src/paml
-RUN cd src/paml && \
-  wget http://abacus.gene.ucl.ac.uk/software/paml4.9j.tgz && \
-  tar -xf paml4.9j.tgz && \
-  cd paml4.9j/src && \
-  sed 's/CC = cc/CC = gcc/g' -i Makefile && \
-  make
-## I add paml4.9j/src to PATH at the bottom so I don't need to move the executables
+### but now I want to install paml from the source, a newer version
+# paml version 4.9j, February 2020
+# RUN mkdir src/paml
+# RUN cd src/paml && \
+#   wget http://abacus.gene.ucl.ac.uk/software/paml4.9j.tgz && \
+#   tar -xf paml4.9j.tgz && \
+#   cd paml4.9j/src && \
+#   sed 's/CC = cc/CC = gcc/g' -i Makefile && \
+#   make
+  ## I add paml4.9j/src to PATH at the bottom so I don't need to move the executables
+# did not work when I was installing PAML BEFORE perl-bioperl - failed at the conda install perl-bioperl  stage
 
 ## Install my scripts and templates and docs from the local drive
 RUN mkdir pamlWrapper

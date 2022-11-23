@@ -36,16 +36,26 @@ To get a shell for a quick look:
 docker run -v `pwd`:/workingDir -it paml_wrapper
 ```
 
+Perhaps I run some standard tests, something like this:
+```
+scripts/pw_testScript.bioperl 
+which codeml 
+which phyml
+which R
+```
+
 
 When I know it's working I add a new tag and push it to [docker hub](https://hub.docker.com/repository/docker/jayoungfhcrc/paml_wrapper).  I update the version number each time:
 ```
-docker tag paml_wrapper jayoungfhcrc/paml_wrapper:version1.1.0
-docker push jayoungfhcrc/paml_wrapper:version1.1.0
+docker tag paml_wrapper jayoungfhcrc/paml_wrapper:version1.2.0
+docker push jayoungfhcrc/paml_wrapper:version1.2.0
 ```
+
+xxxx v 1.2.0 is a total rebuild using bioperl base.  tested within docker container on my mac, need to test from outside it.  I got this far
 
 I then test my container in a totally different environment using the [Play with Docker](https://labs.play-with-docker.com) site - it seems to work. Once I have an instance running there:
 ```
-docker run -it jayoungfhcrc/paml_wrapper:version1.1.0
+docker run -it jayoungfhcrc/paml_wrapper:version1.2.0
 cd pamlWrapper/testData/
 pw_makeTreeAndRunPAML.pl ACE2_primates_aln1_NT.fa
 ```
@@ -59,16 +69,30 @@ On gizmo/rhino:
 cd ~/FH_fast_storage/paml_screen/pamlWrapper/buildContainer
 module purge
 module load Singularity/3.5.3
-singularity build paml_wrapper-v1.1.0.sif docker://jayoungfhcrc/paml_wrapper:version1.1.0
+singularity build paml_wrapper-v1.2.0.sif docker://jayoungfhcrc/paml_wrapper:version1.2.0
 module purge
 ```
-A file called paml_wrapper-v1.1.0.sif appears. I want a copy of the singularity image file, and a script that uses it, in a more central place, for use by others:
+A file called paml_wrapper-v1.2.0.sif appears. I want a copy of the singularity image file, and a script that uses it, in a more central place, for use by others:
 ```
-cp paml_wrapper-v1.1.0.sif /fh/fast/malik_h/grp/malik_lab_shared/singularityImages
+cp paml_wrapper-v1.2.0.sif /fh/fast/malik_h/grp/malik_lab_shared/singularityImages
 ```
 If I want to retest before I change the version used by others
 ```
 cd ~/FH_fast_storage/paml_screen/pamlWrapper/testData
+
+# test paml v4.9j (singularity 1.2.0)
+cd ~/FH_fast_storage/paml_screen/pamlWrapper/testData
+../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa
+   xxx 4364086 and 4364087
+
+/.singularity.d/actions/exec: 21: exec: pw_makeTreeAndRunPAML.pl: Permission denied
+
+
+cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/test_paml4.9j
+../../pamlWrapper/scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --usertree=Dmel22genome_tree.nwk Dmel_22_aln.fasta
+   xx 4364159  FAILED
+
+xx old tests below
 
 # test, making a gene tree
 ../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl CENPA_primates_aln2a_only5seqs.fa
@@ -92,7 +116,7 @@ I can get a shell in the singularity container like this:
 ```
 cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments
 module load Singularity/3.5.3
-singularity shell --cleanenv /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.1.0.sif
+singularity shell --cleanenv /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.2.0.sif
 module purge
 ```
 
@@ -104,7 +128,7 @@ pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa
 Or, I can run some code using the singularity image without entering a shell (the `pw_makeTreeAndRunPAML_singularityWrapper.pl` script (same as `runPAML.pl`) does this for each alignment):
 ```
 module load Singularity/3.5.3
-singularity exec --cleanenv /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.1.0.sif pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa 
+singularity exec --cleanenv /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.2.0.sif pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa 
 module purge
 ```
 
@@ -116,6 +140,10 @@ runPAML.pl --codon=2 --omega=3 CENPA_primates_aln2a_NT.fa
 runPAML.pl --usertree=CENPA_primates_aln2a_only5seqs.fa.phy.usertree CENPA_primates_aln2a_only5seqs.fa
 ```
 
+
+xxx how different are results from paml4.9j compared to 4.9a?
+
+xxx docker:  can I build bioperl starting from a newer ubuntu, that would allow me to use a newer R?   or does another bioperl base exist?
 
 # Testing a new feature - allow user-supplied tree
 

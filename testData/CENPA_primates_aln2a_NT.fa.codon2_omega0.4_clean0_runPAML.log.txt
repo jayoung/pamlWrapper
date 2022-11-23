@@ -1,0 +1,14 @@
+
+######## Running PAML wrapper within this singularity container:
+/fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.2.0.sif
+
+Passing the following command to the container:
+
+singularity exec --cleanenv /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.2.0.sif pw_makeTreeAndRunPAML.pl  --omega=0.4 --codon=2 --clean=0 --BEB=0.9 CENPA_primates_aln2a_NT.fa &>> CENPA_primates_aln2a_NT.fa.codon2_omega0.4_clean0_runPAML.log.txt
+
+Running on rhino/gizmo, sometimes we get a singularity-related error containing these words 'WARNING: Bind mount overlaps container CWD may not be available' but I think it's OK to ignore it.
+
+All following output comes from the singularity container, running pw_makeTreeAndRunPAML.pl.
+
+[33mWARNING:[0m Bind mount '/home/jayoung => /home/jayoung' overlaps container CWD /home/jayoung/FH_fast_storage/paml_screen/pamlWrapper/testData, may not be available
+/.singularity.d/actions/exec: 21: exec: pw_makeTreeAndRunPAML.pl: Permission denied

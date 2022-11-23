@@ -1,10 +1,16 @@
 #!/usr/bin/perl
 use warnings;
 use strict;
-use Bio::SeqIO;
 use Cwd;
 use Getopt::Long;
 use Statistics::Distributions;
+use Bio::AlignIO;
+use Bio::Seq;
+use Bio::SeqIO;
+use Bio::TreeIO;
+use IO::String;
+use POSIX qw/ceil/;
+use POSIX qw/floor/;
 
 ### this script simply tests whether Docker container setup is working as I expect.
 

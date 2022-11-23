@@ -4,6 +4,9 @@ Goal: use Docker to provide a container where all my pamlWrapper scripts can run
 
 `Dockerfile` contains instructions to install a bunch of stuff using conda. 
 
+I got it working in April 2022, using this base image: continuumio/miniconda3:4.10.3.  I chose that because it was what Rasi was using and it allows installs via conda. conda gets me paml 4.9a, which has a bug in the BEB
+
+In Nov 2022 I decided I wanted a newer version of PAML so I needed to rebuild the docker image. I wanted to install PAML from scratch rather than using conda.   Even without PAML, I now had trouble installing bioperl using conda.  I decided to abandon the miniconda base, and use a Bioperl base image for my docker container ("bioperl/bioperl:release-1-6-924").   I think I have it working.
 
 # Notes on making my Dockerfile
 I export DOCKER_BUILDKIT in my ~/.profile file on my mac (needed for the "RUN --mount=type=bind" commands):
@@ -32,8 +35,8 @@ docker run -v `pwd`:/workingDir -it paml_wrapper
 
 I should then be able to run the code within the container, e.g. 
 ```
-cd workingDir
-pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa ACE2_primates_aln1_NT.fa
+cd workingDir/testData
+../scripts/pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa ACE2_primates_aln1_NT.fa
 ```
 
 From that docker container shell:
@@ -114,4 +117,17 @@ even if I don't have paml in Dockerfile AT ALL bioperl now fails to build.  I ne
 #11 34.21 Your installed version is: 2.28
 #11 34.21 
 #11 34.21 
+```
+
+
+# Nov 21 troubleshooting Docker build issues
+
+can I get bioperl alone to install?
+
+on the mac:
+```
+cd /Volumes/malik_h/user/jayoung/paml_screen/pamlWrapper/buildContainer/onlyBioperl
+docker build -t test_bioperl -f ./Dockerfile .
+
+
 ```

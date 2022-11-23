@@ -6,8 +6,8 @@ FROM bioperl/bioperl:release-1-6-924
 
 
 ### for testing:
-# docker build -t paml_wrapper -f ./Dockerfile .
-# docker run -it paml_wrapper /bin/bash  
+# docker build -t test_bioperl -f ./Dockerfile .
+# docker run -it test_bioperl /bin/bash  
 
 
 #### install build-essential (for gcc compiler) and autoconf (for autoreconf), both needed to compile phyml. I think build-essential includes wget
