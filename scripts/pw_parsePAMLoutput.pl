@@ -197,6 +197,7 @@ foreach my $fastaAlnFile (@files) {
         # numSeqs seqLenNT seqLenCodons model resultsDir startingOmega 
         my $outputLine = "$fastaAlnFile";
         $outputLine .= "\t$allPAMLresults{$thisModel}{'treefile'}";
+        $outputLine .= "\t$allPAMLresults{$thisModel}{'version'}";
         my $numNT = $pamlResult{'numcodons'} * 3;
         $outputLine .= "\t$pamlResult{'numseqs'}\t$numNT\t$pamlResult{'numcodons'}\t";
         # lnL np test 2diffML df pValue
@@ -290,7 +291,7 @@ if ($combinedOutputFile) {close $overallOutputFile_fh;}
 sub printHeaderRows {
     my $fh = $_[0];
     my $BEB = $_[1];
-    print $fh "seqFile\ttreeFile\tnumSeqs\tseqLenNT\tseqLenCodons\tmodel\tresultsDir\t";
+    print $fh "seqFile\ttreeFile\tpamlVersion\tnumSeqs\tseqLenNT\tseqLenCodons\tmodel\tresultsDir\t";
     print $fh "codonModel\tstartingOmega\tcleanData\t";
     print $fh "lnL\tnp\ttest\t2diffML\tdf\tpValue\tkappa\ttreeLen\ttreeLen_dN\ttreeLen_dS\toverallOmega\t";
     print $fh "proportionSelectedSites\testimatedOmegaOfSelectedClass\tseqToWhichAminoAcidsRefer\tnumSitesBEBover$BEB\twhichSitesBEBover$BEB\n";
@@ -423,6 +424,15 @@ sub parse_paml {
     while (<MLC>) {
         my $line = $_; chomp $line;
         
+        ## check for the line that tells us which PAML version we used
+        if ($line =~ m/^CODONML/) {
+            my $pamlVersion = $line;
+            $pamlVersion =~ m/(\(.+?\))/; $pamlVersion = $1; 
+            $pamlVersion =~ s/[\(\)]//g;
+            $pamlVersion =~ s/in\spaml\sversion\s//;
+            $pamlResults{'version'} = $pamlVersion;
+            # print "pamlVersion $pamlVersion blah\n";
+        }
         ## I use the 'Time used' line that should appear at the end of the file to check that the PAML run worked
         if ($line =~ m/^Time\sused:\s/) { $seenTimeUsedLineYet = "yes"; }
         
