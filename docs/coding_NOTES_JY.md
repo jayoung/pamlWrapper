@@ -122,6 +122,41 @@ xx old tests below
 ../../../pamlWrapper/scripts/pw_makeTreeAndRunPAML.pl --usertree=Dmel22genome_tree.nwk Dmel_22_aln.fasta
 ```
 
+
+```
+
+cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/test_codeml_4.9a 
+
+../../pamlWrapper/scripts/pw_makeTreeAndRunPAML_sbatchWrapper.pl --codeml=/fh/fast/malik_h/grp/malik_lab_shared/linux_gizmo/bin/old/paml/v4.9a/codeml CENPA_primates_aln2a_only5seqs.fa
+    xx running 4559386
+../../pamlWrapper/scripts/pw_makeTreeAndRunPAML_sbatchWrapper.pl --codeml=/fh/fast/malik_h/grp/malik_lab_shared/linux_gizmo/bin/old/paml/v4.9a/codeml ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa
+    xxx running 4559399 4559400
+../../pamlWrapper/scripts/pw_makeTreeAndRunPAML_sbatchWrapper.pl --codeml=/fh/fast/malik_h/grp/malik_lab_shared/linux_gizmo/bin/old/paml/v4.9a/codeml Dmel_22_aln.fasta
+   xxx running 4559502
+```
+
+```
+
+cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/test_codeml_4.8
+
+../../pamlWrapper/scripts/pw_makeTreeAndRunPAML_sbatchWrapper.pl --codeml=/fh/fast/malik_h/grp/malik_lab_shared/linux_gizmo/bin/old/paml/v4.8/codeml CENPA_primates_aln2a_only5seqs.fa ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa Dmel_22_aln.fasta
+
+    xxx running 4559414 4559415 4559416 4559498
+
+```
+
+
+xxxx there are MORE RECENT versions of PAML on github
+
+```
+
+cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/test_codeml_4.9j
+
+../../pamlWrapper/scripts/pw_makeTreeAndRunPAML_sbatchWrapper.pl CENPA_primates_aln2a_only5seqs.fa ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa Dmel_22_aln.fasta 
+    xxx running 4559436 4559437 4559438 4559486
+
+```
+
 Then, when I'm sure it's working, update the version used by others:
 
 ```

@@ -25,9 +25,12 @@ $options{'clean'} = 0;
 $options{'usertree'} = "";
 $options{'BEB'} = 0.9; ### report selected sites with at least this BEB probability into the output file
 $options{'add'} = 0; ## a.k.a addToExistingOutputDir
+$options{'codeml'} = "codeml";  ## default is whichever codeml is in the PATH
 
 ### set up usage, including the default options
-my $usage = "Usage:\nrunPAML.pl myAln1.fa myAln2.fa\n";
+my $script = "runPAML.pl"; ## runPAML.pl is a copy of pw_makeTreeAndRunPAML_singularityWrapper.pl
+
+my $usage = "Usage:\n$script myAln1.fa myAln2.fa\n";
 $usage .= "    Options:\n";
 $usage .= "        --omega=$options{'omega'} : starting omega for codeml\n"; 
 $usage .= "        --codon=$options{'codon'} : codon model for codeml\n";
@@ -48,11 +51,14 @@ my @files = grep !/^--/, @ARGV;
 foreach my $commandLineOption (@commandLineOptions) {
     $commandLineOption =~ s/^--//;
     if ($commandLineOption !~ m/=/) {
-        die "\n\nERROR - terminating in script pw_makeTreeAndRunPAML_singularityWrapper.pl - found a command line option that does not contain '=': that doesn't look right: $commandLineOption.\n\n$usage\n\n";
+        die "\n\nERROR - terminating in script $script - found a command line option that does not contain '=': that doesn't look right: $commandLineOption.\n\n$usage\n\n";
     }
     my @o = split /=/, $commandLineOption;
     if (!defined $options{$o[0]}) {
-        die "\n\nERROR - terminating in script pw_makeTreeAndRunPAML_singularityWrapper.pl - found a command line option I don't recognize: $o[0].\n\n$usage\n\n";
+        die "\n\nERROR - terminating in script $script - found a command line option I don't recognize: $o[0].\n\n$usage\n\n";
+    }
+    if($o[0] eq "codeml") {
+        die "\n\nERROR - terminating in script $script - you are trying to specify the codeml execuytable, but we cannot do that when using the singularity container. Maybe you want to use pw_makeTreeAndRunPAML_sbatchWrapper.pl instead - you can choose the codeml executable there.\n\n$usage\n\n";
     }
     $options{$o[0]} = $o[1];
 }
@@ -60,14 +66,14 @@ foreach my $commandLineOption (@commandLineOptions) {
 # check remaining args - they should all be names of files that exist:
 foreach my $alnFile (@files) {
     if (!-e $alnFile) {
-        die "\n\nERROR - terminating in script pw_makeTreeAndRunPAML_singularityWrapper.pl - file $alnFile does not exist. It's possible you specified a file that doesn't exist, or it's possible you tried to specify a command line argument and got it slightly wrong.\n\n$usage\n\n";
+        die "\n\nERROR - terminating in script $script - file $alnFile does not exist. It's possible you specified a file that doesn't exist, or it's possible you tried to specify a command line argument and got it slightly wrong.\n\n$usage\n\n";
     }
 }
 
 ############# now do things
 
 if (!-e $options{'sif'}) {
-    die "\n\nERROR - terminating in script pw_makeTreeAndRunPAML_singularityWrapper.pl - singularity image file expected by the script does not exist: $options{'sif'}\n\n";
+    die "\n\nERROR - terminating in script $script - singularity image file expected by the script does not exist: $options{'sif'}\n\n";
 }
 
 foreach my $alnFile (@files) {

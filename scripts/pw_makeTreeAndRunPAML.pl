@@ -15,6 +15,7 @@ my $codonFreqModel = 2;
 my $cleanData = 0;
 my $userTreeFile = "";
 my $BEBprobThresholdToPrintSelectedSite = 0.9; ### report selected sites with at least this BEB probability into the output file
+my $codemlExe = "codeml";  ## default is whichever codeml is in the PATH
 
 my $scriptName = "pw_makeTreeAndRunPAML.pl";
 
@@ -22,7 +23,8 @@ GetOptions("omega=f"    => \$initialOrFixedOmega,   ## sometimes I do 3
            "codon=i"    => \$codonFreqModel,        ## sometimes I do 3
            "clean=i"    => \$cleanData,             ## sometimes I do 1 to remove the sites with gaps in any species
            "usertree=s" => \$userTreeFile,
-           "BEB=f"      => \$BEBprobThresholdToPrintSelectedSite) or die "\n\nERROR - terminating in script $scriptName - unknown option(s) specified on command line\n\n"; 
+           "BEB=f"      => \$BEBprobThresholdToPrintSelectedSite,
+           "codeml=s"   => \$codemlExe) or die "\n\nERROR - terminating in script $scriptName - unknown option(s) specified on command line\n\n"; 
 
 ##### I don't usually change these things:
 my $masterPipelineDir = $ENV{'PAML_WRAPPER_HOME'}; 
@@ -173,7 +175,7 @@ foreach my $alignmentFile (@ARGV) {
         #run codeml, if it's not already done
         my $mlcFile = "$modelDir/mlc";
         if (!-e $mlcFile) {
-            my $command = "cd $modelDir ; codeml > screenoutput.txt ; cd ..";
+            my $command = "cd $modelDir ; $codemlExe > screenoutput.txt ; cd ..";
             system ("$command");
         } else {
             print "        output $mlcFile exists already - skipping this model\n";
