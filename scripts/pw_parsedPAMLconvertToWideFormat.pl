@@ -121,20 +121,25 @@ foreach my $file (@ARGV) {
         }
 
         ## record output if this line reflects a statistical test
-        if ($numFields < 14) {next;}
-        if ($thisLineHash{'test'} ne "") {
-            my $test = $thisLineHash{'test'}; 
-            my $diffML2 = $thisLineHash{'2diffML'}; 
-            my $pVal = $thisLineHash{'pValue'}; 
-            $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$test}{"diffML2"} = $diffML2;
-            $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$test}{"pVal"} = $pVal;
-            ## if it's the M8 line and the test was signif, I record results about number of selected sites
-            if (($numFields >= 23) & ($mod eq "M8")) {
-                if ($thisLineHash{'proportionSelectedSites'} ne "") {
-                    $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$mod}{"percentSelected"} = 100*$thisLineHash{'proportionSelectedSites'}; 
-                    $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$mod}{"dNdSselected"} = $thisLineHash{'estimatedOmegaOfSelectedClass'}; 
-                    $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$mod}{"numSitesBEB_90"} = $thisLineHash{'numSitesBEBover0.9'}; 
-                    $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$mod}{"sitesBEB_90"} = $thisLineHash{'whichSitesBEBover0.9'}; 
+        # if ($numFields < 15) {next;} ## used to have this line, but I think I can replace by if (defined $thisLineHash{'test'})
+        if (defined $thisLineHash{'test'}) {
+            if  ($thisLineHash{'test'} ne "") {
+                my $test = $thisLineHash{'test'}; 
+                my $diffML2 = $thisLineHash{'2diffML'}; 
+                my $pVal = $thisLineHash{'pValue'}; 
+                $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$test}{"diffML2"} = $diffML2;
+                $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$test}{"pVal"} = $pVal;
+                ## if it's the M8 line and the test was signif, I record results about number of selected sites
+                #if (($numFields >= 24) & ($mod eq "M8")) { ## used to have this line, but I think the "if ($thisLineHash{'test'} ne "")" conditional takes care of it.
+                if ($mod eq "M8") {
+                    if (defined $thisLineHash{'proportionSelectedSites'}) {
+                        if ($thisLineHash{'proportionSelectedSites'} ne "") {
+                            $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$mod}{"percentSelected"} = 100*$thisLineHash{'proportionSelectedSites'}; 
+                            $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$mod}{"dNdSselected"} = $thisLineHash{'estimatedOmegaOfSelectedClass'}; 
+                            $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$mod}{"numSitesBEB_90"} = $thisLineHash{'numSitesBEBover0.9'}; 
+                            $results{$alnName}{$mask}{$codon}{$omega}{$clean}{$mod}{"sitesBEB_90"} = $thisLineHash{'whichSitesBEBover0.9'}; 
+                        }
+                    }
                 }
             }
         }

@@ -1,8 +1,16 @@
 ## Issues still to fix
 
-
+add elapsed time to parse output
 
 ## Fixes since v1.2.0
+
+
+Nov 23 2022, commit xxx
+- now capturing elapsed time to the parsed output
+
+Nov 23 2022, commit c1a9927
+- add --codeml option so that we can specify a different codeml executable. Useful for testing different versions of PAML.  Not applicable when I'm running within singularity/docker: there I only installed a single version of PAML (currently 4.9j).
+
 Nov 22 2022, commit 5f404a0
 - now capturing PAML version in parsed output
 

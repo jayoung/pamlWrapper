@@ -207,6 +207,7 @@ foreach my $fastaAlnFile (@files) {
             die "\n\nERROR - terminating in script $scriptName - cannot open PAML results dir $modelSubDir\n\n";
         }
         $outputLine .= "$thisModel\t$modelSubDir\t";
+        $outputLine .= "$allPAMLresults{$thisModel}{'timeElapsed'}\t";
         $outputLine .= "$codonFreqModel\t$initialOrFixedOmega\t$cleanData\t";
         $outputLine .= "$pamlResult{'lnL'}\t$pamlResult{'np'}\t";
         my $reportTestResults = "no";
@@ -291,7 +292,8 @@ if ($combinedOutputFile) {close $overallOutputFile_fh;}
 sub printHeaderRows {
     my $fh = $_[0];
     my $BEB = $_[1];
-    print $fh "seqFile\ttreeFile\tpamlVersion\tnumSeqs\tseqLenNT\tseqLenCodons\tmodel\tresultsDir\t";
+    print $fh "seqFile\ttreeFile\tpamlVersion\tnumSeqs\tseqLenNT\tseqLenCodons\t";
+    print $fh "model\tresultsDir\ttimeElapsed\t";
     print $fh "codonModel\tstartingOmega\tcleanData\t";
     print $fh "lnL\tnp\ttest\t2diffML\tdf\tpValue\tkappa\ttreeLen\ttreeLen_dN\ttreeLen_dS\toverallOmega\t";
     print $fh "proportionSelectedSites\testimatedOmegaOfSelectedClass\tseqToWhichAminoAcidsRefer\tnumSitesBEBover$BEB\twhichSitesBEBover$BEB\n";
@@ -434,7 +436,12 @@ sub parse_paml {
             # print "pamlVersion $pamlVersion blah\n";
         }
         ## I use the 'Time used' line that should appear at the end of the file to check that the PAML run worked
-        if ($line =~ m/^Time\sused:\s/) { $seenTimeUsedLineYet = "yes"; }
+        if ($line =~ m/^Time\sused:\s/) { 
+            my $timeElapsed = $line; 
+            $timeElapsed =~ s/^Time\sused:\s+//;
+            $pamlResults{'timeElapsed'} = $timeElapsed;
+            $seenTimeUsedLineYet = "yes"; 
+        }
         
         ## I am checking for a rooted tree - that's unlikely
         if ($line =~ m/^This\sis\sa\srooted\stree/) {
