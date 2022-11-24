@@ -26,6 +26,7 @@ $options{'usertree'} = "";
 $options{'BEB'} = 0.9; ### report selected sites with at least this BEB probability into the output file
 $options{'add'} = 0; ## a.k.a addToExistingOutputDir
 $options{'codeml'} = "codeml";  ## default is whichever codeml is in the PATH
+$options{'strict'} = "strict";    ## 'strict' means we insist that 'Time used' will be present at the end of the mlc file, and if it's not we assume PAML failed.   'loose' means it's OK if that's not present (v4.10.6 doesn't always add it)
 
 ### set up usage, including the default options
 my $script = "runPAML.pl"; ## runPAML.pl is a copy of pw_makeTreeAndRunPAML_singularityWrapper.pl
@@ -103,7 +104,7 @@ foreach my $alnFile (@files) {
     my $moreOptions = "";
     if ($options{'usertree'} ne "") { $moreOptions .= "--usertree=$options{'usertree'}"; }
 
-    my $singularityCommand = "singularity exec --cleanenv $options{'sif'} pw_makeTreeAndRunPAML.pl $moreOptions --omega=$options{'omega'} --codon=$options{'codon'} --clean=$options{'clean'} --BEB=$options{'BEB'} $alnFile &>> $logFile";
+    my $singularityCommand = "singularity exec --cleanenv $options{'sif'} pw_makeTreeAndRunPAML.pl $moreOptions --strict=$options{'strict'} --omega=$options{'omega'} --codon=$options{'codon'} --clean=$options{'clean'} --BEB=$options{'BEB'} $alnFile &>> $logFile";
 
     open (LOG, "> $logFile");
     print LOG "\n######## Running PAML wrapper within this singularity container:\n$options{'sif'}\n\n";

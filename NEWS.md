@@ -5,7 +5,7 @@ add elapsed time to parse output
 ## Fixes since v1.2.0
 
 
-Nov 23 2022, commit xxx
+Nov 23 2022, commit d889f42
 - now capturing elapsed time to the parsed output
 
 Nov 23 2022, commit c1a9927
@@ -20,7 +20,8 @@ Nov 22 2022, commit 41b5282
 ## paml_wrapper-v1.2.0
 
 Nov 22 2022, commit 2354751
-- the docker container now uses PAML version 4.9j instead of 4.9a. This required a total re-jigger of the Dockerfile (I now use bioperl-Ubuntu-trusty as a base rather than the original miniconda base)
+- use PAML version 4.9j instead of 4.9a
+- total rebuild of the Docker/singularity container using bioperl-Ubuntu-trusty as a base rather than the original miniconda base. Couldn't install bioperl any more using conda.  Wanted to rebuild so I could use PAML version 4.9j instead of 4.9a, and couldn't do that without also fixing the conda-bioperl problem
 
 ## paml_wrapper-v1.1.0
 

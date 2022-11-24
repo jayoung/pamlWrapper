@@ -15,6 +15,7 @@ my $codonFreqModel = 2;
 my $cleanData = 0;
 my $userTreeFile = "";
 my $BEBprobThresholdToPrintSelectedSite = 0.9; ### report selected sites with at least this BEB probability into the output file
+my $strictness = "strict";    ## 'strict' means we insist that 'Time used' will be present at the end of the mlc file, and if it's not we assume PAML failed.   'loose' means it's OK if that's not present (v4.10.6 doesn't always add it)
 my $codemlExe = "codeml";  ## default is whichever codeml is in the PATH
 
 my $scriptName = "pw_makeTreeAndRunPAML.pl";
@@ -24,6 +25,7 @@ GetOptions("omega=f"    => \$initialOrFixedOmega,   ## sometimes I do 3
            "clean=i"    => \$cleanData,             ## sometimes I do 1 to remove the sites with gaps in any species
            "usertree=s" => \$userTreeFile,
            "BEB=f"      => \$BEBprobThresholdToPrintSelectedSite,
+           "strict=s"   => \$strictness,
            "codeml=s"   => \$codemlExe) or die "\n\nERROR - terminating in script $scriptName - unknown option(s) specified on command line\n\n"; 
 
 ##### I don't usually change these things:
@@ -47,6 +49,11 @@ if ($userTreeFile ne "") {
         die "\n\nERROR - terminating in script $scriptName - you specified tree file $userTreeFile with the --usertree option, but that file does not exist\n\n";
     }
 }
+
+if (($strictness ne "strict") & ($strictness ne "loose")) {
+    die "\n\nERROR - terminating in script $scriptName - the '--strict' option must be either 'strict' (default) or 'loose'\n\n";
+}
+print "\n#### strictness in script $scriptName is $strictness\n\n";
 
 #first read in codeml.ctl template
 if (!-e $codemlCTLtemplateFile) {
@@ -205,7 +212,7 @@ foreach my $alignmentFile (@ARGV) {
             $otherOptions .= "--processTree=no --usertree=$userTreeFile"; 
         }
 
-        system ("$masterPipelineDir/scripts/pw_parsePAMLoutput.pl $otherOptions -omega=$initialOrFixedOmega -codon=$codonFreqModel -clean=$cleanData -BEB=$BEBprobThresholdToPrintSelectedSite $alnFileWithoutDir");
+        system ("$masterPipelineDir/scripts/pw_parsePAMLoutput.pl $otherOptions  -strict=$strictness -omega=$initialOrFixedOmega -codon=$codonFreqModel -clean=$cleanData -BEB=$BEBprobThresholdToPrintSelectedSite $alnFileWithoutDir");
 
         system ("$masterPipelineDir/scripts/pw_parsedPAMLconvertToWideFormat.pl $parsedPAMLoutputFile");
         if(!-e $parsedPAMLoutputFile) {

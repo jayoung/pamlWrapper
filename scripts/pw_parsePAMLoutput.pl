@@ -20,6 +20,7 @@ my $processTree = "yes"; ## if I ran PAML using a supplied tree (e.g. species tr
 #my $processTree = "no";
 my $BEBprobThresholdToPrintSelectedSite = 0.9; ### report selected sites with at least this BEB probability into the output file
 my $combinedOutputFile = 0;    ## we always make one output file per input file, but do we also make a single output file for all the input files combined?
+my $strictness = "strict";    ## 'strict' means we insist that 'Time used' will be present at the end of the mlc file, and if it's not we assume PAML failed.   'loose' means it's OK if that's not present (v4.10.6 doesn't always add it)
 
 my $scriptName = "pw_parsePAMLoutput.pl";
 
@@ -29,7 +30,8 @@ GetOptions("omega=f"       => \$initialOrFixedOmega,   ## sometimes I do 3, defa
            "usertree=s"    => \$userTreeFile,
            "BEB=f"         => \$BEBprobThresholdToPrintSelectedSite, # 0.5 to be less conservative, default is 0.9
            "processTree=s" => \$processTree,
-           "comb=i"        => \$combinedOutputFile) or die "\n\nERROR - terminating in script $scriptName - unknown option(s) specified on command line\n\n"; 
+           "comb=i"        => \$combinedOutputFile,
+           "strict=s"      => \$strictness) or die "\n\nERROR - terminating in script $scriptName - unknown option(s) specified on command line\n\n"; 
 
 
 
@@ -47,6 +49,9 @@ my $RscriptExecutable = "Rscript";
 
 ################
 
+if (($strictness ne "strict") & ($strictness ne "loose")) {
+    die "\n\nERROR - terminating in script $scriptName - the '--strict' option must be either 'strict' (default) or 'loose'\n\n";
+}
 ## check Rscript is in our path
 my $checkWhich = `which $RscriptExecutable`;
 if ($checkWhich eq "") {
@@ -536,10 +541,15 @@ sub parse_paml {
         }
     }  ## end of "while (<MLC>)" loop
     close MLC;
-    if ($seenTimeUsedLineYet eq "no") {
-        print "    PROBLEM - paml failed!!!!! model $model file $file\n\n";
-        $pamlResults{'warnings'} = "FAILED!!!";
+    if ($seenTimeUsedLineYet eq "no")  {
+        if ($strictness eq "strict") {
+            print "    PROBLEM - paml failed!!!!! model $model file $file\n\n";
+            $pamlResults{'warnings'} = "FAILED!!!";
+        } else {
+            $pamlResults{'timeElapsed'} = "NA";
+        }
     }
+
     return(\%pamlResults);
 }
 

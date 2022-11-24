@@ -179,9 +179,17 @@ pw_annotateCpGsitesInAlignment.pl ACE2_primates_aln1_NT.fa_phymlAndPAML/ACE2_pri
 
 I also created a shiny app to help visualize sitewise (and branchwise) PAML results. The apps can be run [here](https://jyoungfhcrc.shinyapps.io/pamlApps/) and the underlying code is [here](https://github.com/jayoung/pamlApps) (R functions can also be used in a standalone way)
 
+# PAML versions
+
+[Here](docs/compare_PAML_versions.md) are some notes on how different the results from different PAML versions, e.g. paml4.9j / 4.9a / 4.8
+
 # To do 
 
 Add the ability to run only model 0 and model 0fixed on an alignment containing only 2 seqs.  Tree is meaningless, and PHYML fails when there's only two seqs. But I can make a fake tree `(seq1,seq2);` and PAML will work.
+
+Troubleshooting the 'nan' problem in the BEB output:
+- it seems to be happening with the conda-paml install (4.9a), but not the equivalent version of PAML I installed myself, or any other version of paml
+- Ching-Ho's alignment that shows the problem is CG31882_sim.fa
 
 ## Maybe
 
@@ -189,3 +197,7 @@ Add the ability to run and parse:
 - GARD
 - FEL
 - MEME
+
+Docker container: could I use a newer version of R? Then I could make the plots look nicer. I would probably need to starting from a newer ubuntu base for that, and therefore I would need to install bioperl myself rather than using bioperl base. Or does another bioperl base exist that has a newer ubuntu starting point?
+
+There are MORE RECENT versions of PAML on [github](https://github.com/abacus-gene/paml/releases). Update to 4.10.6?  (latest as of Nov 23 2022 - source code was posted Sept 24, 2021, executables were posted Nov 10, 2022)

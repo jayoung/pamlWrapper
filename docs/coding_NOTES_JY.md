@@ -38,20 +38,20 @@ docker run -v `pwd`:/workingDir -it paml_wrapper
 
 Perhaps I run some standard tests, something like this:
 ```
+# make sure I have all the necessary perl modules installed:
 scripts/pw_testScript.bioperl 
+
+# check other executables installed:
 which codeml 
 which phyml
 which R
 ```
-
 
 When I know it's working I add a new tag and push it to [docker hub](https://hub.docker.com/repository/docker/jayoungfhcrc/paml_wrapper).  I update the version number each time:
 ```
 docker tag paml_wrapper jayoungfhcrc/paml_wrapper:version1.2.0
 docker push jayoungfhcrc/paml_wrapper:version1.2.0
 ```
-
-xxxx v 1.2.0 is a total rebuild using bioperl base.  tested within docker container on my mac, need to test from outside it.  I got this far
 
 I then test my container in a totally different environment using the [Play with Docker](https://labs.play-with-docker.com) site - it seems to work. Once I have an instance running there:
 ```
@@ -73,92 +73,38 @@ singularity build paml_wrapper-v1.2.0.sif docker://jayoungfhcrc/paml_wrapper:ver
 module purge
 ```
 
-Now that I use the bioperl base, I do get a bunch of warnings while building the singularity image, e.g. 
+Now that I use the bioperl base, I do get a bunch of warnings while building the singularity image. I think I can ignore them. Examples (but there are MANY): 
 ```
 2022/11/22 17:00:44  warn rootless{dev/agpgart} creating empty file in place of device 10:175
 2022/11/22 17:00:44  warn rootless{dev/audio} creating empty file in place of device 14:4
 2022/11/22 17:00:52  warn rootless{root/.cpanm/work/1468017244.5/Statistics-Descriptive-3.0612/t/pod.t} ignoring (usually) harmless EPERM on setxattr "user.rootlesscontainers"
 ```
 
-
 A file called paml_wrapper-v1.2.0.sif appears. I want a copy of the singularity image file, and a script that uses it, in a more central place, for use by others:
 ```
 cp paml_wrapper-v1.2.0.sif /fh/fast/malik_h/grp/malik_lab_shared/singularityImages
 ```
-If I want to retest before I change the version used by others
+
+
+Perhaps retest the singularity container before I change the version used by others:
 ```
 cd ~/FH_fast_storage/paml_screen/pamlWrapper/testData
 
-# test paml v4.9j (singularity 1.2.0)
-cd ~/FH_fast_storage/paml_screen/pamlWrapper/testData
-
-# test tiny alignment
+# test tiny alignment, making a tree from the alignment
 ../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl CENPA_primates_aln2a_only5seqs.fa
-     xxx 4459620
-# test two real alignments
+
+# test two real alignments, making trees
 ../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl  ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa
-   xxx 4461192 and 4461193
-
-
-
-cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/test_paml4.9j
-../../pamlWrapper/scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --usertree=Dmel22genome_tree.nwk Dmel_22_aln.fasta
-   xx 4461525  
-
-xx old tests below
-
-# test, making a gene tree
-../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl CENPA_primates_aln2a_only5seqs.fa
 
 # test, supplying a tree via --usertree option
 ../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --usertree=CENPA_primates_aln2a_only5seqs.fa.phy.usertree CENPA_primates_aln2a_only5seqs.fa
 
-# test, supplying a tree with non-matching seqnames via --usertree option
+# test, supplying a tree with non-matching seqnames (should stop before running PAML) via --usertree option
 ../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --usertree=CENPA_primates_aln2a_only5seqs.fa.phy.usertree.badNames CENPA_primates_aln2a_only5seqs.fa
 
 ```
 
-```
-../../../pamlWrapper/scripts/pw_makeTreeAndRunPAML.pl --usertree=Dmel22genome_tree.nwk Dmel_22_aln.fasta
-```
-
-
-```
-
-cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/test_codeml_4.9a 
-
-../../pamlWrapper/scripts/pw_makeTreeAndRunPAML_sbatchWrapper.pl --codeml=/fh/fast/malik_h/grp/malik_lab_shared/linux_gizmo/bin/old/paml/v4.9a/codeml CENPA_primates_aln2a_only5seqs.fa
-    xx running 4559386
-../../pamlWrapper/scripts/pw_makeTreeAndRunPAML_sbatchWrapper.pl --codeml=/fh/fast/malik_h/grp/malik_lab_shared/linux_gizmo/bin/old/paml/v4.9a/codeml ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa
-    xxx running 4559399 4559400
-../../pamlWrapper/scripts/pw_makeTreeAndRunPAML_sbatchWrapper.pl --codeml=/fh/fast/malik_h/grp/malik_lab_shared/linux_gizmo/bin/old/paml/v4.9a/codeml Dmel_22_aln.fasta
-   xxx running 4559502
-```
-
-```
-
-cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/test_codeml_4.8
-
-../../pamlWrapper/scripts/pw_makeTreeAndRunPAML_sbatchWrapper.pl --codeml=/fh/fast/malik_h/grp/malik_lab_shared/linux_gizmo/bin/old/paml/v4.8/codeml CENPA_primates_aln2a_only5seqs.fa ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa Dmel_22_aln.fasta
-
-    xxx running 4559414 4559415 4559416 4559498
-
-```
-
-
-xxxx there are MORE RECENT versions of PAML on github
-
-```
-
-cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/test_codeml_4.9j
-
-../../pamlWrapper/scripts/pw_makeTreeAndRunPAML_sbatchWrapper.pl CENPA_primates_aln2a_only5seqs.fa ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa Dmel_22_aln.fasta 
-    xxx running 4559436 4559437 4559438 4559486
-
-```
-
-Then, when I'm sure it's working, update the version used by others:
-
+Then, when I'm sure it's working, update `runPAML.pl` script (that's the one others are using):
 ```
 cp ../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl /fh/fast/malik_h/grp/malik_lab_shared/bin/runPAML.pl
 ```
@@ -176,14 +122,14 @@ And within the shell, this works:
 pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa 
 ```
 
-Or, I can run some code using the singularity image without entering a shell (the `pw_makeTreeAndRunPAML_singularityWrapper.pl` script (same as `runPAML.pl`) does this for each alignment):
+Or, I can run some code using the singularity image without entering a shell (this is what the  `runPAML.pl=pw_makeTreeAndRunPAML_singularityWrapper.pl` script does for each alignment):
 ```
 module load Singularity/3.5.3
 singularity exec --cleanenv /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.2.0.sif pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa 
 module purge
 ```
 
-Test the new singularity container, on rhino/gizmo:
+Test the new singularity container and wrapper, on rhino/gizmo:
 ```
 cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments
 runPAML.pl CENPA_primates_aln2a_NT.fa
@@ -191,10 +137,6 @@ runPAML.pl --codon=2 --omega=3 CENPA_primates_aln2a_NT.fa
 runPAML.pl --usertree=CENPA_primates_aln2a_only5seqs.fa.phy.usertree CENPA_primates_aln2a_only5seqs.fa
 ```
 
-
-xxx how different are results from paml4.9j compared to 4.9a?
-
-xxx docker:  can I build bioperl starting from a newer ubuntu, that would allow me to use a newer R?   or does another bioperl base exist?
 
 # Testing a new feature - allow user-supplied tree
 
@@ -219,6 +161,3 @@ pw_makeTreeAndRunPAML.pl --usertree=CENPA_primates_aln2a_only5seqs.fa.phy.usertr
 # via sbatch wrapper:
 pw_makeTreeAndRunPAML_sbatchWrapper.pl --usertree=CENPA_primates_aln2a_only5seqs.fa.phy.usertree.badNames CENPA_primates_aln2a_only5seqs.fa 
 ```
-
-
-# How to parse PAML after running

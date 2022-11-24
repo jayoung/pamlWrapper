@@ -14,6 +14,7 @@ my $walltime = "1-0";   # if we do use sbatch, default walltime is 1 days
 my $cleanData = 0;
 my $userTreeFile = "";
 my $addToExistingOutputDir = ""; ## default is that I will NOT add to existing output dir
+my $strictness = "strict";    ## 'strict' means we insist that 'Time used' will be present at the end of the mlc file, and if it's not we assume PAML failed.   'loose' means it's OK if that's not present (v4.10.6 doesn't always add it)
 my $codemlExe = "codeml";  ## default is whichever codeml is in the PATH
 
 my $scriptName = "pw_makeTreeAndRunPAML_sbatchWrapper.pl";
@@ -24,6 +25,7 @@ GetOptions("omega=f"     => \$initialOrFixedOmega,   ## sometimes I do 3, defaul
            "usertree=s"  => \$userTreeFile,
            "walltime=s"  => \$walltime,
            "add"         => \$addToExistingOutputDir,
+           "strict=s"    => \$strictness,
            "codeml=s"    => \$codemlExe) or die "\n\nERROR - terminating in script $scriptName - unknown option(s) specified on command line\n\n";             
                       ## '--wall 0-6' to specify 6 hrs
 
@@ -40,6 +42,10 @@ if ($userTreeFile ne "") {
     if (!-e $userTreeFile) {
         die "\n\nERROR - terminating in script $scriptName - you specified tree file $userTreeFile with the --usertree option, but that file does not exist\n\n";
     }
+}
+
+if (($strictness ne "strict") & ($strictness ne "loose")) {
+    die "\n\nERROR - terminating in script $scriptName - the '--strict' option must be either 'strict' (default) or 'loose'\n\n";
 }
 
 ## check the codeml executable exists
@@ -79,7 +85,7 @@ foreach my $file (@ARGV) {
     ## run pw_makeTreeAndRunPAML.pl using sbatch (pass through the parameters)
     my $moreOptions = "";
     if ($userTreeFile ne "") { $moreOptions .= "--usertree=$userTreeFile"; }
-    my $command = "$masterPipelineDir/scripts/pw_makeTreeAndRunPAML.pl $moreOptions --codeml=$codemlExe --omega $initialOrFixedOmega --codon $codonFreqModel --clean $cleanData $file >> $logFile 2>&1"; 
+    my $command = "$masterPipelineDir/scripts/pw_makeTreeAndRunPAML.pl $moreOptions --strict=$strictness --codeml=$codemlExe --omega $initialOrFixedOmega --codon $codonFreqModel --clean $cleanData $file >> $logFile 2>&1"; 
     $command = "/bin/bash -c \\\"source /app/lmod/lmod/init/profile; module load fhR/4.1.2-foss-2020b ; $command\\\"";
     $command = "sbatch -t $walltime --job-name=$jobnamePrefix"."$file --wrap=\"$command\"";
     system($command);
