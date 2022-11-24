@@ -1,12 +1,12 @@
 ## Issues still to fix
 
 
-## Fixes since v1.2.1
+## Fixes since v1.2.2
 
 
 ## paml_wrapper-v1.2.2
 
-Nov 23 2022, commit xxx
+Nov 23 2022, commit 34f462f
 - minor changes, mostly cosmetic. 
 - continued comparing different PAML versions
 
