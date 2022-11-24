@@ -2,8 +2,12 @@
 
 add elapsed time to parse output
 
+xx rebuild paml v4.10.6 after editing paml.h to show different version number
+
 ## Fixes since v1.2.0
 
+Nov 23 2022, commit 33aa2c4
+- added --strict=loose option so that I can parse output of paml v4.10.6, because it does NOT print the 'Time used' message for M2 and M8 (the models where BEB is run)
 
 Nov 23 2022, commit d889f42
 - now capturing elapsed time to the parsed output
