@@ -1,10 +1,17 @@
 ## Issues still to fix
 
-add elapsed time to parse output
 
-xx rebuild paml v4.10.6 after editing paml.h to show different version number
+## Fixes since v1.2.1
 
-## Fixes since v1.2.0
+
+## paml_wrapper-v1.2.2
+
+Nov 23 2022, commit xxx
+- minor changes, mostly cosmetic. 
+- continued comparing different PAML versions
+
+
+## paml_wrapper-v1.2.1
 
 Nov 23 2022, commit 33aa2c4
 - added --strict=loose option so that I can parse output of paml v4.10.6, because it does NOT print the 'Time used' message for M2 and M8 (the models where BEB is run)

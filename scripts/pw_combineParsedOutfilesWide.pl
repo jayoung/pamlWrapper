@@ -12,6 +12,8 @@ GetOptions("out=s" => \$outfile,
            "over=i" => \$overwrite) or die "\n\nERROR - terminating in script $scriptName - unknown option(s) specified on command line\n\n"; 
 
 
+## Nov 23 2022 - added the name of the tsv file as the first field, to help track situations where I have multiple runs on the same alignment/tree combo, e.g. when testing different PAML versions, or testing on different computers.
+
 ############
 
 if (-e $outfile) {
@@ -35,9 +37,9 @@ foreach my $file (@ARGV) {
     while (<IN>) {
         my $line = $_;
         if (($line =~ m/^Gene\sname/) || ($line =~ m/^seqFile/)) {
-            if ($firstFile) { print OUT $line; } else { next; }
+            if ($firstFile) { print OUT "tsvFile\t$line"; } else { next; }
         } else {
-            print OUT $line; 
+            print OUT "$file\t$line"; 
         }
     }
     close IN;

@@ -6,11 +6,12 @@ use Getopt::Long;
 my $outfile = "allAlignments.PAMLsummaries.tsv";
 my $overwrite = 0;
 
-my $scriptName = "pw_combinedParsedOutfilesLong.pl";
+my $scriptName = "pw_combineParsedOutfilesLong.pl";
 
 GetOptions("out=s" => \$outfile,
            "over=i" => \$overwrite) or die "\n\nERROR - terminating in script $scriptName - unknown option(s) specified on command line\n\n"; 
 
+## Nov 23 2022 - added the name of the tsv file as the first field, to help track situations where I have multiple runs on the same alignment/tree combo, e.g. when testing different PAML versions, or testing on different computers.
 
 ############
 
@@ -36,9 +37,9 @@ foreach my $file (@ARGV) {
     while (<IN>) {
         my $line = $_;
         if ($line =~ m/^seqFile/) {
-            if ($firstFile) { print OUT $line; } else { next; }
+            if ($firstFile) { print OUT "tsvFile\t$line"; } else { next; }
         } else {
-            print OUT $line; 
+            print OUT "$file\t$line"; 
         }
     }
     close IN;

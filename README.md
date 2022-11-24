@@ -125,8 +125,8 @@ The pipeline performs the following steps on each input file (e.g. if the input 
 
 Maybe we ran PAML on several input alignments, and we want to see the results for all of them in single file, in either the long format or wide:
 ```
-pw_combinedParsedOutfilesLong.pl */*PAMLsummary.tsv
-pw_combinedParsedOutfilesWide.pl */*PAMLsummary.wide.tsv
+pw_combineParsedOutfilesLong.pl */*PAMLsummary.tsv
+pw_combineParsedOutfilesWide.pl */*PAMLsummary.wide.tsv
 ```
 (if you get a 'command not found' error, put this in front of the script names above: `/fh/fast/malik_h/grp/malik_lab_shared/bin/`)
 
@@ -181,7 +181,7 @@ I also created a shiny app to help visualize sitewise (and branchwise) PAML resu
 
 # PAML versions
 
-[Here](docs/compare_PAML_versions.md) are some notes on how different the results from different PAML versions, e.g. paml4.9j / 4.9a / 4.8
+[Here](docs/compare_PAML_versions.md) are some notes on how different the results from different PAML versions, e.g. paml4.9j / 4.9a / 4.8 / 4.9a-conda / 4.10.6
 
 # To do 
 
@@ -200,4 +200,4 @@ Add the ability to run and parse:
 
 Docker container: could I use a newer version of R? Then I could make the plots look nicer. I would probably need to starting from a newer ubuntu base for that, and therefore I would need to install bioperl myself rather than using bioperl base. Or does another bioperl base exist that has a newer ubuntu starting point?
 
-There are MORE RECENT versions of PAML on [github](https://github.com/abacus-gene/paml/releases). Update to 4.10.6?  (latest as of Nov 23 2022 - source code was posted Sept 24, 2021, executables were posted Nov 10, 2022)
+There are MORE RECENT versions of PAML on [github](https://github.com/abacus-gene/paml/releases). v4.10.6 (latest as of Nov 23 2022 - source code was posted Sept 24, 2021, executables were posted Nov 10, 2022) and seems to work fine.  Should I use that instead of 4.9j as my default? (both from command-line and in singularity)

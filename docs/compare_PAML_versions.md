@@ -1,13 +1,12 @@
 # Observations:
 
-
 the nan values in the BEB output occur in ALL (?) the results from the version of the singularity container where I installed paml 4.9a using conda
 
 I think the likelihoods etc are very similar between all versions, but the BEB results from singularity-conda-paml are off (compared to all the rest)
 
-xxx does singularity-new-paml work OK?  i.e. is it a singularity issue or a singularity-conda-paml issue?
+Singularity with v4.9j behaves fine. So I think the issue is with my docker-conda-paml combination, and it's not a singularity thing per se
 
-xxx timings?  is the BEB module slower with some versions?
+Speed?  4.9j does seem a bit slower than 4.9a or 4.8 (especially for M8) but it's not terrible. 4.10.6 - it doesn't capture timings for M8 or M2 so I don't know.
 
 
 
@@ -54,14 +53,14 @@ cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/test_codeml_4.9a_via_
 runPAML.pl CENPA_primates_aln2a_only5seqs.fa ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa Dmel_22_aln.fasta CG31882_sim.fa TRIM5_primates_aln2_NT.treeorder.noPseudsPartials.fa
 ```
 
-This command shows that ALL five have the nan problem
+This command shows that ALL six have the nan problem
 ```
-head  -2 *PAML/M8_*/rst.BEB.tsv 
+head -2 *PAML/M8_*/rst.BEB.tsv 
 ```
 
 This command confirms that I am running 'version 4.9, March 2015'
 ```
-head  -1 *PAML/M8_*/mlc
+head -1 *PAML/M8_*/mlc
 ```
 
 
@@ -71,7 +70,6 @@ head  -1 *PAML/M8_*/mlc
 cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/test_codeml_4.9a 
 ../../pamlWrapper/scripts/pw_makeTreeAndRunPAML_sbatchWrapper.pl --codeml=/fh/fast/malik_h/grp/malik_lab_shared/linux_gizmo/bin/old/paml/v4.9a/codeml CENPA_primates_aln2a_only5seqs.fa  ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa Dmel_22_aln.fasta CG31882_sim.fa TRIM5_primates_aln2_NT.treeorder.noPseudsPartials.fa
 ```
-
 
 This command shows there is NO nan problem:
 ```
@@ -103,13 +101,8 @@ head -1 *PAML/M8_*/mlc
 ## v4.9j (inside singularity)
 
 ```
-cd test_codeml_4.9j_via_sif1.2.0
-
-../../pamlWrapper/scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --sif=/fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.2.0.sif CENPA_primates_aln2a_only5seqs.fa 
-    xx 4562336
-ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa Dmel_22_aln.fasta CG31882_sim.fa
-
-
+cd test_codeml_4.9j_via_sif1.2.1
+../../pamlWrapper/scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --sif=/fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.2.1.sif CENPA_primates_aln2a_only5seqs.fa ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa Dmel_22_aln.fasta CG31882_sim.fa TRIM5_primates_aln2_NT.treeorder.noPseudsPartials.fa
 ```
 
 ## v4.10.6
@@ -119,37 +112,39 @@ cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/test_codeml_4.10.6
 ```
 first, just CENPA_primates_aln2a_only5seqs.fa .
 
-I need the `--strict=loose` option, because for this PAML version M2 and M8 don't print 'Time used' at the end of the mlc file.  I think they otherwise worked?  No obvious errors. Same output if I run via command-line and not within the sbatch job.
+I need the `--strict=loose` option, because for this PAML version M2 and M8 don't print 'Time used' at the end of the mlc file.  I think they otherwise worked: there are no obvious errors, and the results are very similar to other PAML versions.  Even if I run PAML directly from the command-line I don't see the cause of the premature stop.
 ```
-../../pamlWrapper/scripts/pw_makeTreeAndRunPAML_sbatchWrapper.pl --strict=loose --codeml=/fh/fast/malik_h/grp/malik_lab_shared/linux_gizmo/bin/old/paml/v4.10.6/codeml CENPA_primates_aln2a_only5seqs.fa 
-     xxx running 
-
-```
-It got MOST of the way there - the BEB section looks complete. I think it IS there except that it didn't print 'Time used' at the end.
-
-Try the other alignments. Same issue with 'Time used' for all, I think?  although I'm still waiting for some to complete
-```
-../../pamlWrapper/scripts/pw_makeTreeAndRunPAML_sbatchWrapper.pl  --strict=loose --codeml=/fh/fast/malik_h/grp/malik_lab_shared/linux_gizmo/bin/old/paml/v4.10.6/codeml ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa Dmel_22_aln.fasta CG31882_sim.fa TRIM5_primates_aln2_NT.treeorder.noPseudsPartials.fa
-     xxx running 
+../../pamlWrapper/scripts/pw_makeTreeAndRunPAML_sbatchWrapper.pl --strict=loose --codeml=/fh/fast/malik_h/grp/malik_lab_shared/linux_gizmo/bin/old/paml/v4.10.6/codeml CENPA_primates_aln2a_only5seqs.fa ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa Dmel_22_aln.fasta CG31882_sim.fa TRIM5_primates_aln2_NT.treeorder.noPseudsPartials.fa
 ```
 
 ## combining results across different versions:
 
 ```
-pw_combinedParsedOutfilesLong.pl test_codeml_*/CG31882_sim.fa_phymlAndPAML/*PAMLsummary.tsv
+# CG31882_sim
+pw_combineParsedOutfilesLong.pl test_codeml_*/CG31882_sim.fa_phymlAndPAML/*PAMLsummary.tsv
 mv allAlignments.PAMLsummaries.tsv test_codeml_CG31882_sim_PAMLsummaries.tsv 
 
-pw_combinedParsedOutfilesLong.pl test_codeml_*/Dmel_22_aln.fasta_phymlAndPAML/*PAMLsummary.tsv
+# Abo
+pw_combineParsedOutfilesLong.pl test_codeml_*/Dmel_22_aln.fasta_phymlAndPAML/*PAMLsummary.tsv
 mv allAlignments.PAMLsummaries.tsv test_codeml_Dmel_22_aln_PAMLsummaries.tsv 
 
-pw_combinedParsedOutfilesLong.pl test_codeml_*/CENPA_primates_aln2a_only5seqs.fa_phymlAndPAML/*PAMLsummary.tsv
+# CENPA just 5 seqs
+pw_combineParsedOutfilesLong.pl test_codeml_*/CENPA_primates_aln2a_only5seqs.fa_phymlAndPAML/*PAMLsummary.tsv
 mv allAlignments.PAMLsummaries.tsv test_codeml_CENPA_primates_aln2a_only5seqs_PAMLsummaries.tsv 
 
-pw_combinedParsedOutfilesLong.pl test_codeml_*/xxx.fa_phymlAndPAML/*PAMLsummary.tsv
-mv allAlignments.PAMLsummaries.tsv test_codeml_xxx_PAMLsummaries.tsv 
+# TRIM5
+pw_combineParsedOutfilesLong.pl test_codeml_*/TRIM5_primates_aln2_NT.treeorder.noPseudsPartials.fa_phymlAndPAML/*PAMLsummary.tsv
+mv allAlignments.PAMLsummaries.tsv test_codeml_TRIM5_PAMLsummaries.tsv 
 
-pw_combinedParsedOutfilesLong.pl test_codeml_*/xxx.fa_phymlAndPAML/*PAMLsummary.tsv
-mv allAlignments.PAMLsummaries.tsv test_codeml_xxx_PAMLsummaries.tsv 
+# CENPA all seqs
+pw_combineParsedOutfilesLong.pl test_codeml_*/CENPA_primates_aln2a_NT.fa_phymlAndPAML/*PAMLsummary.tsv
+mv allAlignments.PAMLsummaries.tsv test_codeml_CENPA_primates_aln2a_NT_PAMLsummaries.tsv 
+
+xxx
+
+# ACE2 (still running!)
+pw_combineParsedOutfilesLong.pl test_codeml_*/ACE2_primates_aln1_NT.fa_phymlAndPAML/*PAMLsummary.tsv
+mv allAlignments.PAMLsummaries.tsv test_codeml_ACE2_PAMLsummaries.tsv 
 
 ```
 

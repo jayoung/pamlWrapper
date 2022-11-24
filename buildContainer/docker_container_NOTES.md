@@ -4,7 +4,7 @@ Goal: use Docker to provide a container where all my pamlWrapper scripts can run
 
 `Dockerfile` contains instructions to install a bunch of stuff using conda. 
 
-I got it working in April 2022, using this base image: continuumio/miniconda3:4.10.3.  I chose that because it was what Rasi was using and it allows installs via conda. conda gets me paml 4.9a, which has a bug in the BEB
+I got it working in April 2022, using this base image: continuumio/miniconda3:4.10.3.  I chose that because it was what Rasi was using and it allows installs via conda. conda gets me paml 4.9a, which has a bug in the BEB. See the [issue](https://github.com/bioconda/bioconda-recipes/issues/38109) I filed describing the problem.  The PAML bug is discussed [here](https://groups.google.com/g/pamlsoftware/c/HXxqYBHYbRU/m/lLwe1V4CAwAJ).
 
 In Nov 2022 I decided I wanted a newer version of PAML so I needed to rebuild the docker image. I wanted to install PAML from scratch rather than using conda.   Even without PAML, I now had trouble installing bioperl using conda.  I decided to abandon the miniconda base, and use a Bioperl base image for my docker container ("bioperl/bioperl:release-1-6-924").   I think I have it working.
 
