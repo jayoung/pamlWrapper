@@ -77,6 +77,16 @@ if (!-e $options{'sif'}) {
     die "\n\nERROR - terminating in script $script - singularity image file expected by the script does not exist: $options{'sif'}\n\n";
 }
 
+my $singularityImageVersion = $options{'sif'};
+if ($singularityImageVersion =~ m/\//) {
+    $singularityImageVersion = (split /\//, $singularityImageVersion)[-1];
+}
+$singularityImageVersion =~ s/\.sif$//;
+$singularityImageVersion =~ s/^paml_wrapper-v//;
+## convert 1.1.0 to an true number
+my @singularityImageVersionPieces = split /\./, $singularityImageVersion;
+$singularityImageVersion = join ".", @singularityImageVersionPieces[0..1];
+
 foreach my $alnFile (@files) {
     print "###### working on file $alnFile\n";
     my $alnFileStem = $alnFile; 
@@ -104,7 +114,13 @@ foreach my $alnFile (@files) {
     my $moreOptions = "";
     if ($options{'usertree'} ne "") { $moreOptions .= "--usertree=$options{'usertree'}"; }
 
-    my $singularityCommand = "singularity exec --cleanenv $options{'sif'} pw_makeTreeAndRunPAML.pl $moreOptions --strict=$options{'strict'} --omega=$options{'omega'} --codon=$options{'codon'} --clean=$options{'clean'} --BEB=$options{'BEB'} $alnFile &>> $logFile";
+    ### sometimes I want to run using an older singularity image, where I did NOT encode some of the options I have now
+    my $singularityVersionDependentOptions = "";
+    if ($singularityImageVersion >= 1.2) {
+        $singularityVersionDependentOptions .= " --strict=$options{'strict'} ";
+    }
+
+    my $singularityCommand = "singularity exec --cleanenv $options{'sif'} pw_makeTreeAndRunPAML.pl $moreOptions $singularityVersionDependentOptions --omega=$options{'omega'} --codon=$options{'codon'} --clean=$options{'clean'} --BEB=$options{'BEB'} $alnFile &>> $logFile";
 
     open (LOG, "> $logFile");
     print LOG "\n######## Running PAML wrapper within this singularity container:\n$options{'sif'}\n\n";
@@ -119,7 +135,7 @@ foreach my $alnFile (@files) {
     print SH "source /app/lmod/lmod/init/profile\n";
     print SH "module load Singularity/3.5.3\n";
     print SH "$singularityCommand\n";
-    print SH "echo\n";
+    #print SH "echo\n";
     print SH "module purge\n";
     close SH;
     ### then we set it running using sbatch
