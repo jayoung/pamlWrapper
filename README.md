@@ -132,7 +132,7 @@ pw_combineParsedOutfilesWide.pl */*PAMLsummary.wide.tsv
 
 Output files are called `allAlignments.PAMLsummaries.tsv` or `allAlignments.PAMLsummaries.wide.tsv` - you probably want to rename them to something more informative, so they don't get overwritten next time you run the combining scripts.
 
-## To check for robustness, if we did find evidence for positive selection
+## To check for convergence/robustness, if we did find evidence for positive selection
 
 If we find evidence for positive selection, we might want to check that finding for robustness by running PAML with some different parameters. 
 
@@ -190,6 +190,10 @@ Add the ability to run only model 0 and model 0fixed on an alignment containing 
 Troubleshooting the 'nan' problem in the BEB output:
 - it seems to be happening with the conda-paml install (4.9a), but not the equivalent version of PAML I installed myself, or any other version of paml
 - Ching-Ho's alignment that shows the problem is CG31882_sim.fa
+
+R code to plot omega classes - color choosing is still not quite right for the pos sel class - see `test_codeml_4.8/ACE2_primates_aln1_NT.fa_phymlAndPAML/ACE2_primates_aln1_NT.codonModel2_initOmega0.4_cleandata0.omegaDistributions.pdf`
+
+Very big difference in ACE2 results between PAML versions. Why? See [`docs/compare_PAML_versions.md`](docs/compare_PAML_versions.md).  
 
 ## Maybe
 
