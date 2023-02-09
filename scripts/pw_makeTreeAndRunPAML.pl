@@ -37,18 +37,13 @@ my @modelsToRun = ("0","0fixNeutral","1","2","7","8","8a");
 #my @modelsToRun = ("0","1","2","7","8","8a");
 #my @modelsToRun = ("0");
 
-# print "\nrunning PAML with these parameters:\n    starting omega $initialOrFixedOmega\n    codon model $codonFreqModel\n    cleandata $cleanData\n\n";
-
-
-
 
 ################
 
 my $whichCodeml = `which $codemlExe`;
 chomp $whichCodeml;
-print "whichCodeml $whichCodeml blah\n";
 if ($whichCodeml eq "") {
-    die "\n\nERROR - terminating in script $scriptName - you specified a codeml executable that does not exist on this system\n\n";
+    die "\n\nERROR - terminating in script $scriptName - you specified a codeml executable that does not exist on this system: $codemlExe\n\n";
 }
 
 if ($userTreeFile ne "") {
@@ -60,7 +55,6 @@ if ($userTreeFile ne "") {
 if (($strictness ne "strict") & ($strictness ne "loose")) {
     die "\n\nERROR - terminating in script $scriptName - the '--strict' option must be either 'strict' (default) or 'loose'\n\n";
 }
-print "\n#### strictness in script $scriptName is $strictness\n\n";
 
 #first read in codeml.ctl template
 if (!-e $codemlCTLtemplateFile) {
@@ -79,6 +73,8 @@ foreach my $alignmentFile (@ARGV) {
         die "\n\nERROR - terminating in script $scriptName - alignment file $alignmentFile does not exist\n\n";
     } 
     print "\n######## Running PAML for alignment $alignmentFile with codon model $codonFreqModel, starting omega $initialOrFixedOmega, cleandata $cleanData\n";
+    print "using this codeml executable: $whichCodeml\n";
+
     my $alnFileWithoutDir = $alignmentFile;
     if ($alnFileWithoutDir =~ m/\//) {
         $alnFileWithoutDir = (split /\//, $alnFileWithoutDir)[-1];
