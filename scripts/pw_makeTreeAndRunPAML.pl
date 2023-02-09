@@ -45,8 +45,11 @@ my @modelsToRun = ("0","0fixNeutral","1","2","7","8","8a");
 ################
 
 my $whichCodeml = `which $codemlExe`;
+chomp $whichCodeml;
 print "whichCodeml $whichCodeml blah\n";
-# if ($whichCodeml eq "")
+if ($whichCodeml eq "") {
+    die "\n\nERROR - terminating in script $scriptName - you specified a codeml executable that does not exist on this system\n\n";
+}
 
 if ($userTreeFile ne "") {
     if (!-e $userTreeFile) {
