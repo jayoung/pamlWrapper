@@ -60,7 +60,6 @@ RUN cd src/paml && \
 
 
 ### install paml from the source, version 4.9a, March 2015 (but don't add it to PATH)
-RUN mkdir src/paml
 RUN cd src/paml && \
   wget http://abacus.gene.ucl.ac.uk/software/SoftOld/paml4.9a.tgz && \
   tar -xf paml4.9a.tgz && \
@@ -71,7 +70,6 @@ RUN cd src/paml && \
 
 ### install paml from the source, version 4.9g, October 2017 (but don't add it to PATH)
 # paml.h has the wrong version number
-RUN mkdir src/paml
 RUN cd src/paml && \
   wget http://abacus.gene.ucl.ac.uk/software/SoftOld/paml4.9g.tgz && \
   tar -xf paml4.9g.tgz && \
@@ -81,7 +79,6 @@ RUN cd src/paml && \
   make
 
 ### install paml from the source, version 4.9h, March 2018 (but don't add it to PATH)
-RUN mkdir src/paml
 RUN cd src/paml && \
   wget http://abacus.gene.ucl.ac.uk/software/SoftOld/paml4.9h.tgz && \
   tar -xf paml4.9h.tgz && \
@@ -90,7 +87,6 @@ RUN cd src/paml && \
   make
 
 ### install paml from the source, version 10.2.6, September 2020 (but don't add it to PATH)
-RUN mkdir src/paml
 RUN cd src/paml && \
   wget https://github.com/abacus-gene/paml/archive/refs/tags/v4.10.6.tar.gz && \
   tar -xf v4.10.6.tar.gz && \
