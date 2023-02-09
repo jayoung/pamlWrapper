@@ -8,6 +8,10 @@ I got it working in April 2022, using this base image: continuumio/miniconda3:4.
 
 In Nov 2022 I decided I wanted a newer version of PAML so I needed to rebuild the docker image. I wanted to install PAML from scratch rather than using conda.   Even without PAML, I now had trouble installing bioperl using conda.  I decided to abandon the miniconda base, and use a Bioperl base image for my docker container ("bioperl/bioperl:release-1-6-924").   I think I have it working.
 
+# Building the image
+
+Notes are [here](../docs/coding_NOTES_JY.md)
+
 # Notes on making my Dockerfile
 I export DOCKER_BUILDKIT in my ~/.profile file on my mac (needed for the "RUN --mount=type=bind" commands):
 ```
@@ -147,3 +151,21 @@ Uses PAML v4.9j
 ```
 FROM bioperl/bioperl:release-1-6-924
 ```
+
+
+# Feb 9, 2022
+
+add more PAML versions to the docker image, so that I can use it to run various versions
+
+xx buiklding container now. 
+test it
+add to the pamlWrapper scripts the ability to choose different PAML versions within the container
+
+test paml versions - do I get similar results inside and outside the container?
+
+
+#20 1.070 
+#20 1.070 2023-02-09 22:51:25 (6.85 MB/s) - 'v4.10.6.tar.gz' saved [3386016]
+#20 1.070 
+#20 1.133 /bin/sh: 1: cd: can't cd to v4.10.6/src
+------

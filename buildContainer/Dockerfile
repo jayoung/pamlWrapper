@@ -90,7 +90,7 @@ RUN cd src/paml && \
 RUN cd src/paml && \
   wget https://github.com/abacus-gene/paml/archive/refs/tags/v4.10.6.tar.gz && \
   tar -xf v4.10.6.tar.gz && \
-  cd v4.10.6/src && \
+  cd paml-4.10.6/src && \
   sed 's/CC = cc/CC = gcc/g' -i Makefile && \
   sed 's/version 4.10.0, September 2020/version 4.10.6, November 2022/g' -i paml.h && \
   make

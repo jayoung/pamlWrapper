@@ -32,16 +32,6 @@ Then we re-build the docker image
 docker build -t paml_wrapper -f buildContainer/Dockerfile .
 ```
 
-
-[+] Building 0.0s (1/2)                                                                                    
- => ERROR [internal] load build definition from Dockerfile                                            0.0s
- => => transferring dockerfile: 61B                                                                   0.0s
-------
- > [internal] load build definition from Dockerfile:
-------
-failed to solve with frontend dockerfile.v0: failed to read dockerfile: error from sender: resolve : lstat buildContainer: no such file or directory
-
-
 To get a shell for a quick look:
 ```
 docker run -v `pwd`:/workingDir -it paml_wrapper
