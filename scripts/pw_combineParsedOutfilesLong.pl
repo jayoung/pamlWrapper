@@ -27,6 +27,7 @@ open (OUT, "> $outfile");
 
 my $firstFile = 1;
 foreach my $file (@ARGV) {
+    # print "\n#### file $file\n";
     if (!-e $file) {
         die "\n\nERROR - terminating in script $scriptName - file $file does not exist\n\n";
     }
@@ -34,15 +35,19 @@ foreach my $file (@ARGV) {
         die "\n\nERROR - terminating in script $scriptName - did you really want to run this script on file $file ? It is not a PAMLsummary.tsv file. If you did mean that, change the script\n\n";
     }
     open (IN, "< $file");
+    my $numLinesRecorded = 0;
     while (<IN>) {
         my $line = $_;
         if ($line =~ m/^seqFile/) {
             if ($firstFile) { print OUT "tsvFile\t$line"; } else { next; }
         } else {
-            print OUT "$file\t$line"; 
+            print OUT "$file\t$line";  $numLinesRecorded++;
         }
     }
     close IN;
+    if ($numLinesRecorded == 0) {
+        print "\n    WARNING! didn't add any output for file $file\n\n";
+    }
     $firstFile = 0;
     print OUT "\n"; # empty line between each alignment file's output
 }

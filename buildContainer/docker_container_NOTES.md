@@ -94,7 +94,7 @@ RUN apt-get update && apt-get install wget -y
 
 # trying to update paml in Dockerfile to v4.9j
 
-need to isntall from source if I want 4.9j
+need to install from source if I want 4.9j
 
 even if I don't have paml in Dockerfile AT ALL bioperl now fails to build.  I need to troubleshoot building bioperl.  I think it's trying to get some OTHER version of bioperl that I wasn't getting before?
 
@@ -129,14 +129,21 @@ even if I don't have paml in Dockerfile AT ALL bioperl now fails to build.  I ne
 ```
 
 
-# Nov 21 troubleshooting Docker build issues
+# Nov 21 2022, troubleshooting Docker build issues
 
-can I get bioperl alone to install?
+can I get bioperl alone to install?  no
 
 on the mac:
 ```
 cd /Volumes/malik_h/user/jayoung/paml_screen/pamlWrapper/buildContainer/onlyBioperl
 docker build -t test_bioperl -f ./Dockerfile .
+```
 
+# Nov 22, 2022
 
+I switched to a totally different Docker base, and DO NOT use conda for anything
+
+Uses PAML v4.9j
+```
+FROM bioperl/bioperl:release-1-6-924
 ```
