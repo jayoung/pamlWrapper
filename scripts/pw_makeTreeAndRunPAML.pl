@@ -44,6 +44,10 @@ my @modelsToRun = ("0","0fixNeutral","1","2","7","8","8a");
 
 ################
 
+my $whichCodeml = `which $codemlExe`;
+print "whichCodeml $whichCodeml blah\n";
+# if ($whichCodeml eq "")
+
 if ($userTreeFile ne "") {
     if (!-e $userTreeFile) {
         die "\n\nERROR - terminating in script $scriptName - you specified tree file $userTreeFile with the --usertree option, but that file does not exist\n\n";

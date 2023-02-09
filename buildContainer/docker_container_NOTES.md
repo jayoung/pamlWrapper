@@ -157,15 +157,18 @@ FROM bioperl/bioperl:release-1-6-924
 
 add more PAML versions to the docker image, so that I can use it to run various versions
 
-xx buiklding container now. 
-test it
+xx building container now. it works
+
+from within the container:
+
+ls -l src/paml/*/src/codeml
+-rwxr-xr-x 1 root root 645773 Feb  9 22:53 src/paml/paml-4.10.6/src/codeml
+-rwxr-xr-x 1 root root 628211 Feb  9 22:48 src/paml/paml4.9a/src/codeml
+-rwxr-xr-x 1 root root 636525 Feb  9 22:49 src/paml/paml4.9g/src/codeml
+-rwxr-xr-x 1 root root 644766 Feb  9 22:50 src/paml/paml4.9h/src/codeml
+-rwxr-xr-x 1 root root 644966 Nov 22 01:17 src/paml/paml4.9j/src/codeml
+
+
 add to the pamlWrapper scripts the ability to choose different PAML versions within the container
 
 test paml versions - do I get similar results inside and outside the container?
-
-
-#20 1.070 
-#20 1.070 2023-02-09 22:51:25 (6.85 MB/s) - 'v4.10.6.tar.gz' saved [3386016]
-#20 1.070 
-#20 1.133 /bin/sh: 1: cd: can't cd to v4.10.6/src
-------

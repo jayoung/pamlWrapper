@@ -25,7 +25,7 @@ $options{'clean'} = 0;
 $options{'usertree'} = "";
 $options{'BEB'} = 0.9; ### report selected sites with at least this BEB probability into the output file
 $options{'add'} = 0; ## a.k.a addToExistingOutputDir
-$options{'codeml'} = "codeml";  ## default is whichever codeml is in the PATH
+$options{'version'} = "4.9a";
 $options{'strict'} = "strict";    ## 'strict' means we insist that 'Time used' will be present at the end of the mlc file, and if it's not we assume PAML failed.   'loose' means it's OK if that's not present (v4.10.6 doesn't always add it)
 
 ### set up usage, including the default options
@@ -39,6 +39,9 @@ $usage .= "        --clean=$options{'clean'} : cleandata option for codeml\n";
 $usage .= "        --usertree=$options{'usertree'} : the default behavior is to run PHYML to generate a tree from the alignment, but if we want to specify the input tree for PAML, we use this option\n";
 $usage .= "        --BEB=$options{'BEB'} : BEB threshold for reporting positively selected sites\n";
 $usage .= "        --add=$options{'add'} : if output directory for a previous PAML run exists, are we allowed to add output to it?\n";
+
+$usage .= "        --version=$options{'version'} : which version of codeml do we want to run? (options: 4.9a, 4.9g, 4.9h, 4.9j, 4.10.6)\n";
+
 $usage .= "        --walltime=$options{'walltime'} : how much time to request for each job\n";
 $usage .= "        --job=$options{'job'} : prefix for sbatch job names\n";
 $usage .= "        --sif=$options{'sif'} : name and location of singularity image file\n";
@@ -58,8 +61,9 @@ foreach my $commandLineOption (@commandLineOptions) {
     if (!defined $options{$o[0]}) {
         die "\n\nERROR - terminating in script $script - found a command line option I don't recognize: $o[0].\n\n$usage\n\n";
     }
+    ## xxx will be updating this
     if($o[0] eq "codeml") {
-        die "\n\nERROR - terminating in script $script - you are trying to specify the codeml execuytable, but we cannot do that when using the singularity container. Maybe you want to use pw_makeTreeAndRunPAML_sbatchWrapper.pl instead - you can choose the codeml executable there.\n\n$usage\n\n";
+        die "\n\nERROR - terminating in script $script - you are trying to specify the codeml executable, but we cannot do that when using the singularity container. Maybe you want to use pw_makeTreeAndRunPAML_sbatchWrapper.pl instead - you can choose the codeml executable there.\n\n$usage\n\n";
     }
     $options{$o[0]} = $o[1];
 }
@@ -70,6 +74,29 @@ foreach my $alnFile (@files) {
         die "\n\nERROR - terminating in script $script - file $alnFile does not exist. It's possible you specified a file that doesn't exist, or it's possible you tried to specify a command line argument and got it slightly wrong.\n\n$usage\n\n";
     }
 }
+
+#### get path to the codeml executable within the container
+# 4.9a, 4.9g, 4.9h, 4.9j, 4.10.6
+$options{'codemlExe'} = "undefinedSoFar";  
+if ($options{'version'} eq "4.9a") { 
+    $options{'codemlExe'} = "/src/paml/paml4.9a/src/codeml"
+}
+if ($options{'version'} eq "4.9g") { 
+    $options{'codemlExe'} = "/src/paml/paml4.9g/src/codeml"
+}
+if ($options{'version'} eq "4.9h") { 
+    $options{'codemlExe'} = "/src/paml/paml4.9h/src/codeml"
+}
+if ($options{'version'} eq "4.9j") { 
+    $options{'codemlExe'} = "/src/paml/paml4.9j/src/codeml"
+}
+if ($options{'version'} eq "4.10.6") { 
+    $options{'codemlExe'} = "src/paml/paml-4.10.6/src/codeml"
+}
+if ($options{'codemlExe'} eq "undefinedSoFar") {
+    die "\n\nERROR - terminating in script $script - you specified a version of codeml that is not installed in the container. Available options: 4.9a, 4.9g, 4.9h, 4.9j, 4.10.6\n\n"
+}
+
 
 ############# now do things
 
@@ -120,7 +147,7 @@ foreach my $alnFile (@files) {
         $singularityVersionDependentOptions .= " --strict=$options{'strict'} ";
     }
 
-    my $singularityCommand = "singularity exec --cleanenv $options{'sif'} pw_makeTreeAndRunPAML.pl $moreOptions $singularityVersionDependentOptions --omega=$options{'omega'} --codon=$options{'codon'} --clean=$options{'clean'} --BEB=$options{'BEB'} $alnFile &>> $logFile";
+    my $singularityCommand = "singularity exec --cleanenv $options{'sif'} pw_makeTreeAndRunPAML.pl --codeml=$options{'codemlExe'} $moreOptions $singularityVersionDependentOptions --omega=$options{'omega'} --codon=$options{'codon'} --clean=$options{'clean'} --BEB=$options{'BEB'} $alnFile &>> $logFile";
 
     open (LOG, "> $logFile");
     print LOG "\n######## Running PAML wrapper within this singularity container:\n$options{'sif'}\n\n";
