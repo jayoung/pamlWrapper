@@ -136,6 +136,23 @@ singularity shell --cleanenv /fh/fast/malik_h/grp/malik_lab_shared/singularityIm
 module purge
 ```
 
+To seeing which OS a container uses: `uname -a` works in a docker container, but in a singularity container it doesn't (well, it does, but it gives me the name of the host computer, not the container). Instead, from within a singularity container I can do `cat /etc/*-release`.   In paml_wrapper-v1.3.1.sif this gives me:
+```
+DISTRIB_ID=Ubuntu
+DISTRIB_RELEASE=14.04
+DISTRIB_CODENAME=trusty
+DISTRIB_DESCRIPTION="Ubuntu 14.04.4 LTS"
+NAME="Ubuntu"
+VERSION="14.04.4 LTS, Trusty Tahr"
+ID=ubuntu
+ID_LIKE=debian
+PRETTY_NAME="Ubuntu 14.04.4 LTS"
+VERSION_ID="14.04"
+HOME_URL="http://www.ubuntu.com/"
+SUPPORT_URL="http://help.ubuntu.com/"
+BUG_REPORT_URL="http://bugs.launchpad.net/ubuntu/"
+```
+
 And within the shell, this works:
 ```
 pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa 
