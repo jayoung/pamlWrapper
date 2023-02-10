@@ -1,7 +1,11 @@
 ## Issues still to fix
 
 
-## Fixes since v1.3.0
+## Fixes since v1.3.1
+
+## paml_wrapper-v1.3.1
+Feb 10, commit 61d7eee
+- minor changes, mostly cosmetic
 
 ## paml_wrapper-v1.3.0
 
