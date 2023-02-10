@@ -195,6 +195,8 @@ R code to plot omega classes - color choosing is still not quite right for the p
 
 Very big difference in ACE2 results between PAML versions. Why? See [`docs/compare_PAML_versions.md`](docs/compare_PAML_versions.md).  
 
+fix `--add=1` versus `--add` discrepancy in the sbatch wrapper versus the singularity wrapper
+
 ## Maybe
 
 Add the ability to run and parse:
