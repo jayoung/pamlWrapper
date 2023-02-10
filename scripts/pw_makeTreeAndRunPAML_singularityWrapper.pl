@@ -92,8 +92,11 @@ if ($options{'version'} eq "4.9j") {
 }
 if ($options{'version'} eq "4.10.6") { 
     $options{'codemlExe'} = "/src/paml/paml-4.10.6/src/codeml";
+}
+# some PAML versions don't add a tag to the end of the mlc file, so the way I had of checking for PAML success does not work, and I need to stop checking (i.e. use strict=loose)
+if (($options{'version'} eq "4.9g") || ($options{'version'} eq "4.10.6")) { 
     if ($options{'strict'} ne "loose") {
-        print "    WARNING - because you're using codeml v$options{'version'}we are changing the 'strict' setting to 'loose' (ie.e. we will not check the end of the mlc files to make sure codeml succeeded\n\n)";
+        print "    WARNING - because you're using codeml v$options{'version'} we are changing the 'strict' setting to 'loose' (i.e. we will not check the end of the mlc files to make sure codeml succeeded\n\n)";
     }
     $options{'strict'} = "loose";
 }

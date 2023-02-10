@@ -48,6 +48,9 @@ foreach my $file (@ARGV) {
     if ($numLinesRecorded == 0) {
         print "\n    WARNING! didn't add any output for file $file\n\n";
     }
+    if ($numLinesRecorded < 7) {
+        print "\n    WARNING! only added $numLinesRecorded lines of output (expected 7) for file $file\n\n";
+    }
     $firstFile = 0;
     print OUT "\n"; # empty line between each alignment file's output
 }

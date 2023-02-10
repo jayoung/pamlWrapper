@@ -26,7 +26,7 @@ GetOptions("omega=f"        => \$initialOrFixedOmega,   ## sometimes I do 3, def
            "verboseTable=i" => \$verboseTable,
            "usertree=s"     => \$userTreeFile,
            "walltime=s"     => \$walltime,
-           "add"            => \$addToExistingOutputDir,
+           "add=i"          => \$addToExistingOutputDir,
            "strict=s"       => \$strictness,
            "codeml=s"       => \$codemlExe) or die "\n\nERROR - terminating in script $scriptName - unknown option(s) specified on command line\n\n";             
                       ## '--wall 0-6' to specify 6 hrs
@@ -58,8 +58,16 @@ if ($codemlExe eq "codeml") {
     }
 } else {
     if (!-e $codemlExe) {
-        die "\n\nERROR - terminating in script $scriptName - you specified a custom codeml executable with the --codeml option that does not exist: $codemlExe\n\n";
+        die "\n\nERROR - terminating in script $scriptName - you specified a custom codeml executable using the --codeml option, but that executable does not exist: $codemlExe\n\n";
     }
+}
+# some PAML versions don't add a tag to the end of the mlc file, so the way I had of checking for PAML success does not work, and I need to stop checking (i.e. use strict=loose)
+
+if (($codemlExe =~ m/4\.9g/) || ($codemlExe =~ m/4\.10\.6/))   {
+    if ($strictness eq "strict") {
+        print "    WARNING - because you're using codeml v4.9g or v4.10.6 we are changing the 'strict' setting to 'loose' (i.e. we will not check the end of the mlc files to make sure codeml succeeded)\n\n";
+    }
+    $strictness = "loose";
 }
 
 foreach my $file (@ARGV) {

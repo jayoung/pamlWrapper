@@ -69,6 +69,11 @@ Example:
 /fh/fast/malik_h/grp/malik_lab_shared/bin/runPAML.pl --usertree=primateTree.nwk ACE2_primates_aln1_NT.fa
 ```
 
+By default, we use PAML version 4.9a, but you can also choose 4.9g, 4.9h, 4.9j or 4.10.6. Be warned - [I don't think they are as good](https://github.com/abacus-gene/paml/issues/27) at detecting sitewise positive selection with M8 or M2. To use a different PAML version, supply the --version option. Example:
+```
+/fh/fast/malik_h/grp/malik_lab_shared/bin/runPAML.pl --version=4.10.6 ACE2_primates_aln1_NT.fa
+```
+
 ## To run these scripts in other ways
 
 The `runPAML.pl` script will only work on gizmo/rhino. Behind the scenes, it uses a singularity image file to run a pipeline of scripts inside a container using the Fred Hutch compute cluster via sbatch. 
@@ -181,21 +186,45 @@ I also created a shiny app to help visualize sitewise (and branchwise) PAML resu
 
 # PAML versions
 
-[Here](docs/compare_PAML_versions.md) are some notes on how different the results from different PAML versions, e.g. paml4.9j / 4.9a / 4.8 / 4.9a-conda / 4.10.6
+[Here](docs/compare_PAML_versions.md) and [here](docs/compare_PAML_versions_2.md) are some notes on how different the results from different PAML versions, e.g. paml4.9j / 4.9a / 4.8 / 4.9a-conda / 4.10.6.
+
+In summary: 
+
+## PAML version problem 1
+
+4.9a-conda I think is actually 4.9b (?) and suffers from a known bug. The rst file contains lots of `nan` values in the BEB estimates. See [pamlHistory.txt](https://github.com/abacus-gene/paml/blob/master/doc/pamlHistory.txt) and the note about `strange: f`:  
+```
+Version 4.9g, December 2017
+(*) codeml.  A bug caused the BEB calculation under the site model M8
+(NSsites = 8) to be incorrect, with the program printing out warming
+messages like "strange: f[ 5] = -0.0587063 very small."  This bug was
+introduced in version 4.9b and affects versions 4.9b-f.  A different
+bug was introduced in version 4.9f that causes the log likelihood
+function under the site model M8 (NSsites = 8) to be calculated
+incorrectly.  These are now fixed.
+```
+
+## PAML version problem 2
+
+I think I have uncovered a problem with newer versions of PAML.   Version 4.9a (from March 2015) is BETTER at finding sitewise positive selection than 4.9g and later. More details [here](https://github.com/abacus-gene/paml/issues/27). 
+
+As of Feb 10, 2023, the default is version 4.9a in my PAMLwrapper scripts (https://github.com/jayoung/pamlWrapper)
+
 
 # To do 
 
 Add the ability to run only model 0 and model 0fixed on an alignment containing only 2 seqs.  Tree is meaningless, and PHYML fails when there's only two seqs. But I can make a fake tree `(seq1,seq2);` and PAML will work.
 
-Troubleshooting the 'nan' problem in the BEB output:
-- it seems to be happening with the conda-paml install (4.9a), but not the equivalent version of PAML I installed myself, or any other version of paml
-- Ching-Ho's alignment that shows the problem is CG31882_sim.fa
-
 R code to plot omega classes - color choosing is still not quite right for the pos sel class - see `test_codeml_4.8/ACE2_primates_aln1_NT.fa_phymlAndPAML/ACE2_primates_aln1_NT.codonModel2_initOmega0.4_cleandata0.omegaDistributions.pdf`
 
-Very big difference in ACE2 results between PAML versions. Why? See [`docs/compare_PAML_versions.md`](docs/compare_PAML_versions.md).  
 
-fix `--add=1` versus `--add` discrepancy in the sbatch wrapper versus the singularity wrapper
+## another paml version issue?
+
+different results sometimes for same PAML version inside and outside singularity container. See testPAMLversions_new2023feb9 and docs/compare_PAML_versions_v2.md
+
+test compiling using cc not gcc?  did I mess things up by using gcc?  or am I using an old gcc?  does it even compile with cc?
+
+
 
 ## Maybe
 
