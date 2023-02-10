@@ -15,18 +15,20 @@ my $codonFreqModel = 2;
 my $cleanData = 0;
 my $userTreeFile = "";
 my $BEBprobThresholdToPrintSelectedSite = 0.9; ### report selected sites with at least this BEB probability into the output file
+my $verboseTable = 0;   ## normally we do NOT output all the parameters for all the models, and we do NOT output site class dN/dS and freq unless a pairwise model comparison has a 'good' p-value, but sometimes for troubleshooting and comparing PAML versions we might want that.
 my $strictness = "strict";    ## 'strict' means we insist that 'Time used' will be present at the end of the mlc file, and if it's not we assume PAML failed.   'loose' means it's OK if that's not present (v4.10.6 doesn't always add it)
 my $codemlExe = "codeml";  ## default is whichever codeml is in the PATH
 
 my $scriptName = "pw_makeTreeAndRunPAML.pl";
 
-GetOptions("omega=f"    => \$initialOrFixedOmega,   ## sometimes I do 3
-           "codon=i"    => \$codonFreqModel,        ## sometimes I do 3
-           "clean=i"    => \$cleanData,             ## sometimes I do 1 to remove the sites with gaps in any species
-           "usertree=s" => \$userTreeFile,
-           "BEB=f"      => \$BEBprobThresholdToPrintSelectedSite,
-           "strict=s"   => \$strictness,
-           "codeml=s"   => \$codemlExe) or die "\n\nERROR - terminating in script $scriptName - unknown option(s) specified on command line\n\n"; 
+GetOptions("omega=f"        => \$initialOrFixedOmega,   ## sometimes I do 3
+           "codon=i"        => \$codonFreqModel,        ## sometimes I do 3
+           "clean=i"        => \$cleanData,             ## sometimes I do 1 to remove the sites with gaps in any species
+           "usertree=s"     => \$userTreeFile,
+           "BEB=f"          => \$BEBprobThresholdToPrintSelectedSite,
+           "verboseTable=i" => \$verboseTable,
+           "strict=s"       => \$strictness,
+           "codeml=s"       => \$codemlExe) or die "\n\nERROR - terminating in script $scriptName - unknown option(s) specified on command line\n\n"; 
 
 ##### I don't usually change these things:
 my $masterPipelineDir = $ENV{'PAML_WRAPPER_HOME'}; 
@@ -73,7 +75,7 @@ foreach my $alignmentFile (@ARGV) {
         die "\n\nERROR - terminating in script $scriptName - alignment file $alignmentFile does not exist\n\n";
     } 
     print "\n######## Running PAML for alignment $alignmentFile with codon model $codonFreqModel, starting omega $initialOrFixedOmega, cleandata $cleanData\n";
-    print "using this codeml executable: $whichCodeml\n";
+    print "\n    codeml executable: $whichCodeml\n\n";
 
     my $alnFileWithoutDir = $alignmentFile;
     if ($alnFileWithoutDir =~ m/\//) {
@@ -215,7 +217,7 @@ foreach my $alignmentFile (@ARGV) {
             $otherOptions .= "--processTree=no --usertree=$userTreeFile"; 
         }
 
-        system ("$masterPipelineDir/scripts/pw_parsePAMLoutput.pl $otherOptions  -strict=$strictness -omega=$initialOrFixedOmega -codon=$codonFreqModel -clean=$cleanData -BEB=$BEBprobThresholdToPrintSelectedSite $alnFileWithoutDir");
+        system ("$masterPipelineDir/scripts/pw_parsePAMLoutput.pl $otherOptions -verboseTable=$verboseTable -strict=$strictness -omega=$initialOrFixedOmega -codon=$codonFreqModel -clean=$cleanData -BEB=$BEBprobThresholdToPrintSelectedSite $alnFileWithoutDir");
 
         system ("$masterPipelineDir/scripts/pw_parsedPAMLconvertToWideFormat.pl $parsedPAMLoutputFile");
         if(!-e $parsedPAMLoutputFile) {

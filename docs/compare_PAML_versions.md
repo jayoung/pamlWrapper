@@ -562,22 +562,16 @@ Mx - xxx what does that look like?
 
 xxx are the sites it thinks have dN/dS=999 sites with CpG residues?
 xxx are the rst dN/dS estimates similar?
-xxx is kappa similar?  should I capture/output kappa etc for ALL models not just M0?
-
-xxx should I add an option to capture the dN/dS of the selected sites even when the p-value on the chi-sq test is rubbish?
-
-xx I want a singularity container that uses a self-installed (NOT conda) paml v4.9a. Maybe I put it in the same container and use a --version= option to specify which PAML version to run?  default would be 4.9a but perhaps also allow use of 4.9j (non-conda) and 4.10.6
-
-http://abacus.gene.ucl.ac.uk/software/pamlOld.html
-
-http://abacus.gene.ucl.ac.uk/software/SoftOld/paml4.9a.tgz
-http://abacus.gene.ucl.ac.uk/software/SoftOld/paml4.9g.tgz
-http://abacus.gene.ucl.ac.uk/software/SoftOld/paml4.9h.tgz
-http://abacus.gene.ucl.ac.uk/software/SoftOld/paml4.9j.tgz
 
 
-Found in ~/FH_fast_storage/source_codes/paml/paml4.9j/unpack/paml4.9j/doc/pamlHistory.txt 
 
+on Feb 9 2023 (and before) the version of PAML that's in my path (/home/jayoung/malik_lab_shared/linux_gizmo/bin/codeml) is paml version 4.9j, February 2020 and for Mx and ACE2 that version does NOT give me results I like as much.   AND for M2 it can take a very long time.
+
+Feb 9 2023 - I will revert to 4.9a!
+
+# pamlHistory.txt 
+
+These bits of text come from [pamlHistory.txt](https://github.com/abacus-gene/paml/blob/master/doc/pamlHistory.txt)
 
 Version 4.9g, December 2017
 

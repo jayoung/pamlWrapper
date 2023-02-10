@@ -155,20 +155,16 @@ FROM bioperl/bioperl:release-1-6-924
 
 # Feb 9, 2022
 
-add more PAML versions to the docker image, so that I can use it to run various versions
+add more PAML versions to the docker image (options: 4.9a, 4.9g, 4.9h, 4.9j, 4.10.6), so that I can use it to run various versions
 
-xx building container now. it works
+also added the --version option to pw_makeTreeAndRunPAML_singularityWrapper.pl so that it passes in the correct path to the codeml executable
 
-from within the container:
+http://abacus.gene.ucl.ac.uk/software/pamlOld.html
 
-ls -l src/paml/*/src/codeml
--rwxr-xr-x 1 root root 645773 Feb  9 22:53 src/paml/paml-4.10.6/src/codeml
--rwxr-xr-x 1 root root 628211 Feb  9 22:48 src/paml/paml4.9a/src/codeml
--rwxr-xr-x 1 root root 636525 Feb  9 22:49 src/paml/paml4.9g/src/codeml
--rwxr-xr-x 1 root root 644766 Feb  9 22:50 src/paml/paml4.9h/src/codeml
--rwxr-xr-x 1 root root 644966 Nov 22 01:17 src/paml/paml4.9j/src/codeml
+http://abacus.gene.ucl.ac.uk/software/SoftOld/paml4.9a.tgz
+http://abacus.gene.ucl.ac.uk/software/SoftOld/paml4.9g.tgz
+http://abacus.gene.ucl.ac.uk/software/SoftOld/paml4.9h.tgz
+http://abacus.gene.ucl.ac.uk/software/SoftOld/paml4.9j.tgz
 
 
-add to the pamlWrapper scripts the ability to choose different PAML versions within the container
-
-test paml versions - do I get similar results inside and outside the container?
+xxx test paml versions - do I get similar results inside and outside the container?

@@ -16,17 +16,19 @@ my $userTreeFile = "";
 my $addToExistingOutputDir = ""; ## default is that I will NOT add to existing output dir
 my $strictness = "strict";    ## 'strict' means we insist that 'Time used' will be present at the end of the mlc file, and if it's not we assume PAML failed.   'loose' means it's OK if that's not present (v4.10.6 doesn't always add it)
 my $codemlExe = "codeml";  ## default is whichever codeml is in the PATH
+my $verboseTable = 0;   ## normally we do NOT output all the parameters for all the models, and we do NOT output site class dN/dS and freq unless a pairwise model comparison has a 'good' p-value, but sometimes for troubleshooting and comparing PAML versions we might want that.
 
 my $scriptName = "pw_makeTreeAndRunPAML_sbatchWrapper.pl";
 
-GetOptions("omega=f"     => \$initialOrFixedOmega,   ## sometimes I do 3, default is 0.4
-           "codon=i"     => \$codonFreqModel,        ## sometimes I do 3, default is 2
-           "clean=i"     => \$cleanData,             ## sometimes I do 1 to remove sites with gaps in any species
-           "usertree=s"  => \$userTreeFile,
-           "walltime=s"  => \$walltime,
-           "add"         => \$addToExistingOutputDir,
-           "strict=s"    => \$strictness,
-           "codeml=s"    => \$codemlExe) or die "\n\nERROR - terminating in script $scriptName - unknown option(s) specified on command line\n\n";             
+GetOptions("omega=f"        => \$initialOrFixedOmega,   ## sometimes I do 3, default is 0.4
+           "codon=i"        => \$codonFreqModel,        ## sometimes I do 3, default is 2
+           "clean=i"        => \$cleanData,             ## sometimes I do 1 to remove sites with gaps in any species
+           "verboseTable=i" => \$verboseTable,
+           "usertree=s"     => \$userTreeFile,
+           "walltime=s"     => \$walltime,
+           "add"            => \$addToExistingOutputDir,
+           "strict=s"       => \$strictness,
+           "codeml=s"       => \$codemlExe) or die "\n\nERROR - terminating in script $scriptName - unknown option(s) specified on command line\n\n";             
                       ## '--wall 0-6' to specify 6 hrs
 
 
@@ -85,7 +87,7 @@ foreach my $file (@ARGV) {
     ## run pw_makeTreeAndRunPAML.pl using sbatch (pass through the parameters)
     my $moreOptions = "";
     if ($userTreeFile ne "") { $moreOptions .= "--usertree=$userTreeFile"; }
-    my $command = "$masterPipelineDir/scripts/pw_makeTreeAndRunPAML.pl $moreOptions --strict=$strictness --codeml=$codemlExe --omega $initialOrFixedOmega --codon $codonFreqModel --clean $cleanData $file >> $logFile 2>&1"; 
+    my $command = "$masterPipelineDir/scripts/pw_makeTreeAndRunPAML.pl $moreOptions --strict=$strictness --codeml=$codemlExe --omega $initialOrFixedOmega --codon $codonFreqModel --clean $cleanData --verboseTable=$verboseTable $file >> $logFile 2>&1"; 
     $command = "/bin/bash -c \\\"source /app/lmod/lmod/init/profile; module load fhR/4.1.2-foss-2020b ; $command\\\"";
     $command = "sbatch -t $walltime --job-name=$jobnamePrefix"."$file --wrap=\"$command\"";
     system($command);

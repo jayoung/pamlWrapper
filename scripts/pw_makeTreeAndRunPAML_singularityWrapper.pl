@@ -16,7 +16,7 @@ use strict;
 
 ###### set up defaults for all the options
 my %options;
-$options{'sif'} = "/fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.2.2.sif"; # singularity image file
+$options{'sif'} = "/fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.0.sif"; # singularity image file
 $options{'walltime'} = "1-0"; ## walltime for sbatch jobs
 $options{'job'} = "pw_";   
 $options{'omega'} = 0.4;
@@ -24,6 +24,7 @@ $options{'codon'} = 2;
 $options{'clean'} = 0;
 $options{'usertree'} = "";
 $options{'BEB'} = 0.9; ### report selected sites with at least this BEB probability into the output file
+$options{'verboseTable'} = 0; ## normally we do NOT output all the parameters for all the models, and we do NOT output site class dN/dS and freq unless a pairwise model comparison has a 'good' p-value, but sometimes for troubleshooting and comparing PAML versions we might want that.
 $options{'add'} = 0; ## a.k.a addToExistingOutputDir
 $options{'version'} = "4.9a";
 $options{'strict'} = "strict";    ## 'strict' means we insist that 'Time used' will be present at the end of the mlc file, and if it's not we assume PAML failed.   'loose' means it's OK if that's not present (v4.10.6 doesn't always add it)
@@ -38,10 +39,9 @@ $usage .= "        --codon=$options{'codon'} : codon model for codeml\n";
 $usage .= "        --clean=$options{'clean'} : cleandata option for codeml\n";
 $usage .= "        --usertree=$options{'usertree'} : the default behavior is to run PHYML to generate a tree from the alignment, but if we want to specify the input tree for PAML, we use this option\n";
 $usage .= "        --BEB=$options{'BEB'} : BEB threshold for reporting positively selected sites\n";
+$usage .= "        --verboseTable=$options{'verboseTable'} : ## normally we do NOT output all the parameters for all the models, and we do NOT output site class dN/dS and freq unless a pairwise model comparison has a 'good' p-value, but sometimes for troubleshooting and comparing PAML versions we might want that\n";
 $usage .= "        --add=$options{'add'} : if output directory for a previous PAML run exists, are we allowed to add output to it?\n";
-
 $usage .= "        --version=$options{'version'} : which version of codeml do we want to run? (options: 4.9a, 4.9g, 4.9h, 4.9j, 4.10.6)\n";
-
 $usage .= "        --walltime=$options{'walltime'} : how much time to request for each job\n";
 $usage .= "        --job=$options{'job'} : prefix for sbatch job names\n";
 $usage .= "        --sif=$options{'sif'} : name and location of singularity image file\n";
@@ -79,19 +79,23 @@ foreach my $alnFile (@files) {
 # 4.9a, 4.9g, 4.9h, 4.9j, 4.10.6
 $options{'codemlExe'} = "undefinedSoFar";  
 if ($options{'version'} eq "4.9a") { 
-    $options{'codemlExe'} = "/src/paml/paml4.9a/src/codeml"
+    $options{'codemlExe'} = "/src/paml/paml4.9a/src/codeml";
 }
 if ($options{'version'} eq "4.9g") { 
-    $options{'codemlExe'} = "/src/paml/paml4.9g/src/codeml"
+    $options{'codemlExe'} = "/src/paml/paml4.9g/src/codeml";
 }
 if ($options{'version'} eq "4.9h") { 
-    $options{'codemlExe'} = "/src/paml/paml4.9h/src/codeml"
+    $options{'codemlExe'} = "/src/paml/paml4.9h/src/codeml";
 }
 if ($options{'version'} eq "4.9j") { 
-    $options{'codemlExe'} = "/src/paml/paml4.9j/src/codeml"
+    $options{'codemlExe'} = "/src/paml/paml4.9j/src/codeml";
 }
 if ($options{'version'} eq "4.10.6") { 
-    $options{'codemlExe'} = "src/paml/paml-4.10.6/src/codeml"
+    $options{'codemlExe'} = "/src/paml/paml-4.10.6/src/codeml";
+    if ($options{'strict'} ne "loose") {
+        print "    WARNING - because you're using codeml v$options{'version'}we are changing the 'strict' setting to 'loose' (ie.e. we will not check the end of the mlc files to make sure codeml succeeded\n\n)";
+    }
+    $options{'strict'} = "loose";
 }
 if ($options{'codemlExe'} eq "undefinedSoFar") {
     die "\n\nERROR - terminating in script $script - you specified a version of codeml that is not installed in the container. Available options: 4.9a, 4.9g, 4.9h, 4.9j, 4.10.6\n\n"
@@ -147,7 +151,7 @@ foreach my $alnFile (@files) {
         $singularityVersionDependentOptions .= " --strict=$options{'strict'} ";
     }
 
-    my $singularityCommand = "singularity exec --cleanenv $options{'sif'} pw_makeTreeAndRunPAML.pl --codeml=$options{'codemlExe'} $moreOptions $singularityVersionDependentOptions --omega=$options{'omega'} --codon=$options{'codon'} --clean=$options{'clean'} --BEB=$options{'BEB'} $alnFile &>> $logFile";
+    my $singularityCommand = "singularity exec --cleanenv $options{'sif'} pw_makeTreeAndRunPAML.pl --codeml=$options{'codemlExe'} $moreOptions $singularityVersionDependentOptions --omega=$options{'omega'} --codon=$options{'codon'} --clean=$options{'clean'} --BEB=$options{'BEB'} --verboseTable=$options{'verboseTable'} $alnFile &>> $logFile";
 
     open (LOG, "> $logFile");
     print LOG "\n######## Running PAML wrapper within this singularity container:\n$options{'sif'}\n\n";

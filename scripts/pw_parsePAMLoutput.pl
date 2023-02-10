@@ -20,18 +20,20 @@ my $processTree = "yes"; ## if I ran PAML using a supplied tree (e.g. species tr
 #my $processTree = "no";
 my $BEBprobThresholdToPrintSelectedSite = 0.9; ### report selected sites with at least this BEB probability into the output file
 my $combinedOutputFile = 0;    ## we always make one output file per input file, but do we also make a single output file for all the input files combined?
+my $verboseTable = 0;   ## normally we do NOT output all the parameters for all the models, and we do NOT output site class dN/dS and freq unless a pairwise model comparison has a 'good' p-value, but sometimes for troubleshooting and comparing PAML versions we might want that.
 my $strictness = "strict";    ## 'strict' means we insist that 'Time used' will be present at the end of the mlc file, and if it's not we assume PAML failed.   'loose' means it's OK if that's not present (v4.10.6 doesn't always add it)
 
 my $scriptName = "pw_parsePAMLoutput.pl";
 
-GetOptions("omega=f"       => \$initialOrFixedOmega,   ## sometimes I do 3, default is 0.4
-           "codon=i"       => \$codonFreqModel,        ## sometimes I do 3, default is 2
-           "clean=i"       => \$cleanData,             ## sometimes I do 1 to remove the sites with gaps in any species
-           "usertree=s"    => \$userTreeFile,
-           "BEB=f"         => \$BEBprobThresholdToPrintSelectedSite, # 0.5 to be less conservative, default is 0.9
-           "processTree=s" => \$processTree,
-           "comb=i"        => \$combinedOutputFile,
-           "strict=s"      => \$strictness) or die "\n\nERROR - terminating in script $scriptName - unknown option(s) specified on command line\n\n"; 
+GetOptions("omega=f"        => \$initialOrFixedOmega,   ## sometimes I do 3, default is 0.4
+           "codon=i"        => \$codonFreqModel,        ## sometimes I do 3, default is 2
+           "clean=i"        => \$cleanData,             ## sometimes I do 1 to remove the sites with gaps in any species
+           "usertree=s"     => \$userTreeFile,
+           "BEB=f"          => \$BEBprobThresholdToPrintSelectedSite, # 0.5 to be less conservative, default is 0.9
+           "processTree=s"  => \$processTree,
+           "verboseTable=i" => \$verboseTable,
+           "comb=i"         => \$combinedOutputFile,
+           "strict=s"       => \$strictness) or die "\n\nERROR - terminating in script $scriptName - unknown option(s) specified on command line\n\n"; 
 
 
 
@@ -232,16 +234,24 @@ foreach my $fastaAlnFile (@files) {
             $outputLine .= "\t\t\t\t";
         }
         # kappa treeLen treeLen_dN treeLen_dS overallOmega
-        if ($thisModel eq "M0") {
-            $outputLine .= "$pamlResult{'kappa'}\t$pamlResult{'treelength'}\t";
-            $outputLine .= "$pamlResult{'treelength_dN'}\t$pamlResult{'treelength_dS'}\t";
-            $outputLine .= "$pamlResult{'overallOmega'}\t";
+        # if verboseTable we want these for as many models as we can, otherwise we only want them for M0
+        if (($thisModel eq "M0") || ($verboseTable==1)) {
+            $outputLine .= "$pamlResult{'kappa'}\t";
+            $outputLine .= "$pamlResult{'treelength'}\t";
+            ## these three outputs aren't present unless we're in M0
+            if($thisModel eq "M0") {
+                $outputLine .= "$pamlResult{'treelength_dN'}\t"; 
+                $outputLine .= "$pamlResult{'treelength_dS'}\t"; 
+                $outputLine .= "$pamlResult{'overallOmega'}\t"; 
+            } else {
+                $outputLine .= "\t\t\t";
+            }
         } else {
             $outputLine .= "\t\t\t\t\t";
         }
         # M2: proportionSelectedSites estimatedOmegaOfSelectedClass seqToWhichAminoAcidsRefer whichSites
         if ($thisModel eq "M2") { 
-            if ($pamlStats{'M2_M1_pval'} < 0.1) {
+            if (($pamlStats{'M2_M1_pval'} < 0.1) || ($verboseTable==1)) {
                 print "                test M2 vs M1 had a good p-value!\n";
                 my $model2p = $pamlResult{"p"};
                 $model2p = (split /\,/, $model2p)[2];
@@ -257,8 +267,10 @@ foreach my $fastaAlnFile (@files) {
         
         # M8: proportionSelectedSites estimatedOmegaOfSelectedClass seqToWhichAminoAcidsRefer numSites whichSites
         if ($thisModel eq "M8") {
-            if (($pamlStats{'M8_M7_pval'} < 0.1) || ($pamlStats{'M8_M8a_pval'} < 0.1))  {
-                print "                test M8vsM7 and/or M8avsM7 had a good p-value!\n";
+            if (($pamlStats{'M8_M7_pval'} < 0.1) || 
+                  ($pamlStats{'M8_M8a_pval'} < 0.1) || 
+                  ($verboseTable==1))  {
+                if ($verboseTable==0) {print "                test M8vsM7 and/or M8avsM7 had a good p-value\n";}
                 #print "getting sites!\n";
                 my $model8siteResultsRef = paml_BEB_results("$modelSubDir/mlc");
                 my %model8siteResults = %$model8siteResultsRef;
@@ -279,7 +291,6 @@ foreach my $fastaAlnFile (@files) {
                 $treeorderFile =~ s/\.fasta$//; $treeorderFile =~ s/\.fa$//; 
                 $treeorderFile .= ".treeorder.fa";
                 system("$masterPipelineDir/scripts/pw_annotateAlignmentWithSelectedSites.pl $treeorderFile");
-
             } else {
                 $outputLine .= "\t\t\t\t";
             }

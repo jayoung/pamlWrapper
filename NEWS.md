@@ -3,6 +3,11 @@
 
 ## Fixes since v1.2.2
 
+## paml_wrapper-v1.3.0
+
+Feb 9, 2023
+- added more PAML versions to the Docker container (4.9a, 4.9g, 4.9h, 4.9j, 4.10.6), to help me compare outputs from different versions
+- added a `--verbose=1` option to give me a bit more information in the `PAMLsummary.tsv` output file, to help with troubleshooting different results from different PAML versions
 
 ## paml_wrapper-v1.2.2
 
