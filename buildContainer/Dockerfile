@@ -105,7 +105,6 @@ RUN cd src/paml_ccCompiled && \
   make
 
 ### install paml from the source, version 4.10.6, September 2020, use cc this time (but don't add it to PATH)
-RUN mkdir src/paml_ccCompiled
 RUN cd src/paml_ccCompiled && \
   cp /src/paml/v4.10.6.tar.gz . && \
   tar -xf v4.10.6.tar.gz && \
