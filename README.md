@@ -218,6 +218,10 @@ Add the ability to run only model 0 and model 0fixed on an alignment containing 
 
 R code to plot omega classes - color choosing is still not quite right for the pos sel class - see `test_codeml_4.8/ACE2_primates_aln1_NT.fa_phymlAndPAML/ACE2_primates_aln1_NT.codonModel2_initOmega0.4_cleandata0.omegaDistributions.pdf`
 
+I'm trying versions compiled using cc not gcc:  4.9a and 4.10.6, via singularity and via sbatch. started running Friday Feb 10, 2023. haven't looked at results yet 
+
+xxx update the runPAML to also use sif 1.3.2 ?
+
 
 ## another paml version issue?
 

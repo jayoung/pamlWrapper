@@ -249,6 +249,43 @@ rm *L/*tsv *L/*pdf
 ../../../pamlWrapper/scripts/pw_makeTreeAndRunPAML_sbatchWrapper.pl --add=1 --verboseTable=1 --codeml=/home/jayoung/malik_lab_shared/linux_gizmo/bin/old/paml/v4.10.6/codeml --codon=3 --omega=3 --add=1 ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa CG31882_sim.fa Dmel_22_aln.fa Mx1_PAML25.names.fa TRIM5_primates_aln2_NT.treeorder.noPseudsPartials.fa
 ```
 
+# try cc compiled versions
+
+4.9a_via_sif1.3.2_cc_compiled
+```
+cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/testPAMLversions_new2023feb9/test_codeml_4.9a_via_sif1.3.2_cc_compiled
+
+# --codon=2 --omega=0.4 
+~/FH_fast_storage/paml_screen/pamlWrapper/scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --verboseTable=1 --version=4.9a_cc ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa CG31882_sim.fa Dmel_22_aln.fa Mx1_PAML25.names.fa TRIM5_primates_aln2_NT.treeorder.noPseudsPartials.fa
+
+# --codon=2 --omega=3 
+~/FH_fast_storage/paml_screen/pamlWrapper/scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --verboseTable=1 --version=4.10.6cc --add=1 --codon=2 --omega=3 ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa CG31882_sim.fa Dmel_22_aln.fa Mx1_PAML25.names.fa TRIM5_primates_aln2_NT.treeorder.noPseudsPartials.fa
+
+# --codon=3 --omega=0.4 
+~/FH_fast_storage/paml_screen/pamlWrapper/scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --verboseTable=1 --version=4.10.6cc --add=1 --codon=3 --omega=0.4 ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa CG31882_sim.fa Dmel_22_aln.fa Mx1_PAML25.names.fa TRIM5_primates_aln2_NT.treeorder.noPseudsPartials.fa
+
+# --codon=3 --omega=3 
+~/FH_fast_storage/paml_screen/pamlWrapper/scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --verboseTable=1 --version=4.10.6cc --add=1 --codon=3 --omega=3 ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa CG31882_sim.fa Dmel_22_aln.fa Mx1_PAML25.names.fa TRIM5_primates_aln2_NT.treeorder.noPseudsPartials.fa
+```
+
+4.10.6_via_sif1.3.2_cc_compiled
+```
+cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/testPAMLversions_new2023feb9/test_codeml_4.10.6_via_sif1.3.2_cc_compiled
+
+# --codon=2 --omega=0.4 
+~/FH_fast_storage/paml_screen/pamlWrapper/scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --verboseTable=1 --version=4.10.6cc ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa CG31882_sim.fa Dmel_22_aln.fa Mx1_PAML25.names.fa TRIM5_primates_aln2_NT.treeorder.noPseudsPartials.fa
+
+# --codon=2 --omega=3 
+~/FH_fast_storage/paml_screen/pamlWrapper/scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --verboseTable=1 --version=4.10.6cc --add=1 --codon=2 --omega=3 ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa CG31882_sim.fa Dmel_22_aln.fa Mx1_PAML25.names.fa TRIM5_primates_aln2_NT.treeorder.noPseudsPartials.fa
+
+# --codon=3 --omega=0.4 
+~/FH_fast_storage/paml_screen/pamlWrapper/scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --verboseTable=1 --version=4.10.6cc --add=1 --codon=3 --omega=0.4 ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa CG31882_sim.fa Dmel_22_aln.fa Mx1_PAML25.names.fa TRIM5_primates_aln2_NT.treeorder.noPseudsPartials.fa
+
+# --codon=3 --omega=3 
+~/FH_fast_storage/paml_screen/pamlWrapper/scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --verboseTable=1 --version=4.10.6cc --add=1 --codon=3 --omega=3 ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa CG31882_sim.fa Dmel_22_aln.fa Mx1_PAML25.names.fa TRIM5_primates_aln2_NT.treeorder.noPseudsPartials.fa
+```
+
+
 
 4.10.6_via_sbatch_cc_compiled
 ```

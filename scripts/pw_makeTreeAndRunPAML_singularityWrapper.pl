@@ -16,7 +16,7 @@ use strict;
 
 ###### set up defaults for all the options
 my %options;
-$options{'sif'} = "/fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.1.sif"; # singularity image file
+$options{'sif'} = "/fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.2.sif"; # singularity image file
 $options{'walltime'} = "1-0"; ## walltime for sbatch jobs
 $options{'job'} = "pw_";   
 $options{'omega'} = 0.4;
@@ -97,7 +97,7 @@ if ($options{'version'} eq "4.10.6") {
     $options{'codemlExe'} = "/src/paml/paml-4.10.6/src/codeml";
 }
 if ($options{'version'} eq "4.10.6cc") { 
-    $options{'codemlExe'} = "/src/paml_ccCompiled/paml4.10.6/src/codeml";
+    $options{'codemlExe'} = "/src/paml_ccCompiled/paml-4.10.6/src/codeml";
 }
 # some PAML versions don't add a tag to the end of the mlc file, so the way I had of checking for PAML success does not work, and I need to stop checking (i.e. use strict=loose)
 if (($options{'version'} eq "4.9g") || ($options{'version'} eq "4.10.6")) { 

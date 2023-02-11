@@ -50,13 +50,13 @@ which R
 
 When I know it's working I add a new tag and push it to [docker hub](https://hub.docker.com/repository/docker/jayoungfhcrc/paml_wrapper).  I update the version number each time:
 ```
-docker tag paml_wrapper jayoungfhcrc/paml_wrapper:version1.3.1
-docker push jayoungfhcrc/paml_wrapper:version1.3.1
+docker tag paml_wrapper jayoungfhcrc/paml_wrapper:version1.3.2
+docker push jayoungfhcrc/paml_wrapper:version1.3.2
 ```
 
 I then test my container in a totally different environment using the [Play with Docker](https://labs.play-with-docker.com) site - it seems to work. Once I have an instance running there:
 ```
-docker run -it jayoungfhcrc/paml_wrapper:version1.3.1
+docker run -it jayoungfhcrc/paml_wrapper:version1.3.2
 cd pamlWrapper/testData/
 pw_makeTreeAndRunPAML.pl ACE2_primates_aln1_NT.fa
 ```
@@ -70,7 +70,7 @@ On gizmo/rhino:
 cd ~/FH_fast_storage/paml_screen/pamlWrapper/buildContainer
 module purge
 module load Singularity/3.5.3
-singularity build paml_wrapper-v1.3.1.sif docker://jayoungfhcrc/paml_wrapper:version1.3.1
+singularity build paml_wrapper-v1.3.2.sif docker://jayoungfhcrc/paml_wrapper:version1.3.2
 module purge
 ```
 
@@ -81,9 +81,9 @@ Now that I use the bioperl base, I do get a bunch of warnings while building the
 2022/11/22 17:00:52  warn rootless{root/.cpanm/work/1468017244.5/Statistics-Descriptive-3.0612/t/pod.t} ignoring (usually) harmless EPERM on setxattr "user.rootlesscontainers"
 ```
 
-A file called paml_wrapper-v1.3.1.sif appears. I want a copy of the singularity image file, and a script that uses it, in a more central place, for use by others:
+A file called paml_wrapper-v1.3.2.sif appears. I want a copy of the singularity image file, and a script that uses it, in a more central place, for use by others:
 ```
-cp paml_wrapper-v1.3.1.sif /fh/fast/malik_h/grp/malik_lab_shared/singularityImages
+cp paml_wrapper-v1.3.2.sif /fh/fast/malik_h/grp/malik_lab_shared/singularityImages
 ```
 
 
@@ -132,11 +132,11 @@ I can get a shell in the singularity container like this:
 ```
 cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments
 module load Singularity/3.5.3
-singularity shell --cleanenv /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.1.sif
+singularity shell --cleanenv /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.2.sif
 module purge
 ```
 
-To seeing which OS a container uses: `uname -a` works in a docker container, but in a singularity container it doesn't (well, it does, but it gives me the name of the host computer, not the container). Instead, from within a singularity container I can do `cat /etc/*-release`.   In paml_wrapper-v1.3.1.sif this gives me:
+To seeing which OS a container uses: `uname -a` works in a docker container, but in a singularity container it doesn't (well, it does, but it gives me the name of the host computer, not the container). Instead, from within a singularity container I can do `cat /etc/*-release`.   In paml_wrapper-v1.3.1.sif this gave me:
 ```
 DISTRIB_ID=Ubuntu
 DISTRIB_RELEASE=14.04
@@ -161,7 +161,7 @@ pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa
 Or, I can run some code using the singularity image without entering a shell (this is what the  `runPAML.pl=pw_makeTreeAndRunPAML_singularityWrapper.pl` script does for each alignment):
 ```
 module load Singularity/3.5.3
-singularity exec --cleanenv /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.1.sif pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa 
+singularity exec --cleanenv /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.2.sif pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa 
 module purge
 ```
 
