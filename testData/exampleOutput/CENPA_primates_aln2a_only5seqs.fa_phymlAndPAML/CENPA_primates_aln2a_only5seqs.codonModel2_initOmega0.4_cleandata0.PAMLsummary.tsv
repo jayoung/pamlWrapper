@@ -1,8 +1,0 @@
-seqFile	numSeqs	seqLenNT	seqLenCodons	model	resultsDir	codonModel	startingOmega	cleanData	lnL	np	test	2diffML	df	pValue	kappa	treeLen	treeLen_dN	treeLen_dS	overallOmega	proportionSelectedSites	estimatedOmegaOfSelectedClass	seqToWhichAminoAcidsRefer	numSitesBEBover0.9	whichSitesBEBover0.9
-CENPA_primates_aln2a_only5seqs.fa	5	423	141	M0	CENPA_primates_aln2a_only5seqs.fa_phymlAndPAML/M0_initOmega0.4_codonModel2	2	0.4	0	-709.445127	  9					2.22099	0.17916	0.0343	0.1230	0.27852	
-CENPA_primates_aln2a_only5seqs.fa	5	423	141	M0fixNeutral	CENPA_primates_aln2a_only5seqs.fa_phymlAndPAML/M0fixNeutral_initOmega0.4_codonModel2	2	0.4	0	-714.107244	  8	M0_M0fix	9.32423400000016	1	0.0022614						
-CENPA_primates_aln2a_only5seqs.fa	5	423	141	M1	CENPA_primates_aln2a_only5seqs.fa_phymlAndPAML/M1_initOmega0.4_codonModel2	2	0.4	0	-708.426625	 10										
-CENPA_primates_aln2a_only5seqs.fa	5	423	141	M2	CENPA_primates_aln2a_only5seqs.fa_phymlAndPAML/M2_initOmega0.4_codonModel2	2	0.4	0	-708.236675	 12	M2_M1	0.379899999999907	2	0.82700										
-CENPA_primates_aln2a_only5seqs.fa	5	423	141	M7	CENPA_primates_aln2a_only5seqs.fa_phymlAndPAML/M7_initOmega0.4_codonModel2	2	0.4	0	-708.453596	 10										
-CENPA_primates_aln2a_only5seqs.fa	5	423	141	M8	CENPA_primates_aln2a_only5seqs.fa_phymlAndPAML/M8_initOmega0.4_codonModel2	2	0.4	0	-708.236675	 12	M8_M7	0.433841999999913	2	0.80499										
-CENPA_primates_aln2a_only5seqs.fa	5	423	141	M8a	CENPA_primates_aln2a_only5seqs.fa_phymlAndPAML/M8a_initOmega0.4_codonModel2	2	0.4	0	-708.426623	 11	M8_M8a	0.379895999999917	1	0.53766						

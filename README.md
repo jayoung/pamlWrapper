@@ -34,7 +34,8 @@ If you want to set up your account so you can use this simpler form, and don't k
 
 Whichever way you do it, that command will start 'batch' jobs on the cluster, one for each input file. You can monitor whether your PAML job(s) are still running using the following command:
 ```
-squeue -u $USER
+squeue -u ${USER}
+    # or if that doesn't work, put in your rhino user name instead of ${USER}
 ```
 This will list all the jobs you have running on the cluster. Any PAML jobs still running will show up with IDs starting `pw_` in the NAME column. The JOBID column shows a numerical job ID that can be useful: for example, if the JOBID is `55134218` you could cancel your job using this command: `scancel 55134218`. 
 
