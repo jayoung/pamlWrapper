@@ -98,21 +98,20 @@ RUN cd src/paml && \
 ### install paml from the source, version 4.9a, March 2015, use cc this time (but don't add it to PATH)
 RUN mkdir src/paml_ccCompiled
 RUN cd src/paml_ccCompiled && \
-  cp /src/paml/paml4.9a.tgz .
-  #\
-  # tar -xf paml4.9a.tgz && \
-  # cd paml4.9a/src && \
-  # sed 's/version 4.9/version 4.9a_cc/g' -i paml.h && \
-  # make
+  cp /src/paml/paml4.9a.tgz . && \
+  tar -xf paml4.9a.tgz && \
+  cd paml4.9a/src && \
+  sed 's/version 4.9/version 4.9a_cc/g' -i paml.h && \
+  make
 
 ### install paml from the source, version 4.10.6, September 2020, use cc this time (but don't add it to PATH)
-# RUN mkdir src/paml_ccCompiled
-# RUN cd src/paml_ccCompiled && \
-#   cp /src/paml/v4.10.6.tar.gz . \
-#   tar -xf v4.10.6.tar.gz && \
-#   cd paml-4.10.6/src && \
-#   sed 's/version 4.10.0, September 2020/version 4.10.6cc, November 2022/g' -i paml.h && \
-#   make
+RUN mkdir src/paml_ccCompiled
+RUN cd src/paml_ccCompiled && \
+  cp /src/paml/v4.10.6.tar.gz . && \
+  tar -xf v4.10.6.tar.gz && \
+  cd paml-4.10.6/src && \
+  sed 's/version 4.10.0, September 2020/version 4.10.6cc, November 2022/g' -i paml.h && \
+  make
 
 
 ## Install my scripts and templates and docs from the local drive
