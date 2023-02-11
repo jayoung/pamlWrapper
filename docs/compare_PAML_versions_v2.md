@@ -250,10 +250,6 @@ rm *L/*tsv *L/*pdf
 ```
 
 
-
-xxx
-
-
 4.10.6_via_sbatch_cc_compiled
 ```
 cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/testPAMLversions_new2023feb9/test_codeml_4.10.6_via_sbatch_cc_compiled
@@ -272,7 +268,23 @@ cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/testPAMLversions_new2
 ```
 
 
-xxx
+4.9a_via_sbatch_cc_compiled
+
+```
+cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/testPAMLversions_new2023feb9/test_codeml_4.9a_via_sbatch_cc_compiled
+
+# --codon=2 --omega=0.4 
+../../../pamlWrapper/scripts/pw_makeTreeAndRunPAML_sbatchWrapper.pl --verboseTable=1 --strict=loose --codeml=/home/jayoung/malik_lab_shared/linux_gizmo/bin/old/paml/v4.9a_cc/codeml ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa CG31882_sim.fa Dmel_22_aln.fa Mx1_PAML25.names.fa TRIM5_primates_aln2_NT.treeorder.noPseudsPartials.fa
+
+# --codon=2 --omega=3
+../../../pamlWrapper/scripts/pw_makeTreeAndRunPAML_sbatchWrapper.pl --verboseTable=1 --strict=loose --codeml=/home/jayoung/malik_lab_shared/linux_gizmo/bin/old/paml/v4.10.6/codeml --codon=2 --omega=3 --add=1 ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa CG31882_sim.fa Dmel_22_aln.fa Mx1_PAML25.names.fa TRIM5_primates_aln2_NT.treeorder.noPseudsPartials.fa
+
+# --codon=3 --omega=0.4
+../../../pamlWrapper/scripts/pw_makeTreeAndRunPAML_sbatchWrapper.pl --verboseTable=1 --strict=loose --codeml=/home/jayoung/malik_lab_shared/linux_gizmo/bin/old/paml/v4.10.6/codeml --codon=3 --omega=0.4 --add=1 ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa CG31882_sim.fa Dmel_22_aln.fa Mx1_PAML25.names.fa TRIM5_primates_aln2_NT.treeorder.noPseudsPartials.fa
+
+# --codon=3 --omega=3
+../../../pamlWrapper/scripts/pw_makeTreeAndRunPAML_sbatchWrapper.pl --verboseTable=1 --strict=loose --codeml=/home/jayoung/malik_lab_shared/linux_gizmo/bin/old/paml/v4.10.6/codeml --codon=3 --omega=3 --add=1 ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa CG31882_sim.fa Dmel_22_aln.fa Mx1_PAML25.names.fa TRIM5_primates_aln2_NT.treeorder.noPseudsPartials.fa
+```
 
 
 ## combine results 

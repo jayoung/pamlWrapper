@@ -250,6 +250,7 @@ foreach my $fastaAlnFile (@files) {
             $outputLine .= "\t\t\t\t\t";
         }
         # M2: proportionSelectedSites estimatedOmegaOfSelectedClass seqToWhichAminoAcidsRefer whichSites
+        my $printedExtraColumns = 0;
         if ($thisModel eq "M2") { 
             if (($pamlStats{'M2_M1_pval'} < 0.1) || ($verboseTable==1)) {
                 print "                test M2 vs M1 had a good p-value!\n";
@@ -263,6 +264,7 @@ foreach my $fastaAlnFile (@files) {
             } else {
                 $outputLine .= "\t\t\t\t";
             }
+            $printedExtraColumns = 1;
         }
         
         # M8: proportionSelectedSites estimatedOmegaOfSelectedClass seqToWhichAminoAcidsRefer numSites whichSites
@@ -294,10 +296,12 @@ foreach my $fastaAlnFile (@files) {
             } else {
                 $outputLine .= "\t\t\t\t";
             }
-        }
+            $printedExtraColumns = 1;
+        } 
+        if ($printedExtraColumns == 0) { $outputLine .= "\t\t\t\t"; }
         print $outfile_fh "$outputLine\n";
         if ($combinedOutputFile) {print $overallOutputFile_fh "$outputLine\n";}
-    }
+    }  # end of foreach my $thisModel loop
     if ($combinedOutputFile) {print $overallOutputFile_fh "\n";}
     close $outfile_fh;
 }
