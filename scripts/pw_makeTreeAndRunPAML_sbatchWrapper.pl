@@ -73,6 +73,7 @@ if (($codemlExe =~ m/4\.9g/) || ($codemlExe =~ m/4\.10\.6/))   {
 foreach my $file (@ARGV) {
     if (!-e $file) { die "\n\nERROR - terminating in script $scriptName - file $file does not exist\n\n";}
     print "\n####### Working on file $file\n";
+    print "    using executable $codemlExe\n";
     ## I used to always check for the top level outdir.
     # now I still do it by default, but I can override by including --add on the command line (because I might want to run PAML again with different parameters)
     my $outdir = $file . "_phymlAndPAML";

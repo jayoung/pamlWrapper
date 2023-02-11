@@ -3,6 +3,8 @@
 
 ## Fixes since v1.3.1
 
+- Fixed tsv output so that every line has the same number of columns (displays better on github)
+
 ## paml_wrapper-v1.3.1
 Feb 10 2023, commit 61d7eee
 - minor changes, mostly cosmetic

@@ -41,7 +41,7 @@ $usage .= "        --usertree=$options{'usertree'} : the default behavior is to 
 $usage .= "        --BEB=$options{'BEB'} : BEB threshold for reporting positively selected sites\n";
 $usage .= "        --verboseTable=$options{'verboseTable'} : ## normally we do NOT output all the parameters for all the models, and we do NOT output site class dN/dS and freq unless a pairwise model comparison has a 'good' p-value, but sometimes for troubleshooting and comparing PAML versions we might want that\n";
 $usage .= "        --add=$options{'add'} : if output directory for a previous PAML run exists, are we allowed to add output to it?\n";
-$usage .= "        --version=$options{'version'} : which version of codeml do we want to run? (options: 4.9a, 4.9g, 4.9h, 4.9j, 4.10.6)\n";
+$usage .= "        --version=$options{'version'} : which version of codeml do we want to run? (options: 4.9a, 4.9a_cc, 4.9g, 4.9h, 4.9j, 4.10.6, 4.10.6cc)\n";
 $usage .= "        --walltime=$options{'walltime'} : how much time to request for each job\n";
 $usage .= "        --job=$options{'job'} : prefix for sbatch job names\n";
 $usage .= "        --sif=$options{'sif'} : name and location of singularity image file\n";
@@ -81,6 +81,9 @@ $options{'codemlExe'} = "undefinedSoFar";
 if ($options{'version'} eq "4.9a") { 
     $options{'codemlExe'} = "/src/paml/paml4.9a/src/codeml";
 }
+if ($options{'version'} eq "4.9a_cc") { 
+    $options{'codemlExe'} = "/src/paml_ccCompiled/paml4.9a/src/codeml";
+}
 if ($options{'version'} eq "4.9g") { 
     $options{'codemlExe'} = "/src/paml/paml4.9g/src/codeml";
 }
@@ -92,6 +95,9 @@ if ($options{'version'} eq "4.9j") {
 }
 if ($options{'version'} eq "4.10.6") { 
     $options{'codemlExe'} = "/src/paml/paml-4.10.6/src/codeml";
+}
+if ($options{'version'} eq "4.10.6cc") { 
+    $options{'codemlExe'} = "/src/paml_ccCompiled/paml4.10.6/src/codeml";
 }
 # some PAML versions don't add a tag to the end of the mlc file, so the way I had of checking for PAML success does not work, and I need to stop checking (i.e. use strict=loose)
 if (($options{'version'} eq "4.9g") || ($options{'version'} eq "4.10.6")) { 
@@ -123,6 +129,7 @@ $singularityImageVersion = join ".", @singularityImageVersionPieces[0..1];
 
 foreach my $alnFile (@files) {
     print "###### working on file $alnFile\n";
+    print "    using executable $options{'codemlExe'}\n";
     my $alnFileStem = $alnFile; 
     
     # check for the top level outdir (can override by including --add on the command line, because I might want to run PAML again with different parameters)
