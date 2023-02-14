@@ -227,7 +227,7 @@ xxx update the runPAML to also use sif 1.3.2 ?
 
 different results sometimes for same PAML version inside and outside singularity container. See testPAMLversions_new2023feb9 and docs/compare_PAML_versions_v2.md
 
-test compiling using cc not gcc?  did I mess things up by using gcc?  or am I using an old gcc?  does it even compile with cc?
+also get different results for 4.10.6 depending on whether I compiled with cc or gcc (and that interacts with whether I run via sigularity or sbatch). See testPAMLversions_new2023feb9 and docs/compare_PAML_versions_v2.md
 
 
 
