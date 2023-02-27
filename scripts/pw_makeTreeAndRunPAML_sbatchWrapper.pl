@@ -12,6 +12,7 @@ my $initialOrFixedOmega = 0.4;
 my $codonFreqModel = 2;
 my $walltime = "1-0";   # if we do use sbatch, default walltime is 1 days
 my $cleanData = 0;
+my $smallDiff = ".5e-6";   ## .5e-6 was what I ALWAYS used before adding the option to change things, Feb 27, 2023
 my $userTreeFile = "";
 my $addToExistingOutputDir = ""; ## default is that I will NOT add to existing output dir
 my $strictness = "strict";    ## 'strict' means we insist that 'Time used' will be present at the end of the mlc file, and if it's not we assume PAML failed.   'loose' means it's OK if that's not present (v4.10.6 doesn't always add it)
@@ -23,6 +24,7 @@ my $scriptName = "pw_makeTreeAndRunPAML_sbatchWrapper.pl";
 GetOptions("omega=f"        => \$initialOrFixedOmega,   ## sometimes I do 3, default is 0.4
            "codon=i"        => \$codonFreqModel,        ## sometimes I do 3, default is 2
            "clean=i"        => \$cleanData,             ## sometimes I do 1 to remove sites with gaps in any species
+           "smallDiff=s"    => \$smallDiff,
            "verboseTable=i" => \$verboseTable,
            "usertree=s"     => \$userTreeFile,
            "walltime=s"     => \$walltime,
@@ -36,7 +38,7 @@ GetOptions("omega=f"        => \$initialOrFixedOmega,   ## sometimes I do 3, def
 my $masterPipelineDir = $ENV{'PAML_WRAPPER_HOME'}; 
 my $jobnamePrefix = "pw_";   
 
-print "\nrunning PAML with these parameters:\n    starting omega $initialOrFixedOmega\n    codon model $codonFreqModel\n    cleandata $cleanData\n\n";
+print "\nrunning PAML with these parameters:\n    starting omega $initialOrFixedOmega\n    codon model $codonFreqModel\n    cleandata $cleanData\n    smallDiff $smallDiff\n\n";
 
 ##################
 
@@ -96,7 +98,7 @@ foreach my $file (@ARGV) {
     ## run pw_makeTreeAndRunPAML.pl using sbatch (pass through the parameters)
     my $moreOptions = "";
     if ($userTreeFile ne "") { $moreOptions .= "--usertree=$userTreeFile"; }
-    my $command = "$masterPipelineDir/scripts/pw_makeTreeAndRunPAML.pl $moreOptions --strict=$strictness --codeml=$codemlExe --omega $initialOrFixedOmega --codon $codonFreqModel --clean $cleanData --verboseTable=$verboseTable $file >> $logFile 2>&1"; 
+    my $command = "$masterPipelineDir/scripts/pw_makeTreeAndRunPAML.pl $moreOptions --strict=$strictness --codeml=$codemlExe --omega=$initialOrFixedOmega --codon=$codonFreqModel --clean=$cleanData --smallDiff=$smallDiff --verboseTable=$verboseTable $file >> $logFile 2>&1"; 
     $command = "/bin/bash -c \\\"source /app/lmod/lmod/init/profile; module load fhR/4.1.2-foss-2020b ; $command\\\"";
     $command = "sbatch -t $walltime --job-name=$jobnamePrefix"."$file --wrap=\"$command\"";
     system($command);

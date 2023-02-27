@@ -22,6 +22,7 @@ $options{'job'} = "pw_";
 $options{'omega'} = 0.4;
 $options{'codon'} = 2;
 $options{'clean'} = 0;
+$options{'smallDiff'} = ".5e-6";
 $options{'usertree'} = "";
 $options{'BEB'} = 0.9; ### report selected sites with at least this BEB probability into the output file
 $options{'verboseTable'} = 0; ## normally we do NOT output all the parameters for all the models, and we do NOT output site class dN/dS and freq unless a pairwise model comparison has a 'good' p-value, but sometimes for troubleshooting and comparing PAML versions we might want that.
@@ -37,6 +38,7 @@ $usage .= "    Options:\n";
 $usage .= "        --omega=$options{'omega'} : starting omega for codeml\n"; 
 $usage .= "        --codon=$options{'codon'} : codon model for codeml\n";
 $usage .= "        --clean=$options{'clean'} : cleandata option for codeml\n";
+$usage .= "        --smallDiff=$options{'smallDiff'} : smallDiff option for codeml\n";
 $usage .= "        --usertree=$options{'usertree'} : the default behavior is to run PHYML to generate a tree from the alignment, but if we want to specify the input tree for PAML, we use this option\n";
 $usage .= "        --BEB=$options{'BEB'} : BEB threshold for reporting positively selected sites\n";
 $usage .= "        --verboseTable=$options{'verboseTable'} : ## normally we do NOT output all the parameters for all the models, and we do NOT output site class dN/dS and freq unless a pairwise model comparison has a 'good' p-value, but sometimes for troubleshooting and comparing PAML versions we might want that\n";
@@ -161,7 +163,7 @@ foreach my $alnFile (@files) {
         $singularityVersionDependentOptions .= " --strict=$options{'strict'} ";
     }
 
-    my $singularityCommand = "singularity exec --cleanenv $options{'sif'} pw_makeTreeAndRunPAML.pl --codeml=$options{'codemlExe'} $moreOptions $singularityVersionDependentOptions --omega=$options{'omega'} --codon=$options{'codon'} --clean=$options{'clean'} --BEB=$options{'BEB'} --verboseTable=$options{'verboseTable'} $alnFile &>> $logFile";
+    my $singularityCommand = "singularity exec --cleanenv $options{'sif'} pw_makeTreeAndRunPAML.pl --codeml=$options{'codemlExe'} $moreOptions $singularityVersionDependentOptions --omega=$options{'omega'} --codon=$options{'codon'} --clean=$options{'clean'} --smallDiff=$options{'smallDiff'} --BEB=$options{'BEB'} --verboseTable=$options{'verboseTable'} $alnFile &>> $logFile";
 
     open (LOG, "> $logFile");
     print LOG "\n######## Running PAML wrapper within this singularity container:\n$options{'sif'}\n\n";

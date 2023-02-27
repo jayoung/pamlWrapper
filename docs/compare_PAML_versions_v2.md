@@ -325,6 +325,9 @@ cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/testPAMLversions_new2
 Just codonModel2_initOmega0.4_cleandata0 results to start
 
 ```
+
+cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/testPAMLversions_new2023feb9
+
 # ACE2_primates_aln1_NT.fa
 pw_combineParsedOutfilesLong.pl test_codeml_*/ACE2_primates_aln1_NT.fa_phymlAndPAML/*codonModel2_initOmega0.4_cleandata0.PAMLsummary.tsv
 mv allAlignments.PAMLsummaries.tsv test_codeml_ACE2_cod2omeg3clean0.PAMLsummaries.tsv 
@@ -383,3 +386,44 @@ Use 4.9a!    4.9g and later often fail to find a good p1/w combination for the p
 
 
 I also tried cc-compiled versions of 4.10.6 and 4.9a.  Again, for 4.10.6, it gives unstable results (meaning sometimes the low-p1/high-omega/bad-p-value outcome, sometimes the reasonable-p1/reasonable-omega/good-p-value outcome):  depends on whether I run via singularity or sbatch, depends whether I compile with gcc or cc
+
+
+# use Ziheng's suggestion
+
+[Ziheng says](https://github.com/abacus-gene/paml/issues/27): 
+There has been no change to the optimization routine, so i think it is just a matter of the overall difficulty of the optimisation routine, and the choice of some parameters/settings, rather than a systematic difference between versions. you can check and change some of the following control variables.
+SmallDiff = 1e-8 # use a valle between 1e-6 and 1e-9
+method = 1 or 0
+
+I've been using 
+```
+Small_Diff = .5e-6
+    method = 1   * 0: simultaneous; 1: one branch at a time
+```
+
+test new script where I add option to change smallDiff
+```
+# test running script directly
+cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/testPAMLversions_new2023feb27_changeSmallDiff/directScriptCall
+cp ../../CENPA_primates_aln2a_only5seqs.fa .
+
+module load fhR/4.1.2-foss-2020b
+pw_makeTreeAndRunPAML.pl --smallDiff=1e-8 CENPA_primates_aln2a_only5seqs.fa 
+module purge
+
+# test using sbatch wrapper
+cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/testPAMLversions_new2023feb27_changeSmallDiff/useSbatchWrapper
+cp ../../CENPA_primates_aln2a_only5seqs.fa .
+pw_makeTreeAndRunPAML_sbatchWrapper.pl --smallDiff=1e-8 CENPA_primates_aln2a_only5seqs.fa 
+
+# test using singularity wrapper
+cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/testPAMLversions_new2023feb27_changeSmallDiff/useSingularityWrapper
+cp ../../CENPA_primates_aln2a_only5seqs.fa .
+
+xxx need to update the docker+singularity containers before I can do this
+
+pw_makeTreeAndRunPAML_singularityWrapper.pl --smallDiff=1e-8 CENPA_primates_aln2a_only5seqs.fa 
+```
+
+Is it `Small_Diff` (that's what I've been using for years) or `SmallDiff` (in Ziheng's github comment)
+

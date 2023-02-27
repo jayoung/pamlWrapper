@@ -40,7 +40,7 @@
 * 10: blepharisma nu.
 * These codes correspond to transl_table 1 to 11 of GENEBANK.
 
-   Small_Diff = .5e-6
+   Small_Diff = SMALLDIFF
     cleandata = CLEANDATA  * remove sites with ambiguity data (1:yes, 0:no)?
         ndata = 1
 *  fix_blength = -1  * 0: ignore, -1: random, 1: initial, 2: fixed
