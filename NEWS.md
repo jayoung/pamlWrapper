@@ -1,8 +1,13 @@
 ## Issues still to fix
 
 
-## Fixes since v1.3.1
+## Fixes since v1.3.3
 
+
+## paml_wrapper-v1.3.3
+- added smallDiff option to `pw_makeTreeAndRunPAML.pl` and to the sbatch and singularity wrappers
+
+## paml_wrapper-v1.3.2
 - Fixed tsv output so that every line has the same number of columns (displays better on github)
 
 ## paml_wrapper-v1.3.1
