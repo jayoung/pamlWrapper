@@ -211,3 +211,38 @@ cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/testVerboseOutput/ver
 cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/testVerboseOutput/verbose1_sbatch
 ../../../pamlWrapper/scripts/pw_makeTreeAndRunPAML_sbatchWrapper.pl --verbose=1 Mx1_PAML25.fasta.names Dmel_22_aln.fasta CENPA_primates_aln2a_NT.fa
 ```
+
+
+# Actually using this on my Mac (desktop)
+
+I installed a few PAML versions (see /Users/jayoung/source_codes/paml/paml_MAC_installNOTES_JY.txt)
+
+1. pull an up-to-date copy of the repo  
+```
+cd /Users/jayoung/gitProjects/pamlWrapper
+git pull
+```
+
+2. fix permissions
+because I'm not syncing permissions to github
+```
+pushd /Users/jayoung/gitProjects/pamlWrapper/scripts/
+chmod u+x *l
+popd
+```
+
+3. fix the shebang lines for all perl scripts so I use my Mac's preferred perl installation
+```
+pushd /Users/jayoung/gitProjects/pamlWrapper/scripts/
+# mac needs -e (and makes a backup file called file-e)
+sed -i -e 's/\/usr\/bin\/perl/\/usr\/bin\/env perl/' *.pl *.bioperl
+rm *-e 
+popd
+```
+
+It works if I supply the user tree, but I haven't worked through installing phyml, so I won't be able to run the whole thing:
+```
+cd /Users/jayoung/testPAMLversions/2023_Feb27/test_4.9a_mac
+
+/Users/jayoung/gitProjects/pamlWrapper/scripts/pw_makeTreeAndRunPAML.pl --verboseTable=1 --smallDiff=1e-8 --codeml=/Users/jayoung/source_codes/paml/compiled/paml4.9a/src/codeml --usertree=ACE2_primates_aln1_NT.fa.phy_phyml_tree.nolen ACE2_primates_aln1_NT.fa.phy.fa
+```

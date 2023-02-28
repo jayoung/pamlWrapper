@@ -302,6 +302,24 @@ cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/testPAMLversions_new2
 ../../../pamlWrapper/scripts/pw_makeTreeAndRunPAML_sbatchWrapper.pl --verboseTable=1 --strict=loose --codeml=/home/jayoung/malik_lab_shared/linux_gizmo/bin/old/paml/v4.10.6cc/codeml --codon=3 --omega=3 --add=1 ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa CG31882_sim.fa Dmel_22_aln.fa Mx1_PAML25.names.fa TRIM5_primates_aln2_NT.treeorder.noPseudsPartials.fa
 ```
 
+4.10.6_via_sbatch_cc_compiled_changeSmallDiff
+    xxxx running
+```
+cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/testPAMLversions_new2023feb9/test_codeml_4.10.6_via_sbatch_cc_compiled_changeSmallDiff
+
+# --codon=2 --omega=0.4 
+../../../pamlWrapper/scripts/pw_makeTreeAndRunPAML_sbatchWrapper.pl --smallDiff=1e-8 --verboseTable=1 --strict=loose --codeml=/home/jayoung/malik_lab_shared/linux_gizmo/bin/old/paml/v4.10.6cc/codeml ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa CG31882_sim.fa Dmel_22_aln.fa Mx1_PAML25.names.fa TRIM5_primates_aln2_NT.treeorder.noPseudsPartials.v1.fa
+
+# --codon=2 --omega=3
+../../../pamlWrapper/scripts/pw_makeTreeAndRunPAML_sbatchWrapper.pl --smallDiff=1e-8 --verboseTable=1 --strict=loose --codeml=/home/jayoung/malik_lab_shared/linux_gizmo/bin/old/paml/v4.10.6cc/codeml --codon=2 --omega=3 --add=1 ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa CG31882_sim.fa Dmel_22_aln.fa Mx1_PAML25.names.fa TRIM5_primates_aln2_NT.treeorder.noPseudsPartials.v1.fa
+
+# --codon=3 --omega=0.4
+../../../pamlWrapper/scripts/pw_makeTreeAndRunPAML_sbatchWrapper.pl --smallDiff=1e-8 --verboseTable=1 --strict=loose --codeml=/home/jayoung/malik_lab_shared/linux_gizmo/bin/old/paml/v4.10.6cc/codeml --codon=3 --omega=0.4 --add=1 ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa CG31882_sim.fa Dmel_22_aln.fa Mx1_PAML25.names.fa TRIM5_primates_aln2_NT.treeorder.noPseudsPartials.v1.fa
+
+# --codon=3 --omega=3
+../../../pamlWrapper/scripts/pw_makeTreeAndRunPAML_sbatchWrapper.pl --smallDiff=1e-8 --verboseTable=1 --strict=loose --codeml=/home/jayoung/malik_lab_shared/linux_gizmo/bin/old/paml/v4.10.6cc/codeml --codon=3 --omega=3 --add=1 ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa CG31882_sim.fa Dmel_22_aln.fa Mx1_PAML25.names.fa TRIM5_primates_aln2_NT.treeorder.noPseudsPartials.v1.fa
+```
+
 4.9a_via_sbatch_cc_compiled
 
 ```
@@ -318,6 +336,25 @@ cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/testPAMLversions_new2
 
 # --codon=3 --omega=3
 ../../../pamlWrapper/scripts/pw_makeTreeAndRunPAML_sbatchWrapper.pl --verboseTable=1 --strict=loose --codeml=/home/jayoung/malik_lab_shared/linux_gizmo/bin/old/paml/v4.9a_cc/codeml --codon=3 --omega=3 --add=1 ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa CG31882_sim.fa Dmel_22_aln.fa Mx1_PAML25.names.fa TRIM5_primates_aln2_NT.treeorder.noPseudsPartials.fa
+```
+
+
+4.9a_via_sbatch_cc_compiled_changeSmallDiff
+
+```
+cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/testPAMLversions_new2023feb9/test_codeml_4.9a_via_sbatch_cc_compiled_changeSmallDiff
+
+# --codon=2 --omega=0.4 
+../../../pamlWrapper/scripts/pw_makeTreeAndRunPAML_sbatchWrapper.pl --smallDiff=1e-8 --verboseTable=1 --strict=loose --codeml=/home/jayoung/malik_lab_shared/linux_gizmo/bin/old/paml/v4.9a_cc/codeml ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa CG31882_sim.fa Dmel_22_aln.fa Mx1_PAML25.names.fa TRIM5_primates_aln2_NT.treeorder.noPseudsPartials.v1.fa
+
+# --codon=2 --omega=3
+../../../pamlWrapper/scripts/pw_makeTreeAndRunPAML_sbatchWrapper.pl --smallDiff=1e-8 --verboseTable=1 --strict=loose --codeml=/home/jayoung/malik_lab_shared/linux_gizmo/bin/old/paml/v4.9a_cc/codeml --codon=2 --omega=3 --add=1 ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa CG31882_sim.fa Dmel_22_aln.fa Mx1_PAML25.names.fa TRIM5_primates_aln2_NT.treeorder.noPseudsPartials.v1.fa
+
+# --codon=3 --omega=0.4
+../../../pamlWrapper/scripts/pw_makeTreeAndRunPAML_sbatchWrapper.pl --smallDiff=1e-8 --verboseTable=1 --strict=loose --codeml=/home/jayoung/malik_lab_shared/linux_gizmo/bin/old/paml/v4.9a_cc/codeml --codon=3 --omega=0.4 --add=1 ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa CG31882_sim.fa Dmel_22_aln.fa Mx1_PAML25.names.fa TRIM5_primates_aln2_NT.treeorder.noPseudsPartials.v1.fa
+
+# --codon=3 --omega=3
+../../../pamlWrapper/scripts/pw_makeTreeAndRunPAML_sbatchWrapper.pl --smallDiff=1e-8 --verboseTable=1 --strict=loose --codeml=/home/jayoung/malik_lab_shared/linux_gizmo/bin/old/paml/v4.9a_cc/codeml --codon=3 --omega=3 --add=1 ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa CG31882_sim.fa Dmel_22_aln.fa Mx1_PAML25.names.fa TRIM5_primates_aln2_NT.treeorder.noPseudsPartials.v1.fa
 ```
 
 ## combine results 
@@ -401,29 +438,98 @@ Small_Diff = .5e-6
     method = 1   * 0: simultaneous; 1: one branch at a time
 ```
 
-test new script where I add option to change smallDiff
+I added an option to the script to change smallDiff - it works.
+
+Test again.  Use Small_Diff = 1e-8
+
+Just 4.10.6 and 4.9a, all four parameter choices.  Just sbatch.   Try on Mac?  Compiler does seem to make a difference
+
+
+On rhino - get a fasta file that matches the tree file I'm going to provide:
 ```
-# test running script directly
-cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/testPAMLversions_new2023feb27_changeSmallDiff/directScriptCall
-cp ../../CENPA_primates_aln2a_only5seqs.fa .
-
-module load fhR/4.1.2-foss-2020b
-pw_makeTreeAndRunPAML.pl --smallDiff=1e-8 CENPA_primates_aln2a_only5seqs.fa 
-module purge
-
-# test using sbatch wrapper
-cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/testPAMLversions_new2023feb27_changeSmallDiff/useSbatchWrapper
-cp ../../CENPA_primates_aln2a_only5seqs.fa .
-pw_makeTreeAndRunPAML_sbatchWrapper.pl --smallDiff=1e-8 CENPA_primates_aln2a_only5seqs.fa 
-
-# test using singularity wrapper
-cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/testPAMLversions_new2023feb27_changeSmallDiff/useSingularityWrapper
-cp ../../CENPA_primates_aln2a_only5seqs.fa .
-
-xxx need to update the docker+singularity containers before I can do this
-
-pw_makeTreeAndRunPAML_singularityWrapper.pl --smallDiff=1e-8 CENPA_primates_aln2a_only5seqs.fa 
+cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/testPAMLversions_new2023feb9/test_codeml_4.9a_via_sbatch/ACE2_primates_aln1_NT.fa_phymlAndPAML
+paml2fastaformat.pl ACE2_primates_aln1_NT.fa.phy
 ```
 
-Is it `Small_Diff` (that's what I've been using for years) or `SmallDiff` (in Ziheng's github comment)
 
+On Mac, providing a tree:
+
+v4.9a
+```
+cd /Users/jayoung/testPAMLversions/2023_Feb27/test_4.9a_mac
+
+# default params (--codon=2 --omega=0.4):
+/Users/jayoung/gitProjects/pamlWrapper/scripts/pw_makeTreeAndRunPAML.pl --verboseTable=1 --smallDiff=1e-8 --codeml=/Users/jayoung/source_codes/paml/compiled/paml4.9a/src/codeml --usertree=ACE2_primates_aln1_NT.fa.phy_phyml_tree.nolen ACE2_primates_aln1_NT.fa.phy.fa
+
+# --codon=2 --omega=3
+/Users/jayoung/gitProjects/pamlWrapper/scripts/pw_makeTreeAndRunPAML.pl --verboseTable=1 --smallDiff=1e-8 --codon=2 --omega=3 --codeml=/Users/jayoung/source_codes/paml/compiled/paml4.9a/src/codeml --usertree=ACE2_primates_aln1_NT.fa.phy_phyml_tree.nolen ACE2_primates_aln1_NT.fa.phy.fa
+
+# --codon=3 --omega=3
+/Users/jayoung/gitProjects/pamlWrapper/scripts/pw_makeTreeAndRunPAML.pl --verboseTable=1 --smallDiff=1e-8 --codon=3 --omega=3 --codeml=/Users/jayoung/source_codes/paml/compiled/paml4.9a/src/codeml --usertree=ACE2_primates_aln1_NT.fa.phy_phyml_tree.nolen ACE2_primates_aln1_NT.fa.phy.fa
+
+# --codon=3 --omega=0.4
+/Users/jayoung/gitProjects/pamlWrapper/scripts/pw_makeTreeAndRunPAML.pl --verboseTable=1 --smallDiff=1e-8 --codon=3 --omega=0.4 --codeml=/Users/jayoung/source_codes/paml/compiled/paml4.9a/src/codeml --usertree=ACE2_primates_aln1_NT.fa.phy_phyml_tree.nolen ACE2_primates_aln1_NT.fa.phy.fa
+
+```
+
+v4.10.6
+```
+cd /Users/jayoung/testPAMLversions/2023_Feb27/test_4.10.6_mac
+
+# default params (--codon=2 --omega=0.4):
+/Users/jayoung/gitProjects/pamlWrapper/scripts/pw_makeTreeAndRunPAML.pl --verboseTable=1 --smallDiff=1e-8 --codeml=/Users/jayoung/source_codes/paml/compiled/paml-4.10.6/src/codeml --strict=loose --usertree=ACE2_primates_aln1_NT.fa.phy_phyml_tree.nolen ACE2_primates_aln1_NT.fa.phy.fa
+
+# --codon=2 --omega=3
+/Users/jayoung/gitProjects/pamlWrapper/scripts/pw_makeTreeAndRunPAML.pl --verboseTable=1 --smallDiff=1e-8 --codon=2 --omega=3 --codeml=/Users/jayoung/source_codes/paml/compiled/paml-4.10.6/src/codeml --strict=loose --usertree=ACE2_primates_aln1_NT.fa.phy_phyml_tree.nolen ACE2_primates_aln1_NT.fa.phy.fa
+
+# --codon=3 --omega=3
+/Users/jayoung/gitProjects/pamlWrapper/scripts/pw_makeTreeAndRunPAML.pl --verboseTable=1 --smallDiff=1e-8 --codon=3 --omega=3 --codeml=/Users/jayoung/source_codes/paml/compiled/paml-4.10.6/src/codeml --strict=loose --usertree=ACE2_primates_aln1_NT.fa.phy_phyml_tree.nolen ACE2_primates_aln1_NT.fa.phy.fa
+
+# --codon=3 --omega=0.4
+/Users/jayoung/gitProjects/pamlWrapper/scripts/pw_makeTreeAndRunPAML.pl --verboseTable=1 --smallDiff=1e-8 --codon=3 --omega=0.4 --codeml=/Users/jayoung/source_codes/paml/compiled/paml-4.10.6/src/codeml --strict=loose --usertree=ACE2_primates_aln1_NT.fa.phy_phyml_tree.nolen ACE2_primates_aln1_NT.fa.phy.fa
+```
+
+```
+cd /Users/jayoung/testPAMLversions/2023_Feb27/
+
+
+/Users/jayoung/gitProjects/pamlWrapper/scripts/pw_combineParsedOutfilesLong.pl test*/*_phymlAndPAML/*PAMLsummary.tsv
+
+mv allAlignments.PAMLsummaries.tsv test_codeml_ACE2.PAMLsummaries.tsv 
+```
+
+
+making a package of files to send to Ziheng
+
+```
+cd /Users/jayoung/testPAMLversions
+cp -R 2023_Feb27/ testPAMLversions_2023_Feb27
+cd testPAMLversions_2023_Feb27
+
+# remove some unneeded files (and remove M0 results from xlsx file):
+rm -r tes*/*L/M0*
+rm -r tes*/*L/*pdf
+rm -r tes*/*L/*tsv
+
+rm -r tes*/*L/ACE2_primates_aln1_NT.fa.phy.fa
+rm -r tes*/*L/ACE2_primates_aln1_NT.fa.phy.fa.aliases.txt
+rm -r tes*/*L/*treeorder*
+rm -r tes*/*L/*nolen
+rm -r tes*/*L/plotOmegaDistributions.logfile.Rout
+
+rm -r tes*/ACE2_primates_aln1_NT.fa.phy.fa
+rm -r tes*/ACE2_primates_aln1_NT.fa.phy_phyml_tree.nolen
+
+cd test_4.10.6_mac/
+mv ACE2_primates_aln1_NT.fa.phy.fa_phymlAndPAML/* .
+rmdir ACE2_primates_aln1_NT.fa.phy.fa_phymlAndPAML/
+
+cd ../test_4.9a_mac/
+mv ACE2_primates_aln1_NT.fa.phy.fa_phymlAndPAML/* .
+rmdir ACE2_primates_aln1_NT.fa.phy.fa_phymlAndPAML/
+
+# after editing xlsx file:
+cp test_codeml_ACE2.PAMLsummaries.xlsx ../2023_Feb27/test_codeml_ACE2.PAMLsummaries.shortened.xlsx
+```
+
+added to the [git issue](https://github.com/abacus-gene/paml/issues/27#), Feb 28, 2023
