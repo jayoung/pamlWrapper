@@ -85,16 +85,6 @@ RUN cd src/paml && \
   sed 's/CC = cc/CC = gcc/g' -i Makefile && \
   make
 
-### install paml from the source, version 10.2.6, September 2020 (but don't add it to PATH)
-RUN cd src/paml && \
-  wget https://github.com/abacus-gene/paml/archive/refs/tags/v4.10.6.tar.gz && \
-  tar -xf v4.10.6.tar.gz && \
-  cd paml-4.10.6/src && \
-  sed 's/CC = cc/CC = gcc/g' -i Makefile && \
-  sed 's/version 4.10.0, September 2020/version 4.10.6, November 2022/g' -i paml.h && \
-  make
-
-
 ### install paml from the source, version 4.9a, March 2015, use cc this time (but don't add it to PATH)
 RUN mkdir src/paml_ccCompiled
 RUN cd src/paml_ccCompiled && \
@@ -104,14 +94,31 @@ RUN cd src/paml_ccCompiled && \
   sed 's/version 4.9/version 4.9a_cc/g' -i paml.h && \
   make
 
-### install paml from the source, version 4.10.6, September 2020, use cc this time (but don't add it to PATH)
-RUN cd src/paml_ccCompiled && \
-  cp /src/paml/v4.10.6.tar.gz . && \
-  tar -xf v4.10.6.tar.gz && \
-  cd paml-4.10.6/src && \
-  sed 's/version 4.10.0, September 2020/version 4.10.6cc, November 2022/g' -i paml.h && \
-  make
 
+### install paml from the source, version 10.2.6, September 2020 (but don't add it to PATH). I figured out the tarball is too old - it IS NOT NOT really v4.10.6
+# RUN cd src/paml && \
+#   wget https://github.com/abacus-gene/paml/archive/refs/tags/v4.10.6.tar.gz && \
+#   tar -xf v4.10.6.tar.gz && \
+#   cd paml-4.10.6/src && \
+#   sed 's/CC = cc/CC = gcc/g' -i Makefile && \
+#   sed 's/version 4.10.0, September 2020/version 4.10.6, November 2022/g' -i paml.h && \
+#   make
+
+### install paml from the source, version 4.10.6, September 2020, use cc this time (but don't add it to PATH)
+# RUN cd src/paml_ccCompiled && \
+#   cp /src/paml/v4.10.6.tar.gz . && \
+#   tar -xf v4.10.6.tar.gz && \
+#   cd paml-4.10.6/src && \
+#   sed 's/version 4.10.0, September 2020/version 4.10.6cc, November 2022/g' -i paml.h && \
+#   make
+
+### install paml v4.10.6 from the github repo, using the Dec 1 2022 commit
+RUN cd src/paml && \
+  wget https://github.com/abacus-gene/paml/archive/af30c375c35fe3bbb48464e5056f9fcf879d6b08.zip && \
+  unzip af30c375c35fe3bbb48464e5056f9fcf879d6b08.zip && \
+  mv paml-af30c375c35fe3bbb48464e5056f9fcf879d6b08 paml-github20221201 && \
+  cd paml-github20221201/src && \
+  make
 
 ## Install my scripts and templates and docs from the local drive
 RUN mkdir pamlWrapper

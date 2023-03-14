@@ -216,12 +216,13 @@ As of Feb 10, 2023, the default is version 4.9a in my PAMLwrapper scripts (https
 
 Add the ability to run only model 0 and model 0fixed on an alignment containing only 2 seqs.  Tree is meaningless, and PHYML fails when there's only two seqs. But I can make a fake tree `(seq1,seq2);` and PAML will work.
 
+then call it several times from the main script. runPHYML also needs to be separate, and should be a dependency for runPAML.   the runPAML jobIDs would then be dependencies for downstream parsing. Once I add the ability for the runPAML script to take a single model name as input, then I should be able to parallelize better across models
+
 R code to plot omega classes - color choosing is still not quite right for the pos sel class - see `test_codeml_4.8/ACE2_primates_aln1_NT.fa_phymlAndPAML/ACE2_primates_aln1_NT.codonModel2_initOmega0.4_cleandata0.omegaDistributions.pdf`
 
-I'm trying versions compiled using cc not gcc:  4.9a and 4.10.6, via singularity and via sbatch. started running Friday Feb 10, 2023. haven't looked at results yet 
+I'm trying versions compiled using cc not gcc:  4.9a and 4.10.6, via singularity and via sbatch. 
 
-xxx update the runPAML to also use sif 1.3.2 ?
-
+add more test genes: PARPs? IFITs?
 
 ## another paml version issue?
 
