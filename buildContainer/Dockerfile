@@ -119,8 +119,9 @@ RUN cd src/paml && \
   wget https://github.com/abacus-gene/paml/archive/af30c375c35fe3bbb48464e5056f9fcf879d6b08.zip && \
   unzip af30c375c35fe3bbb48464e5056f9fcf879d6b08.zip && \
   mv paml-af30c375c35fe3bbb48464e5056f9fcf879d6b08 paml-github20221201 && \
-  cd paml-github20221201/src
-  # make
+  cd paml-github20221201/src && \
+  sed 's/ -Wmemset-elt-size//g' -i Makefile && \
+  make
 
 ## Install my scripts and templates and docs from the local drive
 RUN mkdir pamlWrapper

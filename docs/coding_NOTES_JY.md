@@ -77,8 +77,12 @@ gcc -v
 # gcc version 4.8.4  December 19, 2014 https://gcc.gnu.org/releases.html
 
 
-```
+# try removing `-Wmemset-elt-size` from the Makefile - it should be enabled anyway when the `-Wall` option is on. I don't think it's available in gcc version 4.8.4
 
+  sed 's/ -Wmemset-elt-size//g' -i Makefile
+
+
+```
 
 
 
