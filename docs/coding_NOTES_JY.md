@@ -34,13 +34,55 @@ Then we re-build the docker image
 cd /Users/jayoung/gitProjects/pamlWrapper
 docker build -t paml_wrapper -f buildContainer/Dockerfile .
 ```
+--------
 
+Troubleshoot compiling the new PAML. Here's the docker message:
+```
 #23 2.226 cc  -O3 -Wall -Wno-unused-result -Wmemset-elt-size -c baseml.c
 #23 2.227 cc: error: unrecognized command line option '-Wmemset-elt-size'
 #23 2.227 make: *** [baseml.o] Error 1
 ------
 executor failed running [/bin/sh -c cd src/paml &&   wget https://github.com/abacus-gene/paml/archive/af30c375c35fe3bbb48464e5056f9fcf879d6b08.zip &&   unzip af30c375c35fe3bbb48464e5056f9fcf879d6b08.zip &&   mv paml-af30c375c35fe3bbb48464e5056f9fcf879d6b08 paml-github20221201 &&   cd paml-github20221201/src &&   make]: exit code: 2
+```
 
+Rebuild the docker image, without actually running `make` for PAML. Then get a shell in the container and try running make.
+```
+docker run -v `pwd`:/workingDir -it paml_wrapper
+
+cd /src/paml/paml-github20221201/src
+
+make
+cc  -O3 -Wall -Wno-unused-result -Wmemset-elt-size -c baseml.c
+cc: error: unrecognized command line option '-Wmemset-elt-size'
+make: *** [baseml.o] Error 1
+
+
+make codeml
+cc  -O3 -Wall -Wno-unused-result -Wmemset-elt-size -c codeml.c
+cc: error: unrecognized command line option '-Wmemset-elt-size'
+make: *** [codeml.o] Error 1
+
+sed 's/CC = cc/CC = gcc/g' -i Makefile 
+make
+gcc  -O3 -Wall -Wno-unused-result -Wmemset-elt-size -c baseml.c
+gcc: error: unrecognized command line option '-Wmemset-elt-size'
+make: *** [baseml.o] Error 1
+
+cc -v
+    # gcc version 4.8.4 (Ubuntu 4.8.4-2ubuntu1~14.04.4) 
+gcc -v
+    # gcc version 4.8.4 (Ubuntu 4.8.4-2ubuntu1~14.04.4) 
+
+
+# gcc version 4.8.4  December 19, 2014 https://gcc.gnu.org/releases.html
+
+
+```
+
+
+
+
+--------
 
 To get a shell for a quick look:
 ```

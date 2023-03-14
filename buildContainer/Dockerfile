@@ -4,6 +4,8 @@ FROM bioperl/bioperl:release-1-6-924
 # At present, the base OS image is Ubuntu 14.04 (a.k.a. 'trusty'). This may change in the future, in particular if there is user demand, so please post on the issue tracker if you'd like to see other base OS images as well.
 # R is NOT installed in the base image
 
+# xx maybe try a new base: docker pull bioperl/bioperl:release-1-7-2
+# xx not sure why I used 1-6-924
 
 ### for testing:
 # docker build -t paml_wrapper -f ./Dockerfile .
