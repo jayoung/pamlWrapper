@@ -1,8 +1,8 @@
-FROM bioperl/bioperl:release-1-1-7-2
+FROM bioperl/bioperl:release-1-7-2
 
 ### for testing:
-# docker build -t paml_wrapper -f ./Dockerfile .
-# docker run -it paml_wrapper /bin/bash  
+# docker build -t paml_wrapper_new -f buildContainer/Dockerfile_new .
+# docker run -it paml_wrapper_new /bin/bash  
 
 #### install build-essential (for gcc compiler) and autoconf (for autoreconf), both needed to compile phyml. I think build-essential includes wget
 RUN apt-get update && apt-get install build-essential autoconf wget -y
