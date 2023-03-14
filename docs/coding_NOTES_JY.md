@@ -20,17 +20,27 @@ Before starting, make sure the pamlWrapper is synced to github, then:
 
 On the mac, make sure we have the latest version of the pamlWrapper git repo:
 
+The reason I do a fresh clone, rather than a pull, is because if I actually want to use the scripts on my mac I make a bunch of changes, but those are NOT changes I want to sync back to the repo. There's probably a way to get fancy and make a mac branch that merges the changes from main, but I'm not going to deal with that
 ```
-cd /Users/jayoung/gitProjects/pamlWrapper
-git pull
+cd /Users/jayoung/gitProjects/
+rm -rf pamlWrapper
+git clone https://github.com/jayoung/pamlWrapper.git
 ```
 
 I also make sure the Mac docker app is running, and using the app, I sign in to my account.
 
 Then we re-build the docker image
 ```
+cd /Users/jayoung/gitProjects/pamlWrapper
 docker build -t paml_wrapper -f buildContainer/Dockerfile .
 ```
+
+#23 2.226 cc  -O3 -Wall -Wno-unused-result -Wmemset-elt-size -c baseml.c
+#23 2.227 cc: error: unrecognized command line option '-Wmemset-elt-size'
+#23 2.227 make: *** [baseml.o] Error 1
+------
+executor failed running [/bin/sh -c cd src/paml &&   wget https://github.com/abacus-gene/paml/archive/af30c375c35fe3bbb48464e5056f9fcf879d6b08.zip &&   unzip af30c375c35fe3bbb48464e5056f9fcf879d6b08.zip &&   mv paml-af30c375c35fe3bbb48464e5056f9fcf879d6b08 paml-github20221201 &&   cd paml-github20221201/src &&   make]: exit code: 2
+
 
 To get a shell for a quick look:
 ```
@@ -213,7 +223,7 @@ cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/testVerboseOutput/ver
 ```
 
 
-# Actually using this on my Mac (desktop)
+# Actually USING the scripts on my Mac (desktop), without using docker
 
 I installed a few PAML versions (see /Users/jayoung/source_codes/paml/paml_MAC_installNOTES_JY.txt)
 
@@ -246,3 +256,4 @@ cd /Users/jayoung/testPAMLversions/2023_Feb27/test_4.9a_mac
 
 /Users/jayoung/gitProjects/pamlWrapper/scripts/pw_makeTreeAndRunPAML.pl --verboseTable=1 --smallDiff=1e-8 --codeml=/Users/jayoung/source_codes/paml/compiled/paml4.9a/src/codeml --usertree=ACE2_primates_aln1_NT.fa.phy_phyml_tree.nolen ACE2_primates_aln1_NT.fa.phy.fa
 ```
+
