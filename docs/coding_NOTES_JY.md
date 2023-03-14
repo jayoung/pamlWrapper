@@ -34,59 +34,6 @@ Then we re-build the docker image
 cd /Users/jayoung/gitProjects/pamlWrapper
 docker build -t paml_wrapper -f buildContainer/Dockerfile .
 ```
---------
-
-Troubleshoot compiling the new PAML. Here's the docker message:
-```
-#23 2.226 cc  -O3 -Wall -Wno-unused-result -Wmemset-elt-size -c baseml.c
-#23 2.227 cc: error: unrecognized command line option '-Wmemset-elt-size'
-#23 2.227 make: *** [baseml.o] Error 1
-------
-executor failed running [/bin/sh -c cd src/paml &&   wget https://github.com/abacus-gene/paml/archive/af30c375c35fe3bbb48464e5056f9fcf879d6b08.zip &&   unzip af30c375c35fe3bbb48464e5056f9fcf879d6b08.zip &&   mv paml-af30c375c35fe3bbb48464e5056f9fcf879d6b08 paml-github20221201 &&   cd paml-github20221201/src &&   make]: exit code: 2
-```
-
-Rebuild the docker image, without actually running `make` for PAML. Then get a shell in the container and try running make.
-```
-docker run -v `pwd`:/workingDir -it paml_wrapper
-
-cd /src/paml/paml-github20221201/src
-
-make
-cc  -O3 -Wall -Wno-unused-result -Wmemset-elt-size -c baseml.c
-cc: error: unrecognized command line option '-Wmemset-elt-size'
-make: *** [baseml.o] Error 1
-
-
-make codeml
-cc  -O3 -Wall -Wno-unused-result -Wmemset-elt-size -c codeml.c
-cc: error: unrecognized command line option '-Wmemset-elt-size'
-make: *** [codeml.o] Error 1
-
-sed 's/CC = cc/CC = gcc/g' -i Makefile 
-make
-gcc  -O3 -Wall -Wno-unused-result -Wmemset-elt-size -c baseml.c
-gcc: error: unrecognized command line option '-Wmemset-elt-size'
-make: *** [baseml.o] Error 1
-
-cc -v
-    # gcc version 4.8.4 (Ubuntu 4.8.4-2ubuntu1~14.04.4) 
-gcc -v
-    # gcc version 4.8.4 (Ubuntu 4.8.4-2ubuntu1~14.04.4) 
-
-
-# gcc version 4.8.4  December 19, 2014 https://gcc.gnu.org/releases.html
-
-
-# try removing `-Wmemset-elt-size` from the Makefile - it should be enabled anyway when the `-Wall` option is on. I don't think it's available in gcc version 4.8.4
-
-  sed 's/ -Wmemset-elt-size//g' -i Makefile
-
-
-```
-
-
-
---------
 
 To get a shell for a quick look:
 ```
@@ -106,13 +53,13 @@ which R
 
 When I know it's working I add a new tag and push it to [docker hub](https://hub.docker.com/repository/docker/jayoungfhcrc/paml_wrapper).  I update the version number each time:
 ```
-docker tag paml_wrapper jayoungfhcrc/paml_wrapper:version1.3.3
-docker push jayoungfhcrc/paml_wrapper:version1.3.3
+docker tag paml_wrapper jayoungfhcrc/paml_wrapper:version1.3.4
+docker push jayoungfhcrc/paml_wrapper:version1.3.4
 ```
 
 I then test my container in a totally different environment using the [Play with Docker](https://labs.play-with-docker.com) site - it seems to work. Once I have an instance running there:
 ```
-docker run -it jayoungfhcrc/paml_wrapper:version1.3.3
+docker run -it jayoungfhcrc/paml_wrapper:version1.3.4
 cd pamlWrapper/testData/
 pw_makeTreeAndRunPAML.pl ACE2_primates_aln1_NT.fa
 ```
@@ -126,7 +73,7 @@ On gizmo/rhino:
 cd ~/FH_fast_storage/paml_screen/pamlWrapper/buildContainer
 module purge
 module load Singularity/3.5.3
-singularity build paml_wrapper-v1.3.3.sif docker://jayoungfhcrc/paml_wrapper:version1.3.3
+singularity build paml_wrapper-v1.3.4.sif docker://jayoungfhcrc/paml_wrapper:version1.3.4
 module purge
 ```
 
@@ -137,9 +84,9 @@ Now that I use the bioperl base, I do get a bunch of warnings while building the
 2022/11/22 17:00:52  warn rootless{root/.cpanm/work/1468017244.5/Statistics-Descriptive-3.0612/t/pod.t} ignoring (usually) harmless EPERM on setxattr "user.rootlesscontainers"
 ```
 
-A file called paml_wrapper-v1.3.3.sif appears. I want a copy of the singularity image file, and a script that uses it, in a more central place, for use by others:
+A file called paml_wrapper-v1.3.4.sif appears. I want a copy of the singularity image file, and a script that uses it, in a more central place, for use by others:
 ```
-cp paml_wrapper-v1.3.3.sif /fh/fast/malik_h/grp/malik_lab_shared/singularityImages
+cp paml_wrapper-v1.3.4.sif /fh/fast/malik_h/grp/malik_lab_shared/singularityImages
 ```
 
 
@@ -188,7 +135,7 @@ I can get a shell in the singularity container like this:
 ```
 cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments
 module load Singularity/3.5.3
-singularity shell --cleanenv /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.3.sif
+singularity shell --cleanenv /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.4.sif
 module purge
 ```
 
@@ -217,7 +164,7 @@ pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa
 Or, I can run some code using the singularity image without entering a shell (this is what the  `runPAML.pl=pw_makeTreeAndRunPAML_singularityWrapper.pl` script does for each alignment):
 ```
 module load Singularity/3.5.3
-singularity exec --cleanenv /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.3.sif pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa 
+singularity exec --cleanenv /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.4.sif pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa 
 module purge
 ```
 

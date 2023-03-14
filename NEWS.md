@@ -1,8 +1,10 @@
 ## Issues still to fix
 
 
-## Fixes since v1.3.3
+## Fixes since v1.3.4
 
+## paml_wrapper-v1.3.4
+- docker container now compiles a true v4.10.6 of PAML using [PAML git repo](https://github.com/abacus-gene/paml) commit af30c37 (Dec 1, 2022) (before I was using an out-of-date tarball that seemed like it was v4.10.6 but actually it wasn't)
 
 ## paml_wrapper-v1.3.3
 - added smallDiff option to `pw_makeTreeAndRunPAML.pl` and to the sbatch and singularity wrappers

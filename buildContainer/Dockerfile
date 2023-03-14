@@ -96,7 +96,6 @@ RUN cd src/paml_ccCompiled && \
   sed 's/version 4.9/version 4.9a_cc/g' -i paml.h && \
   make
 
-
 ### install paml from the source, version 10.2.6, September 2020 (but don't add it to PATH). I figured out the tarball is too old - it IS NOT NOT really v4.10.6
 # RUN cd src/paml && \
 #   wget https://github.com/abacus-gene/paml/archive/refs/tags/v4.10.6.tar.gz && \
@@ -115,6 +114,9 @@ RUN cd src/paml_ccCompiled && \
 #   make
 
 ### install paml v4.10.6 from the github repo, using the Dec 1 2022 commit
+# in order to get it to compile in this version of linux, I have to remove the  -Wmemset-elt-size flag from the CFLAGS given in the Makefile. If I understand right it won't make any difference to the compiled executable - just controls how many warnings are emitted during the complication
+# If I don't remove that flag, the error I get is this: 
+# cc: error: unrecognized command line option '-Wmemset-elt-size'
 RUN cd src/paml && \
   wget https://github.com/abacus-gene/paml/archive/af30c375c35fe3bbb48464e5056f9fcf879d6b08.zip && \
   unzip af30c375c35fe3bbb48464e5056f9fcf879d6b08.zip && \
