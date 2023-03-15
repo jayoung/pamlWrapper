@@ -12,7 +12,7 @@ my $initialOrFixedOmega = 0.4;
 my $codonFreqModel = 2;
 my $walltime = "1-0";   # if we do use sbatch, default walltime is 1 days
 my $cleanData = 0;
-my $smallDiff = ".5e-6";   ## .5e-6 was what I ALWAYS used before adding the option to change things, Feb 27, 2023
+my $smallDiff = ".5e-6";   ## .5e-6 was what I ALWAYS used before adding the option to change things, Feb 27, 2023. Ziheng recommends "use a value between 1e-6 and 1e-9", so this is OK
 my $userTreeFile = "";
 my $addToExistingOutputDir = ""; ## default is that I will NOT add to existing output dir
 my $strictness = "strict";    ## 'strict' means we insist that 'Time used' will be present at the end of the mlc file, and if it's not we assume PAML failed.   'loose' means it's OK if that's not present (v4.10.6 doesn't always add it)
@@ -65,9 +65,10 @@ if ($codemlExe eq "codeml") {
 }
 # some PAML versions don't add a tag to the end of the mlc file, so the way I had of checking for PAML success does not work, and I need to stop checking (i.e. use strict=loose)
 
-if (($codemlExe =~ m/4\.9g/) || ($codemlExe =~ m/4\.10\.6/))   {
+if ($codemlExe =~ m/4\.9g/) {
+#if (($codemlExe =~ m/4\.9g/) || ($codemlExe =~ m/4\.10\.6/))   {
     if ($strictness eq "strict") {
-        print "    WARNING - because you're using codeml v4.9g or v4.10.6 we are changing the 'strict' setting to 'loose' (i.e. we will not check the end of the mlc files to make sure codeml succeeded)\n\n";
+        print "    WARNING - because you're using codeml v4.9g, we are changing the 'strict' setting to 'loose' (i.e. we will not check the end of the mlc files to make sure codeml succeeded)\n\n";
     }
     $strictness = "loose";
 }

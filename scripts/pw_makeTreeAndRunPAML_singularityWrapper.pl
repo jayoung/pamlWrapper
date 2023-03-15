@@ -22,12 +22,12 @@ $options{'job'} = "pw_";
 $options{'omega'} = 0.4;
 $options{'codon'} = 2;
 $options{'clean'} = 0;
-$options{'smallDiff'} = ".5e-6";
+$options{'smallDiff'} = ".5e-6"; ## .5e-6 was what I ALWAYS used before adding the option to change things, Feb 27, 2023. Ziheng recommends "use a value between 1e-6 and 1e-9", so this is OK
 $options{'usertree'} = "";
 $options{'BEB'} = 0.9; ### report selected sites with at least this BEB probability into the output file
 $options{'verboseTable'} = 0; ## normally we do NOT output all the parameters for all the models, and we do NOT output site class dN/dS and freq unless a pairwise model comparison has a 'good' p-value, but sometimes for troubleshooting and comparing PAML versions we might want that.
 $options{'add'} = 0; ## a.k.a addToExistingOutputDir
-$options{'version'} = "4.9a";
+$options{'version'} = "4.10.6";
 $options{'strict'} = "strict";    ## 'strict' means we insist that 'Time used' will be present at the end of the mlc file, and if it's not we assume PAML failed.   'loose' means it's OK if that's not present (v4.10.6 doesn't always add it)
 
 ### set up usage, including the default options
@@ -104,7 +104,8 @@ if ($options{'version'} eq "4.10.6") {
     $options{'codemlExe'} = "/src/paml/paml-github20221201/src/codeml";
 }
 # some PAML versions don't add a tag to the end of the mlc file, so the way I had of checking for PAML success does not work, and I need to stop checking (i.e. use strict=loose)
-if (($options{'version'} eq "4.9g") || ($options{'version'} eq "4.10.6")) { 
+if ($options{'version'} eq "4.9g") { 
+# if (($options{'version'} eq "4.9g") || ($options{'version'} eq "4.10.6")) { 
     if ($options{'strict'} ne "loose") {
         print "    WARNING - because you're using codeml v$options{'version'} we are changing the 'strict' setting to 'loose' (i.e. we will not check the end of the mlc files to make sure codeml succeeded\n\n)";
     }

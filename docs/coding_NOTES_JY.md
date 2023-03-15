@@ -53,7 +53,7 @@ which R
 
 Perhaps I test running PAML
 ```
-cd workingDir/testData
+cd workingDir/
 /pamlWrapper/scripts/pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_only5seqs.fa
 ```
 

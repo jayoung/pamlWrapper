@@ -6,7 +6,8 @@
 ## paml_wrapper-v1.3.6
 - no longer build the bad 4.10.6 PAML versions in the docker container
 - remove the tarballs after compiling within the docker container, aiming for a smaller image
-- version 4.10.6 is now the default (compiled from github source, commit af30c37)
+- version 4.10.6 is now the default (compiled from github source, commit af30c37) in all scripts and in rhino/gizmo path
+- now not switching to --strict=loose for v4.10.6 (because it's not needed)
 
 
 ## paml_wrapper-v1.3.5
