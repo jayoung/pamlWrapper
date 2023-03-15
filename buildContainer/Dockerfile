@@ -128,8 +128,8 @@ RUN find /pamlWrapper -maxdepth 2 -depth -name 'allAlignments.PAMLsummaries*' -e
 ### set an ENV to help me track the github repo home. Some of the scripts use this.
 ENV PAML_WRAPPER_HOME /pamlWrapper/
 
-### add 4.9a to PATH. The other versions will NOT be in the PATH but will be available if I want them
-ENV PATH /pamlWrapper/scripts:/src/paml/paml4.9a/src:$PATH
+### add 4.10.6 to PATH. The other versions will NOT be in the PATH but will be available if I want them
+ENV PATH /pamlWrapper/scripts:/src/paml/paml-github20221201/src:$PATH
 
 ### what to DO in our container
 # CMD ["/bin/bash"]

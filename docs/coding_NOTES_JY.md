@@ -51,15 +51,21 @@ which phyml
 which R
 ```
 
+Perhaps I test running PAML
+```
+cd workingDir/testData
+/pamlWrapper/scripts/pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_only5seqs.fa
+```
+
 When I know it's working I add a new tag and push it to [docker hub](https://hub.docker.com/repository/docker/jayoungfhcrc/paml_wrapper).  I update the version number each time:
 ```
-docker tag paml_wrapper jayoungfhcrc/paml_wrapper:version1.3.5
-docker push jayoungfhcrc/paml_wrapper:version1.3.5
+docker tag paml_wrapper jayoungfhcrc/paml_wrapper:version1.3.6
+docker push jayoungfhcrc/paml_wrapper:version1.3.6
 ```
 
 I then test my container in a totally different environment using the [Play with Docker](https://labs.play-with-docker.com) site - it seems to work. Once I have an instance running there:
 ```
-docker run -it jayoungfhcrc/paml_wrapper:version1.3.5
+docker run -it jayoungfhcrc/paml_wrapper:version1.3.6
 cd pamlWrapper/testData/
 pw_makeTreeAndRunPAML.pl ACE2_primates_aln1_NT.fa
 ```
@@ -75,7 +81,7 @@ I was previously using singularity to build the container for rhino/gizmo
 cd ~/FH_fast_storage/paml_screen/pamlWrapper/buildContainer
 module purge
 module load Singularity/3.5.3
-singularity build paml_wrapper-v1.3.5.sif docker://jayoungfhcrc/paml_wrapper:version1.3.5
+singularity build paml_wrapper-v1.3.6.sif docker://jayoungfhcrc/paml_wrapper:version1.3.6
 module purge
 ```
 
@@ -86,8 +92,8 @@ xxx maybe use Apptainer/1.0.1 next time (Dan found some issues with a newer vers
 cd ~/FH_fast_storage/paml_screen/pamlWrapper/buildContainer
 module purge
 module load Apptainer/1.1.6
-apptainer build paml_wrapper-v1.3.5.sif docker://jayoungfhcrc/paml_wrapper:version1.3.5
-# apptainer run --cleanenv paml_wrapper-v1.3.5.sif
+apptainer build paml_wrapper-v1.3.6.sif docker://jayoungfhcrc/paml_wrapper:version1.3.6
+# apptainer run --cleanenv paml_wrapper-v1.3.6.sif
 module purge
 ```
 
@@ -99,9 +105,9 @@ Now that I use the bioperl base, I do get a bunch of warnings while building the
 2022/11/22 17:00:52  warn rootless{root/.cpanm/work/1468017244.5/Statistics-Descriptive-3.0612/t/pod.t} ignoring (usually) harmless EPERM on setxattr "user.rootlesscontainers"
 ```
 
-A file called paml_wrapper-v1.3.5.sif appears. I want a copy of the singularity image file, and a script that uses it, in a more central place, for use by others:
+A file called paml_wrapper-v1.3.6.sif appears. I want a copy of the singularity image file, and a script that uses it, in a more central place, for use by others:
 ```
-cp paml_wrapper-v1.3.5.sif /fh/fast/malik_h/grp/malik_lab_shared/singularityImages
+cp paml_wrapper-v1.3.6.sif /fh/fast/malik_h/grp/malik_lab_shared/singularityImages
 ```
 
 
@@ -150,7 +156,7 @@ I can get a shell in the singularity container like this:
 ```
 cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments
 module load Singularity/3.5.3
-singularity shell --cleanenv /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.5.sif
+singularity shell --cleanenv /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.6.sif
 module purge
 ```
 
@@ -179,7 +185,7 @@ pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa
 Or, I can run some code using the singularity image without entering a shell (this is what the  `runPAML.pl=pw_makeTreeAndRunPAML_singularityWrapper.pl` script does for each alignment):
 ```
 module load Singularity/3.5.3
-singularity exec --cleanenv /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.5.sif pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa 
+singularity exec --cleanenv /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.6.sif pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa 
 module purge
 ```
 
