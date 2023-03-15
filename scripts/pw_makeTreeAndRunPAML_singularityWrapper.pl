@@ -16,7 +16,7 @@ use strict;
 
 ###### set up defaults for all the options
 my %options;
-$options{'sif'} = "/fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.3.sif"; # singularity image file
+$options{'sif'} = "/fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.6.sif"; # singularity image file
 $options{'walltime'} = "1-0"; ## walltime for sbatch jobs
 $options{'job'} = "pw_";   
 $options{'omega'} = 0.4;
@@ -166,20 +166,20 @@ foreach my $alnFile (@files) {
         $singularityVersionDependentOptions .= " --strict=$options{'strict'} ";
     }
 
-    my $singularityCommand = "singularity exec --cleanenv $options{'sif'} pw_makeTreeAndRunPAML.pl --codeml=$options{'codemlExe'} $moreOptions $singularityVersionDependentOptions --omega=$options{'omega'} --codon=$options{'codon'} --clean=$options{'clean'} --smallDiff=$options{'smallDiff'} --BEB=$options{'BEB'} --verboseTable=$options{'verboseTable'} $alnFile &>> $logFile";
+    my $singularityCommand = "apptainer exec --cleanenv $options{'sif'} pw_makeTreeAndRunPAML.pl --codeml=$options{'codemlExe'} $moreOptions $singularityVersionDependentOptions --omega=$options{'omega'} --codon=$options{'codon'} --clean=$options{'clean'} --smallDiff=$options{'smallDiff'} --BEB=$options{'BEB'} --verboseTable=$options{'verboseTable'} $alnFile &>> $logFile";
 
     open (LOG, "> $logFile");
-    print LOG "\n######## Running PAML wrapper within this singularity container:\n$options{'sif'}\n\n";
+    print LOG "\n######## Running PAML wrapper within this apptainer container:\n$options{'sif'}\n\n";
     print LOG "Passing the following command to the container:\n\n";
     print LOG "$singularityCommand\n\n";
-    print LOG "Running on rhino/gizmo, sometimes we get a singularity-related error containing these words 'WARNING: Bind mount overlaps container CWD may not be available' but I think it's OK to ignore it.\n\n";
-    print LOG "All following output comes from the singularity container, running pw_makeTreeAndRunPAML.pl.\n\n";
+    print LOG "Running on rhino/gizmo, sometimes we get a apptainer-related error containing these words 'WARNING: Bind mount overlaps container CWD may not be available' but I think it's OK to ignore it.\n\n";
+    print LOG "All following output comes from the apptainer container, running pw_makeTreeAndRunPAML.pl.\n\n";
     close LOG;
 
     open (SH, "> $shellFile");
     print SH "#!/bin/bash\n";
     print SH "source /app/lmod/lmod/init/profile\n";
-    print SH "module load Singularity/3.5.3\n";
+    print SH "module load Apptainer/1.0.1\n";
     print SH "$singularityCommand\n";
     #print SH "echo\n";
     print SH "module purge\n";

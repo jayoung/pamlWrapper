@@ -8,6 +8,7 @@
 - remove the tarballs after compiling within the docker container, aiming for a smaller image
 - version 4.10.6 is now the default (compiled from github source, commit af30c37) in all scripts and in rhino/gizmo path
 - now not switching to --strict=loose for v4.10.6 (because it's not needed)
+- using apptainer v1.0.1 instead of singularity
 
 
 ## paml_wrapper-v1.3.5

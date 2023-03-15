@@ -76,27 +76,16 @@ I noticed (when I run on my Mac) that within the Docker container, the timestamp
 
 On gizmo/rhino:
 
-I was previously using singularity to build the container for rhino/gizmo
+I was previously using singularity (v3.5.3) to build the container for rhino/gizmo but now I use Apptainer (a direct replacement for singularity) - use v1.0.1 (Dan found some issues with a newer version of Apptainer)
+
 ```
 cd ~/FH_fast_storage/paml_screen/pamlWrapper/buildContainer
 module purge
-module load Singularity/3.5.3
-singularity build paml_wrapper-v1.3.6.sif docker://jayoungfhcrc/paml_wrapper:version1.3.6
-module purge
-```
-
-There's a newer replacement, called apptainer - use that instead:
-
-xxx maybe use Apptainer/1.0.1 next time (Dan found some issues with a newer version)
-```
-cd ~/FH_fast_storage/paml_screen/pamlWrapper/buildContainer
-module purge
-module load Apptainer/1.1.6
+module load Apptainer/1.0.1
 apptainer build paml_wrapper-v1.3.6.sif docker://jayoungfhcrc/paml_wrapper:version1.3.6
 # apptainer run --cleanenv paml_wrapper-v1.3.6.sif
 module purge
 ```
-
 
 Now that I use the bioperl base, I do get a bunch of warnings while building the apptainer image. I think I can ignore them. Examples (but there are MANY): 
 ```
@@ -117,22 +106,27 @@ cd ~/FH_fast_storage/paml_screen/pamlWrapper/testData
 
 # test tiny alignment, making a tree from the alignment
 ../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl CENPA_primates_aln2a_only5seqs.fa
+    xxx 
 
 # using different codeml versions
+mkdir v4.9g
 cd v4.9g
 cp ../CENPA_primates_aln2a_only5seqs.fa .
 ../../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --version=4.9g CENPA_primates_aln2a_only5seqs.fa
     # paml4.9g gave core dump with M8, although all the outputs look correct except that screenoutput.txt is empty. Not sure what that core dump meant.
 
+mkdir ../v4.9h
 cd ../v4.9h
 cp ../CENPA_primates_aln2a_only5seqs.fa .
 ../../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --version=4.9h CENPA_primates_aln2a_only5seqs.fa
 
+mkdir ../v4.9j
 cd ../v4.9j
 cp ../CENPA_primates_aln2a_only5seqs.fa .
 ../../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --version=4.9j CENPA_primates_aln2a_only5seqs.fa
 
-cd ../v4.10.6
+mkdir ../v4.9a
+cd ../v4.9a
 cp ../CENPA_primates_aln2a_only5seqs.fa .
 ../../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --strict=loose --version=4.10.6 CENPA_primates_aln2a_only5seqs.fa
 
