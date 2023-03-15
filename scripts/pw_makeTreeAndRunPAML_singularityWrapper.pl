@@ -63,7 +63,6 @@ foreach my $commandLineOption (@commandLineOptions) {
     if (!defined $options{$o[0]}) {
         die "\n\nERROR - terminating in script $script - found a command line option I don't recognize: $o[0].\n\n$usage\n\n";
     }
-    ## xxx will be updating this
     if($o[0] eq "codeml") {
         die "\n\nERROR - terminating in script $script - you are trying to specify the codeml executable, but we cannot do that when using the singularity container. Maybe you want to use pw_makeTreeAndRunPAML_sbatchWrapper.pl instead - you can choose the codeml executable there.\n\n$usage\n\n";
     }
@@ -95,13 +94,13 @@ if ($options{'version'} eq "4.9h") {
 if ($options{'version'} eq "4.9j") { 
     $options{'codemlExe'} = "/src/paml/paml4.9j/src/codeml";
 }
+# if ($options{'version'} eq "4.10.6") { 
+#     $options{'codemlExe'} = "/src/paml/paml-4.10.6/src/codeml";
+# }
+# if ($options{'version'} eq "4.10.6cc") { 
+#     $options{'codemlExe'} = "/src/paml_ccCompiled/paml-4.10.6/src/codeml";
+# }
 if ($options{'version'} eq "4.10.6") { 
-    $options{'codemlExe'} = "/src/paml/paml-4.10.6/src/codeml";
-}
-if ($options{'version'} eq "4.10.6cc") { 
-    $options{'codemlExe'} = "/src/paml_ccCompiled/paml-4.10.6/src/codeml";
-}
-if ($options{'version'} eq "4.10.6github") { 
     $options{'codemlExe'} = "/src/paml/paml-github20221201/src/codeml";
 }
 # some PAML versions don't add a tag to the end of the mlc file, so the way I had of checking for PAML success does not work, and I need to stop checking (i.e. use strict=loose)

@@ -41,25 +41,14 @@ RUN cd src/phyml && \
   autoreconf -i && \  
   ./configure --enable-mpi && \ 
   make && \ 
-  make install
-
+  make install && \
+  rm ../v3.3.20220408.tar.gz
 
 ### Install some perl modules (cpanm is already in this base)
 RUN cpanm CPAN::Meta \
   Cwd \
   Getopt::Long \
   Statistics::Distributions
-
-### install paml from the source, version 4.9j, February 2020
-RUN mkdir src/paml
-RUN cd src/paml && \
-  wget http://abacus.gene.ucl.ac.uk/software/paml4.9j.tgz && \
-  tar -xf paml4.9j.tgz && \
-  cd paml4.9j/src && \
-  sed 's/CC = cc/CC = gcc/g' -i Makefile && \
-  make
-## I add paml4.9j/src to PATH at the bottom so I don't need to move the executables
-
 
 ### install paml from the source, version 4.9a, March 2015 (but don't add it to PATH)
 RUN cd src/paml && \
@@ -69,6 +58,17 @@ RUN cd src/paml && \
   sed 's/CC = cc/CC = gcc/g' -i Makefile && \
   make
 
+### install paml from the source, version 4.9a, March 2015, use cc this time (but don't add it to PATH)
+RUN mkdir src/paml_ccCompiled
+RUN cd src/paml_ccCompiled && \
+  cp src/paml/paml4.9a.tgz . && \
+  tar -xf paml4.9a.tgz && \
+  cd paml4.9a/src && \
+  sed 's/version 4.9/version 4.9a_cc/g' -i paml.h && \
+  make && \
+  rm ../../paml4.9a.tgz && \
+  rm ../../../src/paml/paml4.9a.tgz
+
 ### install paml from the source, version 4.9g, October 2017 (but don't add it to PATH)
 # paml.h has the wrong version number
 RUN cd src/paml && \
@@ -77,7 +77,8 @@ RUN cd src/paml && \
   cd paml4.9g/src && \
   sed 's/CC = cc/CC = gcc/g' -i Makefile && \
   sed 's/version 4.9f/version 4.9g/g' -i paml.h && \
-  make
+  make && \
+  rm ../../paml4.9g.tgz
 
 ### install paml from the source, version 4.9h, March 2018 (but don't add it to PATH)
 RUN cd src/paml && \
@@ -85,35 +86,21 @@ RUN cd src/paml && \
   tar -xf paml4.9h.tgz && \
   cd paml4.9h/src && \
   sed 's/CC = cc/CC = gcc/g' -i Makefile && \
-  make
+  make && \
+  rm ../../paml4.9h.tgz
 
-### install paml from the source, version 4.9a, March 2015, use cc this time (but don't add it to PATH)
-RUN mkdir src/paml_ccCompiled
-RUN cd src/paml_ccCompiled && \
-  cp /src/paml/paml4.9a.tgz . && \
-  tar -xf paml4.9a.tgz && \
-  cd paml4.9a/src && \
-  sed 's/version 4.9/version 4.9a_cc/g' -i paml.h && \
-  make
+### install paml from the source, version 4.9j, February 2020
+RUN mkdir src/paml
+RUN cd src/paml && \
+  wget http://abacus.gene.ucl.ac.uk/software/paml4.9j.tgz && \
+  tar -xf paml4.9j.tgz && \
+  cd paml4.9j/src && \
+  sed 's/CC = cc/CC = gcc/g' -i Makefile && \
+  make && \
+  rm ../../paml4.9j.tgz
+## I add paml4.9j/src to PATH at the bottom so I don't need to move the executables
 
-### install paml from the source, version 10.2.6, September 2020 (but don't add it to PATH). I figured out the tarball is too old - it IS NOT NOT really v4.10.6
-# RUN cd src/paml && \
-#   wget https://github.com/abacus-gene/paml/archive/refs/tags/v4.10.6.tar.gz && \
-#   tar -xf v4.10.6.tar.gz && \
-#   cd paml-4.10.6/src && \
-#   sed 's/CC = cc/CC = gcc/g' -i Makefile && \
-#   sed 's/version 4.10.0, September 2020/version 4.10.6, November 2022/g' -i paml.h && \
-#   make
-
-### install paml from the source, version 4.10.6, September 2020, use cc this time (but don't add it to PATH)
-# RUN cd src/paml_ccCompiled && \
-#   cp /src/paml/v4.10.6.tar.gz . && \
-#   tar -xf v4.10.6.tar.gz && \
-#   cd paml-4.10.6/src && \
-#   sed 's/version 4.10.0, September 2020/version 4.10.6cc, November 2022/g' -i paml.h && \
-#   make
-
-### install paml v4.10.6 from the github repo, using the Dec 1 2022 commit
+### install paml v4.10.6 from the github repo, using the Dec 1 2022 commit. I do NOT want to use the tarball found here https://github.com/abacus-gene/paml/archive/refs/tags/v4.10.6.tar.gz because it IS NOT really v4.10.6 - it is something older
 # in order to get it to compile in this version of linux, I have to remove the  -Wmemset-elt-size flag from the CFLAGS given in the Makefile. If I understand right it won't make any difference to the compiled executable - just controls how many warnings are emitted during the complication
 # If I don't remove that flag, the error I get is this: 
 # cc: error: unrecognized command line option '-Wmemset-elt-size'
@@ -123,7 +110,8 @@ RUN cd src/paml && \
   mv paml-af30c375c35fe3bbb48464e5056f9fcf879d6b08 paml-github20221201 && \
   cd paml-github20221201/src && \
   sed 's/ -Wmemset-elt-size//g' -i Makefile && \
-  make
+  make && \
+  rm ../../af30c375c35fe3bbb48464e5056f9fcf879d6b08.zip
 
 ## Install my scripts and templates and docs from the local drive
 RUN mkdir pamlWrapper

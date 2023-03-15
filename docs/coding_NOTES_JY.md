@@ -80,11 +80,14 @@ module purge
 ```
 
 There's a newer replacement, called apptainer - use that instead:
+
+xxx maybe use Apptainer/1.0.1 next time (Dan found some issues with a newer version)
 ```
 cd ~/FH_fast_storage/paml_screen/pamlWrapper/buildContainer
 module purge
 module load Apptainer/1.1.6
 apptainer build paml_wrapper-v1.3.5.sif docker://jayoungfhcrc/paml_wrapper:version1.3.5
+# apptainer run --cleanenv paml_wrapper-v1.3.5.sif
 module purge
 ```
 

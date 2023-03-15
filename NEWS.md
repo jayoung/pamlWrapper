@@ -4,7 +4,9 @@
 ## Fixes since v1.3.5
 
 ## paml_wrapper-v1.3.5
-- now adding a first line ("  numSeqs numTrees") to the tree input file for PAML, because the newer versions are more picky about that than the older versions
+- now adding a first line ("  numSeqs numTrees") to the tree input file for PAML, because newer codeml versions are more picky about tree format than the older versions were
+- no longer build the bad 4.10.6 PAML versions in the docker container
+- remove the tarballs after compiling within the docker container, aiming for a smaller image
 
 ## paml_wrapper-v1.3.4
 - docker container now compiles a true v4.10.6 of PAML using [PAML git repo](https://github.com/abacus-gene/paml) commit af30c37 (Dec 1, 2022) (before I was using an out-of-date tarball that seemed like it was v4.10.6 but actually it wasn't)
