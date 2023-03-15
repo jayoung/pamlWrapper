@@ -224,6 +224,9 @@ I'm trying versions compiled using cc not gcc:  4.9a and 4.10.6, via singularity
 
 add more test genes: PARPs? IFITs?
 
+add to the paml learning notes that newer PAML versions require a first line in the tree file (  numSeqs numTrees)
+
+
 ## another paml version issue?
 
 different results sometimes for same PAML version inside and outside singularity container. See testPAMLversions_new2023feb9 and docs/compare_PAML_versions_v2.md
