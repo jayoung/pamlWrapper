@@ -2,6 +2,7 @@
 hide
 notUsingTheseFiles
 testData/*_phymlAndPAML
+testData/userTree*
 testData/*PAMLsummary*tsv
 testData/v*
 *_runPAML.log.txt

@@ -99,6 +99,8 @@ A file called paml_wrapper-v1.3.6.sif appears. I want a copy of the singularity 
 cp paml_wrapper-v1.3.6.sif /fh/fast/malik_h/grp/malik_lab_shared/singularityImages
 ```
 
+xxx singularity would mount CURRENT working dir and start in that, whereas apptainer starts in ~
+
 
 Perhaps retest the singularity container before I change the version used by others:
 ```
@@ -113,31 +115,44 @@ mkdir v4.9g
 cd v4.9g
 cp ../CENPA_primates_aln2a_only5seqs.fa .
 ../../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --version=4.9g CENPA_primates_aln2a_only5seqs.fa
+  xx running
     # paml4.9g gave core dump with M8, although all the outputs look correct except that screenoutput.txt is empty. Not sure what that core dump meant.
 
 mkdir ../v4.9h
 cd ../v4.9h
 cp ../CENPA_primates_aln2a_only5seqs.fa .
 ../../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --version=4.9h CENPA_primates_aln2a_only5seqs.fa
+  xx running
 
 mkdir ../v4.9j
 cd ../v4.9j
 cp ../CENPA_primates_aln2a_only5seqs.fa .
 ../../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --version=4.9j CENPA_primates_aln2a_only5seqs.fa
+  xx running
 
 mkdir ../v4.9a
 cd ../v4.9a
 cp ../CENPA_primates_aln2a_only5seqs.fa .
 ../../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --strict=loose --version=4.10.6 CENPA_primates_aln2a_only5seqs.fa
+  xx running
 
-# test two real alignments, making trees
+# test two real alignments, making trees 
+cd ../
 ../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl  ACE2_primates_aln1_NT.fa CENPA_primates_aln2a_NT.fa
 
 # test, supplying a tree via --usertree option
-../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --usertree=CENPA_primates_aln2a_only5seqs.fa.phy.usertree CENPA_primates_aln2a_only5seqs.fa
+mkdir userTree
+cd userTree
+cp ../CENPA_primates_aln2a_only5seqs.fa.phy.usertree ../CENPA_primates_aln2a_only5seqs.fa .
+../../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --usertree=CENPA_primates_aln2a_only5seqs.fa.phy.usertree CENPA_primates_aln2a_only5seqs.fa
 
 # test, supplying a tree with non-matching seqnames (should stop before running PAML) via --usertree option
-../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --usertree=CENPA_primates_aln2a_only5seqs.fa.phy.usertree.badNames CENPA_primates_aln2a_only5seqs.fa
+cd ../
+mkdir userTree_badTree
+cd userTree_badTree
+cp ../CENPA_primates_aln2a_only5seqs.fa.phy.usertree.badNames ../CENPA_primates_aln2a_only5seqs.fa .
+
+../../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --usertree=CENPA_primates_aln2a_only5seqs.fa.phy.usertree.badNames CENPA_primates_aln2a_only5seqs.fa
 
 ```
 
