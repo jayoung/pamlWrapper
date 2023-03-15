@@ -91,7 +91,6 @@ RUN cd src/paml && \
   rm ../../paml4.9h.tgz
 
 ### install paml from the source, version 4.9j, February 2020
-RUN mkdir src/paml
 RUN cd src/paml && \
   wget http://abacus.gene.ucl.ac.uk/software/paml4.9j.tgz && \
   tar -xf paml4.9j.tgz && \
