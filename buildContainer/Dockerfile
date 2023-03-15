@@ -68,7 +68,7 @@ RUN cd src/paml_ccCompiled && \
   sed 's/version 4.9/version 4.9a_cc/g' -i paml.h && \
   make && \
   rm ../../paml4.9a.tgz && \
-  rm ../../../src/paml/paml4.9a.tgz
+  rm /src/paml/paml4.9a.tgz
 
 ### install paml from the source, version 4.9g, October 2017 (but don't add it to PATH)
 # paml.h has the wrong version number
