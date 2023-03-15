@@ -51,7 +51,7 @@ RUN cpanm CPAN::Meta \
   Statistics::Distributions
 
 ### install paml from the source, version 4.9a, March 2015 (but don't add it to PATH)
-RUN mkdir src/phyml
+RUN mkdir src/paml
 RUN cd src/paml && \
   wget http://abacus.gene.ucl.ac.uk/software/SoftOld/paml4.9a.tgz && \
   tar -xf paml4.9a.tgz && \
