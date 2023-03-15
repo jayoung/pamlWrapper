@@ -62,7 +62,7 @@ RUN cd src/paml && \
 ### install paml from the source, version 4.9a, March 2015, use cc this time (but don't add it to PATH)
 RUN mkdir src/paml_ccCompiled
 RUN cd src/paml_ccCompiled && \
-  cp src/paml/paml4.9a.tgz . && \
+  cp /src/paml/paml4.9a.tgz . && \
   tar -xf paml4.9a.tgz && \
   cd paml4.9a/src && \
   sed 's/version 4.9/version 4.9a_cc/g' -i paml.h && \

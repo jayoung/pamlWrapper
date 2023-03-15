@@ -214,15 +214,19 @@ As of Feb 10, 2023, the default is version 4.9a in my PAMLwrapper scripts (https
 
 # To do 
 
+With newer codeml version (the true 4.10.6) and after having fixed the tree file format error, I think I am now getting all the expected 'Time used' lines again, so I think I can remove the `--strict=loose` option when I run it. Check that.
+
+Finish up the PAML [version checking](https://github.com/abacus-gene/paml/issues/27). Remove the bad versions of 4.10.6 from gizmo/rhino and from the container. 
+
+Think about default value for `SmallDiff`.
+
+Think about default codeml version
+
 Add a check for error in the screenoutput.txt and runPAML.log.txt files? e.g. 
 ```
 grep -v 'Bind mount overlaps container' *log.txt | grep -i 'error'
 grep -i 'error' *_phymlAndPAML/M*/screenoutput.txt
 ```
-
-With newer codeml version (the true 4.10.6) and after having fixed the tree file format error, I think I am now getting all the expected 'Time used' lines again, so I think I can remove the `--strict=loose` option when I run it. Check that.
-
-Finish up the PAML [version checking](https://github.com/abacus-gene/paml/issues/27). Remove the bad versions of 4.10.6 from gizmo/rhino and from the container. Think about default value for `SmallDiff`.
 
 Add the ability to run only model 0 and model 0fixed on an alignment containing only 2 seqs.  Tree is meaningless, and PHYML fails when there's only two seqs. But I can make a fake tree `(seq1,seq2);` and PAML will work.
 
