@@ -2,7 +2,9 @@
 use warnings;
 use strict;
 
-###### for each alignment file, makes a shell script that will use the singularity image to run PAML, and launches that shell script using sbatch.
+###### for each alignment file, makes a shell script that will use the apptainer image to run PAML, and launches that shell script using sbatch.
+
+# yes, this script has the word singularity in the name, but I'm actually using the newer version of singularity, called apptainer
 
 ###### usage: runPAML.pl myAln1.fa myAln2.fa
 ### options:
