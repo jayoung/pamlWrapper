@@ -76,14 +76,17 @@ I noticed (when I run on my Mac) that within the Docker container, the timestamp
 
 On gizmo/rhino:
 
+I'm going to keep using singularity for now, until I understand how to mount pwd when I run apptainer
+
 I was previously using singularity (v3.5.3) to build the container for rhino/gizmo but now I use Apptainer (a direct replacement for singularity) - use v1.0.1 (Dan found some issues with a newer version of Apptainer)
 
 ```
 cd ~/FH_fast_storage/paml_screen/pamlWrapper/buildContainer
 module purge
-module load Apptainer/1.0.1
-apptainer build paml_wrapper-v1.3.6.sif docker://jayoungfhcrc/paml_wrapper:version1.3.6
-# apptainer run --cleanenv paml_wrapper-v1.3.6.sif
+module load Singularity/3.5.3
+# module load Apptainer/1.0.1
+singularity build paml_wrapper-v1.3.6.sif docker://jayoungfhcrc/paml_wrapper:version1.3.6
+# singularity run --cleanenv paml_wrapper-v1.3.6.sif
 module purge
 ```
 
@@ -99,7 +102,7 @@ A file called paml_wrapper-v1.3.6.sif appears. I want a copy of the singularity 
 cp paml_wrapper-v1.3.6.sif /fh/fast/malik_h/grp/malik_lab_shared/singularityImages
 ```
 
-xxx singularity would mount CURRENT working dir and start in that, whereas apptainer starts in ~
+xxx singularity mounts CURRENT working dir and start in that, whereas apptainer starts in ~ and only mounts /fh/scratch (not /fh/fast)
 
 
 Perhaps retest the singularity container before I change the version used by others:
@@ -108,7 +111,7 @@ cd ~/FH_fast_storage/paml_screen/pamlWrapper/testData
 
 # test tiny alignment, making a tree from the alignment
 ../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl CENPA_primates_aln2a_only5seqs.fa
-    xxx 
+
 
 # using different codeml versions
 mkdir v4.9g
@@ -133,7 +136,7 @@ cp ../CENPA_primates_aln2a_only5seqs.fa .
 mkdir ../v4.9a
 cd ../v4.9a
 cp ../CENPA_primates_aln2a_only5seqs.fa .
-../../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --strict=loose --version=4.10.6 CENPA_primates_aln2a_only5seqs.fa
+../../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --strict=loose --version=4.9a CENPA_primates_aln2a_only5seqs.fa
   xx running
 
 # test two real alignments, making trees 

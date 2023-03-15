@@ -9,7 +9,6 @@
 - version 4.10.6 is now the default (compiled from github source, commit af30c37) in all scripts and in rhino/gizmo path
 - now not switching to --strict=loose for v4.10.6 (because it's not needed)
 
-
 ## paml_wrapper-v1.3.5
 - now adding a first line ("  numSeqs numTrees") to the tree input file for PAML, because newer codeml versions are more picky about tree format than the older versions were
 
