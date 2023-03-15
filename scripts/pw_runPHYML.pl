@@ -63,7 +63,7 @@ foreach my $file (@ARGV) {
         next;
     }
     my $logfile = $file . "_phyml_log";
-    my $command = "$phyml_exe -i $file $parameters > $logfile ; mv $treeOutfileWithExt $treeOutfile ; $masterPipelineDir/scripts/pw_removeBranchLengthsFromTree.pl $treeOutfile";
+    my $command = "$phyml_exe -i $file $parameters > $logfile ; mv $treeOutfileWithExt $treeOutfile ; $masterPipelineDir/scripts/pw_removeBranchLengthsFromTree.pl --addFirstLine=1 $treeOutfile";
     print "    making tree for file $file - command is:\n$command\n\n";
     if (!$use_sbatch) {
         system("$command");

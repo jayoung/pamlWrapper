@@ -69,6 +69,8 @@ I noticed (when I run on my Mac) that within the Docker container, the timestamp
 # Convert docker image to singularity
 
 On gizmo/rhino:
+
+I was previously using singularity to build the container for rhino/gizmo
 ```
 cd ~/FH_fast_storage/paml_screen/pamlWrapper/buildContainer
 module purge
@@ -77,7 +79,17 @@ singularity build paml_wrapper-v1.3.4.sif docker://jayoungfhcrc/paml_wrapper:ver
 module purge
 ```
 
-Now that I use the bioperl base, I do get a bunch of warnings while building the singularity image. I think I can ignore them. Examples (but there are MANY): 
+There's a newer replacement, called apptainer - use that instead:
+```
+cd ~/FH_fast_storage/paml_screen/pamlWrapper/buildContainer
+module purge
+module load Apptainer/1.1.6
+apptainer build paml_wrapper-v1.3.4.sif docker://jayoungfhcrc/paml_wrapper:version1.3.4
+module purge
+```
+
+
+Now that I use the bioperl base, I do get a bunch of warnings while building the apptainer image. I think I can ignore them. Examples (but there are MANY): 
 ```
 2022/11/22 17:00:44  warn rootless{dev/agpgart} creating empty file in place of device 10:175
 2022/11/22 17:00:44  warn rootless{dev/audio} creating empty file in place of device 14:4
