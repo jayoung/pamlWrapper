@@ -11,3 +11,4 @@ testData/v*
 slurm-*
 screenoutput
 .vscode
+.bash_history

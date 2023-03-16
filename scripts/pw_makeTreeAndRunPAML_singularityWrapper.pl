@@ -4,7 +4,7 @@ use strict;
 
 ###### for each alignment file, makes a shell script that will use the singularity/apptainer image to run PAML, and launches that shell script using sbatch.
 
-# yes, this script has the word singularity in the name, but at some point I will update it to use the newer version of singularity, called apptainer
+# yes, this script has the word singularity in the name, butI now use the newer version of singularity, called apptainer
 
 ###### usage: runPAML.pl myAln1.fa myAln2.fa
 ### options:
@@ -165,10 +165,13 @@ foreach my $alnFile (@files) {
     ### sometimes I want to run using an older singularity image, where I did NOT encode some of the options I have now
     my $singularityVersionDependentOptions = "";
     if ($singularityImageVersion >= 1.2) {
-        $singularityVersionDependentOptions .= " --strict=$options{'strict'} ";
+        $singularityVersionDependentOptions .= "--strict=$options{'strict'}";
     }
-    ## later I will switch singularity to apptainer
-    my $singularityCommand = "singularity exec --cleanenv $options{'sif'} pw_makeTreeAndRunPAML.pl --codeml=$options{'codemlExe'} $moreOptions $singularityVersionDependentOptions --omega=$options{'omega'} --codon=$options{'codon'} --clean=$options{'clean'} --smallDiff=$options{'smallDiff'} --BEB=$options{'BEB'} --verboseTable=$options{'verboseTable'} $alnFile &>> $logFile";
+
+    #my $singularityCommand = "singularity exec --cleanenv ";
+    my $singularityCommand = "apptainer exec --bind \$(pwd):/mnt -H /mnt --cleanenv ";
+    
+    $singularityCommand .= "$options{'sif'} pw_makeTreeAndRunPAML.pl --codeml=$options{'codemlExe'} $moreOptions $singularityVersionDependentOptions --omega=$options{'omega'} --codon=$options{'codon'} --clean=$options{'clean'} --smallDiff=$options{'smallDiff'} --BEB=$options{'BEB'} --verboseTable=$options{'verboseTable'} $alnFile &>> $logFile";
 
     open (LOG, "> $logFile");
     print LOG "\n######## Running PAML wrapper within this apptainer container:\n$options{'sif'}\n\n";
@@ -181,8 +184,8 @@ foreach my $alnFile (@files) {
     open (SH, "> $shellFile");
     print SH "#!/bin/bash\n";
     print SH "source /app/lmod/lmod/init/profile\n";
-    print SH "module load Singularity/3.5.3\n";
-    # print SH "module load Apptainer/1.0.1\n";
+    # print SH "module load Singularity/3.5.3\n";
+    print SH "module load Apptainer/1.0.1\n";
     print SH "$singularityCommand\n";
     #print SH "echo\n";
     print SH "module purge\n";

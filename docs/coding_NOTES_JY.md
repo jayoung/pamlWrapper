@@ -72,20 +72,21 @@ pw_makeTreeAndRunPAML.pl ACE2_primates_aln1_NT.fa
 
 I noticed (when I run on my Mac) that within the Docker container, the timestamps for files seems to be based on Europe time. That's weird. The timestamps look fine from outside the Docker container though. I probably don't care about that. I'm not going to worry about it.
 
-# Convert docker image to singularity
+# Convert docker image to singularity/apptainer
 
 On gizmo/rhino:
-
-I'm going to keep using singularity for now, until I understand how to mount pwd when I run apptainer
 
 I was previously using singularity (v3.5.3) to build the container for rhino/gizmo but now I use Apptainer (a direct replacement for singularity) - use v1.0.1 (Dan found some issues with a newer version of Apptainer)
 
 ```
 cd ~/FH_fast_storage/paml_screen/pamlWrapper/buildContainer
 module purge
-module load Singularity/3.5.3
-# module load Apptainer/1.0.1
-singularity build paml_wrapper-v1.3.6.sif docker://jayoungfhcrc/paml_wrapper:version1.3.6
+# module load Singularity/3.5.3
+# singularity build paml_wrapper-v1.3.6.sif docker://jayoungfhcrc/paml_wrapper:version1.3.6
+
+module load Apptainer/1.0.1
+apptainer build paml_wrapper-v1.3.6.sif docker://jayoungfhcrc/paml_wrapper:version1.3.6
+
 # singularity run --cleanenv paml_wrapper-v1.3.6.sif
 module purge
 ```
@@ -102,8 +103,6 @@ A file called paml_wrapper-v1.3.6.sif appears. I want a copy of the singularity 
 cp paml_wrapper-v1.3.6.sif /fh/fast/malik_h/grp/malik_lab_shared/singularityImages
 ```
 
-xxx singularity mounts CURRENT working dir and start in that, whereas apptainer starts in ~ and only mounts /fh/scratch (not /fh/fast)
-
 
 Perhaps retest the singularity container before I change the version used by others:
 ```
@@ -118,26 +117,22 @@ mkdir v4.9g
 cd v4.9g
 cp ../CENPA_primates_aln2a_only5seqs.fa .
 ../../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --version=4.9g CENPA_primates_aln2a_only5seqs.fa
-  xx running
     # paml4.9g gave core dump with M8, although all the outputs look correct except that screenoutput.txt is empty. Not sure what that core dump meant.
 
 mkdir ../v4.9h
 cd ../v4.9h
 cp ../CENPA_primates_aln2a_only5seqs.fa .
 ../../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --version=4.9h CENPA_primates_aln2a_only5seqs.fa
-  xx running
 
 mkdir ../v4.9j
 cd ../v4.9j
 cp ../CENPA_primates_aln2a_only5seqs.fa .
 ../../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --version=4.9j CENPA_primates_aln2a_only5seqs.fa
-  xx running
 
 mkdir ../v4.9a
 cd ../v4.9a
 cp ../CENPA_primates_aln2a_only5seqs.fa .
 ../../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --strict=loose --version=4.9a CENPA_primates_aln2a_only5seqs.fa
-  xx running
 
 # test two real alignments, making trees 
 cd ../
@@ -164,11 +159,11 @@ Then, when I'm sure it's working, update `runPAML.pl` script (that's the one oth
 cp ../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl /fh/fast/malik_h/grp/malik_lab_shared/bin/runPAML.pl
 ```
 
-I can get a shell in the singularity container like this:
+I can get a shell in the singularity/apptainer container like this:
 ```
 cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments
-module load Singularity/3.5.3
-singularity shell --cleanenv /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.6.sif
+module load Apptainer/1.0.1
+apptainer shell --cleanenv --bind $(pwd):/mnt -H /mnt /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.6.sif
 module purge
 ```
 
@@ -196,12 +191,12 @@ pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa
 
 Or, I can run some code using the singularity image without entering a shell (this is what the  `runPAML.pl=pw_makeTreeAndRunPAML_singularityWrapper.pl` script does for each alignment):
 ```
-module load Singularity/3.5.3
-singularity exec --cleanenv /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.6.sif pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa 
+module load Apptainer/1.0.1
+apptainer exec --cleanenv --bind $(pwd):/mnt -H /mnt /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.6.sif pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa 
 module purge
 ```
 
-Test the new singularity container and wrapper, on rhino/gizmo:
+Test the new container and wrapper, on rhino/gizmo:
 ```
 cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments
 runPAML.pl CENPA_primates_aln2a_NT.fa
