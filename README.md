@@ -70,9 +70,9 @@ Example:
 /fh/fast/malik_h/grp/malik_lab_shared/bin/runPAML.pl --usertree=primateTree.nwk ACE2_primates_aln1_NT.fa
 ```
 
-By default, we use PAML version 4.9a, but you can also choose 4.9g, 4.9h, 4.9j or 4.10.6. Be warned - [I don't think they are as good](https://github.com/abacus-gene/paml/issues/27) at detecting sitewise positive selection with M8 or M2. To use a different PAML version, supply the --version option. Example:
+By default, we use PAML version 4.10.6, but you can also choose 4.9a, 4.9g, 4.9h, 4.9j. To use a different PAML version, supply the --version option. Example:
 ```
-/fh/fast/malik_h/grp/malik_lab_shared/bin/runPAML.pl --version=4.10.6 ACE2_primates_aln1_NT.fa
+/fh/fast/malik_h/grp/malik_lab_shared/bin/runPAML.pl --version=4.9a ACE2_primates_aln1_NT.fa
 ```
 
 ## To run these scripts in other ways
@@ -207,12 +207,13 @@ incorrectly.  These are now fixed.
 
 ## PAML version problem 2
 
-I think I have uncovered a problem with newer versions of PAML.   Version 4.9a (from March 2015) is BETTER at finding sitewise positive selection than 4.9g and later. More details [here](https://github.com/abacus-gene/paml/issues/27). 
+I uncovered a problem with some newer versions of PAML.   Version 4.9a (from March 2015) is BETTER at finding sitewise positive selection than 4.9g and versions before 4.10.6. More details [here](https://github.com/abacus-gene/paml/issues/27). 4.10.6 is OK though
 
-As of Feb 10, 2023, the default is version 4.9a in my PAMLwrapper scripts (https://github.com/jayoung/pamlWrapper)
 
 
 # To do 
+
+add to the paml learning notes that newer PAML versions require a first line in the tree file (  numSeqs numTrees)
 
 Add a check for error in the screenoutput.txt and runPAML.log.txt files? e.g. 
 ```
@@ -228,18 +229,8 @@ then call it several times from the main script. runPHYML also needs to be separ
 
 R code to plot omega classes - color choosing is still not quite right for the pos sel class - see `test_codeml_4.8/ACE2_primates_aln1_NT.fa_phymlAndPAML/ACE2_primates_aln1_NT.codonModel2_initOmega0.4_cleandata0.omegaDistributions.pdf`
 
-I'm trying versions compiled using cc not gcc:  4.9a and 4.10.6, via singularity and via sbatch. 
-
 add more test genes: PARPs? IFITs?
 
-add to the paml learning notes that newer PAML versions require a first line in the tree file (  numSeqs numTrees)
-
-
-## another paml version issue?
-
-different results sometimes for same PAML version inside and outside singularity container. See testPAMLversions_new2023feb9 and docs/compare_PAML_versions_v2.md
-
-also get different results for 4.10.6 depending on whether I compiled with cc or gcc (and that interacts with whether I run via sigularity or sbatch). See testPAMLversions_new2023feb9 and docs/compare_PAML_versions_v2.md
 
 
 
@@ -251,5 +242,3 @@ Add the ability to run and parse:
 - MEME
 
 Docker container: could I use a newer version of R? Then I could make the plots look nicer. I would probably need to starting from a newer ubuntu base for that, and therefore I would need to install bioperl myself rather than using bioperl base. Or does another bioperl base exist that has a newer ubuntu starting point?
-
-There are MORE RECENT versions of PAML on [github](https://github.com/abacus-gene/paml/releases). v4.10.6 (latest as of Nov 23 2022 - source code was posted Sept 24, 2021, executables were posted Nov 10, 2022) and seems to work fine.  Should I use that instead of 4.9j as my default? (both from command-line and in singularity)
