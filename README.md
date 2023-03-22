@@ -213,36 +213,19 @@ I uncovered a problem with some newer versions of PAML.   Version 4.9a (from Mar
 
 # To do 
 
-PAML does NOT run if the alignment file is within a subdir
-
-
+for files with very long names I think R is truncating the file names for the pdf tree plot outputs. Might also be to do with them being in nested subdirs. Example
 ```
-cd ~/FH_fast_storage/getSameSpeciesGenomicEquivalent/data/Maria/whole_transcript_inclIntrons/tx_dna_seq.names.fa_eachSeq/getMammalsAdd500join1000/Homo_sapiens_wtip_ENST00000590071.6.getMammalsAdd500join1000.BLAT/zz_testPAML/
+cd ~/FH_fast_storage/getSameSpeciesGenomicEquivalent/data/Maria/whole_transcript_inclIntrons/tx_dna_seq.names.fa_eachSeq/getMammalsAdd500join1000/Homo_sapiens_zdhhc3_ENST00000296127.7.getMammalsAdd500join1000.BLAT/Homo_sapiens_zdhhc3_ENST00000296127.7.getMammalsAdd500join1000.mafft.aln2.addTxAndSmORF.trim.filt_MACSEfsTerm30_NT.intact.degapcodon.fa_phymlAndPAML/Homo_sapiens_zdhhc3_ENST00000296127.7.getMammalsAdd500join1000.mafft.aln2.addTxAndSmORF.trim.filt_MACSEfsTerm30_NT.intact.degapcodon.fa_PHYMLtree
 
-module load fhR/4.1.2-foss-2020b
+# this is a pdf (148 characters in the filename): 
+Homo_sapiens_zdhhc3_ENST00000296127.7.getMammalsAdd500join1000.mafft.aln2.addTxAndSmORF.trim.filt_MACSEfsTerm30_NT.intact.degapcodon.fa.phy_phyml_tr
 
-mkdir run_in_same_dir use_subdir
-cp ../Homo_sapiens_wtip_ENST00000590071.6.getMammalsAdd500join1000.mafft.aln2.addTxAndSmORF.trim.filt_MACSEfsTerm30_NT.intact.degapcodon.fa use_subdir/testAln.fa
-cp use_subdir/testAln.fa run_in_same_dir
+# I would normally see two pdf files with names like this:
+Mx1_PAML25.names.fa.phy_phyml_tree.names.pdf
+Mx1_PAML25.names.fa.phy_phyml_tree.nolen.names.pdf
 
-## running on an alignment in the subdir 
-/fh/fast/malik_h/user/jayoung/paml_screen/pamlWrapper/scripts/pw_makeTreeAndRunPAML.pl use_subdir/testAln.fa
-
-ERROR - terminating in script pw_annotateAlignmentWithSelectedSites.pl - file use_subdir/M8_initOmega0.4_codonModel2/mlc does not exist
-
-
-
-## running on the same alignment in .
-cd run_in_same_dir
-/fh/fast/malik_h/user/jayoung/paml_screen/pamlWrapper/scripts/pw_makeTreeAndRunPAML.pl testAln.fa
-    # works
-
-
-
+# I bet the second one over-wrote the first one, as their names got truncated to the same length
 ```
-
-
-
 
 
 add to the paml learning notes that newer PAML versions require a first line in the tree file (  numSeqs numTrees)

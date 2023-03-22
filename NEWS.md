@@ -1,5 +1,7 @@
 ## Issues still to fix
 
+- for files with very long names I think R is truncating the file names for the pdf tree plot outputs. See (README.md)[README.md] for details
+
 ## Fixes since v1.3.7
 
 ## paml_wrapper-v1.3.7
