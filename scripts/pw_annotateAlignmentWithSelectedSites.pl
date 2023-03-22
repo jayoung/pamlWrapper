@@ -50,11 +50,12 @@ foreach my $fastaAlnFile (@ARGV) {
     my $dir = ".";
     if ($fastaAlnFile =~ m/\//) {
         my $fileWithoutDir = $fastaAlnFile; 
-        $fileWithoutDir =~ m/\/(.+?)$/;
-        $fileWithoutDir = $1;
+        if ($fileWithoutDir =~ m/\//) { 
+            $fileWithoutDir = (split /\//, $fileWithoutDir)[-1];
+        }
         $dir = $fastaAlnFile;
         $dir =~ s/\/$fileWithoutDir$//;
-        #print "file $fastaAlnFile\nfileWithoutDir $fileWithoutDir\ndir $dir\n";
+        # print "file $fastaAlnFile\nfileWithoutDir $fileWithoutDir\ndir $dir\n";
     }
 
     ## now look at PAML results

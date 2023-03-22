@@ -213,6 +213,38 @@ I uncovered a problem with some newer versions of PAML.   Version 4.9a (from Mar
 
 # To do 
 
+PAML does NOT run if the alignment file is within a subdir
+
+
+```
+cd ~/FH_fast_storage/getSameSpeciesGenomicEquivalent/data/Maria/whole_transcript_inclIntrons/tx_dna_seq.names.fa_eachSeq/getMammalsAdd500join1000/Homo_sapiens_wtip_ENST00000590071.6.getMammalsAdd500join1000.BLAT/zz_testPAML/
+
+module load fhR/4.1.2-foss-2020b
+
+mkdir run_in_same_dir use_subdir
+cp ../Homo_sapiens_wtip_ENST00000590071.6.getMammalsAdd500join1000.mafft.aln2.addTxAndSmORF.trim.filt_MACSEfsTerm30_NT.intact.degapcodon.fa use_subdir/testAln.fa
+cp use_subdir/testAln.fa run_in_same_dir
+
+## running on an alignment in the subdir 
+/fh/fast/malik_h/user/jayoung/paml_screen/pamlWrapper/scripts/pw_makeTreeAndRunPAML.pl use_subdir/testAln.fa
+
+ERROR - terminating in script pw_annotateAlignmentWithSelectedSites.pl - file use_subdir/M8_initOmega0.4_codonModel2/mlc does not exist
+
+
+
+## running on the same alignment in .
+cd run_in_same_dir
+/fh/fast/malik_h/user/jayoung/paml_screen/pamlWrapper/scripts/pw_makeTreeAndRunPAML.pl testAln.fa
+    # works
+
+
+
+```
+
+
+
+
+
 add to the paml learning notes that newer PAML versions require a first line in the tree file (  numSeqs numTrees)
 
 Add a check for error in the screenoutput.txt and runPAML.log.txt files? e.g. 

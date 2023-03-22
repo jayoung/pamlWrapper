@@ -86,22 +86,27 @@ foreach my $alignmentFile (@ARGV) {
     ## run some checks on the alignment using pw_checkAlignmentBasics.pl :
     # are seqs the same length?
     # is alignment length is a multiple of three?
-    my $exitCode = system("$masterPipelineDir/scripts/pw_checkAlignmentBasics.pl $alnFileWithoutDir") >> 8;
+    # my $exitCode = system("$masterPipelineDir/scripts/pw_checkAlignmentBasics.pl $alnFileWithoutDir") >> 8;
+    my $exitCode = system("$masterPipelineDir/scripts/pw_checkAlignmentBasics.pl $alignmentFile") >> 8;
     if ($exitCode > 0) {
         die "\n\nERROR - terminating in script $scriptName - ERROR - problem with seq lengths in alignment file (see details above). Is this really an in-frame alignment?  We need an in-frame alignment to run PAML\n\n";
     }
     # check for internal stops/frameshifts
-    my $exitCode2 = system("$masterPipelineDir/scripts/pw_checkAlignmentFrameshiftsStops.pl $alnFileWithoutDir") >> 8;
+    # my $exitCode2 = system("$masterPipelineDir/scripts/pw_checkAlignmentFrameshiftsStops.pl $alnFileWithoutDir") >> 8;
+    my $exitCode2 = system("$masterPipelineDir/scripts/pw_checkAlignmentFrameshiftsStops.pl $alignmentFile") >> 8;
     if ($exitCode2 > 0) {
         print "    WARNING - some seqs in this alignment file have internal stops/frameshifts (see details above). Is this really an in-frame alignment?  We need an in-frame alignment to run PAML. Proceeding, but you might want to check your alignment\n\n";
     }
 
 
     ## make a new folder, and run everything in there
-    my $pamlDir = $alnFileWithoutDir . "_phymlAndPAML";
+    # my $pamlDir = $alnFileWithoutDir . "_phymlAndPAML";
+    my $pamlDir = $alignmentFile . "_phymlAndPAML";
+    #print "\npamlDir $pamlDir\n\n";
     if (!-e $pamlDir) { mkdir $pamlDir; }
+    if (!-e "$pamlDir/$alnFileWithoutDir") { system ("cp $alignmentFile $pamlDir"); }
     chdir $pamlDir; ## I'm in $pamlDir
-    if (!-e $alnFileWithoutDir) { system ("cp ../$alnFileWithoutDir ."); }
+    #if (!-e $alnFileWithoutDir) { system ("cp ../$alnFileWithoutDir ."); }
     
     ## convert to paml format, including truncating names to 30 characters
     # This also makes an aliases file so we know what the original names were
@@ -220,7 +225,15 @@ foreach my $alignmentFile (@ARGV) {
             $otherOptions .= "--processTree=no --usertree=$userTreeFile"; 
         }
 
-        system ("$masterPipelineDir/scripts/pw_parsePAMLoutput.pl $otherOptions -verboseTable=$verboseTable -strict=$strictness -omega=$initialOrFixedOmega -codon=$codonFreqModel -clean=$cleanData -BEB=$BEBprobThresholdToPrintSelectedSite $alnFileWithoutDir");
+        # my $cwd = cwd();
+        # print "\n############################\n\n";
+        # print "Parsing PAML.\n";
+        # print "    cwd $cwd\n";
+        # print "    pamlDir $pamlDir\n";
+        # print "    alnFileWithoutDir $alnFileWithoutDir\n";
+
+        #system ("$masterPipelineDir/scripts/pw_parsePAMLoutput.pl $otherOptions -verboseTable=$verboseTable -strict=$strictness -omega=$initialOrFixedOmega -codon=$codonFreqModel -clean=$cleanData -BEB=$BEBprobThresholdToPrintSelectedSite $alnFileWithoutDir");
+        system ("$masterPipelineDir/scripts/pw_parsePAMLoutput.pl $otherOptions -verboseTable=$verboseTable -strict=$strictness -omega=$initialOrFixedOmega -codon=$codonFreqModel -clean=$cleanData -BEB=$BEBprobThresholdToPrintSelectedSite --dir=$pamlDir $alnFileWithoutDir");
 
         system ("$masterPipelineDir/scripts/pw_parsedPAMLconvertToWideFormat.pl $parsedPAMLoutputFile");
         if(!-e $parsedPAMLoutputFile) {

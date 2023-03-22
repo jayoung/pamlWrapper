@@ -12,6 +12,7 @@ use Getopt::Long;
 
 ##### set up defaults:
 ## initial omega / codon model (we only need to know this to know what the output dirs are called)
+my $PAMLresultsDir = "";
 my $initialOrFixedOmega = 0.4;
 my $codonFreqModel = 2;
 my $cleanData = 0;
@@ -22,10 +23,10 @@ my $BEBprobThresholdToPrintSelectedSite = 0.9; ### report selected sites with at
 my $combinedOutputFile = 0;    ## we always make one output file per input file, but do we also make a single output file for all the input files combined?
 my $verboseTable = 0;   ## normally we do NOT output all the parameters for all the models, and we do NOT output site class dN/dS and freq unless a pairwise model comparison has a 'good' p-value, but sometimes for troubleshooting and comparing PAML versions we might want that.
 my $strictness = "strict";    ## 'strict' means we insist that 'Time used' will be present at the end of the mlc file, and if it's not we assume PAML failed.   'loose' means it's OK if that's not present (v4.10.6 doesn't always add it)
-
 my $scriptName = "pw_parsePAMLoutput.pl";
 
-GetOptions("omega=f"        => \$initialOrFixedOmega,   ## sometimes I do 3, default is 0.4
+GetOptions("dir=s"          => \$PAMLresultsDir,  ## until Mar22 2023 I was figuring this out - now must pass it to the script
+           "omega=f"        => \$initialOrFixedOmega,   ## sometimes I do 3, default is 0.4
            "codon=i"        => \$codonFreqModel,        ## sometimes I do 3, default is 2
            "clean=i"        => \$cleanData,             ## sometimes I do 1 to remove the sites with gaps in any species
            "usertree=s"     => \$userTreeFile,
@@ -38,7 +39,6 @@ GetOptions("omega=f"        => \$initialOrFixedOmega,   ## sometimes I do 3, def
 
 
 ###### I don't usually change these things:
-my $PAMLresultsDirSuffix = "phymlAndPAML";
 
 ## which models to look at output for
 my @allmodels = ("M0","M0fixNeutral","M1","M2","M7","M8","M8a");
@@ -51,6 +51,14 @@ my $RscriptExecutable = "Rscript";
 
 ################
 
+my $numFiles = @ARGV;
+if ($numFiles > 1) {
+    die "\n\nERROR - terminating in script $scriptName - this script is no longer set up to be able to work on >1 alignment file. Must call it once per alignment file, supplying the relevant PAML results dir for each using the --dir argument\n\n";
+}
+
+if ($PAMLresultsDir eq "") {
+    die "\n\nERROR - terminating in script $scriptName - you must specify the name of the PAML results file using the --dir argument\n\n";
+}
 if (($strictness ne "strict") & ($strictness ne "loose")) {
     die "\n\nERROR - terminating in script $scriptName - the '--strict' option must be either 'strict' (default) or 'loose'\n\n";
 }
@@ -81,8 +89,8 @@ if ($combinedOutputFile) {
 my @files = sort (@ARGV);
 
 foreach my $fastaAlnFile (@files) {
-    if (!-e $fastaAlnFile) {
-        die "\n\nERROR - terminating in script $scriptName - cannot open file $fastaAlnFile\n\n";
+    if (!-e "$PAMLresultsDir/$fastaAlnFile") {
+        die "\n\nERROR - terminating in script $scriptName - cannot open file $PAMLresultsDir/$fastaAlnFile\n\n";
     }
 
     print "\n\n############################\n\n";
@@ -97,7 +105,6 @@ foreach my $fastaAlnFile (@files) {
     $fileStem =~ s/\.fa$//;
     $fileStem =~ s/\.fasta$//;
     
-    my $PAMLresultsDir = "$fastaAlnFile"."_$PAMLresultsDirSuffix";
     if (!-e $PAMLresultsDir) {
         die "\n\nERROR - terminating in script $scriptName - cannot find PAML results master dir $PAMLresultsDir\n\n";
     }
