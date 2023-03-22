@@ -56,6 +56,8 @@ if ($use_sbatch) {print "\n\nUsing sbatch to parallelize\n\n";}
 
 foreach my $file (@ARGV) {
     if (!-e $file) { die "\n\nERROR - terminating in script $scriptName - file $file does not exist\n\n";}
+
+    ### figure out output file names
     my $treeOutfile = $file . "_phyml_tree";
     my $treeOutfileWithExt = $file . "_phyml_tree.txt"; # newer versions of phyml use this output name.  I'll rename the output file to be compatible with older version
     if (-e $treeOutfile) {
@@ -63,7 +65,41 @@ foreach my $file (@ARGV) {
         next;
     }
     my $logfile = $file . "_phyml_log";
-    my $command = "$phyml_exe -i $file $parameters > $logfile ; mv $treeOutfileWithExt $treeOutfile ; $masterPipelineDir/scripts/pw_removeBranchLengthsFromTree.pl --addFirstLine=1 $treeOutfile";
+
+    ### special situation for when there are only 2 seqs in the alignment - we make a fake tree, because PHYML (rightly) doesn't want to make a tree from that.
+    my $numSeqs = `head -1 $file`; 
+    chomp $numSeqs; $numSeqs =~ s/^\s+//;
+    $numSeqs = (split /\s+/, $numSeqs)[0];
+    if ($numSeqs == 2) {
+        print "\n\n    WARNING - there are only $numSeqs in alignment file $file. This is NOT enough to run PHYML to make a tree. I'm going to make a fake tree (star phylogeny)\n\n";
+        open (LOG, "> $logfile");
+        print "\n\n    WARNING - there are only $numSeqs in alignment file $file. This is NOT enough to run PHYML to make a tree. I'm going to make a fake tree (star phylogeny)\n\n";
+        close LOG;
+
+        ## get seqnames - get rid of first line in the file, then seqnames are every other line
+        open (ALN, "< $file");
+        my @lines = <ALN>;
+        close ALN;
+        shift @lines; # remove first line
+        my $takeThisLine = 1;
+        my @seqnames;
+        # keep every other line
+        foreach my $line (@lines) {
+            if ($takeThisLine) {
+                chomp $line; push @seqnames, $line;
+            }
+            $takeThisLine = !$takeThisLine;
+        }
+        my $seqnameString = join ",", @seqnames;
+        open (TREE, "> $treeOutfile");
+        print TREE "($seqnameString);\n";
+        close TREE;
+        system("$masterPipelineDir/scripts/pw_removeBranchLengthsFromTree.pl --addFirstLine=1 $treeOutfile");
+        next;
+    }
+
+    ### run PHYML
+    my $command = "$phyml_exe -i $file $parameters >> $logfile ; mv $treeOutfileWithExt $treeOutfile ; $masterPipelineDir/scripts/pw_removeBranchLengthsFromTree.pl --addFirstLine=1 $treeOutfile";
     print "    making tree for file $file - command is:\n$command\n\n";
     if (!$use_sbatch) {
         system("$command");

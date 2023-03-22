@@ -220,13 +220,17 @@ Add a check for error in the screenoutput.txt and runPAML.log.txt files? e.g.
 grep -v 'Bind mount overlaps container' *log.txt | grep -i 'error'
 grep -i 'error' *_phymlAndPAML/M*/screenoutput.txt
 ```
-Add an exit with error if there's only 1 seq in the alignment
+
+xxx 
 
 
 Add the ability to run only model 0 and model 0fixed on an alignment containing only 2 seqs.  Tree is meaningless, and PHYML fails when there's only two seqs. But I can make a fake tree `(seq1,seq2);` and PAML will work.
 
+xxx
+rebuild the container after I make the above changes
+xxx
 
-then call it several times from the main script. runPHYML also needs to be separate, and should be a dependency for runPAML.   the runPAML jobIDs would then be dependencies for downstream parsing. Once I add the ability for the runPAML script to take a single model name as input, then I should be able to parallelize better across models
+refactor to run each codeml model in a separate sbatch script? then call it several times from the main script. runPHYML job also needs to be separate, and should be a dependency for runPAML.   the runPAML jobIDs would then be dependencies for downstream parsing. Once I add the ability for the runPAML script to take a single model name as input, then I should be able to parallelize better across models
 
 R code to plot omega classes - color choosing is still not quite right for the pos sel class - see `test_codeml_4.8/ACE2_primates_aln1_NT.fa_phymlAndPAML/ACE2_primates_aln1_NT.codonModel2_initOmega0.4_cleandata0.omegaDistributions.pdf`
 

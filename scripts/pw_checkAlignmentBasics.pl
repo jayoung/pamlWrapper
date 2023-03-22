@@ -7,6 +7,8 @@ use Bio::SeqIO;
 #    all seqs are the same length
 #    alignment length is a multiple of 3. 
 #    there are no duplicate sequence names
+#    there are >=2 seqs 
+#      (if there are only 2 seqs, we need to make a fake tree and only run M0 and M0fix, but I think I'll do that back in the main script)
 
 my $scriptName = "pw_checkAlignmentBasics.pl";
 
@@ -16,9 +18,11 @@ foreach my $file (@ARGV){
     my $seqIN = Bio::SeqIO->new(-file => "< $file", '-format' => 'fasta');
     my %lengths; # key = seq length, values=seqnames with that length
     my %seqnames;
+    my $numSeqs = 0;
     while (my $seq = $seqIN ->next_seq) {
         my $len = $seq->length(); 
         my $header = $seq->display_id();
+        $numSeqs++;
         if (defined $seqnames{$header}) {
             print "\n    ERROR - sequence $header appears more than once in alignment file $file\n\n";
             $exitCode = 1;
@@ -26,8 +30,13 @@ foreach my $file (@ARGV){
         $seqnames{$header}=1;
         push @{$lengths{$len}}, $header;
     }
-    my $numDiffLengths = keys %lengths;
+    print "    checking num seqs in file $file\n";
+    if ($numSeqs < 2) {
+        print "\n    ERROR - there are only $numSeqs in alignment file $file - cannot run PAML\n";
+        $exitCode = 1;
+    } 
     print "    checking seqlengths in file $file\n";
+    my $numDiffLengths = keys %lengths;
     if ($numDiffLengths > 1) {
         print "\n    ERROR - the sequences in alignment file $file are not all the same length\n\n\tLength\tSeqs\n";
         foreach my $length (sort keys %lengths) {

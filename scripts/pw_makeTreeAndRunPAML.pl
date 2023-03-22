@@ -83,7 +83,7 @@ foreach my $alignmentFile (@ARGV) {
     if ($alnFileWithoutDir =~ m/\//) {
         $alnFileWithoutDir = (split /\//, $alnFileWithoutDir)[-1];
     }
-    ## run some checks on the alignment:
+    ## run some checks on the alignment using pw_checkAlignmentBasics.pl :
     # are seqs the same length?
     # is alignment length is a multiple of three?
     my $exitCode = system("$masterPipelineDir/scripts/pw_checkAlignmentBasics.pl $alnFileWithoutDir") >> 8;

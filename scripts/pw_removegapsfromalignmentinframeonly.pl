@@ -23,7 +23,9 @@ if (@ARGV==0) {
 foreach my $infile (@ARGV) {
     if (!-e $infile) { die "\n\nterminating - file $infile does not exist\n\n"; }
     if (-z $infile) {next;}
-    my $outfile = "$infile" . ".degapcodon";
+    my $outfile = $infile;
+    $outfile =~ s/\.fasta$//; $outfile =~ s/\.fa$//;
+    $outfile .= ".degapcodon.fa";
     my $seqIN = Bio::SeqIO->new(-file => "$infile", '-format' => 'Fasta');
     my @orderedseqs;
     #go through sequences the first time and read them in(the hash called sequences will be a hash of arrays, three letter per position)
