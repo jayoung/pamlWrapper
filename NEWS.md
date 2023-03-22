@@ -1,14 +1,11 @@
 ## Issues still to fix
 
-
-
 ## Fixes since v1.3.7
 
-## Fixes since v1.3.7
+## paml_wrapper-v1.3.7
 - added an exit with error if there's only 1 seq in the alignment
 - added a test for alignments containing only 2 sequences (in which case PHYML tree building fails). I make a fake tree file (`(seq1,seq2);`) and proceed with PAML. Results are pretty much meaningless for the more complex models, but I think M0 versus M0fixed might still be useful
 - added the ability to run the scripts on input files that are not in the current directory. Output files goes where input file are.
-
 
 ## paml_wrapper-v1.3.6
 - no longer build the bad 4.10.6 PAML versions in the docker container
