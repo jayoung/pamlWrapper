@@ -213,6 +213,8 @@ I uncovered a problem with some newer versions of PAML.   Version 4.9a (from Mar
 
 # To do 
 
+after updating PAML versions, need to update the pamlApps shiny app - see [issue](https://github.com/jayoung/pamlApps/issues/1).  Also check it still parses sitewise paml results OK
+
 for files with very long names I think R is truncating the file names for the pdf tree plot outputs. Might also be to do with them being in nested subdirs. Example
 ```
 cd ~/FH_fast_storage/getSameSpeciesGenomicEquivalent/data/Maria/whole_transcript_inclIntrons/tx_dna_seq.names.fa_eachSeq/getMammalsAdd500join1000/Homo_sapiens_zdhhc3_ENST00000296127.7.getMammalsAdd500join1000.BLAT/Homo_sapiens_zdhhc3_ENST00000296127.7.getMammalsAdd500join1000.mafft.aln2.addTxAndSmORF.trim.filt_MACSEfsTerm30_NT.intact.degapcodon.fa_phymlAndPAML/Homo_sapiens_zdhhc3_ENST00000296127.7.getMammalsAdd500join1000.mafft.aln2.addTxAndSmORF.trim.filt_MACSEfsTerm30_NT.intact.degapcodon.fa_PHYMLtree
