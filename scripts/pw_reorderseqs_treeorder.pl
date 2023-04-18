@@ -29,8 +29,9 @@ shift @lines;
 
 ### check there's just one tree
 my @check = grep /\;/, @lines;
-if (@check > 1) {die "\n\nERROR - terminating in script $scriptName - looks like there is more than one tree in file $ARGV[1]\n\n";}
-if (@check < 1) {die "\n\nERROR - terminating in script $scriptName - looks like there is no tree in file $ARGV[1]\n\n";}
+my $numSemicolonLines = @check;
+if ($numSemicolonLines > 1) {die "\n\nERROR - terminating in script $scriptName - looks like there is more than one tree in file $ARGV[1]\n\n";}
+if ($numSemicolonLines < 1) {die "\n\nERROR - terminating in script $scriptName - looks like there is no tree in file $ARGV[1]\n\n";}
 
 ### parse the tree to get seqnames in order
 my $tree = join "", @lines;

@@ -68,6 +68,11 @@ cd workingDir/
 /pamlWrapper/scripts/pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_only5seqs.fa
 ```
 
+xxx
+ERROR - terminating in script pw_reorderseqs_treeorder.pl - looks like there is no tree in file CENPA_primates_aln2a_only5seqs.fa_phymlAndPAML/CENPA_primates_aln2a_only5seqs.fa_PHYMLtree/CENPA_primates_aln2a_only5seqs.fa.phy_phyml_tree
+    xxxx not true!  pw_reorderseqs_treeorder.pl is expecting that first line but the input file I use here is the one BEFORE I added that line.   Need to either have pw_reorderseqs_treeorder.pl be flexible, OR give it the input tree file AFTER I added that line.
+
+
 When I know it's working I add a new tag and push it to [docker hub](https://hub.docker.com/repository/docker/jayoungfhcrc/paml_wrapper).  I update the version number each time:
 ```
 docker tag paml_wrapper jayoungfhcrc/paml_wrapper:version1.3.7
