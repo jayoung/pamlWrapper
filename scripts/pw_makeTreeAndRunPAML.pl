@@ -144,7 +144,7 @@ foreach my $alignmentFile (@ARGV) {
         ## first we check that the treefile and alignment file the user specified have names that match each other
         my $exitCode = system("$masterPipelineDir/scripts/pw_checkUserTree.pl $alnFileWithoutDir ../$userTreeFile") >> 8;
         if ($exitCode > 0) {
-            die "\n\nERROR - terminating in script $scriptName - problem with the user tree (see details above - the tsv file will be inside the folder called $pamlDir).\n\n";
+            die "\n\nERROR - terminating in script $scriptName - problem with the user tree (see details above - if that error refers to a tsv file, you should see it inside the folder called $pamlDir).\n\n";
         }
         ## then we truncate long names in the treefile just like we might have done in the alignment file
         system("cp ../$userTreeFile .");

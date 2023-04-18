@@ -3,17 +3,15 @@ use warnings;
 use strict;
 use Bio::SeqIO;
 use Bio::TreeIO;
+use IO::String;
 
 ## we check that seq file and tree file contain the same seqs, with exactly the same names
 # if not, we make the start of a name translation file 
 
 my $scriptName = "pw_checkUserTree.pl";
 
-
-
 ###### 
 my $exitCode = 0;
-
 
 ###### some checks before we start
 if (@ARGV != 2) {
@@ -32,7 +30,7 @@ if (!-e $treeFile) {
     die "\n\nERROR - terminating in script $scriptName - the alignment file you specified does not exist: $treeFile\n\n";
     $exitCode = 1;
 }
-print "    checking seq names match between alignment file $alnFile and user-specified tree file $treeFile\n";
+print "    in $scriptName: checking seq names match between alignment file $alnFile and user-specified tree file $treeFile\n";
 
 ### get seq names from alignment
 my @orderedSeqnames;
@@ -47,11 +45,28 @@ my $numSeqs = @orderedSeqnames;
 #print "Alignment file has $numSeqs sequences\n";
 
 ### get taxon names from tree
-my $treeIN = Bio::TreeIO->new(-format => "newick", -file   => "< $treeFile");
 my $numTrees = 0;
 my $numLeaves;
 my @treeIDs;
 my %treeIDhash;
+
+## used this before PAML required a first line containing num taxa and num trees
+# my $treeIN = Bio::TreeIO->new(-format => "newick", -file   => "< $treeFile");
+
+## now have to use much more code to get the tree ready to read, because we have to ingore that first line.:
+open (TREE, "< $treeFile");
+my @tree_lines = <TREE>;
+close TREE;
+my $numTreeLines = @tree_lines;
+if ($numTreeLines != 2) {
+    die "\n\nERROR - terminating in script $scriptName - the tree file should contain exactly two lines.  PAML 4.10.6 and above is more picky about this than older versions of PAML.\n\nThe first line should look something like this: '  22 1' (i.e., two spaces, the number of taxa in your tree, then one space, then 1, for the number of trees in the file), and the second line should contain the tree itself.: $treeFile\n\n";
+    $exitCode = 1;
+}
+my $treeString = $tree_lines[1]; chomp $treeString;
+my $treeIO = IO::String->new($treeString); 
+my $treeIN = Bio::TreeIO->new(-format => "newick", -fh => $treeIO);
+
+## look at the tree:
 while( my $tree = $treeIN->next_tree ) {
     my @leaves = $tree->get_leaf_nodes();
     $numTrees++;

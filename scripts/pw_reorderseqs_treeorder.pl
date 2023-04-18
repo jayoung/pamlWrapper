@@ -24,6 +24,9 @@ open (TREE, "< $ARGV[1]");
 my @lines = <TREE> ;
 close TREE;
 
+### now that PAML newer version requires an additional first line in the tree file (containing numTaxa and numTrees), we need to get rid of that first line for this purpose:
+shift @lines;
+
 ### check there's just one tree
 my @check = grep /\;/, @lines;
 if (@check > 1) {die "\n\nERROR - terminating in script $scriptName - looks like there is more than one tree in file $ARGV[1]\n\n";}
