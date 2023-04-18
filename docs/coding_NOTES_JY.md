@@ -42,24 +42,33 @@ Checking: tree DOES have first line:
 cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/testUserTree/tree_withFirstLine
 runPAML.pl --usertree=Dmel22genome_tree.withFirstLine.nwk Dmel_22_aln.fasta
  
-# use non-containerized
+# test in non-containerized environment
 ~/FH_fast_storage/paml_screen/pamlWrapper/scripts/pw_makeTreeAndRunPAML_sbatchWrapper.pl --usertree=Dmel22genome_tree.withFirstLine.nwk Dmel_22_aln.fasta
     xxx 19057650
 ```
 
+Test containerized (with and without supplying user tree), after rebuilding the container on my Mac (see [docker_container_NOTES](../buildContainer/docker_container_NOTES.md)):
+```
+cd /Users/jayoung/gitProjects/pamlWrapper
+    # rebuilt the container
+docker run -v `pwd`:/workingDir -it paml_wrapper
 
-xx do lots of checks!  if they pass, rebuild the container and bump version number
+cd workingDir/testData
 
-xx I COULD make the script flexible to using tree in STANDARD newick format without that extra line
-xx I COULD make the script flexible to using alignment that's already in PAML format
+# make tree
+/pamlWrapper/scripts/pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_only5seqs.fa
+rm -r CENPA_primates_aln2a_only5seqs.fa_phymlAndPAML
+
+# supply user tree
+/pamlWrapper/scripts/pw_makeTreeAndRunPAML.pl --usertree=CENPA_primates_aln2a_only5seqs.fa.phy.usertree CENPA_primates_aln2a_only5seqs.fa
+rm -r CENPA_primates_aln2a_only5seqs.fa_phymlAndPAML
+```
 
 Check Sophie's input files:
 ```
 cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/testUserTree/sophie
 
-~/FH_fast_storage/paml_screen/pamlWrapper/scripts/pw_makeTreeAndRunPAML_sbatchWrapper.pl --usertree=cenpa_primate_species_trees_scientificnames_nobranch.nh cenpa_primate_aln3_scinames_v2.fasta
-
-    xxx running
+~/FH_fast_storage/paml_screen/pamlWrapper/scripts/pw_makeTreeAndRunPAML_sbatchWrapper.pl --add=1 --usertree=cenpa_primate_species_trees_scientificnames_nobranch.nh cenpa_primate_aln3_scinames_v2.fasta
 ```
 
 # Testing the --verbose=1 option 

@@ -62,26 +62,28 @@ which phyml
 which R
 ```
 
-Perhaps I test running PAML
+I should test running PAML within the container, with and without supplying user tree
 ```
-cd workingDir/
+cd workingDir/testData
+
+# make tree
 /pamlWrapper/scripts/pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_only5seqs.fa
+rm -r CENPA_primates_aln2a_only5seqs.fa_phymlAndPAML
+
+# supply user tree
+/pamlWrapper/scripts/pw_makeTreeAndRunPAML.pl --usertree=CENPA_primates_aln2a_only5seqs.fa.phy.usertree CENPA_primates_aln2a_only5seqs.fa
+rm -r CENPA_primates_aln2a_only5seqs.fa_phymlAndPAML
 ```
-
-xxx
-ERROR - terminating in script pw_reorderseqs_treeorder.pl - looks like there is no tree in file CENPA_primates_aln2a_only5seqs.fa_phymlAndPAML/CENPA_primates_aln2a_only5seqs.fa_PHYMLtree/CENPA_primates_aln2a_only5seqs.fa.phy_phyml_tree
-    xxxx not true!  pw_reorderseqs_treeorder.pl is expecting that first line but the input file I use here is the one BEFORE I added that line.   Need to either have pw_reorderseqs_treeorder.pl be flexible, OR give it the input tree file AFTER I added that line.
-
 
 When I know it's working I add a new tag and push it to [docker hub](https://hub.docker.com/repository/docker/jayoungfhcrc/paml_wrapper).  I update the version number each time:
 ```
-docker tag paml_wrapper jayoungfhcrc/paml_wrapper:version1.3.7
-docker push jayoungfhcrc/paml_wrapper:version1.3.7
+docker tag paml_wrapper jayoungfhcrc/paml_wrapper:version1.3.8
+docker push jayoungfhcrc/paml_wrapper:version1.3.8
 ```
 
 I then test my container in a totally different environment using the [Play with Docker](https://labs.play-with-docker.com) site - it seems to work. Once I have an instance running there:
 ```
-docker run -it jayoungfhcrc/paml_wrapper:version1.3.7
+docker run -it jayoungfhcrc/paml_wrapper:version1.3.8
 cd pamlWrapper/testData/
 pw_makeTreeAndRunPAML.pl ACE2_primates_aln1_NT.fa
 ```
@@ -98,12 +100,12 @@ I was previously using singularity (v3.5.3) to build the container for rhino/giz
 cd ~/FH_fast_storage/paml_screen/pamlWrapper/buildContainer
 module purge
 # module load Singularity/3.5.3
-# singularity build paml_wrapper-v1.3.7.sif docker://jayoungfhcrc/paml_wrapper:version1.3.7
+# singularity build paml_wrapper-v1.3.8.sif docker://jayoungfhcrc/paml_wrapper:version1.3.8
 
 module load Apptainer/1.0.1
-apptainer build paml_wrapper-v1.3.7.sif docker://jayoungfhcrc/paml_wrapper:version1.3.7
+apptainer build paml_wrapper-v1.3.8.sif docker://jayoungfhcrc/paml_wrapper:version1.3.8
 
-# singularity run --cleanenv paml_wrapper-v1.3.7.sif
+# singularity run --cleanenv paml_wrapper-v1.3.8.sif
 module purge
 ```
 
@@ -114,9 +116,9 @@ Now that I use the bioperl base, I do get a bunch of warnings while building the
 2022/11/22 17:00:52  warn rootless{root/.cpanm/work/1468017244.5/Statistics-Descriptive-3.0612/t/pod.t} ignoring (usually) harmless EPERM on setxattr "user.rootlesscontainers"
 ```
 
-A file called paml_wrapper-v1.3.7.sif appears. I want a copy of the singularity image file, and a script that uses it, in a more central place, for use by others:
+A file called paml_wrapper-v1.3.8.sif appears. I want a copy of the singularity image file, and a script that uses it, in a more central place, for use by others:
 ```
-cp paml_wrapper-v1.3.7.sif /fh/fast/malik_h/grp/malik_lab_shared/singularityImages
+cp paml_wrapper-v1.3.8.sif /fh/fast/malik_h/grp/malik_lab_shared/singularityImages
 ```
 
 
@@ -179,7 +181,7 @@ I can get a shell in the singularity/apptainer container like this:
 ```
 cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments
 module load Apptainer/1.0.1
-apptainer shell --cleanenv --bind $(pwd):/mnt -H /mnt /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.7.sif
+apptainer shell --cleanenv --bind $(pwd):/mnt -H /mnt /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.8.sif
 module purge
 ```
 
@@ -208,7 +210,7 @@ pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa
 Or, I can run some code using the singularity image without entering a shell (this is what the  `runPAML.pl=pw_makeTreeAndRunPAML_singularityWrapper.pl` script does for each alignment):
 ```
 module load Apptainer/1.0.1
-apptainer exec --cleanenv --bind $(pwd):/mnt -H /mnt /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.7.sif pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa 
+apptainer exec --cleanenv --bind $(pwd):/mnt -H /mnt /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.8.sif pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa 
 module purge
 ```
 

@@ -229,6 +229,9 @@ Mx1_PAML25.names.fa.phy_phyml_tree.nolen.names.pdf
 # I bet the second one over-wrote the first one, as their names got truncated to the same length
 ```
 
+I COULD make the script flexible to using tree in STANDARD newick format without that extra line, using the script to add it
+
+I COULD make the script flexible to using alignment that's already in PAML format, rather than requiring fasta format
 
 add to the paml learning notes that newer PAML versions require a first line in the tree file (  numSeqs numTrees)
 
