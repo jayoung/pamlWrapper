@@ -203,7 +203,7 @@ foreach my $fastaAlnFile (@files) {
             if ($pamlResult{'warnings'} eq "FAILED!!!") { 
                 die "\n\nERROR - terminating in script $scriptName - looks like PAML failed - mlc file is $pamlResult{'file'}\n\n";
             } else {
-                print "        WARNING - paml result had a warning $pamlResult{'warnings'} - see file $pamlResult{'file'}\n";
+                print "        WARNING - paml result had a warning: '$pamlResult{'warnings'}'\n            see file $pamlResult{'file'}\n";
             }
         }
         

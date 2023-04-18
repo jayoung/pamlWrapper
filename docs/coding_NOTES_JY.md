@@ -71,6 +71,26 @@ cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/testUserTree/sophie
 ~/FH_fast_storage/paml_screen/pamlWrapper/scripts/pw_makeTreeAndRunPAML_sbatchWrapper.pl --add=1 --usertree=cenpa_primate_species_trees_scientificnames_nobranch.nh cenpa_primate_aln3_scinames_v2.fasta
 ```
 
+Check those things again using singularity 
+```
+cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/testUserTree/tree_withFirstLine
+~/FH_fast_storage/paml_screen/pamlWrapper/scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --usertree=Dmel22genome_tree.withFirstLine.nwk Dmel_22_aln.fasta
+    # works
+
+cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/testUserTree/tree_withFirstLine
+~/FH_fast_storage/paml_screen/pamlWrapper/scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --usertree=Dmel22genome_tree.nwk Dmel_22_aln.fasta
+    # detects the problem and exits. Good.
+
+cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/testUserTree/sophie
+~/FH_fast_storage/paml_screen/pamlWrapper/scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --usertree=cenpa_primate_species_trees_scientificnames_nobranch.nh cenpa_primate_aln3_scinames_v2.fasta
+    # works
+
+# and no tree
+cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments/
+~/FH_fast_storage/paml_screen/pamlWrapper/scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl CENPA_primates_aln2a_only5seqs.fa
+    # works
+```
+
 # Testing the --verbose=1 option 
 
 added Feb 9, 2023
