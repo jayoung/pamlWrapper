@@ -2,7 +2,7 @@
 
 - for files with very long names I think R is truncating the file names for the pdf tree plot outputs. See (README.md)[README.md] for details
 
-## Fixes since v1.3.7
+## Fixes since v1.3.8
 
 ## paml_wrapper-v1.3.8
 - PAML 4.10.6 now requires tree files that contain an extra first line, but in paml_wrapper-v1.3.7, the `--usertree` option was broken for treefiles containing that extra first line.  I've fixed that now.
