@@ -21,8 +21,9 @@ $usage .= "    --format means format of the alias file: can be 'new_old' or 'old
 $usage .= "    --header (optional): sometimes we want to tell the script what a header line looks like for the alias file. Supply the first part of the header line. Default value is '$headerToIgnore'\n";
 
 ### get non-default option values
+# Using a colon : instead of the equals sign indicates that the option value is optional. 
 GetOptions("format=s"  => \$aliasFormat, 
-           "header=s"  => \$headerToIgnore) or die "\n\nERROR - terminating in script $scriptName - unknown option(s) specified on command line\n\n$usage\n\n"; 
+           "header:s"  => \$headerToIgnore) or die "\n\nERROR - terminating in script $scriptName - unknown option(s) specified on command line\n\n$usage\n\n"; 
 
 
 #################  start script
@@ -50,17 +51,18 @@ open (TABLE, "< $aliasfile") || die "\n\nERROR - terminating in script $scriptNa
 my @lines1 = <TABLE>;
 my %hashnames;
 foreach my $line1 (@lines1) {
-   chomp $line1;
-   #if ($line1 =~ m/^Order/) {next;}
-   if ($line1 =~ m/^$headerToIgnore/) {next;}
-
-   my $oldname = (split /\t/, $line1)[$oldnameField];
-   #$oldname =~ s/_ORF//;
-   #$oldname =~ s/\*//;
-   my $newname = (split /\t/, $line1)[$newnameField];
-   #print "alias old $oldname new $newname\n";
-   $hashnames{$oldname} = $newname;
- }
+    chomp $line1;
+    #if ($line1 =~ m/^Order/) {next;}
+    if ($headerToIgnore ne "") {
+        if ($line1 =~ m/^$headerToIgnore/) {next;}
+    }
+    my $oldname = (split /\t/, $line1)[$oldnameField];
+    #$oldname =~ s/_ORF//;
+    #$oldname =~ s/\*//;
+    my $newname = (split /\t/, $line1)[$newnameField];
+    #print "alias old $oldname new $newname\n";
+    $hashnames{$oldname} = $newname;
+}
 close TABLE;
 #print "\n\n";
 
