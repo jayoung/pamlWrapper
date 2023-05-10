@@ -13,6 +13,14 @@ Default behaviour is to generate a tree from the alignment (using PHYML), but st
 
 If you find bugs/problems or see room for improvement, you can submit an issue via [github](https://github.com/jayoung/pamlWrapper) or you can just email me.
 
+# See also
+
+"Beginner's Guide on the Use of PAML to Detect Positive Selection" [paper](https://academic.oup.com/mbe/article/40/4/msad041/7140562) and associated [github repo](https://github.com/abacus-gene/paml-tutorial/tree/main/positive-selection)  
+Sandra Álvarez-Carretero, Paschalia Kapli, Ziheng Yang  
+Molecular Biology and Evolution, Volume 40, Issue 4, April 2023  
+Includes some [R scripts](https://github.com/abacus-gene/paml-tutorial/blob/main/positive-selection/01_protocol_analyses/01_site_models/Find_bestmodel.R) to parse results
+
+
 # Instructions
 
 Input file(s): in-frame multiple sequence alignment(s), in fasta format
