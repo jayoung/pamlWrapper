@@ -117,7 +117,8 @@ RUN cd src/paml && \
 RUN mkdir pamlWrapper
 RUN --mount=type=bind,target=/src/pamlWrapper,source=. \
   cp -R /src/pamlWrapper /
-RUN rmdir /src/pamlWrapper
+## not sure why I had this in - commenting out, as it caused me trouble.
+# RUN rmdir /src/pamlWrapper
 RUN chmod a+r -R pamlWrapper && \
   chmod a+x pamlWrapper/scripts/*
 

@@ -33,18 +33,40 @@ Next, on the mac, we make sure we have the latest version of the pamlWrapper git
 
 The reason I do a fresh clone, rather than a pull, is because if I actually want to use the scripts on my mac I make a bunch of changes, but those are NOT changes I want to sync back to the repo. There's probably a way to get fancy and make a mac branch that merges the changes from main, but I'm not going to deal with that
 ```
-cd /Users/jayoung/gitProjects/
-rm -rf pamlWrapper
-git clone https://github.com/jayoung/pamlWrapper.git
+cd /Users/jayoung/gitProjects/pamlWrapper
+git pull
+cd ..
 ```
 
 I also make sure the Mac docker app is running, and using the app, I sign in to my account.
+
+Disable Netskope client on the mac, otherwise I get an error ("cannot verify github.com's certificate").
 
 Then we re-build the docker image
 ```
 cd /Users/jayoung/gitProjects/pamlWrapper
 docker build -t paml_wrapper -f buildContainer/Dockerfile .
+    xxx
 ```
+
+------                                                                                           
+ > [stage-0 22/25] RUN rmdir /src/pamlWrapper:                                                   
+0.175 rmdir: failed to remove '/src/pamlWrapper': No such file or directory                      
+------
+Dockerfile:120
+--------------------
+ 118 |     RUN --mount=type=bind,target=/src/pamlWrapper,source=. \
+ 119 |       cp -R /src/pamlWrapper /
+ 120 | >>> RUN rmdir /src/pamlWrapper
+ 121 |     RUN chmod a+r -R pamlWrapper && \
+ 122 |       chmod a+x pamlWrapper/scripts/*
+--------------------
+ERROR: failed to solve: process "/bin/sh -c rmdir /src/pamlWrapper" did not complete successfully: exit code: 1
+
+
+
+Re-enable Netskope client on the mac
+xxxx
 
 To get a shell for a quick look:
 ```
