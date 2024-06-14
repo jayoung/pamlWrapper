@@ -2,7 +2,8 @@
 
 - for files with very long names I think R is truncating the file names for the pdf tree plot outputs. See (README.md)[README.md] for details
 
-## Fixes since v1.3.8 (have not yet rebuilt the singularity container)
+## Fixes since v1.3.9
+- more fixes to the `pw_parsedPAMLconvertToWideFormat.pl` script. Now assuming I'll mostly run in sbatch mode, on one gene at a time. If I need to combine results for pairs of CpG-masked and unmasked alignments, I'll make a different script to do that.
 
 ## paml_wrapper_v1.3.9
 - tiny changes in pw_changenamesinphyliptreefile.pl to make it more useful outside the pipeline
