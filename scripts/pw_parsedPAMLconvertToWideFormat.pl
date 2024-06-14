@@ -24,18 +24,21 @@ use POSIX qw/floor/;
 ## xxx I might be able to add BH-corrected p-values in this script (see https://metacpan.org/pod/Statistics::Multtest) but for now I will open the output in R and do it
 
 
-############# get the command line options and chec them 
+############# get the command line options and check them 
 ## set defaults for each option
-my $includeCpGMasked = 0; ## I mostly DO want to look for results on CpG-masked versions of the alignments, but not always (e.g. if I have run PAML on multipl GARD segments of the same gene, and did not do masked)
+my $includeCpGMasked = 0; ## I mostly DO want to look for corresponding results on CpG-masked versions of the alignments, but not always (e.g. if I have run PAML on multiple GARD segments of the same gene, and did not do masked)
+my $ignoreCpGmasking = 1; ## perhaps now I mostly want to run this in a very simple mode, where I just convert long output to wide output, ignoreing whether or not the alignment is CpG masked.  I've made this more complex than it needs to be by having two options $includeCpGMasked and $ignoreCpGmasking. Should think a bit about the situations where I want to run this. Right now I'm making this work best for situations where I run the entire pipeline on single alignments individually, and don't want to try to find and combine the masked and unmasked results for the same gene.
+
 my $splitGeneName = 0; ## I mostly DO want to get gene name by splitting up input file name, but not always (e.g.. if I have run PAML on multiple GARD segments of the same gene)
 my $figureOutSegmentPositions = ''; ## in the unusual case I ran PAML on GARD segments I might want to know segment name,startNT,endNT,startAA,endAA
 
 my $scriptName = "pw_parsedPAMLconvertToWideFormat.pl";
 
 ## GetOptions syntax:  https://perldoc.perl.org/Getopt/Long.html
-GetOptions ( "cpg=i"      => \$includeCpGMasked, 
-             "genename=i" => \$splitGeneName, 
-             "segname"    => \$figureOutSegmentPositions) or die "\n\nERROR - terminating in script $scriptName - unknown option(s) specified on command line\n\n";
+GetOptions ( "cpg=i"        => \$includeCpGMasked, 
+             "ignore_cpg=i" => \$ignoreCpGmasking, 
+             "genename=i"   => \$splitGeneName, 
+             "segname"      => \$figureOutSegmentPositions) or die "\n\nERROR - terminating in script $scriptName - unknown option(s) specified on command line\n\n";
 
 ################
 
@@ -89,8 +92,9 @@ foreach my $file (@ARGV) {
         }
         my $mask = "unmasked"; 
         #print "line $line geneName $geneName\n";
-        if ($thisAlignmentName =~ m/removeCpGinframe/) { $mask = "masked"; }
-
+        if ($ignoreCpGmasking == 0) {
+            if ($thisAlignmentName =~ m/removeCpGinframe/) { $mask = "masked"; }
+        }
         my $mod = $thisLineHash{'model'};
         my $codon = $thisLineHash{'codonModel'};
         my $omega = $thisLineHash{'startingOmega'};

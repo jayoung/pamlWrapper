@@ -2,8 +2,11 @@
 
 - for files with very long names I think R is truncating the file names for the pdf tree plot outputs. See (README.md)[README.md] for details
 
-## Fixes since v1.3.8
+## Fixes since v1.3.8 (have not yet rebuilt the singularity container)
+
+## paml_wrapper_v1.3.9
 - tiny changes in pw_changenamesinphyliptreefile.pl to make it more useful outside the pipeline
+- changed `pw_makeTreeAndRunPAML.pl` to use --cpg=1 option when it calls the `pw_parsedPAMLconvertToWideFormat.pl` script. This fixes a situation whereby I was running PAML on a single CpG-masked alignment, and it produced an empty "wide" format output, because it didn't have the unmasked alignment to match the results up to.
 
 ## paml_wrapper-v1.3.8
 - PAML 4.10.6 now requires tree files that contain an extra first line, but in paml_wrapper-v1.3.7, the `--usertree` option was broken for treefiles containing that extra first line.  I've fixed that now.

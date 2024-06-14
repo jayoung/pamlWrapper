@@ -232,10 +232,12 @@ foreach my $alignmentFile (@ARGV) {
         # print "    pamlDir $pamlDir\n";
         # print "    alnFileWithoutDir $alnFileWithoutDir\n";
 
-        #system ("$masterPipelineDir/scripts/pw_parsePAMLoutput.pl $otherOptions -verboseTable=$verboseTable -strict=$strictness -omega=$initialOrFixedOmega -codon=$codonFreqModel -clean=$cleanData -BEB=$BEBprobThresholdToPrintSelectedSite $alnFileWithoutDir");
+        # system ("$masterPipelineDir/scripts/pw_parsePAMLoutput.pl $otherOptions -verboseTable=$verboseTable -strict=$strictness -omega=$initialOrFixedOmega -codon=$codonFreqModel -clean=$cleanData -BEB=$BEBprobThresholdToPrintSelectedSite $alnFileWithoutDir");
         system ("$masterPipelineDir/scripts/pw_parsePAMLoutput.pl $otherOptions -verboseTable=$verboseTable -strict=$strictness -omega=$initialOrFixedOmega -codon=$codonFreqModel -clean=$cleanData -BEB=$BEBprobThresholdToPrintSelectedSite --dir=$pamlDir $alnFileWithoutDir");
 
+        ### before Jun 14 2024 I did not include the --cpg=1 option, so the script would produce empty output if run on a single CpG-masked alignment.  xxx still testing
         system ("$masterPipelineDir/scripts/pw_parsedPAMLconvertToWideFormat.pl $parsedPAMLoutputFile");
+        # system ("$masterPipelineDir/scripts/pw_parsedPAMLconvertToWideFormat.pl --cpg=1 $parsedPAMLoutputFile");
         if(!-e $parsedPAMLoutputFile) {
             die "\n\nERROR - terminating in script $scriptName - parsed PAML output file does not exist: $parsedPAMLoutputFile\n\n";
         }
