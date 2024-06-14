@@ -46,27 +46,7 @@ Then we re-build the docker image
 ```
 cd /Users/jayoung/gitProjects/pamlWrapper
 docker build -t paml_wrapper -f buildContainer/Dockerfile .
-    xxx
 ```
-
-------                                                                                           
- > [stage-0 22/25] RUN rmdir /src/pamlWrapper:                                                   
-0.175 rmdir: failed to remove '/src/pamlWrapper': No such file or directory                      
-------
-Dockerfile:120
---------------------
- 118 |     RUN --mount=type=bind,target=/src/pamlWrapper,source=. \
- 119 |       cp -R /src/pamlWrapper /
- 120 | >>> RUN rmdir /src/pamlWrapper
- 121 |     RUN chmod a+r -R pamlWrapper && \
- 122 |       chmod a+x pamlWrapper/scripts/*
---------------------
-ERROR: failed to solve: process "/bin/sh -c rmdir /src/pamlWrapper" did not complete successfully: exit code: 1
-
-
-
-Re-enable Netskope client on the mac
-xxxx
 
 To get a shell for a quick look:
 ```
@@ -97,20 +77,26 @@ rm -r CENPA_primates_aln2a_only5seqs.fa_phymlAndPAML
 rm -r CENPA_primates_aln2a_only5seqs.fa_phymlAndPAML
 ```
 
+
 When I know it's working I add a new tag and push it to [docker hub](https://hub.docker.com/repository/docker/jayoungfhcrc/paml_wrapper).  I update the version number each time:
 ```
-docker tag paml_wrapper jayoungfhcrc/paml_wrapper:version1.3.8
-docker push jayoungfhcrc/paml_wrapper:version1.3.8
+docker tag paml_wrapper jayoungfhcrc/paml_wrapper:version1.3.9
+docker push jayoungfhcrc/paml_wrapper:version1.3.9
 ```
 
 I then test my container in a totally different environment using the [Play with Docker](https://labs.play-with-docker.com) site - it seems to work. Once I have an instance running there:
 ```
-docker run -it jayoungfhcrc/paml_wrapper:version1.3.8
+docker run -it jayoungfhcrc/paml_wrapper:version1.3.9
 cd pamlWrapper/testData/
 pw_makeTreeAndRunPAML.pl ACE2_primates_aln1_NT.fa
 ```
 
+
+Re-enable Netskope client on the mac
+
+
 I noticed (when I run on my Mac) that within the Docker container, the timestamps for files seems to be based on Europe time. That's weird. The timestamps look fine from outside the Docker container though. I probably don't care about that. I'm not going to worry about it.
+
 
 # Convert docker image to singularity/apptainer
 
@@ -122,12 +108,12 @@ I was previously using singularity (v3.5.3) to build the container for rhino/giz
 cd ~/FH_fast_storage/paml_screen/pamlWrapper/buildContainer
 module purge
 # module load Singularity/3.5.3
-# singularity build paml_wrapper-v1.3.8.sif docker://jayoungfhcrc/paml_wrapper:version1.3.8
+# singularity build paml_wrapper-v1.3.9.sif docker://jayoungfhcrc/paml_wrapper:version1.3.9
 
-module load Apptainer/1.0.1
-apptainer build paml_wrapper-v1.3.8.sif docker://jayoungfhcrc/paml_wrapper:version1.3.8
+module load Apptainer/1.1.6
+apptainer build paml_wrapper-v1.3.9.sif docker://jayoungfhcrc/paml_wrapper:version1.3.9
 
-# singularity run --cleanenv paml_wrapper-v1.3.8.sif
+# singularity run --cleanenv paml_wrapper-v1.3.9.sif
 module purge
 ```
 
@@ -138,9 +124,9 @@ Now that I use the bioperl base, I do get a bunch of warnings while building the
 2022/11/22 17:00:52  warn rootless{root/.cpanm/work/1468017244.5/Statistics-Descriptive-3.0612/t/pod.t} ignoring (usually) harmless EPERM on setxattr "user.rootlesscontainers"
 ```
 
-A file called paml_wrapper-v1.3.8.sif appears. I want a copy of the singularity image file, and a script that uses it, in a more central place, for use by others:
+A file called paml_wrapper-v1.3.9.sif appears. I want a copy of the singularity image file, and a script that uses it, in a more central place, for use by others:
 ```
-cp paml_wrapper-v1.3.8.sif /fh/fast/malik_h/grp/malik_lab_shared/singularityImages
+cp paml_wrapper-v1.3.9.sif /fh/fast/malik_h/grp/malik_lab_shared/singularityImages
 ```
 
 
@@ -150,9 +136,10 @@ cd ~/FH_fast_storage/paml_screen/pamlWrapper/testData
 
 # test tiny alignment, making a tree from the alignment
 ../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl CENPA_primates_aln2a_only5seqs.fa
+```
 
-
-# using different codeml versions
+Test singularity container, using different codeml versions
+```
 mkdir v4.9g
 cd v4.9g
 cp ../CENPA_primates_aln2a_only5seqs.fa .
@@ -191,8 +178,8 @@ cd userTree_badTree
 cp ../CENPA_primates_aln2a_only5seqs.fa.phy.usertree.badNames ../CENPA_primates_aln2a_only5seqs.fa .
 
 ../../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --usertree=CENPA_primates_aln2a_only5seqs.fa.phy.usertree.badNames CENPA_primates_aln2a_only5seqs.fa
-
 ```
+
 
 Then, when I'm sure it's working, update `runPAML.pl` script (that's the one others are using):
 ```
@@ -203,7 +190,7 @@ I can get a shell in the singularity/apptainer container like this:
 ```
 cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments
 module load Apptainer/1.0.1
-apptainer shell --cleanenv --bind $(pwd):/mnt -H /mnt /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.8.sif
+apptainer shell --cleanenv --bind $(pwd):/mnt -H /mnt /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.9.sif
 module purge
 ```
 
@@ -232,7 +219,7 @@ pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa
 Or, I can run some code using the singularity image without entering a shell (this is what the  `runPAML.pl=pw_makeTreeAndRunPAML_singularityWrapper.pl` script does for each alignment):
 ```
 module load Apptainer/1.0.1
-apptainer exec --cleanenv --bind $(pwd):/mnt -H /mnt /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.8.sif pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa 
+apptainer exec --cleanenv --bind $(pwd):/mnt -H /mnt /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.9.sif pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa 
 module purge
 ```
 
