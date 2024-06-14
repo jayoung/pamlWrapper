@@ -180,16 +180,15 @@ cp ../CENPA_primates_aln2a_only5seqs.fa.phy.usertree.badNames ../CENPA_primates_
 ../../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --usertree=CENPA_primates_aln2a_only5seqs.fa.phy.usertree.badNames CENPA_primates_aln2a_only5seqs.fa
 ```
 
-
 Then, when I'm sure it's working, update `runPAML.pl` script (that's the one others are using):
 ```
-cp ../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl /fh/fast/malik_h/grp/malik_lab_shared/bin/runPAML.pl
+cp ../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl /fh/fast/malik_h/grp/malik_lab_shared/linux_gizmo/bin/janet_scripts/runPAML.pl
 ```
 
 I can get a shell in the singularity/apptainer container like this:
 ```
 cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments
-module load Apptainer/1.0.1
+module load Apptainer/1.1.6
 apptainer shell --cleanenv --bind $(pwd):/mnt -H /mnt /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.9.sif
 module purge
 ```
@@ -218,7 +217,7 @@ pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa
 
 Or, I can run some code using the singularity image without entering a shell (this is what the  `runPAML.pl=pw_makeTreeAndRunPAML_singularityWrapper.pl` script does for each alignment):
 ```
-module load Apptainer/1.0.1
+module load Apptainer/1.1.6
 apptainer exec --cleanenv --bind $(pwd):/mnt -H /mnt /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.9.sif pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa 
 module purge
 ```

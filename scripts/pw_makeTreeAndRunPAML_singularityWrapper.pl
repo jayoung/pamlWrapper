@@ -185,7 +185,7 @@ foreach my $alnFile (@files) {
     print SH "#!/bin/bash\n";
     print SH "source /app/lmod/lmod/init/profile\n";
     # print SH "module load Singularity/3.5.3\n";
-    print SH "module load Apptainer/1.0.1\n";
+    print SH "module load Apptainer/1.1.6\n";
     print SH "$singularityCommand\n";
     #print SH "echo\n";
     print SH "module purge\n";
