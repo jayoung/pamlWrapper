@@ -35,7 +35,6 @@ The reason I do a fresh clone, rather than a pull, is because if I actually want
 ```
 cd /Users/jayoung/gitProjects/pamlWrapper
 git pull
-cd ..
 ```
 
 I also make sure the Mac docker app is running, and using the app, I sign in to my account.
@@ -80,13 +79,13 @@ rm -r CENPA_primates_aln2a_only5seqs.fa_phymlAndPAML
 
 When I know it's working I add a new tag and push it to [docker hub](https://hub.docker.com/repository/docker/jayoungfhcrc/paml_wrapper).  I update the version number each time:
 ```
-docker tag paml_wrapper jayoungfhcrc/paml_wrapper:version1.3.9
-docker push jayoungfhcrc/paml_wrapper:version1.3.9
+docker tag paml_wrapper jayoungfhcrc/paml_wrapper:version1.3.10
+docker push jayoungfhcrc/paml_wrapper:version1.3.10
 ```
 
 I then test my container in a totally different environment using the [Play with Docker](https://labs.play-with-docker.com) site - it seems to work. Once I have an instance running there:
 ```
-docker run -it jayoungfhcrc/paml_wrapper:version1.3.9
+docker run -it jayoungfhcrc/paml_wrapper:version1.3.10
 cd pamlWrapper/testData/
 pw_makeTreeAndRunPAML.pl ACE2_primates_aln1_NT.fa
 ```
@@ -108,12 +107,12 @@ I was previously using singularity (v3.5.3) to build the container for rhino/giz
 cd ~/FH_fast_storage/paml_screen/pamlWrapper/buildContainer
 module purge
 # module load Singularity/3.5.3
-# singularity build paml_wrapper-v1.3.9.sif docker://jayoungfhcrc/paml_wrapper:version1.3.9
+# singularity build paml_wrapper-v1.3.10.sif docker://jayoungfhcrc/paml_wrapper:version1.3.10
 
 module load Apptainer/1.1.6
-apptainer build paml_wrapper-v1.3.9.sif docker://jayoungfhcrc/paml_wrapper:version1.3.9
+apptainer build paml_wrapper-v1.3.10.sif docker://jayoungfhcrc/paml_wrapper:version1.3.10
 
-# singularity run --cleanenv paml_wrapper-v1.3.9.sif
+# singularity run --cleanenv paml_wrapper-v1.3.10.sif
 module purge
 ```
 
@@ -124,9 +123,9 @@ Now that I use the bioperl base, I do get a bunch of warnings while building the
 2022/11/22 17:00:52  warn rootless{root/.cpanm/work/1468017244.5/Statistics-Descriptive-3.0612/t/pod.t} ignoring (usually) harmless EPERM on setxattr "user.rootlesscontainers"
 ```
 
-A file called paml_wrapper-v1.3.9.sif appears. I want a copy of the singularity image file, and a script that uses it, in a more central place, for use by others:
+A file called paml_wrapper-v1.3.10.sif appears. I want a copy of the singularity image file, and a script that uses it, in a more central place, for use by others:
 ```
-cp paml_wrapper-v1.3.9.sif /fh/fast/malik_h/grp/malik_lab_shared/singularityImages
+cp paml_wrapper-v1.3.10.sif /fh/fast/malik_h/grp/malik_lab_shared/singularityImages
 ```
 
 
@@ -189,7 +188,7 @@ I can get a shell in the singularity/apptainer container like this:
 ```
 cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments
 module load Apptainer/1.1.6
-apptainer shell --cleanenv --bind $(pwd):/mnt -H /mnt /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.9.sif
+apptainer shell --cleanenv --bind $(pwd):/mnt -H /mnt /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.10.sif
 module purge
 ```
 
@@ -218,7 +217,7 @@ pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa
 Or, I can run some code using the singularity image without entering a shell (this is what the  `runPAML.pl=pw_makeTreeAndRunPAML_singularityWrapper.pl` script does for each alignment):
 ```
 module load Apptainer/1.1.6
-apptainer exec --cleanenv --bind $(pwd):/mnt -H /mnt /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.9.sif pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa 
+apptainer exec --cleanenv --bind $(pwd):/mnt -H /mnt /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.10.sif pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa 
 module purge
 ```
 
