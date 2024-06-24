@@ -33,7 +33,7 @@ foreach my $file (@ARGV) {
     if ($file !~ m/PAMLsummary\.wide.tsv/) {
         die "\n\nERROR - terminating in script $scriptName - did you really want to run this script on file $file ? It is not a PAMLsummary.wide.tsv file. If you did mean that, change the script\n\n";
     }
-    print "## file $file\n";
+    # print "## file $file\n";
     open (IN, "< $file");
     while (<IN>) {
         my $line = $_;

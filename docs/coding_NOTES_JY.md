@@ -138,3 +138,24 @@ cd /Users/jayoung/testPAMLversions/2023_Feb27/test_4.9a_mac
 /Users/jayoung/gitProjects/pamlWrapper/scripts/pw_makeTreeAndRunPAML.pl --verboseTable=1 --smallDiff=1e-8 --codeml=/Users/jayoung/source_codes/paml/compiled/paml4.9a/src/codeml --usertree=ACE2_primates_aln1_NT.fa.phy_phyml_tree.nolen ACE2_primates_aln1_NT.fa.phy.fa
 ```
 
+# tests Jun 24 2024
+
+I think the ape package is missing from one of my R installations. Which one?
+```
+cd ~/FH_fast_storage/paml_screen/pamlWrapper/testData
+runPAML.pl CENPA_primates_aln2a_only5seqs.fa
+```
+
+in this file:
+```
+CENPA_primates_aln2a_only5seqs.fa_PHYMLtree/CENPA_primates_aln2a_only5seqs.fa.phy_phyml_tree.nolen.treeplot.Rout
+```
+I see this error:
+```
+Error in library(ape) : there is no package called 'ape'
+Execution halted
+```
+
+My docker container is supposed to install ape, but obviously it failed. 
+
+xxx look for errors in docker build
