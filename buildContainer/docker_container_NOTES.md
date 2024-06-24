@@ -92,9 +92,7 @@ docker tag paml_wrapper jayoungfhcrc/paml_wrapper:version1.3.11
 docker push jayoungfhcrc/paml_wrapper:version1.3.11
 ```
 
-xxx
-
-git push from mac
+xxx git push from mac
 
 I then test my container in a totally different environment using the [Play with Docker](https://labs.play-with-docker.com) site - it seems to work. Once I have an instance running there:
 ```
@@ -102,6 +100,8 @@ docker run -it jayoungfhcrc/paml_wrapper:version1.3.11
 cd pamlWrapper/testData/
 pw_makeTreeAndRunPAML.pl ACE2_primates_aln1_NT.fa
 ```
+
+xxx
 
 
 Re-enable Netskope client on the mac
