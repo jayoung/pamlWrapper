@@ -8,6 +8,15 @@ I got it working in April 2022, using this base image: continuumio/miniconda3:4.
 
 In Nov 2022 I decided I wanted a newer version of PAML so I needed to rebuild the docker image. I wanted to install PAML from scratch rather than using conda.   Even without PAML, I now had trouble installing bioperl using conda.  I decided to abandon the miniconda base, and use a Bioperl base image for my docker container ("bioperl/bioperl:release-1-6-924").   I think I have it working.
 
+xxxx
+
+June 2024 
+- first, get ape package installation to work
+- second, see if I can use the newer bioperl container base
+
+xxxx
+
+
 # Locations and paths
 
 My git repo is [here](https://github.com/jayoung/pamlWrapper).   
@@ -55,7 +64,7 @@ docker run -v `pwd`:/workingDir -it paml_wrapper
 Perhaps I run some standard tests, something like this:
 ```
 # make sure I have all the necessary perl modules installed:
-scripts/pw_testScript.bioperl 
+pamlWrapper/scripts/pw_testScript.bioperl 
 
 # check other executables installed:
 which codeml 
@@ -79,13 +88,17 @@ rm -r CENPA_primates_aln2a_only5seqs.fa_phymlAndPAML
 
 When I know it's working I add a new tag and push it to [docker hub](https://hub.docker.com/repository/docker/jayoungfhcrc/paml_wrapper).  I update the version number each time:
 ```
-docker tag paml_wrapper jayoungfhcrc/paml_wrapper:version1.3.10
-docker push jayoungfhcrc/paml_wrapper:version1.3.10
+docker tag paml_wrapper jayoungfhcrc/paml_wrapper:version1.3.11
+docker push jayoungfhcrc/paml_wrapper:version1.3.11
 ```
+
+xxx
+
+git push from mac
 
 I then test my container in a totally different environment using the [Play with Docker](https://labs.play-with-docker.com) site - it seems to work. Once I have an instance running there:
 ```
-docker run -it jayoungfhcrc/paml_wrapper:version1.3.10
+docker run -it jayoungfhcrc/paml_wrapper:version1.3.11
 cd pamlWrapper/testData/
 pw_makeTreeAndRunPAML.pl ACE2_primates_aln1_NT.fa
 ```
@@ -107,12 +120,12 @@ I was previously using singularity (v3.5.3) to build the container for rhino/giz
 cd ~/FH_fast_storage/paml_screen/pamlWrapper/buildContainer
 module purge
 # module load Singularity/3.5.3
-# singularity build paml_wrapper-v1.3.10.sif docker://jayoungfhcrc/paml_wrapper:version1.3.10
+# singularity build paml_wrapper-v1.3.11.sif docker://jayoungfhcrc/paml_wrapper:version1.3.11
 
 module load Apptainer/1.1.6
-apptainer build paml_wrapper-v1.3.10.sif docker://jayoungfhcrc/paml_wrapper:version1.3.10
+apptainer build paml_wrapper-v1.3.11.sif docker://jayoungfhcrc/paml_wrapper:version1.3.11
 
-# singularity run --cleanenv paml_wrapper-v1.3.10.sif
+# singularity run --cleanenv paml_wrapper-v1.3.11.sif
 module purge
 ```
 
@@ -123,9 +136,9 @@ Now that I use the bioperl base, I do get a bunch of warnings while building the
 2022/11/22 17:00:52  warn rootless{root/.cpanm/work/1468017244.5/Statistics-Descriptive-3.0612/t/pod.t} ignoring (usually) harmless EPERM on setxattr "user.rootlesscontainers"
 ```
 
-A file called paml_wrapper-v1.3.10.sif appears. I want a copy of the singularity image file, and a script that uses it, in a more central place, for use by others:
+A file called paml_wrapper-v1.3.11.sif appears. I want a copy of the singularity image file, and a script that uses it, in a more central place, for use by others:
 ```
-cp paml_wrapper-v1.3.10.sif /fh/fast/malik_h/grp/malik_lab_shared/singularityImages
+cp paml_wrapper-v1.3.11.sif /fh/fast/malik_h/grp/malik_lab_shared/singularityImages
 ```
 
 
@@ -188,7 +201,7 @@ I can get a shell in the singularity/apptainer container like this:
 ```
 cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments
 module load Apptainer/1.1.6
-apptainer shell --cleanenv --bind $(pwd):/mnt -H /mnt /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.10.sif
+apptainer shell --cleanenv --bind $(pwd):/mnt -H /mnt /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.11.sif
 module purge
 ```
 
@@ -217,7 +230,7 @@ pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa
 Or, I can run some code using the singularity image without entering a shell (this is what the  `runPAML.pl=pw_makeTreeAndRunPAML_singularityWrapper.pl` script does for each alignment):
 ```
 module load Apptainer/1.1.6
-apptainer exec --cleanenv --bind $(pwd):/mnt -H /mnt /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.10.sif pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa 
+apptainer exec --cleanenv --bind $(pwd):/mnt -H /mnt /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.11.sif pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa 
 module purge
 ```
 

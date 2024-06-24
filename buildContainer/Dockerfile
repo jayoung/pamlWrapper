@@ -16,7 +16,7 @@ FROM bioperl/bioperl:release-1-6-924
 RUN apt-get update && apt-get install build-essential autoconf wget -y
 
 
-#### install R : this gets me v3.4.4 (OLD, but I don't care.)
+#### install R : this gets me v3.4.4 (OLD, but I don't care. It's from approx 2018-03-15)
 # I suspect it's hard to install R 4.x on this base image
 # I only use R+ape for some very simple plots.
 # https://www.digitalocean.com/community/tutorials/how-to-set-up-r-on-ubuntu-14-04
@@ -24,8 +24,9 @@ RUN sh -c 'echo "deb http://cran.rstudio.com/bin/linux/ubuntu trusty/" >> /etc/a
 RUN gpg --keyserver keyserver.ubuntu.com --recv-key E298A3A825C0D65DFD57CBB651716619E084DAB9
 RUN gpg -a --export E298A3A825C0D65DFD57CBB651716619E084DAB9 | apt-key add -
 RUN apt-get update && apt-get install r-base -y
-# install the ape R package (5.6-2)
-RUN R -e "install.packages('ape',dependencies=TRUE, repos='http://cran.rstudio.com/')"
+# install the ape R package (5.6-2 2022-03-02) (newer version doesn't work in this base but I don't care)
+RUN R -e "install.packages('https://cran.r-project.org/src/contrib/Archive/Rcpp/Rcpp_1.0.7.tar.gz', dependencies=FALSE, repos=NULL, type='source')"
+RUN R -e "install.packages('https://cran.r-project.org/src/contrib/Archive/ape/ape_5.6-2.tar.gz', dependencies=FALSE, repos=NULL, type='source')"
 
 
 ## install phyml from the tarball - current release. 
