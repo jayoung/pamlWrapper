@@ -18,7 +18,7 @@ use strict;
 
 ###### set up defaults for all the options
 my %options;
-$options{'sif'} = "/fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.10.sif"; # singularity image file
+$options{'sif'} = "/fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.11.sif"; # singularity image file
 $options{'walltime'} = "1-0"; ## walltime for sbatch jobs
 $options{'job'} = "pw_";   
 $options{'omega'} = 0.4;

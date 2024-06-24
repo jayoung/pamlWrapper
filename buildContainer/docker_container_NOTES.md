@@ -92,8 +92,6 @@ docker tag paml_wrapper jayoungfhcrc/paml_wrapper:version1.3.11
 docker push jayoungfhcrc/paml_wrapper:version1.3.11
 ```
 
-xxx git push from mac
-
 I then test my container in a totally different environment using the [Play with Docker](https://labs.play-with-docker.com) site - it seems to work. Once I have an instance running there:
 ```
 docker run -it jayoungfhcrc/paml_wrapper:version1.3.11
@@ -101,7 +99,6 @@ cd pamlWrapper/testData/
 pw_makeTreeAndRunPAML.pl ACE2_primates_aln1_NT.fa
 ```
 
-xxx
 
 
 Re-enable Netskope client on the mac
@@ -119,13 +116,10 @@ I was previously using singularity (v3.5.3) to build the container for rhino/giz
 ```
 cd ~/FH_fast_storage/paml_screen/pamlWrapper/buildContainer
 module purge
-# module load Singularity/3.5.3
-# singularity build paml_wrapper-v1.3.11.sif docker://jayoungfhcrc/paml_wrapper:version1.3.11
 
 module load Apptainer/1.1.6
 apptainer build paml_wrapper-v1.3.11.sif docker://jayoungfhcrc/paml_wrapper:version1.3.11
-
-# singularity run --cleanenv paml_wrapper-v1.3.11.sif
+# apptainer run --cleanenv paml_wrapper-v1.3.11.sif
 module purge
 ```
 

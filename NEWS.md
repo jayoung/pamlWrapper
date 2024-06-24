@@ -4,6 +4,9 @@
 
 ## Fixes since v1.3.9
 
+## paml_wrapper_v1.3.11
+- docker container's R installation failed to install the ape package, so I got an error when trying to plot the trees. I think the newer ape package version available at CRAN probably fails to install on the very old version of R I have in the container. I fixed it by specifying an older version of ape, and by manually installing the Rcpp package rather than doing it as a dependency.
+
 ## paml_wrapper_v1.3.10
 - more fixes to the `pw_parsedPAMLconvertToWideFormat.pl` script. Now assuming I'll mostly run in sbatch mode, on one gene at a time. If I need to combine results for pairs of CpG-masked and unmasked alignments, I'll make a different script to do that.
 
