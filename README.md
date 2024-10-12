@@ -20,6 +20,14 @@ Sandra Álvarez-Carretero, Paschalia Kapli, Ziheng Yang
 Molecular Biology and Evolution, Volume 40, Issue 4, April 2023  
 Includes some [R scripts](https://github.com/abacus-gene/paml-tutorial/blob/main/positive-selection/01_protocol_analyses/01_site_models/Find_bestmodel.R) to parse results
 
+# Alternatives to using this wrapper
+
+I haven't actually tried many of these, but they also offer ways to run PAML
+- [EasyCodeML](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6467853/) - a GUI wrapper for PAML
+- [DGINN pipeline](https://github.com/leapicard/DGINN) - includes PAML and several other methods, as well as alignment prep, recombination detection, duplication detection.
+- [PoSeiDon pipeline](https://github.com/hoelzer/poseidon) - nextflow pipeline with docker support. Builds alignment, checks for recombination, looks for positive selection
+- PosiGene pipeline - [github](https://github.com/gengit/PosiGene) and [publication](https://pubmed.ncbi.nlm.nih.gov/28334822/) 
+- for prokaryotes, [PSP "Positive Selection analysis for Prokaryotic genomes"](https://pubmed.ncbi.nlm.nih.gov/24373418/). Genome-scale. Uses PAML / FitModel for selection analysis.
 
 # Instructions
 
