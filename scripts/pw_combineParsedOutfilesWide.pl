@@ -31,8 +31,8 @@ foreach my $file (@ARGV) {
     if (!-e $file) {
         die "\n\nERROR - terminating in script $scriptName - file $file does not exist\n\n";
     }
-    if ($file !~ m/PAMLsummary\.wide\.tsv/ & $file !~ m/\.wide\.combineMasking\.tsv/) {
-        die "\n\nERROR - terminating in script $scriptName - did you really want to run this script on file $file ? It is not a PAMLsummary.wide.tsv or a PAMLsummary.wide.combineMasking.tsv file. If you did mean that, change the script\n\n";
+    if ($file !~ m/\.wide\.tsv/ & $file !~ m/\.wide\.combineMasking\.tsv/) {
+        die "\n\nERROR - terminating in script $scriptName - did you really want to run this script on file $file ? It is not a .wide.tsv or a .wide.combineMasking.tsv file. If you did mean that, change the script\n\n";
     }
     # print "## file $file\n";
     open (IN, "< $file");
@@ -41,13 +41,17 @@ foreach my $file (@ARGV) {
         my @f = split /\t/, $line;
         my $numFields = @f;
         # print "line $line\n\nnumFields $numFields\n\n"; die;
-        if (($line =~ m/^Gene\sname/) || ($line =~ m/^seqFile/) || ($line =~ m/^gene/)) {
+        if (($line =~ m/^Gene\sname/) || ($line =~ m/^seqFile/) || ($line =~ m/^gene/) || ($line =~ m/^tsvFile/)) {
             if ($firstFile) { 
                 print OUT "tsvFile\t$line"; 
                 $firstFileNumFields = $numFields;
-            } else { next; }
-            
+            } else { 
+                next; 
+            }
         } else {
+            if (!defined $firstFileNumFields) {
+                die "\n\nERROR - didn't find expected header line in the first file. Script expects it to start with 'Gene name' or 'seqFile' or 'gene' or 'tsvFile'\n\n";
+            }
             print OUT "$file\t$line"; 
             if ($numFields != $firstFileNumFields) {
                 die "\n\nERROR - first file had $firstFileNumFields fields per line, but file $file has $numFields\n\n";

@@ -12,3 +12,4 @@ slurm-*
 screenoutput
 .vscode
 .bash_history
+.Rproj.user

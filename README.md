@@ -38,7 +38,7 @@ Input file(s): in-frame multiple sequence alignment(s), in fasta format
 Log in to rhino or gizmo (doesn't matter which), navigate to the folder where your alignment(s) are, and run this script, specifying your alignment(s) as input files:
 ```
 cd ~/my/folder/with/alignments
-/fh/fast/malik_h/grp/malik_lab_shared/bin/runPAML.pl myAln1.fa myAln2.fa
+/fh/fast/malik_h/grp/malik_lab_shared/linux_gizmo/bin/janet_scripts/runPAML.pl myAln1.fa myAln2.fa
 ```
 
 Depending on how your rhino/gizmo account is set up, you might even be able to run it using a simpler form of the command:
@@ -76,19 +76,19 @@ To change the PAML options, use these options when calling runPAML.pl:
 
 Example:
 ```
-/fh/fast/malik_h/grp/malik_lab_shared/bin/runPAML.pl --codon=3 --omega=3 --clean=1 ACE2_primates_aln1_NT.fa
+/fh/fast/malik_h/grp/malik_lab_shared/linux_gizmo/bin/janet_scripts/runPAML.pl --codon=3 --omega=3 --clean=1 ACE2_primates_aln1_NT.fa
 ```
 
 To **supply your own tree file** use the `--usertree=myTree.nwk` option (default is to generate a tree from the input alignment using PHYML). Treefile should be in newick format. The script expects that the sequence names match exactly between the alignment and the tree, and won't run PAML unless they do. If they don't match, it will provide a few hints on how to make a tree where names match.
 
 Example:
 ```
-/fh/fast/malik_h/grp/malik_lab_shared/bin/runPAML.pl --usertree=primateTree.nwk ACE2_primates_aln1_NT.fa
+/fh/fast/malik_h/grp/malik_lab_shared/linux_gizmo/bin/janet_scripts/runPAML.pl --usertree=primateTree.nwk ACE2_primates_aln1_NT.fa
 ```
 
 By default, we use PAML version 4.10.6, but you can also choose 4.9a, 4.9g, 4.9h, 4.9j. To use a different PAML version, supply the --version option. Example:
 ```
-/fh/fast/malik_h/grp/malik_lab_shared/bin/runPAML.pl --version=4.9a ACE2_primates_aln1_NT.fa
+/fh/fast/malik_h/grp/malik_lab_shared/linux_gizmo/bin/janet_scripts/runPAML.pl --version=4.9a ACE2_primates_aln1_NT.fa
 ```
 
 ## To run these scripts in other ways
@@ -160,10 +160,10 @@ If we find evidence for positive selection, we might want to check that finding 
 
 The default parameters I use for codeml are codon model 2, starting omega 0.4, cleandata 0. If we want to use different parameters we use the `--codon` (codon model) or `--omega` (initial omega) or `--clean` (cleandata) options. E.g.:
 ```
-/fh/fast/malik_h/grp/malik_lab_shared/bin/runPAML.pl --codon=3 ACE2_primates_aln1_NT.fa
-/fh/fast/malik_h/grp/malik_lab_shared/bin/runPAML.pl --codon=3 --omega=3 ACE2_primates_aln1_NT.fa
-/fh/fast/malik_h/grp/malik_lab_shared/bin/runPAML.pl --codon=2 --omega=3 ACE2_primates_aln1_NT.fa
-/fh/fast/malik_h/grp/malik_lab_shared/bin/runPAML.pl --clean=1 --codon=3 ACE2_primates_aln1_NT.fa
+/fh/fast/malik_h/grp/malik_lab_shared/linux_gizmo/bin/janet_scripts/runPAML.pl --codon=3 ACE2_primates_aln1_NT.fa
+/fh/fast/malik_h/grp/malik_lab_shared/linux_gizmo/bin/janet_scripts/runPAML.pl --codon=3 --omega=3 ACE2_primates_aln1_NT.fa
+/fh/fast/malik_h/grp/malik_lab_shared/linux_gizmo/bin/janet_scripts/runPAML.pl --codon=2 --omega=3 ACE2_primates_aln1_NT.fa
+/fh/fast/malik_h/grp/malik_lab_shared/linux_gizmo/bin/janet_scripts/runPAML.pl --clean=1 --codon=3 ACE2_primates_aln1_NT.fa
 ```
 
 If you are running the `pw_makeTreeAndRunPAML.pl` or `pw_makeTreeAndRunPAML_sbatchWrapper.pl` scripts instead, you can specify the same arguments to that script.

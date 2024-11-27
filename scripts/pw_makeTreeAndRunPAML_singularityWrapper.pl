@@ -13,7 +13,7 @@ use strict;
 # --clean=0    (cleandata setting)
 # --BEB=0.9    (BEB score threshold to report positively selected sites)
 
-## the version of this script in /fh/fast/malik_h/grp/malik_lab_shared/bin/runPAML.pl is a copy of the one here: https://github.com/jayoung/pamlWrapper/tree/main/scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl
+## the version of this script in /fh/fast/malik_h/grp/malik_lab_shared/linux_gizmo/bin/janet_scripts/runPAML.pl is a copy of the one here: https://github.com/jayoung/pamlWrapper/tree/main/scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl
 
 
 ###### set up defaults for all the options
