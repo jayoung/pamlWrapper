@@ -22,20 +22,23 @@ Includes some [R scripts](https://github.com/abacus-gene/paml-tutorial/blob/main
 
 # Alternatives to using this wrapper
 
-I haven't actually tried many of these, but they also offer ways to run PAML
+I haven't actually tried many of these, but they also offer ways to run PAML and/or other positive selection analyses:
 - [EasyCodeML](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6467853/) - a GUI wrapper for PAML
 - [DGINN pipeline](https://github.com/leapicard/DGINN) - includes PAML and several other methods, as well as alignment prep, recombination detection, duplication detection.
 - [PoSeiDon pipeline](https://github.com/hoelzer/poseidon) - nextflow pipeline with docker support. Builds alignment, checks for recombination, looks for positive selection
 - PosiGene pipeline - [github](https://github.com/gengit/PosiGene) and [publication](https://pubmed.ncbi.nlm.nih.gov/28334822/) 
+- [FREEDA pipeline](https://github.com/DDudka9/freeda) - can run on the web [here](https://app.tamarind.bio/freeda)   
 - for prokaryotes, [PSP "Positive Selection analysis for Prokaryotic genomes"](https://pubmed.ncbi.nlm.nih.gov/24373418/). Genome-scale. Uses PAML / FitModel for selection analysis.
 
 # Instructions
 
-Input file(s): in-frame multiple sequence alignment(s), in fasta format
+Input file(s): in-frame multiple sequence alignment(s), in **fasta format**.
 
 ## To run these scripts on rhino/gizmo
 
-Log in to rhino or gizmo (doesn't matter which), navigate to the folder where your alignment(s) are, and run this script, specifying your alignment(s) as input files:
+Log in to rhino or gizmo (doesn't matter which), navigate to the folder where your alignment(s) are, and run the `runPAML.pl` script, specifying your alignment(s) as input files. 
+
+For example, if the folder `~/my/folder/with/alignments` contains two alignment files named `myAln1.fa` and `myAln2.fa`, you would run this command:
 ```
 cd ~/my/folder/with/alignments
 /fh/fast/malik_h/grp/malik_lab_shared/linux_gizmo/bin/janet_scripts/runPAML.pl myAln1.fa myAln2.fa
