@@ -26,8 +26,10 @@ close TREE;
 
 ### now that PAML newer version requires an additional first line in the tree file (containing numTaxa and numTrees), we need to get rid of that first line for this purpose:
 
-# that shift is needed if we're supplying the user tree. Asking for the presence of ; in the first line is a crude test of whether the extra first line is present, but I think it'll work:
-if ($lines[0] !~ m/\;/) { shift @lines; }
+# that shift is needed if we're supplying the user tree. Asking for the presence of ( in the first line is a crude test of whether the extra first line is present, but I think it'll work:
+# I was matching on ; but it's probably better to match on ( instead, as some valid trees might be split over >1 line and therefore not include a ; character on the first true tree line
+# if ($lines[0] !~ m/\;/) { shift @lines; }
+if ($lines[0] !~ m/\(/) { shift @lines; }
 
 #print "\n\n### lines:\n@lines\n###\n";
 

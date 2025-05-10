@@ -17,14 +17,15 @@ pw_makeTreeAndRunPAML_sbatchWrapper.pl CENPA_primates_aln2a_NT.fa ACE2_primates_
 Use this command to see if your jobs are still running: `squeue -u $USER`.  But on rhino/gizmo, usually I have people use the `runPAML.pl` script so that they use the singularity container, rather than running it in their own compute environment where the dependencies may or may not be installed (see the main [README.md doc](../README.md) for details).
 
 # Installing the whole pipeline on your local machine WITHOUT docker/singularity
+
 If you don't want to deal with installing software/perl modules, look further down at the "using docker" instructions.
 
 If you don't want to deal with docker, here are some notes to help you figure out how to get it running. You'll need to install some dependencies and make sure they're in your PATH:
 ```
 phyml
 codeml
-R                 (on gizmo/rhino: module load fhR/4.1.2-foss-2020b)
-ape package for R, if it's not already installed (it is installed in the fhR/4.1.2-foss-2020b module)
+R                 (on gizmo/rhino: module load fhR/4.4.0-foss-2023b)
+ape package for R, if it's not already installed (it is installed in the fhR/4.4.0-foss-2023b module)
 ```
 Perl modules (make sure PERL5LIB is set right):
 ```

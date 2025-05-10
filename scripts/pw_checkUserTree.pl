@@ -59,6 +59,7 @@ my @tree_lines = <TREE>;
 close TREE;
 my $numTreeLines = @tree_lines;
 if ($numTreeLines != 2) {
+    ## actually - maybe I could be less picky here. Still require the numeric header line, but the tree itself could be spread over >1 line I think
     die "\n\nERROR - terminating in script $scriptName - the tree file should contain exactly two lines, but it has $numTreeLines line(s).  PAML 4.10.6 and above is more picky about this than older versions of PAML.  The first line should look something like this: '  22 1' (i.e., two spaces, the number of taxa in your tree, then one space, then 1, for the number of trees in the file), and the second line should contain the tree itself.: $treeFile\n\n";
     $exitCode = 1;
 }

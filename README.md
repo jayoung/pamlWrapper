@@ -41,15 +41,10 @@ Log in to rhino or gizmo (doesn't matter which), navigate to the folder where yo
 For example, if the folder `~/my/folder/with/alignments` contains two alignment files named `myAln1.fa` and `myAln2.fa`, you would run this command:
 ```
 cd ~/my/folder/with/alignments
-/fh/fast/malik_h/grp/malik_lab_shared/linux_gizmo/bin/janet_scripts/runPAML.pl myAln1.fa myAln2.fa
-```
-
-Depending on how your rhino/gizmo account is set up, you might even be able to run it using a simpler form of the command:
-```
-cd ~/my/folder/with/alignments
 runPAML.pl myAln1.fa myAln2.fa
 ```
-If you want to set up your account so you can use this simpler form, and don't know how to do it, talk to me.
+
+If you get a `command not found` error, you'll need to replace `runPAML.pl` in the example code with the full path to the script: `/fh/fast/malik_h/grp/malik_lab_shared/linux_gizmo/bin/janet_scripts/runPAML.pl`.   If you want to set up your account so you can use the simpler form, and don't know how to do it, talk to me.
 
 Whichever way you do it, that command will start 'batch' jobs on the cluster, one for each input file. You can monitor whether your PAML job(s) are still running using the following command:
 ```
@@ -99,6 +94,21 @@ By default, we use PAML version 4.10.6, but you can also choose 4.9a, 4.9g, 4.9h
 The `runPAML.pl` script will only work on gizmo/rhino. Behind the scenes, it uses a singularity image file to run a pipeline of scripts inside a container using the Fred Hutch compute cluster via sbatch. 
 
 Maybe you don't want to use the Fred Hutch computers (gizmo/rhino). Maybe you want to use individual scripts and modify them. Maybe you want to use Docker. See [here](docs/running_in_other_ways.md) for notes on how you might run it in other ways.
+
+
+# Example input alignments
+
+If you want to just test out the code, without using your own input files, you can find some example alignments here - `/fh/fast/malik_h/user/jayoung/paml_screen/pamlWrapper/testData`.
+
+The alignment files are as follows:
+
+`ACE2_primates_aln1_NT.fa` - 24 seqs, 2418bp (806 codons). Strong positive selection.
+
+`CENPA_primates_aln2a_NT.fa` - 18 seqs, 423bp (141 codons). No evidence for positive selection. (I think for CENPA you need to include lemurs to see positive selection in primates)
+
+`CENPA_primates_aln2a_only5seqs.fa` - 5 seqs, 423bp (141 codons). No evidence for positive selection.
+
+`Mx1_PAML25.fa` - 25 seqs, 1980bp (660 codons). Strong positive selection
 
 
 # What does runPAML.pl actually do? 
@@ -153,7 +163,7 @@ Maybe we ran PAML on several input alignments, and we want to see the results fo
 pw_combineParsedOutfilesLong.pl */*PAMLsummary.tsv
 pw_combineParsedOutfilesWide.pl */*PAMLsummary.wide.tsv
 ```
-(if you get a 'command not found' error, put this in front of the script names above: `/fh/fast/malik_h/grp/malik_lab_shared/bin/`)
+(if you get a 'command not found' error, put this in front of the script names above: `/fh/fast/malik_h/user/jayoung/paml_screen/pamlWrapper/scripts/pw_combineParsedOutfilesWide.pl`)
 
 Output files are called `allAlignments.PAMLsummaries.tsv` or `allAlignments.PAMLsummaries.wide.tsv` - you probably want to rename them to something more informative, so they don't get overwritten next time you run the combining scripts.
 

@@ -100,7 +100,7 @@ foreach my $file (@ARGV) {
     my $moreOptions = "";
     if ($userTreeFile ne "") { $moreOptions .= "--usertree=$userTreeFile"; }
     my $command = "$masterPipelineDir/scripts/pw_makeTreeAndRunPAML.pl $moreOptions --strict=$strictness --codeml=$codemlExe --omega=$initialOrFixedOmega --codon=$codonFreqModel --clean=$cleanData --smallDiff=$smallDiff --verboseTable=$verboseTable $file >> $logFile 2>&1"; 
-    $command = "/bin/bash -c \\\"source /app/lmod/lmod/init/profile; module load fhR/4.1.2-foss-2020b ; $command\\\"";
+    $command = "/bin/bash -c \\\"source /app/lmod/lmod/init/profile; module load fhR/4.4.0-foss-2023b ; $command\\\"";
     $command = "sbatch -t $walltime --job-name=$jobnamePrefix"."$file --wrap=\"$command\"";
     system($command);
 }

@@ -1,29 +1,29 @@
 
- 15         verbose | verbose                0.00
-  7         runmode | runmode                0.00
+ 16         verbose | verbose                0.00
+  8         runmode | runmode                0.00
   4         seqtype | seqtype                1.00
- 13       CodonFreq | CodonFreq              2.00
- 18          aaDist | aaDist                 0.00
- 16           model | model                  0.00
- 20         NSsites | NSsites                1.00
- 22           icode | icode                  0.00
- 23           Mgene | Mgene                  0.00
- 24       fix_kappa | fix_kappa              0.00
- 25           kappa | kappa                  2.00
- 26       fix_omega | fix_omega              0.00
- 27           omega | omega                  0.40
- 28       fix_alpha | fix_alpha              1.00
- 29           alpha | alpha                  0.00
- 30          Malpha | Malpha                 0.00
- 31           ncatG | ncatG                 10.00
-  9           clock | clock                  0.00
- 11           getSE | getSE                  0.00
- 12    RateAncestor | RateAncestor           0.00
+ 14       CodonFreq | CodonFreq              2.00
+ 19          aaDist | aaDist                 0.00
+ 17           model | model                  0.00
+ 21         NSsites | NSsites                1.00
+ 23           icode | icode                  0.00
+ 24           Mgene | Mgene                  0.00
+ 25       fix_kappa | fix_kappa              0.00
+ 26           kappa | kappa                  2.00
+ 27       fix_omega | fix_omega              0.00
+ 28           omega | omega                  0.40
+ 29       fix_alpha | fix_alpha              1.00
+ 30           alpha | alpha                  0.00
+ 31          Malpha | Malpha                 0.00
+ 32           ncatG | ncatG                 10.00
+ 10           clock | clock                  0.00
+ 12           getSE | getSE                  0.00
+ 13    RateAncestor | RateAncestor           0.00
  36      Small_Diff | Small_Diff             0.00
-  6       cleandata | cleandata              0.00
- 34           ndata | ndata                  1.00
-  8          method | method                 1.00
-CODONML in paml version 4.9, March 2015
+  7       cleandata | cleandata              0.00
+  6           ndata | ndata                  1.00
+  9          method | method                 1.00
+CODONML in paml version 4.10.6, November 2022
 
 ----------------------------------------------
 Phe F TTT | Ser S TCT | Tyr Y TAT | Cys C TGT
@@ -69,13 +69,37 @@ D (3): T A G
 - (4): T C A G 
 N (4): T C A G 
 ? (4): T C A G 
-
 ns = 24  	ls = 2418
 Reading sequences, sequential format..
-Reading seq # 1: human_ACE2_ORF     Reading seq # 2: chimpanzee_ACE2_ORF     Reading seq # 3: pygmy_chimpanzee_ACE2_ORF     Reading seq # 4: western_lowland_gorilla_ACE2_O     Reading seq # 5: Sumatran_orangutan_ACE2_ORF     Reading seq # 6: northern_white-cheeked_gibbon_     Reading seq # 7: golden_snub-nosed_monkey_ACE2_     Reading seq # 8: Colobus_angolensis_palliatus_A     Reading seq # 9: olive_baboon_ACE2_ORF     Reading seq #10: crab-eating_macaque_ACE2_ORF     Reading seq #11: Ugandan_red_Colobus_ACE2_ORF     Reading seq #12: gelada_ACE2_ORF     Reading seq #13: green_monkey_ACE2_ORF     Reading seq #14: sooty_mangabey_ACE2_ORF     Reading seq #15: pig-tailed_macaque_ACE2_ORF     Reading seq #16: Rhesus_monkey_ACE2_ORF     Reading seq #17: grivet_ACE2_ORF     Reading seq #18: drill_ACE2_ORF     Reading seq #19: Bolivian_squirrel_monkey_ACE2_     Reading seq #20: Tufted_capuchin_ACE2_ORF     Reading seq #21: Cebus_capucinus_imitator_ACE2_     Reading seq #22: Mas_night_monkey_ACE2_ORF     Reading seq #23: white-tufted-ear_marmoset_ACE2     Reading seq #24: black_snub-nosed_monkey_ACE2_O     
+Reading seq # 1: human_ACE2_ORF       
+Reading seq # 2: chimpanzee_ACE2_ORF       
+Reading seq # 3: pygmy_chimpanzee_ACE2_ORF       
+Reading seq # 4: western_lowland_gorilla_ACE2_O       
+Reading seq # 5: Sumatran_orangutan_ACE2_ORF       
+Reading seq # 6: northern_white-cheeked_gibbon_       
+Reading seq # 7: golden_snub-nosed_monkey_ACE2_       
+Reading seq # 8: Colobus_angolensis_palliatus_A       
+Reading seq # 9: olive_baboon_ACE2_ORF       
+Reading seq #10: crab-eating_macaque_ACE2_ORF       
+Reading seq #11: Ugandan_red_Colobus_ACE2_ORF       
+Reading seq #12: gelada_ACE2_ORF       
+Reading seq #13: green_monkey_ACE2_ORF       
+Reading seq #14: sooty_mangabey_ACE2_ORF       
+Reading seq #15: pig-tailed_macaque_ACE2_ORF       
+Reading seq #16: Rhesus_monkey_ACE2_ORF       
+Reading seq #17: grivet_ACE2_ORF       
+Reading seq #18: drill_ACE2_ORF       
+Reading seq #19: Bolivian_squirrel_monkey_ACE2_       
+Reading seq #20: Tufted_capuchin_ACE2_ORF       
+Reading seq #21: Cebus_capucinus_imitator_ACE2_       
+Reading seq #22: Mas_night_monkey_ACE2_ORF       
+Reading seq #23: white-tufted-ear_marmoset_ACE2       
+Reading seq #24: black_snub-nosed_monkey_ACE2_O       
+
 Sequences read..
 Counting site patterns..  0:00
-         382 patterns at      806 /      806 sites (100.0%),  0:00
+Compressing,    382 patterns at    806 /    806 sites (100.0%),  0:00
+Collecting fpatt[] & pose[],    382 patterns at    806 /    806 sites (100.0%),  0:00
 2 ambiguous codons are seen in the data:
  --- TAN
 Counting codons..
@@ -364,21 +388,73 @@ NG distances for seqs.:
   5000000 bytes for space
 
 TREE #  1
-(21, 20, (19, ((22, 23), ((6, (5, ((2, 3), (4, 1)))), (((24, 7), (11, 8)), ((17, 13), ((12, (14, 18)), (9, (16, (15, 10))))))))));   MP score: -1
-   1    1.011947
-   2    0.026062
-   3    0.023069
-   4    0.022431
-   5    0.022234
-   6    0.022230
-   7    0.022230
-   8    0.022230
+(20, 21, (19, ((23, 22), ((6, (5, ((2, 3), (4, 1)))), (((7, 24), (11, 8)), ((13, 17), ((12, (18, 14)), (9, (16, (10, 15))))))))));   MP score: -1
+ns = 24  nnode = 46
+   dad  node   nson:   sons
+    33     0      0: 
+    32     1      0: 
+    32     2      0: 
+    33     3      0: 
+    30     4      0: 
+    29     5      0: 
+    36     6      0: 
+    37     7      0: 
+    43     8      0: 
+    45     9      0: 
+    37    10      0: 
+    41    11      0: 
+    39    12      0: 
+    42    13      0: 
+    45    14      0: 
+    44    15      0: 
+    39    16      0: 
+    42    17      0: 
+    25    18      0: 
+    24    19      0: 
+    24    20      0: 
+    27    21      0: 
+    27    22      0: 
+    36    23      0: 
+    -1    24      3:  19 20 25
+    24    25      2:  18 26
+    25    26      2:  27 28
+    26    27      2:  22 21
+    26    28      2:  29 34
+    28    29      2:   5 30
+    29    30      2:   4 31
+    30    31      2:  32 33
+    31    32      2:   1  2
+    31    33      2:   3  0
+    28    34      2:  35 38
+    34    35      2:  36 37
+    35    36      2:   6 23
+    35    37      2:  10  7
+    34    38      2:  39 40
+    38    39      2:  12 16
+    38    40      2:  41 43
+    40    41      2:  11 42
+    41    42      2:  17 13
+    40    43      2:   8 44
+    43    44      2:  15 45
+    44    45      2:   9 14
+(20, 21, (19, ((23, 22), ((6, (5, ((2, 3), (4, 1)))), (((7, 24), (11, 8)), ((13, 17), ((12, (18, 14)), (9, (16, (10, 15))))))))));
+(Tufted_capuchin_ACE2_ORF, Cebus_capucinus_imitator_ACE2_, (Bolivian_squirrel_monkey_ACE2_, ((white-tufted-ear_marmoset_ACE2, Mas_night_monkey_ACE2_ORF), ((northern_white-cheeked_gibbon_, (Sumatran_orangutan_ACE2_ORF, ((chimpanzee_ACE2_ORF, pygmy_chimpanzee_ACE2_ORF), (western_lowland_gorilla_ACE2_O, human_ACE2_ORF)))), (((golden_snub-nosed_monkey_ACE2_, black_snub-nosed_monkey_ACE2_O), (Ugandan_red_Colobus_ACE2_ORF, Colobus_angolensis_palliatus_A)), ((green_monkey_ACE2_ORF, grivet_ACE2_ORF), ((gelada_ACE2_ORF, (drill_ACE2_ORF, sooty_mangabey_ACE2_ORF)), (olive_baboon_ACE2_ORF, (Rhesus_monkey_ACE2_ORF, (crab-eating_macaque_ACE2_ORF, pig-tailed_macaque_ACE2_ORF))))))))));
+(Tufted_capuchin_ACE2_ORF: 0.000000, Cebus_capucinus_imitator_ACE2_: 0.000000, (Bolivian_squirrel_monkey_ACE2_: 0.000000, ((white-tufted-ear_marmoset_ACE2: 0.000000, Mas_night_monkey_ACE2_ORF: 0.000000): 0.000000, ((northern_white-cheeked_gibbon_: 0.000000, (Sumatran_orangutan_ACE2_ORF: 0.000000, ((chimpanzee_ACE2_ORF: 0.000000, pygmy_chimpanzee_ACE2_ORF: 0.000000): 0.000000, (western_lowland_gorilla_ACE2_O: 0.000000, human_ACE2_ORF: 0.000000): 0.000000): 0.000000): 0.000000): 0.000000, (((golden_snub-nosed_monkey_ACE2_: 0.000000, black_snub-nosed_monkey_ACE2_O: 0.000000): 0.000000, (Ugandan_red_Colobus_ACE2_ORF: 0.000000, Colobus_angolensis_palliatus_A: 0.000000): 0.000000): 0.000000, ((green_monkey_ACE2_ORF: 0.000000, grivet_ACE2_ORF: 0.000000): 0.000000, ((gelada_ACE2_ORF: 0.000000, (drill_ACE2_ORF: 0.000000, sooty_mangabey_ACE2_ORF: 0.000000): 0.000000): 0.000000, (olive_baboon_ACE2_ORF: 0.000000, (Rhesus_monkey_ACE2_ORF: 0.000000, (crab-eating_macaque_ACE2_ORF: 0.000000, pig-tailed_macaque_ACE2_ORF: 0.000000): 0.000000): 0.000000): 0.000000): 0.000000): 0.000000): 0.000000): 0.000000): 0.000000): 0.000000);
+
+   1    1.012206
+   2    0.026068
+   3    0.023075
+   4    0.022436
+   5    0.022239
+   6    0.022236
+   7    0.022236
+   8    0.022236
   8202304 bytes for conP, adjusted
 
 1 node(s) used for scaling (Yang 2000 J Mol Evol 51:423-432):
  29
 
-    0.010580    0.004833    0.025182    0.027271    0.002764    0.004292    0.032654    0.039404    0.091265    0.021749    0.027778    0.001174    0.019678    0.015805    0.010018    0.003231    0.002967    0.000000    0.014675    0.010056    0.028105    0.002877    0.009623    0.004593    0.004464    0.004414    0.014576    0.011538    0.009679    0.017497    0.005465    0.001825    0.005575    0.002259    0.006069    0.004847    0.004046    0.008768    0.003403    0.006216    0.003682    0.002762    0.001020    0.000680    0.003799    2.000000    0.631606    0.510861
+    0.004588    0.010825    0.025182    0.027271    0.002764    0.004292    0.039207    0.032850    0.091265    0.021749    0.027778    0.001174    0.019678    0.015805    0.010018    0.003231    0.002967    0.000000    0.014675    0.010056    0.028105    0.002877    0.009623    0.004800    0.004256    0.004414    0.014576    0.011538    0.009679    0.017497    0.001947    0.005343    0.005575    0.002259    0.006069    0.004847    0.007851    0.004963    0.003403    0.006216    0.003682    0.002762    0.001020    0.003147    0.001332    2.000000    0.631606    0.510861
 
 ntime & nrate & np:    45     2    48
 
@@ -388,85 +464,85 @@ Bounds (np=48):
 Qfactor_NS = 6.238964
 
 np =    48
-lnL0 = -5930.020008
+lnL0 = -5930.445303
 
 
 Round 1a: Paras (3) (e=5)
 Iterating by ming2
-Initial: fx=  5930.020008
+Initial: fx=  5930.445303
 x=  2.00000  0.63161  0.51086
 
-  1 h-m-p  0.0000 0.0051 116.3163 ++++YY  5876.617127  1 0.0035    13 | 0/3
-  2 h-m-p  0.0000 0.0001 1624.3599 Y      5870.467402  0 0.0000    19 | 0/3
-  3 h-m-p  0.0016 0.0104  50.2045 ++     5856.316695  m 0.0104    25 | 1/3
-  4 h-m-p  1.4018 8.0000   0.3656 C      5853.279671  0 1.4018    31
+  1 h-m-p  0.0000 0.0051 116.3169 ++++YY  5877.042338  1 0.0035    13 | 0/3
+  2 h-m-p  0.0000 0.0001 1624.0635 Y      5870.892626  0 0.0000    19 | 0/3
+  3 h-m-p  0.0016 0.0104  50.2042 ++     5856.740038  m 0.0104    25 | 1/3
+  4 h-m-p  1.4017 8.0000   0.3657 C      5853.702736  0 1.4017    31
 
-    3.164593    0.586491    0.000001         0:02
+    3.164703    0.586485    0.000001         0:02
 
 Round 1b: Blengths (45, e=5)
-	lnL0 =      -5853.279671
-	Cycle  1:   -5845.485981
-	Cycle  2:   -5844.216876
+	lnL0 =      -5853.702736
+	Cycle  1:   -5845.441521
+	Cycle  2:   -5844.214347
 
  0:03
 
 
 Round 2a: Paras (3) (e=2.5)
 Iterating by ming2
-Initial: fx=  5844.216876
-x=  3.16459  0.58649  0.00000
+Initial: fx=  5844.214347
+x=  3.16470  0.58649  0.00000
 
-  1 h-m-p  0.0000 0.0000  91.5595 
-h-m-p:      2.82467709e-21      1.41233855e-20      9.15594746e+01  5844.216876
+  1 h-m-p  0.0000 0.0000  91.5235 
+h-m-p:      2.82550880e-21      1.41275440e-20      9.15235059e+01  5844.214347
 ..  | 1/3
-  2 h-m-p  0.0000 0.0072  58.0571 +++C   5842.322784  0 0.0009    46 | 1/3
-  3 h-m-p  0.0109 5.4507   6.5363 ++C    5839.837862  0 0.1744    54 | 1/3
-  4 h-m-p  1.6000 8.0000   0.1311 Y      5839.654929  0 0.9604    60
+  2 h-m-p  0.0000 0.0072  58.0258 +++C   5842.322299  0 0.0009    46 | 1/3
+  3 h-m-p  0.0109 5.4519   6.5354 ++C    5839.838051  0 0.1745    54 | 1/3
+  4 h-m-p  1.6000 8.0000   0.1313 Y      5839.655601  0 0.9613    60
 
-    4.186691    0.636192    0.000001         0:04
+    4.186667    0.636155    0.000001         0:04
 
 Round 2b: Blengths (45, e=2.5)
-	lnL0 =      -5839.654929
-	Cycle  1:   -5839.231430
+	lnL0 =      -5839.655601
+	Cycle  1:   -5839.231368
 
  0:05
 
 
 Round 3a: Paras (3) (e=1.25)
 Iterating by ming2
-Initial: fx=  5839.231430
-x=  4.18669  0.63619  0.00000
+Initial: fx=  5839.231368
+x=  4.18667  0.63616  0.00000
 
-  1 h-m-p  0.0000 0.0000  27.6718 
-h-m-p:      7.23139655e-21      3.61569827e-20      2.76718219e+01  5839.231430
+  1 h-m-p  0.0000 0.0000  27.7023 
+h-m-p:      7.22372977e-21      3.61186488e-20      2.77022593e+01  5839.231368
 ..  | 1/3
-  2 h-m-p  0.0008 0.3989   0.9639 C      5839.230935  0 0.0011    72 | 1/3
-  3 h-m-p  0.0160 8.0000   0.3603 ++Y    5839.218969  0 0.2013    82
+  2 h-m-p  0.0008 0.3850   0.9951 C      5839.230845  0 0.0011    72 | 1/3
+  3 h-m-p  0.0160 8.0000   0.3574 ++Y    5839.218888  0 0.2028    82
 
-    4.113837    0.637826    0.000001         0:06
+    4.113861    0.637815    0.000001         0:06
 
 Round 3b: Blengths (45, e=1.25)
-	lnL0 =      -5839.218969
-	Cycle  1:   -5839.136782
+	lnL0 =      -5839.218888
+	Cycle  1:   -5839.136774
 
  0:06
 
 
 Round 4a: Paras (3) (e=0.001)
 Iterating by ming2
-Initial: fx=  5839.136782
-x=  4.11384  0.63783  0.00000
+Initial: fx=  5839.136774
+x=  4.11386  0.63782  0.00000
 
-  1 h-m-p  0.0000 0.0000  26.3096 
-h-m-p:      7.60139194e-21      3.80069597e-20      2.63095556e+01  5839.136782
+  1 h-m-p  0.0000 0.0000  26.3195 
+h-m-p:      7.59848987e-21      3.79924493e-20      2.63195314e+01  5839.136774
 ..  | 1/3
-  2 h-m-p  0.0070 3.5181   0.1816 Y      5839.136767  0 0.0009    94 | 1/3
-  3 h-m-p  0.0191 8.0000   0.0089 ++Y    5839.136758  0 0.2239   104
+  2 h-m-p  0.0075 3.7404   0.1709 Y      5839.136760  0 0.0009    94 | 1/3
+  3 h-m-p  0.0178 8.0000   0.0090 ++Y    5839.136751  0 0.2234   104
 
-    4.111834    0.637679    0.000001         0:08
+    4.111835    0.637678    0.000001         0:07
 
 Round 4b: Blengths (45, e=0.001)
-	lnL0 =      -5839.136758
+	lnL0 =      -5839.136751
 	Cycle  1:   -5839.133090
 	Cycle  2:   -5839.133069
 
@@ -478,13 +554,13 @@ Iterating by ming2
 Initial: fx=  5839.133069
 x=  4.11183  0.63768  0.00000
 
-  1 h-m-p  0.0000 0.0000  26.3837 
-h-m-p:      7.57988777e-21      3.78994388e-20      2.63836912e+01  5839.133069
+  1 h-m-p  0.0000 0.0000  26.3853 
+h-m-p:      7.57943576e-21      3.78971788e-20      2.63852617e+01  5839.133069
 ..  | 1/3
-  2 h-m-p  0.0158 7.8849   0.0809 -C     5839.133066  0 0.0009   117 | 1/3
-  3 h-m-p  1.6000 8.0000   0.0000 C      5839.133066  0 1.6000   125
+  2 h-m-p  0.0160 7.9796   0.0799 -C     5839.133066  0 0.0009   117 | 1/3
+  3 h-m-p  1.6000 8.0000   0.0000 Y      5839.133066  0 0.4000   125
 
-    4.111839    0.637603    0.000001         0:10
+    4.111826    0.637603    0.000001         0:09
 
 Round 5b: Blengths (45, e=0.00025)
 	lnL0 =      -5839.133066
@@ -496,15 +572,15 @@ Round 5b: Blengths (45, e=0.00025)
 Round 6a: Paras (3) (e=6.25e-05)
 Iterating by ming2
 Initial: fx=  5839.133065
-x=  4.11184  0.63760  0.00000
+x=  4.11183  0.63760  0.00000
 
   1 h-m-p  0.0000 0.0000  26.4547 
-h-m-p:      7.55949914e-21      3.77974957e-20      2.64547264e+01  5839.133065
+h-m-p:      7.55951681e-21      3.77975841e-20      2.64546645e+01  5839.133065
 ..  | 1/3
-  2 h-m-p  0.0160 8.0000   0.0041 -C     5839.133065  0 0.0008   138 | 1/3
-  3 h-m-p  0.0668 8.0000   0.0001 --C    5839.133065  0 0.0011   148
+  2 h-m-p  0.0160 8.0000   0.0040 -C     5839.133065  0 0.0008   138 | 1/3
+  3 h-m-p  0.1263 8.0000   0.0000 Y      5839.133065  0 0.1263   146
 
-    4.111839    0.637600    0.000001         0:11
+    4.111829    0.637600    0.000001         0:11
 
 Round 6b: Blengths (45, e=6.25e-05)
 	lnL0 =      -5839.133065
@@ -516,26 +592,25 @@ Round 6b: Blengths (45, e=6.25e-05)
 Round 7a: Paras (3) (e=1.5625e-05)
 Iterating by ming2
 Initial: fx=  5839.133065
-x=  4.11184  0.63760  0.00000
+x=  4.11183  0.63760  0.00000
 
   1 h-m-p  0.0000 0.0000  26.4577 
-h-m-p:      7.55865927e-21      3.77932963e-20      2.64576656e+01  5839.133065
+h-m-p:      7.55865823e-21      3.77932911e-20      2.64576692e+01  5839.133065
 ..  | 1/3
-  2 h-m-p  0.0160 8.0000   0.0008 -------C  5839.133065  0 0.0000   167 | 1/3
-  3 h-m-p  0.0160 8.0000   0.0002 -------Y  5839.133065  0 0.0000   182
+  2 h-m-p  0.0160 8.0000   0.0007 --C    5839.133065  0 0.0004   160 | 1/3
+  3 h-m-p  0.0199 8.0000   0.0000 ----------Y  5839.133065  0 0.0000   178
 
-    4.111839    0.637600    0.000001         0:14
+    4.111829    0.637600    0.000001         0:13
 
 Round 7b: Blengths (45, e=1.5625e-05)
 	lnL0 =      -5839.133065
 	Cycle  1:   -5839.133065
 
- 0:16
+ 0:17
 
 lnL  = -5839.133065
 Out..
 lnL  = -5839.133065
-185 lfun, 4477 eigenQcodon, 18774 P(t)
-end of tree file.
+181 lfun, 5773 eigenQcodon, 18414 P(t)
 
-Time used:  0:16
+Time used:  0:17

@@ -32,7 +32,7 @@ foreach my $file (@ARGV){
     }
     print "    checking num seqs in file $file\n";
     if ($numSeqs < 2) {
-        print "\n    ERROR - there are only $numSeqs in alignment file $file - cannot run PAML\n";
+        print "\n    ERROR - there are only $numSeqs seqs in alignment file $file - cannot run PAML\n";
         $exitCode = 1;
     } 
     print "    checking seqlengths in file $file\n";

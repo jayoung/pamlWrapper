@@ -7,6 +7,7 @@ setting myTitleCex to match myCex
 using aliasFile CENPA_primates_aln2a_NT.fa_phymlAndPAML/CENPA_primates_aln2a_NT.fa.aliases.txt
 
 working on file  CENPA_primates_aln2a_NT.fa_phymlAndPAML/CENPA_primates_aln2a_NT.fa_PHYMLtree/CENPA_primates_aln2a_NT.fa.phy_phyml_tree.nolen 
+printing warnings, if any
 
 
 finished

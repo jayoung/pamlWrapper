@@ -1,0 +1,272 @@
+
+ 16         verbose | verbose                0.00
+  8         runmode | runmode                0.00
+  4         seqtype | seqtype                1.00
+ 14       CodonFreq | CodonFreq              2.00
+ 19          aaDist | aaDist                 0.00
+ 17           model | model                  0.00
+ 21         NSsites | NSsites                0.00
+ 23           icode | icode                  0.00
+ 24           Mgene | Mgene                  0.00
+ 25       fix_kappa | fix_kappa              0.00
+ 26           kappa | kappa                  2.00
+ 27       fix_omega | fix_omega              0.00
+ 28           omega | omega                  0.40
+ 29       fix_alpha | fix_alpha              1.00
+ 30           alpha | alpha                  0.00
+ 31          Malpha | Malpha                 0.00
+ 32           ncatG | ncatG                 10.00
+ 10           clock | clock                  0.00
+ 12           getSE | getSE                  0.00
+ 13    RateAncestor | RateAncestor           0.00
+ 36      Small_Diff | Small_Diff             0.00
+  7       cleandata | cleandata              0.00
+  6           ndata | ndata                  1.00
+  9          method | method                 1.00
+CODONML in paml version 4.10.6, November 2022
+
+----------------------------------------------
+Phe F TTT | Ser S TCT | Tyr Y TAT | Cys C TGT
+      TTC |       TCC |       TAC |       TGC
+Leu L TTA |       TCA | *** * TAA | *** * TGA
+      TTG |       TCG |       TAG | Trp W TGG
+----------------------------------------------
+Leu L CTT | Pro P CCT | His H CAT | Arg R CGT
+      CTC |       CCC |       CAC |       CGC
+      CTA |       CCA | Gln Q CAA |       CGA
+      CTG |       CCG |       CAG |       CGG
+----------------------------------------------
+Ile I ATT | Thr T ACT | Asn N AAT | Ser S AGT
+      ATC |       ACC |       AAC |       AGC
+      ATA |       ACA | Lys K AAA | Arg R AGA
+Met M ATG |       ACG |       AAG |       AGG
+----------------------------------------------
+Val V GTT | Ala A GCT | Asp D GAT | Gly G GGT
+      GTC |       GCC |       GAC |       GGC
+      GTA |       GCA | Glu E GAA |       GGA
+      GTG |       GCG |       GAG |       GGG
+----------------------------------------------
+Nice code, uuh?
+
+
+Ambiguity character definition table:
+
+T (1): T 
+C (1): C 
+A (1): A 
+G (1): G 
+U (1): T 
+Y (2): T C 
+R (2): A G 
+M (2): C A 
+K (2): T G 
+S (2): C G 
+W (2): T A 
+H (3): T C A 
+B (3): T C G 
+V (3): C A G 
+D (3): T A G 
+- (4): T C A G 
+N (4): T C A G 
+? (4): T C A G 
+ns = 5  	ls = 423
+Reading sequences, sequential format..
+Reading seq # 1: chimpanzee_CENPA_ORF       
+Reading seq # 2: Sumatran_orangutan_CENPA_ORF       
+Reading seq # 3: human_CENPA_ORF       
+Reading seq # 4: western_lowland_gorilla_CENPA_       
+Reading seq # 5: Rhesus_monkey_CENPA_ORF       
+
+Sequences read..
+Counting site patterns..  0:00
+Compressing,     68 patterns at    141 /    141 sites (100.0%),  0:00
+Collecting fpatt[] & pose[],     68 patterns at    141 /    141 sites (100.0%),  0:00
+1 ambiguous codons are seen in the data:
+ ---
+Counting codons..
+
+  2   1:Sites   108.6 +  305.4 =  414.0	Diffs     5.0 +    1.0 =    6.0
+  3   1:Sites   109.0 +  305.0 =  414.0	Diffs     7.0 +    0.0 =    7.0
+  3   2:Sites   111.2 +  308.8 =  420.0	Diffs     3.0 +    1.0 =    4.0
+  4   1:Sites   109.1 +  304.9 =  414.0	Diffs     6.0 +    1.0 =    7.0
+  4   2:Sites   111.4 +  308.6 =  420.0	Diffs     3.0 +    2.0 =    5.0
+  4   3:Sites   111.8 +  308.2 =  420.0	Diffs     3.0 +    1.0 =    4.0
+  5   1:Sites   109.2 +  304.8 =  414.0	Diffs     8.0 +    9.0 =   17.0
+  5   2:Sites   109.4 +  304.6 =  414.0	Diffs     5.0 +    8.0 =   13.0
+  5   3:Sites   109.8 +  304.2 =  414.0	Diffs     7.8 +    9.2 =   17.0
+  5   4:Sites   109.9 +  304.1 =  414.0	Diffs     8.0 +   10.0 =   18.0
+
+       80 bytes for distance
+    66368 bytes for conP
+        0 bytes for fhK
+  5000000 bytes for space
+
+TREE #  1
+(2, 5, (1, (3, 4)));   MP score: -1
+ns = 5  nnode = 8
+   dad  node   nson:   sons
+     6     0      0: 
+     5     1      0: 
+     7     2      0: 
+     7     3      0: 
+     5     4      0: 
+    -1     5      3:   1  4  6
+     5     6      2:   0  7
+     6     7      2:   2  3
+(2, 5, (1, (3, 4)));
+(Sumatran_orangutan_CENPA_ORF, Rhesus_monkey_CENPA_ORF, (chimpanzee_CENPA_ORF, (human_CENPA_ORF, western_lowland_gorilla_CENPA_)));
+(Sumatran_orangutan_CENPA_ORF: 0.000000, Rhesus_monkey_CENPA_ORF: 0.000000, (chimpanzee_CENPA_ORF: 0.000000, (human_CENPA_ORF: 0.000000, western_lowland_gorilla_CENPA_: 0.000000): 0.000000): 0.000000);
+
+    99552 bytes for conP, adjusted
+
+    0.001494    0.094900    0.009445    0.028454    0.009778    0.012115    0.016865    2.000000    0.400000
+
+ntime & nrate & np:     7     2     9
+
+Bounds (np=9):
+   0.000004   0.000004   0.000004   0.000004   0.000004   0.000004   0.000004   0.000100   0.000100
+  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000 999.000000 999.000000
+
+np =     9
+lnL0 =  -710.356466
+
+
+Round 1a: Paras (2) (e=5)
+Iterating by ming2
+Initial: fx=   710.356466
+x=  2.00000  0.40000
+
+  1 h-m-p  0.0000 0.0729   5.4998 ++++Y   709.954724  0 0.0200    11 | 0/2
+  2 h-m-p  0.3865 8.0000   0.2841 Y       709.916873  0 0.7552    16
+
+    2.222798    0.276569         0:00
+
+Round 1b: Blengths (7, e=5)
+	lnL0 =       -709.916873
+	Cycle  1:    -709.473639
+
+ 0:00
+
+
+Round 2a: Paras (2) (e=1.25)
+Iterating by ming2
+Initial: fx=   709.473639
+x=  2.22280  0.27657
+
+  1 h-m-p  0.0040 8.0000   0.1616 +Y      709.473466  0 0.0134    25 | 0/2
+  2 h-m-p  1.2600 8.0000   0.0017 Y       709.473464  0 0.8601    32
+
+    2.221260    0.278704         0:00
+
+Round 2b: Blengths (7, e=1.25)
+	lnL0 =       -709.473464
+	Cycle  1:    -709.445460
+
+ 0:00
+
+
+Round 3a: Paras (2) (e=0.001)
+Iterating by ming2
+Initial: fx=   709.445460
+x=  2.22126  0.27870
+
+  1 h-m-p  0.0040 8.0000   0.0125 +Y      709.445459  0 0.0134    41 | 0/2
+  2 h-m-p  0.5636 8.0000   0.0003 C       709.445459  0 0.8588    48
+
+    2.221002    0.278532         0:00
+
+Round 3b: Blengths (7, e=0.001)
+	lnL0 =       -709.445459
+	Cycle  1:    -709.445127
+
+ 0:00
+
+
+Round 4a: Paras (2) (e=0.00025)
+Iterating by ming2
+Initial: fx=   709.445127
+x=  2.22100  0.27853
+
+  1 h-m-p  0.0040 8.0000   0.0013 +Y      709.445127  0 0.0132    57 | 0/2
+  2 h-m-p  1.2828 8.0000   0.0000 Y       709.445127  0 0.8576    64
+
+    2.220991    0.278515         0:00
+
+Round 4b: Blengths (7, e=0.00025)
+	lnL0 =       -709.445127
+	Cycle  1:    -709.445127
+
+ 0:00
+
+
+Round 5a: Paras (2) (e=6.25e-05)
+Iterating by ming2
+Initial: fx=   709.445127
+x=  2.22099  0.27852
+
+  1 h-m-p  0.0040 8.0000   0.0000 -N      709.445127  0 0.0001    73 | 0/2
+  2 h-m-p  0.0160 8.0000   0.0000 --C     709.445127  0 0.0003    82
+
+    2.220991    0.278515         0:00
+
+Round 5b: Blengths (7, e=6.25e-05)
+	lnL0 =       -709.445127
+	Cycle  1:    -709.445127
+
+ 0:00
+
+lnL  =  -709.445127
+Out..
+lnL  =  -709.445127
+85 lfun, 85 eigenQcodon, 665 P(t)
+
+d123[*] =  0.00000  0.00000  0.00000  average  0.00000
+    [B] =  0.00000  0.00000  0.00000  average  0.00000
+accept  =  0.31360  0.27852  0.88248
+
+w =  0.27852 dN =  0.00000 dS =  0.00000 d4 =  0.00000 (84.2 four-fold sites)
+             dN*=  0.00000 dS*=  0.00000 S* = 113.95 N* = 309.05
+
+d123[*] =  0.01920  0.02099  0.05800  average  0.03273
+    [B] =  0.06123  0.07538  0.06573  average  0.06745
+accept  =  0.31360  0.27852  0.88248
+
+w =  0.27852 dN =  0.01879 dS =  0.06745 d4 =  0.07409 (84.2 four-fold sites)
+             dN*=  0.01834 dS*=  0.07177 S* = 113.95 N* = 309.05
+
+d123[*] =  0.00286  0.00313  0.00865  average  0.00488
+    [B] =  0.00913  0.01124  0.00980  average  0.01006
+accept  =  0.31360  0.27852  0.88248
+
+w =  0.27852 dN =  0.00280 dS =  0.01006 d4 =  0.01105 (84.2 four-fold sites)
+             dN*=  0.00274 dS*=  0.01070 S* = 113.95 N* = 309.05
+
+d123[*] =  0.00585  0.00640  0.01768  average  0.00998
+    [B] =  0.01866  0.02298  0.02003  average  0.02056
+accept  =  0.31360  0.27852  0.88248
+
+w =  0.27852 dN =  0.00573 dS =  0.02056 d4 =  0.02258 (84.2 four-fold sites)
+             dN*=  0.00559 dS*=  0.02188 S* = 113.95 N* = 309.05
+
+d123[*] =  0.00141  0.00154  0.00425  average  0.00240
+    [B] =  0.00449  0.00553  0.00482  average  0.00495
+accept  =  0.31360  0.27852  0.88248
+
+w =  0.27852 dN =  0.00138 dS =  0.00495 d4 =  0.00543 (84.2 four-fold sites)
+             dN*=  0.00134 dS*=  0.00526 S* = 113.95 N* = 309.05
+
+d123[*] =  0.00285  0.00312  0.00862  average  0.00487
+    [B] =  0.00910  0.01121  0.00977  average  0.01003
+accept  =  0.31360  0.27852  0.88248
+
+w =  0.27852 dN =  0.00279 dS =  0.01003 d4 =  0.01101 (84.2 four-fold sites)
+             dN*=  0.00273 dS*=  0.01067 S* = 113.95 N* = 309.05
+
+d123[*] =  0.00285  0.00312  0.00861  average  0.00486
+    [B] =  0.00909  0.01119  0.00976  average  0.01001
+accept  =  0.31360  0.27852  0.88248
+
+w =  0.27852 dN =  0.00279 dS =  0.01001 d4 =  0.01100 (84.2 four-fold sites)
+             dN*=  0.00272 dS*=  0.01066 S* = 113.95 N* = 309.05
+
+Time used:  0:00

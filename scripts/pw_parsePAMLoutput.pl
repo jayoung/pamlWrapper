@@ -65,7 +65,7 @@ if (($strictness ne "strict") & ($strictness ne "loose")) {
 ## check Rscript is in our path
 my $checkWhich = `which $RscriptExecutable`;
 if ($checkWhich eq "") {
-    die "\n\nERROR - terminating in script $scriptName - R is not available. If you're working on gizmo/rhino, maybe you need to load an R module before running this script. Try this:\n    module load fhR/4.1.2-foss-2020b\n\n";
+    die "\n\nERROR - terminating in script $scriptName - R is not available. If you're working on gizmo/rhino, maybe you need to load an R module before running this script. Try this:\n    module load fhR/4.4.0-foss-2023b\n\n";
 }
 
 if ($userTreeFile ne "") {
@@ -299,7 +299,9 @@ foreach my $fastaAlnFile (@files) {
                 my $treeorderFile = "$PAMLresultsDir/$filenameWithoutDir";
                 $treeorderFile =~ s/\.fasta$//; $treeorderFile =~ s/\.fa$//; 
                 $treeorderFile .= ".treeorder.fa";
-                system("$masterPipelineDir/scripts/pw_annotateAlignmentWithSelectedSites.pl $treeorderFile");
+                # system("$masterPipelineDir/scripts/pw_annotateAlignmentWithSelectedSites.pl --$treeorderFile");
+                # I only run this on M8 results
+                system("$masterPipelineDir/scripts/pw_annotateAlignmentWithSelectedSites.pl --codonModel=8 --omega=$initialOrFixedOmega --codon=$codonFreqModel $treeorderFile");
             } else {
                 $outputLine .= "\t\t\t\t";
             }

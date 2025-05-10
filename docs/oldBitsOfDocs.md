@@ -2,7 +2,7 @@
 
 Unlikely: if your gizmo/rhino environment IS set up like mine (only true for a few people in the lab - I've been moving away from doing this) - I think you may be able to run the scripts after loading an R module. Try it and let me know what happens:
 ```
-module load fhR/4.1.2-foss-2020b
+module load fhR/4.4.0-foss-2023b
 pw_makeTreeAndRunPAML.pl myAln.fa
 module purge
 ```

@@ -1,29 +1,29 @@
 
- 15         verbose | verbose                0.00
-  7         runmode | runmode                0.00
+ 16         verbose | verbose                0.00
+  8         runmode | runmode                0.00
   4         seqtype | seqtype                1.00
- 13       CodonFreq | CodonFreq              2.00
- 18          aaDist | aaDist                 0.00
- 16           model | model                  0.00
- 20         NSsites | NSsites                0.00
- 22           icode | icode                  0.00
- 23           Mgene | Mgene                  0.00
- 24       fix_kappa | fix_kappa              0.00
- 25           kappa | kappa                  2.00
- 26       fix_omega | fix_omega              1.00
- 27           omega | omega                  1.00
- 28       fix_alpha | fix_alpha              1.00
- 29           alpha | alpha                  0.00
- 30          Malpha | Malpha                 0.00
- 31           ncatG | ncatG                 10.00
-  9           clock | clock                  0.00
- 11           getSE | getSE                  0.00
- 12    RateAncestor | RateAncestor           0.00
+ 14       CodonFreq | CodonFreq              2.00
+ 19          aaDist | aaDist                 0.00
+ 17           model | model                  0.00
+ 21         NSsites | NSsites                0.00
+ 23           icode | icode                  0.00
+ 24           Mgene | Mgene                  0.00
+ 25       fix_kappa | fix_kappa              0.00
+ 26           kappa | kappa                  2.00
+ 27       fix_omega | fix_omega              1.00
+ 28           omega | omega                  1.00
+ 29       fix_alpha | fix_alpha              1.00
+ 30           alpha | alpha                  0.00
+ 31          Malpha | Malpha                 0.00
+ 32           ncatG | ncatG                 10.00
+ 10           clock | clock                  0.00
+ 12           getSE | getSE                  0.00
+ 13    RateAncestor | RateAncestor           0.00
  36      Small_Diff | Small_Diff             0.00
-  6       cleandata | cleandata              0.00
- 34           ndata | ndata                  1.00
-  8          method | method                 1.00
-CODONML in paml version 4.9, March 2015
+  7       cleandata | cleandata              0.00
+  6           ndata | ndata                  1.00
+  9          method | method                 1.00
+CODONML in paml version 4.10.6, November 2022
 
 ----------------------------------------------
 Phe F TTT | Ser S TCT | Tyr Y TAT | Cys C TGT
@@ -69,13 +69,37 @@ D (3): T A G
 - (4): T C A G 
 N (4): T C A G 
 ? (4): T C A G 
-
 ns = 24  	ls = 2418
 Reading sequences, sequential format..
-Reading seq # 1: human_ACE2_ORF     Reading seq # 2: chimpanzee_ACE2_ORF     Reading seq # 3: pygmy_chimpanzee_ACE2_ORF     Reading seq # 4: western_lowland_gorilla_ACE2_O     Reading seq # 5: Sumatran_orangutan_ACE2_ORF     Reading seq # 6: northern_white-cheeked_gibbon_     Reading seq # 7: golden_snub-nosed_monkey_ACE2_     Reading seq # 8: Colobus_angolensis_palliatus_A     Reading seq # 9: olive_baboon_ACE2_ORF     Reading seq #10: crab-eating_macaque_ACE2_ORF     Reading seq #11: Ugandan_red_Colobus_ACE2_ORF     Reading seq #12: gelada_ACE2_ORF     Reading seq #13: green_monkey_ACE2_ORF     Reading seq #14: sooty_mangabey_ACE2_ORF     Reading seq #15: pig-tailed_macaque_ACE2_ORF     Reading seq #16: Rhesus_monkey_ACE2_ORF     Reading seq #17: grivet_ACE2_ORF     Reading seq #18: drill_ACE2_ORF     Reading seq #19: Bolivian_squirrel_monkey_ACE2_     Reading seq #20: Tufted_capuchin_ACE2_ORF     Reading seq #21: Cebus_capucinus_imitator_ACE2_     Reading seq #22: Mas_night_monkey_ACE2_ORF     Reading seq #23: white-tufted-ear_marmoset_ACE2     Reading seq #24: black_snub-nosed_monkey_ACE2_O     
+Reading seq # 1: human_ACE2_ORF       
+Reading seq # 2: chimpanzee_ACE2_ORF       
+Reading seq # 3: pygmy_chimpanzee_ACE2_ORF       
+Reading seq # 4: western_lowland_gorilla_ACE2_O       
+Reading seq # 5: Sumatran_orangutan_ACE2_ORF       
+Reading seq # 6: northern_white-cheeked_gibbon_       
+Reading seq # 7: golden_snub-nosed_monkey_ACE2_       
+Reading seq # 8: Colobus_angolensis_palliatus_A       
+Reading seq # 9: olive_baboon_ACE2_ORF       
+Reading seq #10: crab-eating_macaque_ACE2_ORF       
+Reading seq #11: Ugandan_red_Colobus_ACE2_ORF       
+Reading seq #12: gelada_ACE2_ORF       
+Reading seq #13: green_monkey_ACE2_ORF       
+Reading seq #14: sooty_mangabey_ACE2_ORF       
+Reading seq #15: pig-tailed_macaque_ACE2_ORF       
+Reading seq #16: Rhesus_monkey_ACE2_ORF       
+Reading seq #17: grivet_ACE2_ORF       
+Reading seq #18: drill_ACE2_ORF       
+Reading seq #19: Bolivian_squirrel_monkey_ACE2_       
+Reading seq #20: Tufted_capuchin_ACE2_ORF       
+Reading seq #21: Cebus_capucinus_imitator_ACE2_       
+Reading seq #22: Mas_night_monkey_ACE2_ORF       
+Reading seq #23: white-tufted-ear_marmoset_ACE2       
+Reading seq #24: black_snub-nosed_monkey_ACE2_O       
+
 Sequences read..
 Counting site patterns..  0:00
-         382 patterns at      806 /      806 sites (100.0%),  0:00
+Compressing,    382 patterns at    806 /    806 sites (100.0%),  0:00
+Collecting fpatt[] & pose[],    382 patterns at    806 /    806 sites (100.0%),  0:00
 2 ambiguous codons are seen in the data:
  --- TAN
 Counting codons..
@@ -364,21 +388,73 @@ NG distances for seqs.:
   5000000 bytes for space
 
 TREE #  1
-(21, 20, (19, ((22, 23), ((6, (5, ((2, 3), (4, 1)))), (((24, 7), (11, 8)), ((17, 13), ((12, (14, 18)), (9, (16, (15, 10))))))))));   MP score: -1
-   1    1.011947
-   2    0.026062
-   3    0.023069
-   4    0.022431
-   5    0.022234
-   6    0.022230
-   7    0.022230
-   8    0.022230
+(20, 21, (19, ((23, 22), ((6, (5, ((2, 3), (4, 1)))), (((7, 24), (11, 8)), ((13, 17), ((12, (18, 14)), (9, (16, (10, 15))))))))));   MP score: -1
+ns = 24  nnode = 46
+   dad  node   nson:   sons
+    33     0      0: 
+    32     1      0: 
+    32     2      0: 
+    33     3      0: 
+    30     4      0: 
+    29     5      0: 
+    36     6      0: 
+    37     7      0: 
+    43     8      0: 
+    45     9      0: 
+    37    10      0: 
+    41    11      0: 
+    39    12      0: 
+    42    13      0: 
+    45    14      0: 
+    44    15      0: 
+    39    16      0: 
+    42    17      0: 
+    25    18      0: 
+    24    19      0: 
+    24    20      0: 
+    27    21      0: 
+    27    22      0: 
+    36    23      0: 
+    -1    24      3:  19 20 25
+    24    25      2:  18 26
+    25    26      2:  27 28
+    26    27      2:  22 21
+    26    28      2:  29 34
+    28    29      2:   5 30
+    29    30      2:   4 31
+    30    31      2:  32 33
+    31    32      2:   1  2
+    31    33      2:   3  0
+    28    34      2:  35 38
+    34    35      2:  36 37
+    35    36      2:   6 23
+    35    37      2:  10  7
+    34    38      2:  39 40
+    38    39      2:  12 16
+    38    40      2:  41 43
+    40    41      2:  11 42
+    41    42      2:  17 13
+    40    43      2:   8 44
+    43    44      2:  15 45
+    44    45      2:   9 14
+(20, 21, (19, ((23, 22), ((6, (5, ((2, 3), (4, 1)))), (((7, 24), (11, 8)), ((13, 17), ((12, (18, 14)), (9, (16, (10, 15))))))))));
+(Tufted_capuchin_ACE2_ORF, Cebus_capucinus_imitator_ACE2_, (Bolivian_squirrel_monkey_ACE2_, ((white-tufted-ear_marmoset_ACE2, Mas_night_monkey_ACE2_ORF), ((northern_white-cheeked_gibbon_, (Sumatran_orangutan_ACE2_ORF, ((chimpanzee_ACE2_ORF, pygmy_chimpanzee_ACE2_ORF), (western_lowland_gorilla_ACE2_O, human_ACE2_ORF)))), (((golden_snub-nosed_monkey_ACE2_, black_snub-nosed_monkey_ACE2_O), (Ugandan_red_Colobus_ACE2_ORF, Colobus_angolensis_palliatus_A)), ((green_monkey_ACE2_ORF, grivet_ACE2_ORF), ((gelada_ACE2_ORF, (drill_ACE2_ORF, sooty_mangabey_ACE2_ORF)), (olive_baboon_ACE2_ORF, (Rhesus_monkey_ACE2_ORF, (crab-eating_macaque_ACE2_ORF, pig-tailed_macaque_ACE2_ORF))))))))));
+(Tufted_capuchin_ACE2_ORF: 0.000000, Cebus_capucinus_imitator_ACE2_: 0.000000, (Bolivian_squirrel_monkey_ACE2_: 0.000000, ((white-tufted-ear_marmoset_ACE2: 0.000000, Mas_night_monkey_ACE2_ORF: 0.000000): 0.000000, ((northern_white-cheeked_gibbon_: 0.000000, (Sumatran_orangutan_ACE2_ORF: 0.000000, ((chimpanzee_ACE2_ORF: 0.000000, pygmy_chimpanzee_ACE2_ORF: 0.000000): 0.000000, (western_lowland_gorilla_ACE2_O: 0.000000, human_ACE2_ORF: 0.000000): 0.000000): 0.000000): 0.000000): 0.000000, (((golden_snub-nosed_monkey_ACE2_: 0.000000, black_snub-nosed_monkey_ACE2_O: 0.000000): 0.000000, (Ugandan_red_Colobus_ACE2_ORF: 0.000000, Colobus_angolensis_palliatus_A: 0.000000): 0.000000): 0.000000, ((green_monkey_ACE2_ORF: 0.000000, grivet_ACE2_ORF: 0.000000): 0.000000, ((gelada_ACE2_ORF: 0.000000, (drill_ACE2_ORF: 0.000000, sooty_mangabey_ACE2_ORF: 0.000000): 0.000000): 0.000000, (olive_baboon_ACE2_ORF: 0.000000, (Rhesus_monkey_ACE2_ORF: 0.000000, (crab-eating_macaque_ACE2_ORF: 0.000000, pig-tailed_macaque_ACE2_ORF: 0.000000): 0.000000): 0.000000): 0.000000): 0.000000): 0.000000): 0.000000): 0.000000): 0.000000): 0.000000);
+
+   1    1.012206
+   2    0.026068
+   3    0.023075
+   4    0.022436
+   5    0.022239
+   6    0.022236
+   7    0.022236
+   8    0.022236
   4101152 bytes for conP, adjusted
 
 1 node(s) used for scaling (Yang 2000 J Mol Evol 51:423-432):
  29
 
-    0.010580    0.004833    0.025182    0.027271    0.002764    0.004292    0.032654    0.039404    0.091265    0.021749    0.027778    0.001174    0.019678    0.015805    0.010018    0.003231    0.002967    0.000000    0.014675    0.010056    0.028105    0.002877    0.009623    0.004593    0.004464    0.004414    0.014576    0.011538    0.009679    0.017497    0.005465    0.001825    0.005575    0.002259    0.006069    0.004847    0.004046    0.008768    0.003403    0.006216    0.003682    0.002762    0.001020    0.000680    0.003799    2.000000
+    0.004588    0.010825    0.025182    0.027271    0.002764    0.004292    0.039207    0.032850    0.091265    0.021749    0.027778    0.001174    0.019678    0.015805    0.010018    0.003231    0.002967    0.000000    0.014675    0.010056    0.028105    0.002877    0.009623    0.004800    0.004256    0.004414    0.014576    0.011538    0.009679    0.017497    0.001947    0.005343    0.005575    0.002259    0.006069    0.004847    0.007851    0.004963    0.003403    0.006216    0.003682    0.002762    0.001020    0.003147    0.001332    2.000000
 
 ntime & nrate & np:    45     1    46
 
@@ -387,58 +463,58 @@ Bounds (np=46):
   50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000  50.000000 999.000000
 
 np =    46
-lnL0 = -5966.404755
+lnL0 = -5966.830087
 
 
 Round 1a: Paras (1) (e=5)
 Iterating by ming2
-Initial: fx=  5966.404755
+Initial: fx=  5966.830087
 x=  2.00000
 
-  1 h-m-p  0.0040 8.0000  45.2649 ++Y    5923.973541  0 0.0640     8 | 0/1
-  2 h-m-p  1.6000 8.0000   0.0919 +Y     5923.688164  0 4.7828    13
+  1 h-m-p  0.0040 8.0000  45.2653 ++Y    5924.398057  0 0.0640     8 | 0/1
+  2 h-m-p  1.6000 8.0000   0.0919 +Y     5924.112669  0 4.7818    13
 
-    5.336625         0:01
+    5.336663         0:00
 
 Round 1b: Blengths (45, e=5)
-	lnL0 =      -5923.688164
-	Cycle  1:   -5916.339296
-	Cycle  2:   -5914.781685
+	lnL0 =      -5924.112669
+	Cycle  1:   -5916.273673
+	Cycle  2:   -5914.779599
 
- 0:01
+ 0:00
 
 
 Round 2a: Paras (1) (e=2.5)
 Iterating by ming2
-Initial: fx=  5914.781685
-x=  5.33662
+Initial: fx=  5914.779599
+x=  5.33666
 
-  1 h-m-p  0.0040 8.0000   0.0040 +++C   5914.781682  0 0.3580    23
+  1 h-m-p  0.0040 8.0000   0.0041 +++C   5914.779596  0 0.3568    23
 
-    5.338071         0:02
+    5.338112         0:01
 
 Round 2b: Blengths (45, e=2.5)
-	lnL0 =      -5914.781682
-	Cycle  1:   -5914.400944
+	lnL0 =      -5914.779596
+	Cycle  1:   -5914.400931
 
- 0:02
+ 0:01
 
 
 Round 3a: Paras (1) (e=0.001)
 Iterating by ming2
-Initial: fx=  5914.400944
-x=  5.33807
+Initial: fx=  5914.400931
+x=  5.33811
 
-  1 h-m-p  0.0040 8.0000   0.0044 +++C   5914.400941  0 0.3355    33
+  1 h-m-p  0.0040 8.0000   0.0042 +++C   5914.400928  0 0.3589    33
 
-    5.336593         0:02
+    5.336594         0:01
 
 Round 3b: Blengths (45, e=0.001)
-	lnL0 =      -5914.400941
+	lnL0 =      -5914.400928
 	Cycle  1:   -5914.326322
 	Cycle  2:   -5914.326107
 
- 0:02
+ 0:01
 
 
 Round 4a: Paras (1) (e=0.00025)
@@ -446,43 +522,36 @@ Iterating by ming2
 Initial: fx=  5914.326107
 x=  5.33659
 
-  1 h-m-p  0.0040 8.0000   0.0005 -------C  5914.326107  0 0.0000    47
+  1 h-m-p  0.0040 8.0000   0.0002 +++C   5914.326107  0 0.3642    43
 
-    5.336593         0:03
+    5.336535         0:02
 
 Round 4b: Blengths (45, e=0.00025)
 	lnL0 =      -5914.326107
 	Cycle  1:   -5914.326107
 
- 0:03
+ 0:02
 
 
 Round 5a: Paras (1) (e=6.25e-05)
 Iterating by ming2
 Initial: fx=  5914.326107
-x=  5.33659
+x=  5.33654
 
-  1 h-m-p  0.0040 8.0000   0.0004 Y      5914.326107  0 0.0010    54
+  1 h-m-p  0.0040 8.0000   0.0000 ++Y    5914.326107  0 0.0640    52
 
-    5.336593         0:03
+    5.336535         0:02
 
 Round 5b: Blengths (45, e=6.25e-05)
 	lnL0 =      -5914.326107
 	Cycle  1:   -5914.326107
 
- 0:04
+ 0:03
 
 lnL  = -5914.326107
 Out..
 lnL  = -5914.326107
-57 lfun, 57 eigenQcodon, 3399 P(t)
-
-d123[*] =  0.00342  0.00308  0.00350  average  0.00333
-    [B] =  0.00342  0.00308  0.00350  average  0.00333
-accept  =  1.00000  1.00000  1.00000
-
-w =  1.00000 dN =  0.00333 dS =  0.00333 d4 =  0.00283 (354.1 four-fold sites)
-             dN*=  0.00306 dS*=  0.00421 S* = 564.40 N* =1853.60
+55 lfun, 55 eigenQcodon, 3309 P(t)
 
 d123[*] =  0.00178  0.00161  0.00183  average  0.00174
     [B] =  0.00178  0.00161  0.00183  average  0.00174
@@ -490,6 +559,13 @@ accept  =  1.00000  1.00000  1.00000
 
 w =  1.00000 dN =  0.00174 dS =  0.00174 d4 =  0.00148 (354.1 four-fold sites)
              dN*=  0.00160 dS*=  0.00220 S* = 564.40 N* =1853.60
+
+d123[*] =  0.00342  0.00308  0.00350  average  0.00333
+    [B] =  0.00342  0.00308  0.00350  average  0.00333
+accept  =  1.00000  1.00000  1.00000
+
+w =  1.00000 dN =  0.00333 dS =  0.00333 d4 =  0.00283 (354.1 four-fold sites)
+             dN*=  0.00306 dS*=  0.00421 S* = 564.40 N* =1853.60
 
 d123[*] =  0.00692  0.00623  0.00709  average  0.00675
     [B] =  0.00692  0.00623  0.00709  average  0.00675
@@ -519,19 +595,19 @@ accept  =  1.00000  1.00000  1.00000
 w =  1.00000 dN =  0.00071 dS =  0.00071 d4 =  0.00060 (354.1 four-fold sites)
              dN*=  0.00065 dS*=  0.00089 S* = 564.40 N* =1853.60
 
-d123[*] =  0.01069  0.00963  0.01095  average  0.01043
-    [B] =  0.01069  0.00963  0.01095  average  0.01043
-accept  =  1.00000  1.00000  1.00000
-
-w =  1.00000 dN =  0.01043 dS =  0.01043 d4 =  0.00887 (354.1 four-fold sites)
-             dN*=  0.00959 dS*=  0.01317 S* = 564.40 N* =1853.60
-
 d123[*] =  0.01406  0.01267  0.01441  average  0.01371
     [B] =  0.01406  0.01267  0.01441  average  0.01371
 accept  =  1.00000  1.00000  1.00000
 
 w =  1.00000 dN =  0.01371 dS =  0.01371 d4 =  0.01167 (354.1 four-fold sites)
              dN*=  0.01262 dS*=  0.01732 S* = 564.40 N* =1853.60
+
+d123[*] =  0.01069  0.00963  0.01095  average  0.01043
+    [B] =  0.01069  0.00963  0.01095  average  0.01043
+accept  =  1.00000  1.00000  1.00000
+
+w =  1.00000 dN =  0.01043 dS =  0.01043 d4 =  0.00887 (354.1 four-fold sites)
+             dN*=  0.00959 dS*=  0.01317 S* = 564.40 N* =1853.60
 
 d123[*] =  0.03393  0.03057  0.03476  average  0.03309
     [B] =  0.03393  0.03057  0.03476  average  0.03309
@@ -638,19 +714,19 @@ accept  =  1.00000  1.00000  1.00000
 w =  1.00000 dN =  0.00255 dS =  0.00255 d4 =  0.00217 (354.1 four-fold sites)
              dN*=  0.00235 dS*=  0.00322 S* = 564.40 N* =1853.60
 
-d123[*] =  0.00144  0.00130  0.00147  average  0.00140
-    [B] =  0.00144  0.00130  0.00147  average  0.00140
-accept  =  1.00000  1.00000  1.00000
-
-w =  1.00000 dN =  0.00140 dS =  0.00140 d4 =  0.00119 (354.1 four-fold sites)
-             dN*=  0.00129 dS*=  0.00177 S* = 564.40 N* =1853.60
-
 d123[*] =  0.00130  0.00117  0.00133  average  0.00127
     [B] =  0.00130  0.00117  0.00133  average  0.00127
 accept  =  1.00000  1.00000  1.00000
 
 w =  1.00000 dN =  0.00127 dS =  0.00127 d4 =  0.00108 (354.1 four-fold sites)
              dN*=  0.00117 dS*=  0.00160 S* = 564.40 N* =1853.60
+
+d123[*] =  0.00144  0.00130  0.00147  average  0.00140
+    [B] =  0.00144  0.00130  0.00147  average  0.00140
+accept  =  1.00000  1.00000  1.00000
+
+w =  1.00000 dN =  0.00140 dS =  0.00140 d4 =  0.00119 (354.1 four-fold sites)
+             dN*=  0.00129 dS*=  0.00177 S* = 564.40 N* =1853.60
 
 d123[*] =  0.00243  0.00219  0.00249  average  0.00237
     [B] =  0.00243  0.00219  0.00249  average  0.00237
@@ -687,19 +763,19 @@ accept  =  1.00000  1.00000  1.00000
 w =  1.00000 dN =  0.00675 dS =  0.00675 d4 =  0.00574 (354.1 four-fold sites)
              dN*=  0.00621 dS*=  0.00852 S* = 564.40 N* =1853.60
 
-d123[*] =  0.00174  0.00157  0.00178  average  0.00170
-    [B] =  0.00174  0.00157  0.00178  average  0.00170
-accept  =  1.00000  1.00000  1.00000
-
-w =  1.00000 dN =  0.00170 dS =  0.00170 d4 =  0.00144 (354.1 four-fold sites)
-             dN*=  0.00156 dS*=  0.00214 S* = 564.40 N* =1853.60
-
 d123[*] =  0.00043  0.00038  0.00044  average  0.00041
     [B] =  0.00043  0.00038  0.00044  average  0.00041
 accept  =  1.00000  1.00000  1.00000
 
 w =  1.00000 dN =  0.00041 dS =  0.00041 d4 =  0.00035 (354.1 four-fold sites)
              dN*=  0.00038 dS*=  0.00052 S* = 564.40 N* =1853.60
+
+d123[*] =  0.00174  0.00157  0.00178  average  0.00170
+    [B] =  0.00174  0.00157  0.00178  average  0.00170
+accept  =  1.00000  1.00000  1.00000
+
+w =  1.00000 dN =  0.00170 dS =  0.00170 d4 =  0.00144 (354.1 four-fold sites)
+             dN*=  0.00156 dS*=  0.00214 S* = 564.40 N* =1853.60
 
 d123[*] =  0.00114  0.00103  0.00117  average  0.00111
     [B] =  0.00114  0.00103  0.00117  average  0.00111
@@ -729,19 +805,19 @@ accept  =  1.00000  1.00000  1.00000
 w =  1.00000 dN =  0.00169 dS =  0.00169 d4 =  0.00144 (354.1 four-fold sites)
              dN*=  0.00156 dS*=  0.00214 S* = 564.40 N* =1853.60
 
-d123[*] =  0.00130  0.00117  0.00133  average  0.00126
-    [B] =  0.00130  0.00117  0.00133  average  0.00126
-accept  =  1.00000  1.00000  1.00000
-
-w =  1.00000 dN =  0.00126 dS =  0.00126 d4 =  0.00108 (354.1 four-fold sites)
-             dN*=  0.00116 dS*=  0.00160 S* = 564.40 N* =1853.60
-
 d123[*] =  0.00217  0.00195  0.00222  average  0.00211
     [B] =  0.00217  0.00195  0.00222  average  0.00211
 accept  =  1.00000  1.00000  1.00000
 
 w =  1.00000 dN =  0.00211 dS =  0.00211 d4 =  0.00180 (354.1 four-fold sites)
              dN*=  0.00194 dS*=  0.00267 S* = 564.40 N* =1853.60
+
+d123[*] =  0.00130  0.00117  0.00133  average  0.00126
+    [B] =  0.00130  0.00117  0.00133  average  0.00126
+accept  =  1.00000  1.00000  1.00000
+
+w =  1.00000 dN =  0.00126 dS =  0.00126 d4 =  0.00108 (354.1 four-fold sites)
+             dN*=  0.00116 dS*=  0.00160 S* = 564.40 N* =1853.60
 
 d123[*] =  0.00050  0.00045  0.00051  average  0.00049
     [B] =  0.00050  0.00045  0.00051  average  0.00049
@@ -778,6 +854,13 @@ accept  =  1.00000  1.00000  1.00000
 w =  1.00000 dN =  0.00000 dS =  0.00000 d4 =  0.00000 (354.1 four-fold sites)
              dN*=  0.00000 dS*=  0.00000 S* = 564.40 N* =1853.60
 
+d123[*] =  0.00086  0.00078  0.00088  average  0.00084
+    [B] =  0.00086  0.00078  0.00088  average  0.00084
+accept  =  1.00000  1.00000  1.00000
+
+w =  1.00000 dN =  0.00084 dS =  0.00084 d4 =  0.00072 (354.1 four-fold sites)
+             dN*=  0.00077 dS*=  0.00106 S* = 564.40 N* =1853.60
+
 d123[*] =  0.00000  0.00000  0.00000  average  0.00000
     [B] =  0.00000  0.00000  0.00000  average  0.00000
 accept  =  1.00000  1.00000  1.00000
@@ -785,12 +868,4 @@ accept  =  1.00000  1.00000  1.00000
 w =  1.00000 dN =  0.00000 dS =  0.00000 d4 =  0.00000 (354.1 four-fold sites)
              dN*=  0.00000 dS*=  0.00000 S* = 564.40 N* =1853.60
 
-d123[*] =  0.00086  0.00078  0.00088  average  0.00084
-    [B] =  0.00086  0.00078  0.00088  average  0.00084
-accept  =  1.00000  1.00000  1.00000
-
-w =  1.00000 dN =  0.00084 dS =  0.00084 d4 =  0.00072 (354.1 four-fold sites)
-             dN*=  0.00077 dS*=  0.00106 S* = 564.40 N* =1853.60
-end of tree file.
-
-Time used:  0:04
+Time used:  0:03

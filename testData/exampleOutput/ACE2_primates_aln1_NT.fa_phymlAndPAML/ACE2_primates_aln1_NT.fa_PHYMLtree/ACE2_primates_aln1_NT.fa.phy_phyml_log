@@ -29,9 +29,9 @@
         . Minimum length of an edge:			 1e-08
         . Optimise substitution model parameters:	 yes
         . Run ID:					 none
-        . Random seed:					 1676078155
+        . Random seed:					 1746647974
         . Subtree patterns aliasing:			 no
-        . Version:					 3.3.20220408
+        . Version:					 3.3.20200621
         . Byte alignment:				 32
         . AVX enabled:					 yes
         . SSE enabled:					 yes
@@ -57,24 +57,24 @@
 
 . Starting first round of SPRs...
 
-	       0s |   1 | lnL=     -5950.7 | depth=    1/   40 | improvements=   3 | delta_lnL=    0.0/ 1000.0   +
+	       0s |   1 | lnL=     -5951.0 | depth=    1/   40 | improvements=   5 | delta_lnL=    0.0/ 1000.0   +
 
 . Second round of optimization...
 
-	       0s |   2 | lnL=     -5955.8 | depth=    1/   36 | improvements=   2 | delta_lnL=    0.0/ 1000.0  
+	       1s |   2 | lnL=     -5951.3 | depth=    1/   36 | improvements=   4 | delta_lnL=    0.0/ 1000.0  
 
 . Third round of optimization...
 
-	       1s |   3 | lnL=     -5950.0 | depth=    1/   20 | improvements=   5 | delta_lnL=    0.0/ 1000.0 | triple moves=   5   +
+	       1s |   3 | lnL=     -5950.0 | depth=    1/   20 | improvements=   3 | delta_lnL=    0.0/ 1000.0 | triple moves=   5   +
 	       2s |   4 | lnL=     -5950.0 | depth=    0/   16 | improvements=   0 | delta_lnL=    0.0/  100.0 | triple moves=   5   +
 
 . Final optimisation steps...
 
 
-. Log likelihood of the current tree: -5949.630371836958147468977.
+. Log likelihood of the current tree: -5949.630266574386041611433.
 
 . Printing the most likely tree in file 'ACE2_primates_aln1_NT.fa.phy_phyml_tree.txt'.
 
-. Time used 0h0m2s
+. Time used 0h0m3s
 
 oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo

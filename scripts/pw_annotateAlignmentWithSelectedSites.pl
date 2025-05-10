@@ -13,7 +13,7 @@ my $codonModel = 2;
 my $initOmega = 0.4;
 my $cleanData = 0;
 
-## which model do we want to annotate the selected sites for?
+## which model do we want to annotate the selected sites for? This is used in constructing filenames to read the BEB results and to construct output filename
 my $codemlModel = 8;
 
 ## report selected sites with at least this BEB probability into the output file:
@@ -22,12 +22,12 @@ my $BEBprobThresholdToPrintSelectedSite = 0.9;
 my $scriptName = "pw_annotateAlignmentWithSelectedSites.pl";
 
 ######### get any non-default parameters from the command-line:
-GetOptions("omega=f" => \$initOmega,         ## sometimes I do 3, default is 0.4
-           "codon=i" => \$codonModel,        ## sometimes I do 3, default is 2
+GetOptions("omega=f"      => \$initOmega,         ## sometimes I do 3, default is 0.4
+           "codon=i"      => \$codonModel,        ## sometimes I do 3, default is 2
            "codonModel=i" => \$codemlModel,  ## default is 8
-           "clean=i" => \$cleanData,         ## default is 0. sometimes I do paml with cleandata=1 to remove the sites with gaps in any species.  But I haven't implemented looking at cleandata=1 output. 
-           "BEB=f"   => \$BEBprobThresholdToPrintSelectedSite,  # BEB threshold 0.5 would be less conservative, default is 0.9
-           "annot=s" => \$codonAnnotString) or die "\n\nERROR - terminating in script $scriptName - unknown option(s) specified on command line\n\n" ; 
+           "clean=i"      => \$cleanData,         ## default is 0. sometimes I do paml with cleandata=1 to remove the sites with gaps in any species.  But I haven't implemented looking at cleandata=1 output. 
+           "BEB=f"        => \$BEBprobThresholdToPrintSelectedSite,  # BEB threshold 0.5 would be less conservative, default is 0.9
+           "annot=s"      => \$codonAnnotString) or die "\n\nERROR - terminating in script $scriptName - unknown option(s) specified on command line\n\n" ; 
 
 ################
 
@@ -95,7 +95,9 @@ foreach my $fastaAlnFile (@ARGV) {
     ## to make output file, I first copy the input alignment, then I add to it another seq that has annotation. 
     my $outfile = $fastaAlnFile;
     $outfile =~ s/\.fasta$//; $outfile =~ s/\.fa$//;
-    $outfile .= ".annotBEBover$BEBprobThresholdToPrintSelectedSite.fa";
+    # $outfile .= ".annotBEBover$BEBprobThresholdToPrintSelectedSite.fa";
+    $outfile .= ".annotBEBover$BEBprobThresholdToPrintSelectedSite.M$codemlModel"."_initOmega$initOmega"."_codonModel$codonModel.fa";
+
     system("cp $fastaAlnFile $outfile");
     my $seqOUTannot = Bio::SeqIO->new(-file => ">> $outfile", '-format' => 'Fasta');
     my $annotSeqname = "posSelM$codemlModel"."_BEBover$BEBprobThresholdToPrintSelectedSite";

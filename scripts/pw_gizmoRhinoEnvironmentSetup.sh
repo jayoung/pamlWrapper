@@ -10,7 +10,7 @@ export PATH=$PAML_WRAPPER_HOME/scripts:$PATH
 export PATH=/fh/fast/malik_h/grp/malik_lab_shared/linux_gizmo/bin:$PATH
 
 # load R and bioperl modules
-module load fhR/4.1.2-foss-2020b
+module load fhR/4.4.0-foss-2023b
 module load BioPerl/1.7.8-GCCcore-10.2.0
 
 # make sure we can find the other perl modules we need

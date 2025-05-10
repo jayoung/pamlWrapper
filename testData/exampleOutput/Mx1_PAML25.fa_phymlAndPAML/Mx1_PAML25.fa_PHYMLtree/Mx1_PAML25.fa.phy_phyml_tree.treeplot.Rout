@@ -7,6 +7,7 @@ setting myTitleCex to match myCex
 using aliasFile Mx1_PAML25.fa_phymlAndPAML/Mx1_PAML25.fa.aliases.txt
 
 working on file  Mx1_PAML25.fa_phymlAndPAML/Mx1_PAML25.fa_PHYMLtree/Mx1_PAML25.fa.phy_phyml_tree 
+printing warnings, if any
 
 
 finished
