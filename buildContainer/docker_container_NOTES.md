@@ -42,13 +42,16 @@ Next, on the mac, we make sure we have the latest version of the pamlWrapper git
 
 The reason I do a fresh clone, rather than a pull, is because if I actually want to use the scripts on my mac I make a bunch of changes, but those are NOT changes I want to sync back to the repo. There's probably a way to get fancy and make a mac branch that merges the changes from main, but I'm not going to deal with that
 ```
-cd /Users/jayoung/gitProjects/pamlWrapper
-git pull
+cd /Users/jayoung/gitProjects/
+# remove old clone
+rm -r pamlWrapper
+# clone fresh copy
+git clone https://github.com/jayoung/pamlWrapper.git
 ```
 
 I also make sure the Mac docker app is running, and using the app, I sign in to my account.
 
-Disable Netskope client on the mac, otherwise I get an error ("cannot verify github.com's certificate").
+Disable Netskope client on the mac, otherwise I get an error ("cannot verify github.com's certificate"). Not sure that's relevant on my 2024 work laptop
 
 Then we re-build the docker image
 ```
