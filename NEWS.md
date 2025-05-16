@@ -3,6 +3,7 @@
 - for files with very long names I think R is truncating the file names for the pdf tree plot outputs. See (README.md)[README.md] for details
 
 ## Fixes since v1.3.11
+- filename of the annotBEBover0.9 fasta file now contains parameters used (as different parameters will give different values)
 
 ## paml_wrapper_v1.3.11
 - docker container's R installation failed to install the ape package, so I got an error when trying to plot the trees. I think the newer ape package version available at CRAN probably fails to install on the very old version of R I have in the container. I fixed it by specifying an older version of ape, and by manually installing the Rcpp package rather than doing it as a dependency.

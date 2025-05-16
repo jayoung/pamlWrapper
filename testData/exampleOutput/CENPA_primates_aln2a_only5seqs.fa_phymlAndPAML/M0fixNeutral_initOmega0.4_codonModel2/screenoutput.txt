@@ -102,7 +102,7 @@ Counting codons..
   5000000 bytes for space
 
 TREE #  1
-(2, 5, (1, (3, 4)));   MP score: -1
+(5, 2, (1, (4, 3)));   MP score: -1
 ns = 5  nnode = 8
    dad  node   nson:   sons
      6     0      0: 
@@ -110,16 +110,16 @@ ns = 5  nnode = 8
      7     2      0: 
      7     3      0: 
      5     4      0: 
-    -1     5      3:   1  4  6
+    -1     5      3:   4  1  6
      5     6      2:   0  7
-     6     7      2:   2  3
-(2, 5, (1, (3, 4)));
-(Sumatran_orangutan_CENPA_ORF, Rhesus_monkey_CENPA_ORF, (chimpanzee_CENPA_ORF, (human_CENPA_ORF, western_lowland_gorilla_CENPA_)));
-(Sumatran_orangutan_CENPA_ORF: 0.000000, Rhesus_monkey_CENPA_ORF: 0.000000, (chimpanzee_CENPA_ORF: 0.000000, (human_CENPA_ORF: 0.000000, western_lowland_gorilla_CENPA_: 0.000000): 0.000000): 0.000000);
+     6     7      2:   3  2
+(5, 2, (1, (4, 3)));
+(Rhesus_monkey_CENPA_ORF, Sumatran_orangutan_CENPA_ORF, (chimpanzee_CENPA_ORF, (western_lowland_gorilla_CENPA_, human_CENPA_ORF)));
+(Rhesus_monkey_CENPA_ORF: 0.000000, Sumatran_orangutan_CENPA_ORF: 0.000000, (chimpanzee_CENPA_ORF: 0.000000, (western_lowland_gorilla_CENPA_: 0.000000, human_CENPA_ORF: 0.000000): 0.000000): 0.000000);
 
     99552 bytes for conP, adjusted
 
-    0.001494    0.094900    0.009445    0.028454    0.009778    0.012115    0.016865    2.000000
+    0.094900    0.001494    0.009445    0.028454    0.009778    0.016865    0.012115    2.000000
 
 ntime & nrate & np:     7     1     8
 
@@ -142,22 +142,22 @@ x=  2.00000
 
 Round 1b: Blengths (7, e=5)
 	lnL0 =       -714.581308
-	Cycle  1:    -714.142517
+	Cycle  1:    -714.142498
 
  0:00
 
 
 Round 2a: Paras (1) (e=1.25)
 Iterating by ming2
-Initial: fx=   714.142517
+Initial: fx=   714.142498
 x=  2.70982
 
-  1 h-m-p  0.0040 8.0000   0.1119 ++++C   714.134659  0 1.1554    21
+  1 h-m-p  0.0040 8.0000   0.1119 ++++C   714.134641  0 1.1554    21
 
-    2.580486         0:00
+    2.580487         0:00
 
 Round 2b: Blengths (7, e=1.25)
-	lnL0 =       -714.134659
+	lnL0 =       -714.134641
 	Cycle  1:    -714.107595
 
  0:00
@@ -169,7 +169,7 @@ Initial: fx=   714.107595
 x=  2.58049
 
   1 h-m-p  0.0040 8.0000   0.0066 ++++C   714.107571  0 1.1330    32 | 0/1
-  2 h-m-p  1.6000 8.0000   0.0000 Y       714.107571  0 0.9961    37
+  2 h-m-p  1.6000 8.0000   0.0000 Y       714.107571  0 0.9956    37
 
     2.573008         0:00
 
@@ -185,7 +185,7 @@ Iterating by ming2
 Initial: fx=   714.107244
 x=  2.57301
 
-  1 h-m-p  0.0040 8.0000   0.0000 ++++C   714.107244  0 1.1515    48
+  1 h-m-p  0.0040 8.0000   0.0000 ++++C   714.107244  0 1.1463    48
 
     2.573056         0:00
 
@@ -201,7 +201,7 @@ Iterating by ming2
 Initial: fx=   714.107244
 x=  2.57306
 
-  1 h-m-p  0.0040 8.0000   0.0000 N       714.107244  0 0.0040    55
+  1 h-m-p  0.0040 8.0000   0.0000 Y       714.107244  0 0.0040    55
 
     2.573056         0:00
 
@@ -216,19 +216,19 @@ Out..
 lnL  =  -714.107244
 58 lfun, 58 eigenQcodon, 476 P(t)
 
-d123[*] =  0.00000  0.00000  0.00000  average  0.00000
-    [B] =  0.00000  0.00000  0.00000  average  0.00000
-accept  =  1.00000  1.00000  1.00000
-
-w =  1.00000 dN =  0.00000 dS =  0.00000 d4 =  0.00000 (84.2 four-fold sites)
-             dN*=  0.00000 dS*=  0.00000 S* = 113.95 N* = 309.05
-
 d123[*] =  0.02937  0.03636  0.03160  average  0.03244
     [B] =  0.02937  0.03636  0.03160  average  0.03244
 accept  =  1.00000  1.00000  1.00000
 
 w =  1.00000 dN =  0.03244 dS =  0.03244 d4 =  0.03562 (84.2 four-fold sites)
              dN*=  0.03153 dS*=  0.03492 S* = 113.95 N* = 309.05
+
+d123[*] =  0.00000  0.00000  0.00000  average  0.00000
+    [B] =  0.00000  0.00000  0.00000  average  0.00000
+accept  =  1.00000  1.00000  1.00000
+
+w =  1.00000 dN =  0.00000 dS =  0.00000 d4 =  0.00000 (84.2 four-fold sites)
+             dN*=  0.00000 dS*=  0.00000 S* = 113.95 N* = 309.05
 
 d123[*] =  0.00436  0.00540  0.00469  average  0.00482
     [B] =  0.00436  0.00540  0.00469  average  0.00482

@@ -1,5 +1,5 @@
       seqfile = ../CENPA_primates_aln2a_only5seqs.fa.phy
-      treefile = ../CENPA_primates_aln2a_only5seqs.fa.phy.usertree.names
+      treefile = ../CENPA_primates_aln2a_only5seqs.fa.phy_phyml_tree.nolen
 
       outfile = mlc           * main result file name
         noisy = 9  * 0,1,2,3,9: how much rubbish on the screen

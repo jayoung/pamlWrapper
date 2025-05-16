@@ -102,7 +102,7 @@ Counting codons..
   5000000 bytes for space
 
 TREE #  1
-(2, 5, (1, (3, 4)));   MP score: -1
+(5, 2, (1, (4, 3)));   MP score: -1
 ns = 5  nnode = 8
    dad  node   nson:   sons
      6     0      0: 
@@ -110,18 +110,18 @@ ns = 5  nnode = 8
      7     2      0: 
      7     3      0: 
      5     4      0: 
-    -1     5      3:   1  4  6
+    -1     5      3:   4  1  6
      5     6      2:   0  7
-     6     7      2:   2  3
-(2, 5, (1, (3, 4)));
-(Sumatran_orangutan_CENPA_ORF, Rhesus_monkey_CENPA_ORF, (chimpanzee_CENPA_ORF, (human_CENPA_ORF, western_lowland_gorilla_CENPA_)));
-(Sumatran_orangutan_CENPA_ORF: 0.000000, Rhesus_monkey_CENPA_ORF: 0.000000, (chimpanzee_CENPA_ORF: 0.000000, (human_CENPA_ORF: 0.000000, western_lowland_gorilla_CENPA_: 0.000000): 0.000000): 0.000000);
+     6     7      2:   3  2
+(5, 2, (1, (4, 3)));
+(Rhesus_monkey_CENPA_ORF, Sumatran_orangutan_CENPA_ORF, (chimpanzee_CENPA_ORF, (western_lowland_gorilla_CENPA_, human_CENPA_ORF)));
+(Rhesus_monkey_CENPA_ORF: 0.000000, Sumatran_orangutan_CENPA_ORF: 0.000000, (chimpanzee_CENPA_ORF: 0.000000, (western_lowland_gorilla_CENPA_: 0.000000, human_CENPA_ORF: 0.000000): 0.000000): 0.000000);
 
   1095072 bytes for conP, adjusted
 
 initial w for M8:NSbetaw>1 reset.
 
-    0.001494    0.094900    0.009445    0.028454    0.009778    0.012115    0.016865    2.000000    0.900000    0.675943    1.882193    2.185780
+    0.094900    0.001494    0.009445    0.028454    0.009778    0.016865    0.012115    2.000000    0.900000    0.675943    1.882193    2.185780
 
 ntime & nrate & np:     7     2    12
 
@@ -140,257 +140,257 @@ Initial: fx=   709.767701
 x=  2.00000  0.90000  0.67594  1.88219  2.18578
 
   1 h-m-p  0.0000 0.0097  10.5363 +++++   709.497323  m 0.0097    13 | 0/5
-  2 h-m-p  0.0764 0.5380   1.3430 +C      709.074875  0 0.3056    22 | 0/5
+  2 h-m-p  0.0764 0.5380   1.3430 +C      709.074874  0 0.3056    22 | 0/5
   3 h-m-p  0.8875 8.0000   0.4624 Y       708.924841  0 0.4058    30
 
     2.250172    0.913577    0.337180    2.118055    2.152333         0:00
 
 Round 1b: Blengths (7, e=5)
 	lnL0 =       -708.924841
-	Cycle  1:    -708.440817
+	Cycle  1:    -708.440784
 
  0:01
 
 
 Round 2a: Paras (5) (e=2.5)
 Iterating by ming2
-Initial: fx=   708.440817
+Initial: fx=   708.440784
 x=  2.25017  0.91358  0.33718  2.11805  2.15233
 
-  1 h-m-p  0.0002 0.4525   0.7438 ++++C   708.423158  0 0.0579    45 | 0/5
-  2 h-m-p  0.0039 0.0273  10.9535 +
-QuantileBeta(0.15, 0.00500, 2.16036) = 1.221812e-160	2000 rounds
-+      708.306461  m 0.0273    58
-QuantileBeta(0.15, 0.00500, 2.16036) = 1.221812e-160	2000 rounds
+  1 h-m-p  0.0002 0.4524   0.7437 ++++C   708.422393  0 0.0579    45 | 0/5
+  2 h-m-p  0.0038 0.0261  11.4626 +
+QuantileBeta(0.15, 0.00500, 2.16036) = 1.221818e-160	2000 rounds
++      708.304843  m 0.0261    58
+QuantileBeta(0.15, 0.00500, 2.16036) = 1.221818e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16036) = 1.221812e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16036) = 1.221818e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16037) = 1.221811e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16036) = 1.221817e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16036) = 1.221812e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16036) = 1.221818e-160	2000 rounds
  | 0/5
-  3 h-m-p  0.0000 0.0000   0.9758 
-h-m-p:      9.62581620e-19      4.81290810e-18      9.75771443e-01   708.306461
+  3 h-m-p  0.0000 0.0000   0.7674 
+h-m-p:      1.23604837e-18      6.18024186e-18      7.67411057e-01   708.304843
 .. 
-QuantileBeta(0.15, 0.00500, 2.16036) = 1.221812e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16036) = 1.221818e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16036) = 1.221812e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16036) = 1.221818e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16036) = 1.221812e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16036) = 1.221818e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16036) = 1.221812e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16036) = 1.221818e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16049) = 1.221719e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16049) = 1.221725e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16023) = 1.221905e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16023) = 1.221911e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16036) = 1.221812e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16036) = 1.221818e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16036) = 1.221812e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16036) = 1.221818e-160	2000 rounds
  | 0/5
-  4 h-m-p  0.0007 0.3340   2.5628 +C      708.297044  0 0.0031    77 | 0/5
-  5 h-m-p  0.0011 0.0055   0.1018 +
-QuantileBeta(0.15, 0.00500, 2.16036) = 1.221812e-160	2000 rounds
-+      708.296987  m 0.0055    85
-QuantileBeta(0.15, 0.00500, 2.16036) = 1.221812e-160	2000 rounds
+  4 h-m-p  0.0007 0.3591   2.3824 +C      708.296642  0 0.0029    77 | 0/5
+  5 h-m-p  0.0009 0.0046   0.1010 +
+QuantileBeta(0.15, 0.00500, 2.16036) = 1.221818e-160	2000 rounds
++      708.296595  m 0.0046    85
+QuantileBeta(0.15, 0.00500, 2.16036) = 1.221818e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16036) = 1.221812e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16036) = 1.221818e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16036) = 1.221812e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16036) = 1.221818e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16036) = 1.221812e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16036) = 1.221818e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16049) = 1.221719e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16049) = 1.221725e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16023) = 1.221905e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16023) = 1.221911e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16036) = 1.221812e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16036) = 1.221818e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16036) = 1.221812e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16036) = 1.221818e-160	2000 rounds
  | 1/5
-  6 h-m-p  0.0063 3.1569   0.3750 
+  6 h-m-p  0.0065 3.2602   0.3632 
+QuantileBeta(0.15, 0.00500, 2.16036) = 1.221817e-160	2000 rounds
+
+QuantileBeta(0.15, 0.00500, 2.16036) = 1.221817e-160	2000 rounds
++
 QuantileBeta(0.15, 0.00500, 2.16036) = 1.221813e-160	2000 rounds
-
-QuantileBeta(0.15, 0.00500, 2.16036) = 1.221814e-160	2000 rounds
 +
-QuantileBeta(0.15, 0.00500, 2.16035) = 1.221820e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16038) = 1.221798e-160	2000 rounds
 +
-QuantileBeta(0.15, 0.00500, 2.16032) = 1.221845e-160	2000 rounds
-+
-QuantileBeta(0.15, 0.00500, 2.16018) = 1.221943e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16047) = 1.221738e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221869e-160	2000 rounds
-Y    708.280712  0 0.7041   101
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221869e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16041) = 1.221782e-160	2000 rounds
+Y    708.280393  0 0.7367   101
+QuantileBeta(0.15, 0.00500, 2.16041) = 1.221782e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221869e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16041) = 1.221782e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221869e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16041) = 1.221782e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221869e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16041) = 1.221782e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16041) = 1.221776e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16054) = 1.221690e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16016) = 1.221962e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16028) = 1.221875e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221869e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16041) = 1.221782e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221869e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16041) = 1.221782e-160	2000 rounds
  | 1/5
-  7 h-m-p  1.6000 8.0000   0.0659 
-QuantileBeta(0.15, 0.00500, 2.16026) = 1.221887e-160	2000 rounds
+  7 h-m-p  1.6000 8.0000   0.0607 
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221769e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16019) = 1.221940e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16048) = 1.221729e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16027) = 1.221882e-160	2000 rounds
-Y       708.279467  0 1.1820   113
-QuantileBeta(0.15, 0.00500, 2.16027) = 1.221882e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221772e-160	2000 rounds
+C       708.279132  0 1.2958   113
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221772e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16027) = 1.221882e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221772e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16027) = 1.221882e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221772e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16027) = 1.221882e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221772e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16040) = 1.221789e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16055) = 1.221679e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16014) = 1.221975e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16029) = 1.221864e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16027) = 1.221882e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221772e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16027) = 1.221882e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221772e-160	2000 rounds
  | 1/5
-  8 h-m-p  1.6000 8.0000   0.0073 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221876e-160	2000 rounds
+  8 h-m-p  1.6000 8.0000   0.0123 
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221773e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16030) = 1.221857e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16041) = 1.221778e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16027) = 1.221878e-160	2000 rounds
-Y       708.279271  0 0.9896   125
-QuantileBeta(0.15, 0.00500, 2.16027) = 1.221878e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221773e-160	2000 rounds
+Y       708.278998  0 0.8714   125
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221773e-160	2000 rounds
 
 
-    2.252207    0.829811    0.005000    2.160272    1.848039         0:02
+    2.251110    0.829795    0.005000    2.160420    1.847766         0:02
 
 Round 2b: Blengths (7, e=2.5)
 
-QuantileBeta(0.15, 0.00500, 2.16027) = 1.221878e-160	2000 rounds
-	lnL0 =       -708.279271
-	Cycle  1:    -708.238612
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221773e-160	2000 rounds
+	lnL0 =       -708.278998
+	Cycle  1:    -708.238610
 
  0:03
 
 
 Round 3a: Paras (5) (e=0.001)
-  2.252207  0.829811  0.005000  2.160272  1.848039
+  2.251110  0.829795  0.005000  2.160420  1.847766
    0.00010   0.00001   0.00500   0.00500   1.00000
  999.00000   0.99999  99.00000  99.00000 999.00000
 warning: ming2, 1 paras at boundary.
-QuantileBeta(0.15, 0.00500, 2.16027) = 1.221878e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221773e-160	2000 rounds
 
 Iterating by ming2
-Initial: fx=   708.238612
-x=  2.25221  0.82981  0.00500  2.16027  1.84804
+Initial: fx=   708.238610
+x=  2.25111  0.82980  0.00500  2.16042  1.84777
 
-QuantileBeta(0.15, 0.00500, 2.16027) = 1.221878e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221773e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16027) = 1.221878e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221773e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16027) = 1.221877e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221771e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16027) = 1.221878e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221773e-160	2000 rounds
 
-  1 h-m-p  0.0010 1.9859   0.4203 
-QuantileBeta(0.15, 0.00500, 2.16027) = 1.221878e-160	2000 rounds
+  1 h-m-p  0.0010 1.9918   0.4191 
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221772e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16027) = 1.221878e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221772e-160	2000 rounds
 +
-QuantileBeta(0.15, 0.00500, 2.16027) = 1.221878e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221772e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16027) = 1.221878e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221772e-160	2000 rounds
 C      708.238257  0 0.0041   137
-QuantileBeta(0.15, 0.00500, 2.16027) = 1.221878e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221772e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16027) = 1.221878e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221772e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16027) = 1.221878e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221772e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16027) = 1.221878e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221772e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16040) = 1.221786e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16055) = 1.221680e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16014) = 1.221971e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16029) = 1.221865e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16027) = 1.221878e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221772e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16027) = 1.221878e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221772e-160	2000 rounds
  | 1/5
-  2 h-m-p  0.0947 8.0000   0.0181 
-QuantileBeta(0.15, 0.00500, 2.16027) = 1.221878e-160	2000 rounds
+  2 h-m-p  0.0946 8.0000   0.0181 
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221772e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16027) = 1.221878e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221772e-160	2000 rounds
 +
-QuantileBeta(0.15, 0.00500, 2.16027) = 1.221877e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221772e-160	2000 rounds
 +
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221875e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221769e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16027) = 1.221877e-160	2000 rounds
-Y     708.237809  0 2.7630   151
-QuantileBeta(0.15, 0.00500, 2.16027) = 1.221877e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221771e-160	2000 rounds
+Y     708.237793  0 2.8748   151
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221771e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16027) = 1.221877e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221771e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16027) = 1.221877e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221771e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16027) = 1.221877e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221771e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16040) = 1.221784e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16055) = 1.221678e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16014) = 1.221969e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16029) = 1.221864e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16027) = 1.221877e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221771e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16027) = 1.221877e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221771e-160	2000 rounds
  | 1/5
-  3 h-m-p  1.6000 8.0000   0.0069 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221876e-160	2000 rounds
+  3 h-m-p  1.6000 8.0000   0.0043 
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221770e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221873e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221767e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221876e-160	2000 rounds
-Y       708.237788  0 0.9760   163
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221876e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221770e-160	2000 rounds
+Y       708.237784  0 0.9404   163
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221770e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221876e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221770e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221876e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221770e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221876e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221770e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16040) = 1.221783e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16055) = 1.221678e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16015) = 1.221969e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16029) = 1.221863e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221876e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221770e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221876e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221770e-160	2000 rounds
  | 1/5
   4 h-m-p  1.6000 8.0000   0.0001 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221875e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221769e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221873e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221767e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221876e-160	2000 rounds
-Y       708.237788  0 1.0211   175
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221876e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221770e-160	2000 rounds
+Y       708.237784  0 1.0251   175
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221770e-160	2000 rounds
 
 
-    2.252858    0.831483    0.005000    2.160276    1.900848         0:03
+    2.252863    0.831487    0.005000    2.160424    1.900906         0:04
 
 Round 3b: Blengths (7, e=0.001)
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221876e-160	2000 rounds
-	lnL0 =       -708.237788
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221770e-160	2000 rounds
+	lnL0 =       -708.237784
 	Cycle  1:    -708.236728
 	Cycle  2:    -708.236725
 
@@ -398,91 +398,89 @@ QuantileBeta(0.15, 0.00500, 2.16028) = 1.221876e-160	2000 rounds
 
 
 Round 4a: Paras (5) (e=0.00025)
-  2.252858  0.831483  0.005000  2.160276  1.900848
+  2.252863  0.831487  0.005000  2.160424  1.900906
    0.00010   0.00001   0.00500   0.00500   1.00000
  999.00000   0.99999  99.00000  99.00000 999.00000
 warning: ming2, 1 paras at boundary.
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221876e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221770e-160	2000 rounds
 
 Iterating by ming2
 Initial: fx=   708.236725
-x=  2.25286  0.83148  0.00500  2.16028  1.90085
+x=  2.25286  0.83149  0.00500  2.16042  1.90091
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221876e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221770e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221876e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221770e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221874e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221769e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221876e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221770e-160	2000 rounds
 
   1 h-m-p  0.0040 8.0000   0.0873 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221876e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221770e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221876e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221770e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221876e-160	2000 rounds
-C       708.236711  0 0.0039   186
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221876e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221770e-160	2000 rounds
+C       708.236710  0 0.0039   186
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221770e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221876e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221770e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221876e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221770e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221876e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221770e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16041) = 1.221783e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16055) = 1.221677e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16015) = 1.221968e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16029) = 1.221863e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221876e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221770e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221876e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221770e-160	2000 rounds
  | 1/5
-  2 h-m-p  0.0746 8.0000   0.0046 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221875e-160	2000 rounds
+  2 h-m-p  0.0749 8.0000   0.0046 
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221770e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221875e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221770e-160	2000 rounds
 +
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221875e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16042) = 1.221769e-160	2000 rounds
 +
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221873e-160	2000 rounds
-+
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221871e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221767e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221874e-160	2000 rounds
-Y    708.236679  0 2.9928   201
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221874e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221768e-160	2000 rounds
+Y     708.236679  0 2.9923   200
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221768e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221874e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221768e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221874e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221768e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221874e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221768e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16041) = 1.221781e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16056) = 1.221675e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16015) = 1.221967e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16030) = 1.221861e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221874e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221768e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221874e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221768e-160	2000 rounds
  | 1/5
   3 h-m-p  1.6000 8.0000   0.0008 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221873e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221767e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221870e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221765e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221873e-160	2000 rounds
-Y       708.236679  0 0.9205   213
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221873e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221768e-160	2000 rounds
+Y       708.236679  0 0.9207   212
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221768e-160	2000 rounds
 
 
-    2.253442    0.831992    0.005000    2.160279    1.914699         0:05
+    2.253442    0.831992    0.005000    2.160427    1.914702         0:05
 
 Round 4b: Blengths (7, e=0.00025)
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221873e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221768e-160	2000 rounds
 	lnL0 =       -708.236679
 	Cycle  1:    -708.236675
 
@@ -490,91 +488,91 @@ QuantileBeta(0.15, 0.00500, 2.16028) = 1.221873e-160	2000 rounds
 
 
 Round 5a: Paras (5) (e=6.25e-05)
-  2.253442  0.831992  0.005000  2.160279  1.914699
+  2.253442  0.831992  0.005000  2.160427  1.914702
    0.00010   0.00001   0.00500   0.00500   1.00000
  999.00000   0.99999  99.00000  99.00000 999.00000
 warning: ming2, 1 paras at boundary.
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221873e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221768e-160	2000 rounds
 
 Iterating by ming2
 Initial: fx=   708.236675
-x=  2.25344  0.83199  0.00500  2.16028  1.91470
+x=  2.25344  0.83199  0.00500  2.16043  1.91470
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221873e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221768e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221873e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221768e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221872e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221766e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221873e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221768e-160	2000 rounds
 
   1 h-m-p  0.0040 8.0000   0.0064 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221873e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221768e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221873e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221768e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221873e-160	2000 rounds
-C       708.236675  0 0.0038   224
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221873e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221768e-160	2000 rounds
+C       708.236675  0 0.0038   223
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221768e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221873e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221768e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221873e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221768e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221873e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221768e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16041) = 1.221781e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16056) = 1.221675e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16015) = 1.221966e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16030) = 1.221860e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221873e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221768e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221873e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221768e-160	2000 rounds
  | 1/5
   2 h-m-p  0.0658 8.0000   0.0004 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221873e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221768e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221873e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221767e-160	2000 rounds
 +
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221873e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221767e-160	2000 rounds
 +
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221871e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221765e-160	2000 rounds
 +
-QuantileBeta(0.15, 0.00500, 2.16029) = 1.221869e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221763e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221872e-160	2000 rounds
-Y    708.236675  0 3.0192   239
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221872e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221766e-160	2000 rounds
+Y    708.236675  0 3.0191   238
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221766e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221872e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221766e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221872e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221766e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221872e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221766e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16041) = 1.221779e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16056) = 1.221673e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16015) = 1.221964e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16030) = 1.221859e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221872e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221766e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221872e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221766e-160	2000 rounds
  | 1/5
   3 h-m-p  1.6000 8.0000   0.0001 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221871e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221765e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16029) = 1.221868e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221762e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221871e-160	2000 rounds
-Y       708.236675  0 0.9320   251
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221871e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221765e-160	2000 rounds
+Y       708.236675  0 0.9325   250
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221765e-160	2000 rounds
 
 
-    2.253494    0.832036    0.005000    2.160282    1.915826         0:06
+    2.253494    0.832036    0.005000    2.160430    1.915826         0:06
 
 Round 5b: Blengths (7, e=6.25e-05)
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221871e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221765e-160	2000 rounds
 	lnL0 =       -708.236675
 	Cycle  1:    -708.236675
 
@@ -582,91 +580,91 @@ QuantileBeta(0.15, 0.00500, 2.16028) = 1.221871e-160	2000 rounds
 
 
 Round 6a: Paras (5) (e=1.5625e-05)
-  2.253494  0.832036  0.005000  2.160282  1.915826
+  2.253494  0.832036  0.005000  2.160430  1.915826
    0.00010   0.00001   0.00500   0.00500   1.00000
  999.00000   0.99999  99.00000  99.00000 999.00000
 warning: ming2, 1 paras at boundary.
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221871e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221765e-160	2000 rounds
 
 Iterating by ming2
 Initial: fx=   708.236675
-x=  2.25349  0.83204  0.00500  2.16028  1.91583
+x=  2.25349  0.83204  0.00500  2.16043  1.91583
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221871e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221765e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221871e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221765e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221870e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221764e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221871e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221765e-160	2000 rounds
 
   1 h-m-p  0.0040 8.0000   0.0008 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221871e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221765e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221871e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221765e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221871e-160	2000 rounds
-C       708.236675  0 0.0033   262
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221871e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221765e-160	2000 rounds
+C       708.236675  0 0.0033   261
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221765e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221871e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221765e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221871e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221765e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221871e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221765e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16041) = 1.221778e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16056) = 1.221673e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16015) = 1.221964e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16030) = 1.221858e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221871e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221765e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221871e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221765e-160	2000 rounds
  | 1/5
   2 h-m-p  0.0589 8.0000   0.0000 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221871e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221765e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221871e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221765e-160	2000 rounds
 +
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221871e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221765e-160	2000 rounds
 +
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221869e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221763e-160	2000 rounds
 +
-QuantileBeta(0.15, 0.00500, 2.16029) = 1.221867e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16044) = 1.221761e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221870e-160	2000 rounds
-Y    708.236675  0 2.8061   277
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221870e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221764e-160	2000 rounds
+Y    708.236675  0 2.7882   276
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221764e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221870e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221764e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221870e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221764e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221870e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221764e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16041) = 1.221777e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16056) = 1.221671e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16015) = 1.221962e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16030) = 1.221857e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221870e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221764e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16028) = 1.221870e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221764e-160	2000 rounds
  | 1/5
   3 h-m-p  1.6000 8.0000   0.0000 
-QuantileBeta(0.15, 0.00500, 2.16029) = 1.221869e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221763e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16029) = 1.221865e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16044) = 1.221760e-160	2000 rounds
 
-QuantileBeta(0.15, 0.00500, 2.16029) = 1.221869e-160	2000 rounds
-Y       708.236675  0 1.2539   289
-QuantileBeta(0.15, 0.00500, 2.16029) = 1.221869e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221763e-160	2000 rounds
+Y       708.236675  0 1.2612   288
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221763e-160	2000 rounds
 
 
-    2.253501    0.832042    0.005000    2.160285    1.915956         0:07
+    2.253501    0.832042    0.005000    2.160433    1.915956         0:07
 
 Round 6b: Blengths (7, e=1.5625e-05)
 
-QuantileBeta(0.15, 0.00500, 2.16029) = 1.221869e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221763e-160	2000 rounds
 	lnL0 =       -708.236675
 	Cycle  1:    -708.236675
 
@@ -674,12 +672,12 @@ QuantileBeta(0.15, 0.00500, 2.16029) = 1.221869e-160	2000 rounds
 
 lnL  =  -708.236675
 
-QuantileBeta(0.15, 0.00500, 2.16029) = 1.221869e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221763e-160	2000 rounds
 Out..
 lnL  =  -708.236675
-292 lfun, 5088 eigenQcodon, 23606 P(t)
+291 lfun, 5076 eigenQcodon, 23529 P(t)
 
-QuantileBeta(0.15, 0.00500, 2.16029) = 1.221869e-160	2000 rounds
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221763e-160	2000 rounds
 
 BEBing (dim = 4).  This may take several minutes.
 Calculating f(x_h|w): 10 categories 20 w sets.
@@ -704,9 +702,9 @@ S10 w log{f(x|w)}:    8.5000     -5.965375
 S10 w log{f(x|w)}:    9.5000     -6.131075
 S10 w log{f(x|w)}:   10.5000     -6.294591
 Calculating f(X), the marginal likelihood.
-	log(fX) =  -712.733296  S =  -680.274680   -53.829472
+	log(fX) =  -712.733296  S =  -680.274680   -53.829471
 Calculating f(w|X), posterior probabilities of site classes.
-	did  10 /  68 patterns   0:07	did  20 /  68 patterns   0:07	did  30 /  68 patterns   0:07	did  40 /  68 patterns   0:07	did  50 /  68 patterns   0:08	did  60 /  68 patterns   0:08	did  68 /  68 patterns   0:08
-QuantileBeta(0.15, 0.00500, 2.16029) = 1.221869e-160	2000 rounds
+	did  10 /  68 patterns   0:08	did  20 /  68 patterns   0:08	did  30 /  68 patterns   0:08	did  40 /  68 patterns   0:08	did  50 /  68 patterns   0:08	did  60 /  68 patterns   0:09	did  68 /  68 patterns   0:09
+QuantileBeta(0.15, 0.00500, 2.16043) = 1.221763e-160	2000 rounds
 
-Time used:  0:08
+Time used:  0:09

@@ -29,11 +29,11 @@
         . Minimum length of an edge:			 1e-08
         . Optimise substitution model parameters:	 yes
         . Run ID:					 none
-        . Random seed:					 1746647974
+        . Random seed:					 1747359667
         . Subtree patterns aliasing:			 no
-        . Version:					 3.3.20200621
-        . Byte alignment:				 32
-        . AVX enabled:					 yes
+        . Version:					 3.3.20220408
+        . Byte alignment:				 16
+        . AVX enabled:					 no
         . SSE enabled:					 yes
 
   ////////////////////////////////////.\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -57,29 +57,28 @@
 
 . Starting first round of SPRs...
 
-	       0s |   1 | lnL=     -6620.8 | depth=    1/   40 | improvements=   5 | delta_lnL=    0.0/ 1000.0  
+	       1s |   1 | lnL=     -6604.8 | depth=    1/   40 | improvements=   9 | delta_lnL=    0.0/ 1000.0  
 
 . Second round of optimization...
 
-	       1s |   2 | lnL=     -6604.9 | depth=    2/   36 | improvements=   8 | delta_lnL=    2.0/ 1000.0  
-	       1s |   3 | lnL=     -6641.6 | depth=    2/   20 | improvements=   9 | delta_lnL=   16.5/ 1000.0  
-	       1s |   4 | lnL=     -6601.7 | depth=    2/   16 | improvements=   8 | delta_lnL=   11.2/ 1000.0  
-	       1s |   5 | lnL=     -6601.1 | depth=    2/   12 | improvements=  12 | delta_lnL=   13.1/ 1000.0  
-	       1s |   6 | lnL=     -6604.9 | depth=    1/    9 | improvements=   8 | delta_lnL=    0.0/   33.0  
-	       1s |   7 | lnL=     -6604.3 | depth=    1/    7 | improvements=   3 | delta_lnL=    0.0/   33.0  
+	       1s |   2 | lnL=     -6628.6 | depth=    1/   36 | improvements=   7 | delta_lnL=    0.0/ 1000.0  
+	       1s |   3 | lnL=     -6605.3 | depth=    1/   20 | improvements=  10 | delta_lnL=    0.0/ 1000.0  
+	       1s |   4 | lnL=     -6611.6 | depth=    1/   16 | improvements=   4 | delta_lnL=    0.0/ 1000.0  
 
 . Third round of optimization...
 
-	       2s |   8 | lnL=     -6597.8 | depth=    1/   10 | improvements=   6 | delta_lnL=    0.0/  100.0 | triple moves=   5   +
-	       3s |   9 | lnL=     -6597.8 | depth=    0/    8 | improvements=   0 | delta_lnL=    0.0/  100.0 | triple moves=   5   +
+	       2s |   5 | lnL=     -6598.0 | depth=    2/   12 | improvements=   7 | delta_lnL=    4.3/ 1000.0 | triple moves=   5   +
+	       3s |   6 | lnL=     -6597.9 | depth=    1/    9 | improvements=   1 | delta_lnL=    0.0/  100.0 | triple moves=   5   +
+	       4s |   7 | lnL=     -6597.8 | depth=    0/    7 | improvements=   1 | delta_lnL=    0.0/  100.0 | triple moves=   5   +
+	       4s |   8 | lnL=     -6597.8 | depth=    0/    5 | improvements=   0 | delta_lnL=    0.0/  100.0 | triple moves=   5   +
 
 . Final optimisation steps...
 
 
-. Log likelihood of the current tree: -6595.869689854506759729702.
+. Log likelihood of the current tree: -6595.869452391325467033312.
 
 . Printing the most likely tree in file 'Mx1_PAML25.fa.phy_phyml_tree.txt'.
 
-. Time used 0h0m4s
+. Time used 0h0m5s
 
 oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo

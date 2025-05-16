@@ -1,4 +1,3 @@
-Reading /home/jayoung/.Rprofile
 files  Mx1_PAML25.fa_phymlAndPAML/Mx1_PAML25.fa_PHYMLtree/Mx1_PAML25.fa.phy_phyml_tree.nolen 
 options2  myCex=1 plotbootstrap=FALSE myTitle=Mx1_PAML25.fa.phy_phyml_tree.nolen aliasFile=Mx1_PAML25.fa_phymlAndPAML/Mx1_PAML25.fa.aliases.txt 
 setting myScaleFontCex to match myCex
@@ -7,7 +6,6 @@ setting myTitleCex to match myCex
 using aliasFile Mx1_PAML25.fa_phymlAndPAML/Mx1_PAML25.fa.aliases.txt
 
 working on file  Mx1_PAML25.fa_phymlAndPAML/Mx1_PAML25.fa_PHYMLtree/Mx1_PAML25.fa.phy_phyml_tree.nolen 
-printing warnings, if any
 
 
 finished

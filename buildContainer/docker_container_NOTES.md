@@ -8,13 +8,15 @@ I got it working in April 2022, using this base image: continuumio/miniconda3:4.
 
 In Nov 2022 I decided I wanted a newer version of PAML so I needed to rebuild the docker image. I wanted to install PAML from scratch rather than using conda.   Even without PAML, I now had trouble installing bioperl using conda.  I decided to abandon the miniconda base, and use a Bioperl base image for my docker container ("bioperl/bioperl:release-1-6-924").   I think I have it working.
 
-xxxx
+# To do 
 
-June 2024 
-- first, get ape package installation to work
-- second, see if I can use the newer bioperl container base
+See if I can use the newer bioperl container base - note from June 2024.  That might fix some of the errors I see
+```
+# maybe try a new base -  not sure why I used 1-6-924
+docker pull bioperl/bioperl:release-1-7-2
+```
 
-xxxx
+Maybe deal with [Adrian's feedback](https://github.com/jayoung/pamlWrapper/issues/15)
 
 
 # Locations and paths
@@ -53,15 +55,22 @@ I also make sure the Mac docker app is running, and using the app, I sign in to 
 
 Disable Netskope client on the mac, otherwise I get an error ("cannot verify github.com's certificate"). Not sure that's relevant on my 2024 work laptop
 
-Then we re-build the docker image
+Then we re-build the docker image.
+
+Adding `--platform linux/amd64` now that I am [building an image on my M1 Mac](https://stackoverflow.com/questions/66662820/m1-docker-preview-and-keycloak-images-platform-linux-amd64-does-not-match-th) to be used on Linux
 ```
 cd /Users/jayoung/gitProjects/pamlWrapper
-docker build -t paml_wrapper -f buildContainer/Dockerfile .
+docker build --platform linux/amd64 -t paml_wrapper -f buildContainer/Dockerfile .
 ```
 
 To get a shell for a quick look:
 ```
-docker run -v `pwd`:/workingDir -it paml_wrapper
+docker run --platform linux/amd64 -v `pwd`:/workingDir -it paml_wrapper
+```
+
+Before I added `--platform linux/amd64` to the docker build command, I warnings like this:
+```
+WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested
 ```
 
 Perhaps I run some standard tests, something like this:
@@ -89,22 +98,26 @@ rm -r CENPA_primates_aln2a_only5seqs.fa_phymlAndPAML
 ```
 
 
-When I know it's working I add a new tag and push it to [docker hub](https://hub.docker.com/repository/docker/jayoungfhcrc/paml_wrapper).  I update the version number each time:
+When I know it's working I exit the container:
 ```
-docker tag paml_wrapper jayoungfhcrc/paml_wrapper:version1.3.11
-docker push jayoungfhcrc/paml_wrapper:version1.3.11
+exit
+```
+then add a new tag and push it to [docker hub](https://hub.docker.com/repository/docker/jayoungfhcrc/paml_wrapper).  I update the version number each time:
+```
+docker tag paml_wrapper jayoungfhcrc/paml_wrapper:version1.3.12
+docker push jayoungfhcrc/paml_wrapper:version1.3.12
 ```
 
 I then test my container in a totally different environment using the [Play with Docker](https://labs.play-with-docker.com) site - it seems to work. Once I have an instance running there:
 ```
-docker run -it jayoungfhcrc/paml_wrapper:version1.3.11
+docker run -it jayoungfhcrc/paml_wrapper:version1.3.12
+
 cd pamlWrapper/testData/
-pw_makeTreeAndRunPAML.pl ACE2_primates_aln1_NT.fa
+pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_only5seqs.fa
 ```
 
 
-
-Re-enable Netskope client on the mac
+(no longer relevant: Re-enable Netskope client on the mac)
 
 
 I noticed (when I run on my Mac) that within the Docker container, the timestamps for files seems to be based on Europe time. That's weird. The timestamps look fine from outside the Docker container though. I probably don't care about that. I'm not going to worry about it.
@@ -118,11 +131,14 @@ I was previously using singularity (v3.5.3) to build the container for rhino/giz
 
 ```
 cd ~/FH_fast_storage/paml_screen/pamlWrapper/buildContainer
-module purge
 
+module purge
 module load Apptainer/1.1.6
-apptainer build paml_wrapper-v1.3.11.sif docker://jayoungfhcrc/paml_wrapper:version1.3.11
-# apptainer run --cleanenv paml_wrapper-v1.3.11.sif
+
+apptainer build paml_wrapper-v1.3.12.sif docker://jayoungfhcrc/paml_wrapper:version1.3.12
+
+# apptainer run --cleanenv paml_wrapper-v1.3.12.sif
+
 module purge
 ```
 
@@ -133,19 +149,78 @@ Now that I use the bioperl base, I do get a bunch of warnings while building the
 2022/11/22 17:00:52  warn rootless{root/.cpanm/work/1468017244.5/Statistics-Descriptive-3.0612/t/pod.t} ignoring (usually) harmless EPERM on setxattr "user.rootlesscontainers"
 ```
 
-A file called paml_wrapper-v1.3.11.sif appears. I want a copy of the singularity image file, and a script that uses it, in a more central place, for use by others:
+A file called paml_wrapper-v1.3.12.sif appears. I want a copy of the singularity image file, and a script that uses it, in a more central place, for use by others:
 ```
-cp paml_wrapper-v1.3.11.sif /fh/fast/malik_h/grp/malik_lab_shared/singularityImages
+cp paml_wrapper-v1.3.12.sif /fh/fast/malik_h/grp/malik_lab_shared/singularityImages
 ```
 
+Edit `scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl` to use the new version.
 
-Perhaps retest the singularity container before I change the version used by others:
+Retest the singularity container before I change the version used by others:
 ```
 cd ~/FH_fast_storage/paml_screen/pamlWrapper/testData
 
 # test tiny alignment, making a tree from the alignment
 ../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl CENPA_primates_aln2a_only5seqs.fa
 ```
+
+Then, when I'm sure it's working, update `runPAML.pl` script (that's the one others are using):
+```
+cp ../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl /fh/fast/malik_h/grp/malik_lab_shared/linux_gizmo/bin/janet_scripts/runPAML.pl
+```
+
+Done.
+
+
+# More container notes
+
+I can get a shell in the singularity/apptainer container like this:
+```
+cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments
+module load Apptainer/1.1.6
+apptainer shell --cleanenv --bind $(pwd):/mnt -H /mnt /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.12.sif
+module purge
+```
+
+To seeing which OS a container uses: `uname -a` works in a docker container, but in a singularity container it doesn't (well, it does, but it gives me the name of the host computer, not the container). Instead, from within a singularity container I can do `cat /etc/*-release`.   In paml_wrapper-v1.3.1.sif this gave me:
+```
+DISTRIB_ID=Ubuntu
+DISTRIB_RELEASE=14.04
+DISTRIB_CODENAME=trusty
+DISTRIB_DESCRIPTION="Ubuntu 14.04.4 LTS"
+NAME="Ubuntu"
+VERSION="14.04.4 LTS, Trusty Tahr"
+ID=ubuntu
+ID_LIKE=debian
+PRETTY_NAME="Ubuntu 14.04.4 LTS"
+VERSION_ID="14.04"
+HOME_URL="http://www.ubuntu.com/"
+SUPPORT_URL="http://help.ubuntu.com/"
+BUG_REPORT_URL="http://bugs.launchpad.net/ubuntu/"
+```
+
+And within the shell, this works:
+```
+pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa 
+```
+
+Or, I can run some code using the singularity image without entering a shell (this is what the  `runPAML.pl=pw_makeTreeAndRunPAML_singularityWrapper.pl` script does for each alignment):
+```
+module load Apptainer/1.1.6
+apptainer exec --cleanenv --bind $(pwd):/mnt -H /mnt /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.12.sif pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa 
+module purge
+```
+
+Test the new container and wrapper, on rhino/gizmo:
+```
+cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments
+runPAML.pl CENPA_primates_aln2a_NT.fa
+runPAML.pl --codon=2 --omega=3 CENPA_primates_aln2a_NT.fa
+runPAML.pl --usertree=CENPA_primates_aln2a_only5seqs.fa.phy.usertree CENPA_primates_aln2a_only5seqs.fa
+```
+
+
+# More tests:
 
 Test singularity container, using different codeml versions
 ```
@@ -189,55 +264,7 @@ cp ../CENPA_primates_aln2a_only5seqs.fa.phy.usertree.badNames ../CENPA_primates_
 ../../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl --usertree=CENPA_primates_aln2a_only5seqs.fa.phy.usertree.badNames CENPA_primates_aln2a_only5seqs.fa
 ```
 
-Then, when I'm sure it's working, update `runPAML.pl` script (that's the one others are using):
-```
-cp ../scripts/pw_makeTreeAndRunPAML_singularityWrapper.pl /fh/fast/malik_h/grp/malik_lab_shared/linux_gizmo/bin/janet_scripts/runPAML.pl
-```
 
-I can get a shell in the singularity/apptainer container like this:
-```
-cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments
-module load Apptainer/1.1.6
-apptainer shell --cleanenv --bind $(pwd):/mnt -H /mnt /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.11.sif
-module purge
-```
-
-To seeing which OS a container uses: `uname -a` works in a docker container, but in a singularity container it doesn't (well, it does, but it gives me the name of the host computer, not the container). Instead, from within a singularity container I can do `cat /etc/*-release`.   In paml_wrapper-v1.3.1.sif this gave me:
-```
-DISTRIB_ID=Ubuntu
-DISTRIB_RELEASE=14.04
-DISTRIB_CODENAME=trusty
-DISTRIB_DESCRIPTION="Ubuntu 14.04.4 LTS"
-NAME="Ubuntu"
-VERSION="14.04.4 LTS, Trusty Tahr"
-ID=ubuntu
-ID_LIKE=debian
-PRETTY_NAME="Ubuntu 14.04.4 LTS"
-VERSION_ID="14.04"
-HOME_URL="http://www.ubuntu.com/"
-SUPPORT_URL="http://help.ubuntu.com/"
-BUG_REPORT_URL="http://bugs.launchpad.net/ubuntu/"
-```
-
-And within the shell, this works:
-```
-pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa 
-```
-
-Or, I can run some code using the singularity image without entering a shell (this is what the  `runPAML.pl=pw_makeTreeAndRunPAML_singularityWrapper.pl` script does for each alignment):
-```
-module load Apptainer/1.1.6
-apptainer exec --cleanenv --bind $(pwd):/mnt -H /mnt /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.11.sif pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_NT.fa 
-module purge
-```
-
-Test the new container and wrapper, on rhino/gizmo:
-```
-cd ~/FH_fast_storage/paml_screen/pamlWrapperTestAlignments
-runPAML.pl CENPA_primates_aln2a_NT.fa
-runPAML.pl --codon=2 --omega=3 CENPA_primates_aln2a_NT.fa
-runPAML.pl --usertree=CENPA_primates_aln2a_only5seqs.fa.phy.usertree CENPA_primates_aln2a_only5seqs.fa
-```
 
 # Notes on making my Dockerfile
 I export DOCKER_BUILDKIT in my ~/.profile file on my mac (needed for the "RUN --mount=type=bind" commands):

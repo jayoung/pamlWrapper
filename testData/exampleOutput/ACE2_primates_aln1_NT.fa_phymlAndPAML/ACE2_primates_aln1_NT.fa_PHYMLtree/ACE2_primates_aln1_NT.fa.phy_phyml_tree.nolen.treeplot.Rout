@@ -1,4 +1,3 @@
-Reading /home/jayoung/.Rprofile
 files  ACE2_primates_aln1_NT.fa_phymlAndPAML/ACE2_primates_aln1_NT.fa_PHYMLtree/ACE2_primates_aln1_NT.fa.phy_phyml_tree.nolen 
 options2  myCex=1 plotbootstrap=FALSE myTitle=ACE2_primates_aln1_NT.fa.phy_phyml_tree.nolen aliasFile=ACE2_primates_aln1_NT.fa_phymlAndPAML/ACE2_primates_aln1_NT.fa.aliases.txt 
 setting myScaleFontCex to match myCex
@@ -7,7 +6,6 @@ setting myTitleCex to match myCex
 using aliasFile ACE2_primates_aln1_NT.fa_phymlAndPAML/ACE2_primates_aln1_NT.fa.aliases.txt
 
 working on file  ACE2_primates_aln1_NT.fa_phymlAndPAML/ACE2_primates_aln1_NT.fa_PHYMLtree/ACE2_primates_aln1_NT.fa.phy_phyml_tree.nolen 
-printing warnings, if any
 
 
 finished
