@@ -149,6 +149,29 @@ makeLookupTibble <- function(alignment) {
 
 
 
+##### format_numbers_nicely function - intended to take p-values and display them in a nicer way.   I want very small numbers to be shown in scientific notation (e.g. "6.11e-05") but less small numbers to be shown as ordinary numeric values, (e.g. "0.406"). In both cases I do some rounding
+
+format_numbers_nicely <- function(x,
+                                  thresholdForVerySmall=0.001,
+                                  verySmallNumberDigits=2,
+                                  lessSmallNumberDigits=3) {
+    y <- case_when(
+        x < thresholdForVerySmall ~ signif(x, verySmallNumberDigits) %>% 
+            as.character(), 
+        TRUE ~ round (x, lessSmallNumberDigits) %>% 
+            as.character()
+    )
+    return(y)
+}
+# PAML_table_to_use$m8vs_m8a_pVal
+#  [1] 6.1097e-05 2.0450e-02 2.1851e-02 3.1046e-02 6.4299e-02 1.7979e-01
+#  [7] 3.2573e-01 4.0610e-01 9.4444e-01 9.9323e-01 9.9414e-01 1.0000e+00
+# [13] 1.0000e+00 1.0000e+00 1.0000e+00 1.0000e+00 1.0000e+00 1.0000e+00
+# format_numbers_nicely(PAML_table_to_use$m8vs_m8a_pVal)
+#  [1] "6.1e-05" "0.02"    "0.022"   "0.031"   "0.064"   "0.18"    "0.326"  
+#  [8] "0.406"   "0.944"   "0.993"   "0.994"   "1"       "1"       "1"      
+# [15] "1"       "1"       "1"       "1"  
+
 
 #### displays PAML output as kable, dropping some unneeded columns and doing some rounding.
 ## xxx wrote this for a separate script (~/FH_fast_storage/paml_screen/Jyoti_Batra_SARS/MTARC2_TOMM70_MAVS_resultsSummary.Rmd). 
@@ -165,6 +188,7 @@ display_PAML_output_nicely <- function(
         cols_color="orange",
         color_signif_rows=TRUE,
         signif_rows_color="red",
+        roundDigits=3,
         caption=NULL,
         return_tbl=FALSE,
         write_excel=FALSE, excel_file=NULL) {
@@ -206,13 +230,38 @@ display_PAML_output_nicely <- function(
     }
     
     ### get relevant columns and do some rounding
+    
+    ## original rounding scheme (less sophisticated):
+    # paml_tbl_nice <- paml_tbl %>% 
+    #     select(all_of(cols_to_choose)) %>%
+    #     mutate(across(.cols=where(is.numeric),
+    #                   .fns= function(x) { round(x, roundDigits) })) %>%
+    #     mutate(across(.cols=c(m8_percent_sites_under_positive_selection,
+    #                           m8_dN_dS_of_selected_sites),
+    #                   .fns= function(x) { round(x, 1) })) 
+    
+    ## use format_numbers_nicely function for the p-value columns
     paml_tbl_nice <- paml_tbl %>% 
-        select(all_of(cols_to_choose)) %>%
-        mutate(across(.cols=where(is.numeric),
-                      .fns= function(x) { round(x, 3) })) %>%
-        mutate(across(.cols=c(m8_percent_sites_under_positive_selection,
-                              m8_dN_dS_of_selected_sites),
-                      .fns= function(x) { round(x, 1) })) 
+        select(all_of(cols_to_choose)) 
+    
+    pValue_colnames <- grep("_pVal", colnames(paml_tbl_nice), value=TRUE)
+    colnames_for_short_rounding <- c("m8_percent_sites_under_positive_selection",
+                                     "m8_dN_dS_of_selected_sites")
+    all_numeric_colnames <- paml_tbl_nice %>% 
+        select(where(is.numeric)) %>% colnames()
+    remaining_numeric_colnames <- setdiff(
+        all_numeric_colnames, 
+        c(pValue_colnames,colnames_for_short_rounding))
+    # cat("all_numeric_colnames", all_numeric_colnames, "\n")
+    # cat("remaining_numeric_colnames", remaining_numeric_colnames, "\n")
+    
+    paml_tbl_nice <- paml_tbl_nice %>% 
+        mutate(across(.cols=all_of(pValue_colnames),
+                      .fns= format_numbers_nicely)) %>%
+        mutate(across(.cols=all_of(colnames_for_short_rounding),
+                      .fns= function(x) { round(x, 1) })) %>% 
+        mutate(across(.cols=all_of(remaining_numeric_colnames),
+                      .fns= function(x) { round(x, roundDigits) }))
     
     ### figure out indices of any columns/rows we want to color
     if(!is.null(cols_to_color)) {
@@ -227,13 +276,30 @@ display_PAML_output_nicely <- function(
     ### fixing colnames and formatting table
     paml_tbl_nice <- paml_tbl_nice %>%
         rename_with(.fn = ~gsub("_"," ",.x) ) 
+    
+    ### other colname replacements:
+    paml_tbl_nice <- paml_tbl_nice %>%
+        rename_with(.fn = function(x) { 
+            x <- gsub("pVal","p-value",x) 
+            x <- gsub("vs m"," vs ",x) 
+            x <- gsub("^m0","model 0",x) 
+            x <- gsub("^m8","model 8",x) 
+            x <- gsub("^m2","model 2",x) 
+            x <- gsub("mask m8","mask model 8",x) 
+            x <- gsub("mask m2","mask model 2",x) 
+            x <- gsub("dN dS","dN/dS",x) 
+            x <- gsub("BHcorr","(BH-corrected)",x) 
+            return(x)
+        } )
+    
+    ### maybe we write an Excel file
     if (write_excel) {
         require(openxlsx, quietly=TRUE)
         wb <- createWorkbook()
         addWorksheet(wb, "Sheet 1")
         writeData(wb, "Sheet 1", paml_tbl_nice)
         
-        ## xx arial font size 12
+        ## arial font size 12
         modifyBaseFont(wb, fontSize = 12, fontName = "Arial")
         
         ## zoom setting
@@ -251,10 +317,11 @@ display_PAML_output_nicely <- function(
         
         saveWorkbook(wb, excel_file, overwrite = TRUE)
     }
+    ## if return_tbl=TRUE we stop here and return paml_tbl_nice
     if(return_tbl) {
         return(paml_tbl_nice)
     }
-    
+    ## otherwise we make a kable formatted object and return that
     paml_tbl_nice <- paml_tbl_nice %>%
         kable(caption=caption) %>% 
         kable_styling(full_width=FALSE)
@@ -262,12 +329,10 @@ display_PAML_output_nicely <- function(
         paml_tbl_nice <- paml_tbl_nice %>% 
             column_spec(color_column_indices, color = cols_color)
     }
-    
     if(color_signif_rows) {
         paml_tbl_nice <- paml_tbl_nice %>% 
             row_spec(color_row_indices, color = signif_rows_color)
     }
-    
     return(paml_tbl_nice)
 }
 
