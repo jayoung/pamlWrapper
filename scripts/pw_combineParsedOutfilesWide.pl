@@ -3,13 +3,20 @@ use warnings;
 use strict;
 use Getopt::Long;
 
+## June 25 2026 - added addGeneName option (but it's not the default)
+
+
 my $outfile = "allAlignments.PAMLsummaries.wide.tsv";
 my $overwrite = 0;
 
+my $addGeneName = 0; ## I often DO want to get gene name by splitting up input file name, but not always (e.g. if I have run PAML on multiple GARD segments of the same gene, it's useful)
+
+
 my $scriptName = "pw_combinedParsedOutfilesWide.pl";
 
-GetOptions("out=s" => \$outfile,
-           "over=i" => \$overwrite) or die "\n\nERROR - terminating in script $scriptName - unknown option(s) specified on command line\n\n"; 
+GetOptions("genename=i" => \$addGeneName,
+           "out=s"      => \$outfile,
+           "over=i"     => \$overwrite) or die "\n\nERROR - terminating in script $scriptName - unknown option(s) specified on command line\n\n"; 
 
 
 ## Nov 23 2022 - added the name of the tsv file as the first field, to help track situations where I have multiple runs on the same alignment/tree combo, e.g. when testing different PAML versions, or testing on different computers.
@@ -43,6 +50,9 @@ foreach my $file (@ARGV) {
         # print "line $line\n\nnumFields $numFields\n\n"; die;
         if (($line =~ m/^Gene\sname/) || ($line =~ m/^seqFile/) || ($line =~ m/^gene/) || ($line =~ m/^tsvFile/)) {
             if ($firstFile) { 
+                if ($addGeneName) {
+                    print OUT "gene\t"; 
+                }
                 print OUT "tsvFile\t$line"; 
                 $firstFileNumFields = $numFields;
             } else { 
@@ -51,6 +61,13 @@ foreach my $file (@ARGV) {
         } else {
             if (!defined $firstFileNumFields) {
                 die "\n\nERROR - didn't find expected header line in the first file. Script expects it to start with 'Gene name' or 'seqFile' or 'gene' or 'tsvFile'\n\n";
+            }
+            if ($addGeneName) { 
+                my $gene = $f[0]; 
+                if ($gene =~ m/_/) {
+                    $gene = (split /_/, $gene)[0];
+                }
+                print OUT "$gene\t";
             }
             print OUT "$file\t$line"; 
             if ($numFields != $firstFileNumFields) {

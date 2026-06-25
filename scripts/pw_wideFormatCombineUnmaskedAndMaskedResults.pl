@@ -11,17 +11,16 @@ use Getopt::Long;
 # pw_wideFormatCombineUnmaskedAndMaskedResults.pl zz_allAlignments.PAMLsummaries.codon2_omega0.4_clean0.wide.tsv
 ## uses file name with and without 'removeCpGinframe' to join the results
 
+## June 25 2026 - added addGeneName option (but it's not the default)
 
 ############# get the command line options and check them
 
 my $scriptName = "pw_wideFormatCombineUnmaskedAndMaskedResults.pl";
 
-# # ## GetOptions syntax:  https://perldoc.perl.org/Getopt/Long.html
-# GetOptions ( #"cpg=i"        => \$includeCpGMasked, 
-#              #"ignore_cpg=i" => \$ignoreCpGmasking, 
-#              "genename=i"   => \$splitGeneName# , 
-#              # "segname"      => \$figureOutSegmentPositions
-#              ) or die "\n\nERROR - terminating in script $scriptName - unknown option(s) specified on command line\n\n";
+my $addGeneName = 0;
+
+# ## GetOptions syntax:  https://perldoc.perl.org/Getopt/Long.html
+GetOptions ( "genename=i"   => \$addGeneName ) or die "\n\nERROR - terminating in script $scriptName - unknown option(s) specified on command line\n\n";
 
 
 ################
@@ -82,7 +81,11 @@ foreach my $file (@ARGV) {
 
     #### print header:
     # unmasked
+    if ($addGeneName) {
+        print OUT "gene\t"; 
+    }
     print OUT join "\t", @headerFields;
+     
     # masked
     foreach my $h (@headerFields) { print OUT "\tCpGmask_$h"; }
     print OUT "\n";
@@ -92,6 +95,14 @@ foreach my $file (@ARGV) {
         if(!defined $results{$seqfileShort}{'unmasked'}) {
             die "\n\nTerminating - gene $seqfileShort does not have unmasked results\n\n";
         }
+        if ($addGeneName) { 
+            my $gene = $seqfileShort; 
+            if ($gene =~ m/_/) {
+                $gene = (split /_/, $gene)[0];
+            }
+            print OUT "$gene\t";
+        }
+
         print OUT $results{$seqfileShort}{'unmasked'};
         print OUT "\t";
         if(!defined $results{$seqfileShort}{'masked'}) {
